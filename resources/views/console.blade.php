@@ -16,7 +16,7 @@
 
                 <a class="btn btn-primary btn-sm mb-4" href="{{route('code-creer-get')}}" role="button" style="width:100%;">nouveau puzzle</a>
 
-                <a href="https://github.com/codepuzzle-io/www.codepuzzle.io/discussions" target="_blank" role="button" class="mt-3 btn btn-light btn-sm text-left text-muted" style="width:100%;opacity:0.8;">
+                <a href="https://github.com/codepuzzle-io/www.codepuzzle.io/discussions" target="_blank" role="button" class="mt-2 btn btn-light btn-sm text-left text-muted" style="width:100%;opacity:0.8;">
                 	<span style="font-size:80%"><i class="fas fa-comment-alt" style="float:left;margin:4px 8px 5px 0px;"></i> discussions <span style="opacity:0.6;font-size:90%;">&</span> annonces</span>
                 </a>
 
@@ -24,7 +24,7 @@
                 	<span style="font-size:80%"><i class="fas fa-bug" style="float:left;margin:4px 8px 5px 0px;"></i> signalement de bogue <span style="opacity:0.6;font-size:90%;">&</span> questions techniques</span>
                 </a>
 
-                <div class="mt-3 text-muted text-monospace text-center" style="font-size:70%;opacity:0.8;">
+                <div class="mt-3 text-muted text-monospace pl-1 mb-5" style="font-size:70%;opacity:0.8;">
                 	<span><i class="fa fa-envelope"></i> contact@codepuzzle.io</span>
                 </div>
 
