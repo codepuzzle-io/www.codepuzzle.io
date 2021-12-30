@@ -30,7 +30,7 @@
 
             </div>
 
-			<div class="col-md-10 pl-5 pr-5">
+			<div class="col-md-10 pl-3 pr-3">
 
 				@if (session('status'))
 					<div class="text-success text-monospace text-center pb-4" role="alert">
