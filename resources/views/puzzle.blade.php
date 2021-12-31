@@ -64,6 +64,9 @@
 				<!-- bouton basthon -->
                 <span id="basthon" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="exécuter ce code avec Basthon" style="display:none"></span>
 
+				<!-- bouton kaggle -->
+                <span id="kaggle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="exécuter ce code avec Kaggle" style="display:none"></span>
+
             </div>
         </div>
 
