@@ -31,7 +31,7 @@
 							Si le courriel n'apparaît pas dans votre boîte de réception, vérifiez vos "spams''.
 							</li>
 							<li class="mt-3">Si vous ne l'avez pas reçu après plusieurs minutes,
-							<form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
+							<form class="d-inline" method="POST" action="{{ route('verification.resend, app()->getLocale()') }}">
 								@csrf
 								<button type="submit" class="btn btn-link p-0 m-0 align-baseline">cliquez ici</button> pour le renvoyer.
 							</form>

@@ -19,7 +19,7 @@
 							@csrf
 
 							<div class="form-group row">
-								<label for="email" class="col-md-4 col-form-label text-md-right text-info">adresse courriel</label>
+								<label for="email" class="col-md-4 col-form-label text-md-right text-info">{{__('adresse courriel')}}</label>
 								<div class="col-md-6">
 									<input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autofocus>
 									@error('email')
@@ -31,7 +31,7 @@
 							</div>
 
 							<div class="form-group row">
-								<label for="password" class="col-md-4 col-form-label text-md-right text-info">mot de passe</label>
+								<label for="password" class="col-md-4 col-form-label text-md-right text-info">{{__('mot de passe')}}</label>
 								<div class="col-md-6">
 									<input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" />
 									@error('password')
@@ -47,18 +47,18 @@
 									<div class="form-check">
 										<input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
-										<label class="form-check-label" for="remember">se souvenir de moi</label>
+										<label class="form-check-label" for="remember">{{__('se souvenir de moi')}}</label>
 									</div>
 								</div>
 							</div>
 
 							<div class="form-group row mb-0">
 								<div class="col-md-8 offset-md-4">
-									<button type="submit" class="btn btn-success"><i class="fas fa-check"></i></button>
+									<button type="submit" class="btn btn-primary"><i class="fas fa-check"></i></button>
 
 									@if (Route::has('password.request'))
 										<a class="text-decoration-none small text-muted ml-3" style="opacity:0.5" href="{{ route('password.request') }}">
-											vous avez oublié votre mot de passe ?
+											{{__('vous avez oublié votre mot de passe ?')}}
 										</a>
 									@endif
 								</div>

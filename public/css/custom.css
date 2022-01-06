@@ -45,6 +45,19 @@ h3 {
 	color: #3490dc;
 }
 
+.kbd {
+    padding: 0.1rem 0.4rem;
+    font-size: .7em;
+    color: #fff;
+    background-color: #34495e;
+    border-radius: 0.2rem;
+}
+
+.kbd:hover {
+    color: #fff;
+    background-color: #34495e;
+}
+
 .frame {
     background-color:white;
     padding:10px 20px 10px 20px;

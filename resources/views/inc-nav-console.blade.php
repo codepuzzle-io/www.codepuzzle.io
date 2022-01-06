@@ -4,7 +4,7 @@
 			<div>
 				<img src="{{ asset('img/nav-home.png') }}" width="20" />
 				<br />
-				<span class="text-monospace small" style="color:#c5c7c9;">console</span>
+				<span class="text-monospace small" style="color:#c5c7c9;">{{__('console')}}</span>
 			</div>
 
 		</div>
@@ -19,6 +19,9 @@
 
 			<!-- Right Side Of Navbar -->
 			<ul class="navbar-nav ml-auto">
+				<div class="text-monospace text-center mr-3">
+					{!! $lang_switch ?? '' !!}
+				</div>
 
 				<li class="nav-item dropdown">
 
@@ -27,7 +30,7 @@
 					</a>
 
 					<div class="dropdown-menu dropdown-menu-right p-2" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item btn btn-light text-center" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><span class="small text-muted">se déconnecter</span></a>
+						<a class="dropdown-item btn btn-light text-center" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><span class="small text-muted">{{__('se déconnecter')}}</span></a>
 
 						<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
 							@csrf

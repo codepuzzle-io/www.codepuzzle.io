@@ -8,7 +8,6 @@
 
 	@include('inc-nav-console')
 
-
 	<!-- MODAL MARKDOWN HELP -->
 	<div class="modal fade" id="markdown_help" tabindex="-1" aria-labelledby="markdown_helpLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
@@ -95,14 +94,14 @@
 
 			<div class="col-md-9">
 
-				<h1>NOUVEAU PUZZLE</h1>
+				<h1>{{__('nouveau puzzle')}}</h1>
 
 				<form method="POST" action="{{route('code-creer-post')}}">
 
 					@csrf
 
-					<div class="text-monospace">TITRE<sup class="text-danger small">*</span></div>
-					<div class="text-monospace text-muted small text-justify mb-1">Visible par vous seulement</div>
+					<div class="text-monospace">{{strtoupper(__('titre'))}}<sup class="text-danger small">*</span></div>
+					<div class="text-monospace text-muted small text-justify mb-1">{{__('Visible par vous seulement')}}</div>
 					<input id="titre_enseignant" type="text" class="form-control @error('titre_enseignant') is-invalid @enderror" name="titre_enseignant" value="{{ old('titre_enseignant') }}" autofocus>
 					@error('titre_enseignant')
 						<span class="invalid-feedback" role="alert">
@@ -110,28 +109,28 @@
 						</span>
 					@enderror
 
-					<div class="mt-3 text-monospace">SOUS-TITRE <span class="font-italic small" style="color:silver;">optionnel</span></div>
-					<div class="text-monospace text-muted small text-justify mb-1">Visible par vous seulement</div>
+					<div class="mt-3 text-monospace">{{strtoupper(__('sous-titre'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
+					<div class="text-monospace text-muted small text-justify mb-1">{{__('Visible par vous seulement')}}</div>
 					<input id="sous_titre_enseignant" type="text" class="form-control @error('sous_titre_enseignant') is-invalid @enderror" name="sous_titre_enseignant" value="{{ old('sous_titre_enseignant') }}" autofocus>
 
-					<div class="mt-3 text-monospace">TITRE ÉLÈVE <span class="font-italic small" style="color:silver;">optionnel</span></div>
-					<div class="text-monospace text-muted small text-justify mb-1">Visible par l'élève</div>
+					<div class="mt-3 text-monospace">{{strtoupper(__('titre élève'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
+					<div class="text-monospace text-muted small text-justify mb-1">{{__('Visible par l élève')}}</div>
 					<input id="titre_eleve" type="text" class="form-control @error('titre_eleve') is-invalid @enderror" name="titre_eleve" value="{{ old('titre_eleve') }}" autofocus>
 
 					<div class="mt-3 text-monospace">
-						CONSIGNES <span class="font-italic small" style="color:silver;">optionnel</span>
+						{{strtoupper(__('consignes'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span>
 						<i class="fas fa-info-circle pl-1" style="cursor:pointer;color:#e74c3c;opacity:0.5" data-toggle="modal" data-target="#markdown_help"></i>
 					</div>
-					<div class="text-monospace text-muted small text-justify mb-1">Consignes pour l'élève</div>
+					<div class="text-monospace text-muted small text-justify mb-1">{{__('Consignes pour l élève')}}</div>
 					<textarea class="form-control" name="consignes_eleve" id="consignes_eleve" rows="6">{{ old('consignes_eleve') }}</textarea>
 
-					<div class="mt-3 text-monospace">CODE<sup class="text-danger small">*</span></div>
+					<div class="mt-3 text-monospace">{{strtoupper(__('code'))}}<sup class="text-danger small">*</span></div>
 					<div class="text-monospace text-muted small text-justify">
-						Avant de valider le formulaire, assurez-vous que votre code respecte les standards de formatage <a href="https://pep8.org/" target="_blank">PEP8</a>.
-						Pour vous aider:
+						{{__('Avant de valider le formulaire, assurez-vous que votre code respecte les standards de formatage')}} <a href="https://pep8.org/" target="_blank">PEP8</a>.
+						{{__('Pour vous aider')}}:
 						<ul>
-							<li>un vérificateur : <a href="http://pep8online.com/" target="_blank">pep8online.com</a></li>
-							<li>un correcteur automatique de code à utiliser avec prudence : <a href="https://black.vercel.app/" target="_blank">black.vercel.app</a></li>
+							<li>{{__('un vérificateur')}} : <a href="http://pep8online.com/" target="_blank">pep8online.com</a></li>
+							<li>{{__('un correcteur automatique de code à utiliser avec prudence')}} : <a href="https://black.vercel.app/" target="_blank">black.vercel.app</a></li>
 						</ul>
 					</div>
 
@@ -143,9 +142,9 @@
 						</span>
 					@enderror
 
-					<div class="mt-3 text-monospace">FAUX CODE <span class="font-italic small" style="color:silver;">optionnel</span></div>
+					<div class="mt-3 text-monospace">{{strtoupper(__('faux code'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
 					<div class="text-monospace text-muted small text-justify mb-1">
-						Vous pouvez ajouter de fausses lignes de code qui seront mélangées aux lignes de code du code ci-dessus mais qui seront considérées comme des lignes inutiles qui ne doivent pas être placées dans le code final.
+						{{__('Vous pouvez ajouter de fausses lignes de code qui seront mélangées aux lignes de code du code ci-dessus mais qui seront considérées comme des lignes inutiles qui ne doivent pas être placées dans le code final.')}}
 					</div>
 					<textarea name="fakecode" style="display:none;" id="fakecode"></textarea>
 					<div style="width:100%;margin:0px auto 0px auto;"><div id="editor_fakecode" style="border-radius:5px;">{{ old('fakecode') }}</div></div>

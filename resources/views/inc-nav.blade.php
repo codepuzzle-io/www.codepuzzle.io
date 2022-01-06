@@ -6,6 +6,9 @@
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
 				<span class="navbar-toggler-icon"></span>
 			</button>
+			<div class="text-monospace text-center">
+				{!! $lang_switch ?? '' !!}
+			</div>
 		</div>
 
 		<div class="col-md-6 text-center">
@@ -16,7 +19,9 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 
 				<!-- Left Side Of Navbar -->
-				<ul class="navbar-nav mr-auto"></ul>
+				<ul class="navbar-nav mr-auto">
+
+				</ul>
 
 				<!-- Right Side Of Navbar -->
 				<ul class="navbar-nav ml-auto">
@@ -24,11 +29,11 @@
 					<!-- Authentication Links -->
 					@guest
 						<li class="nav-item">
-							<a class="btn btn-outline-secondary btn-sm" style="font-size:80%;opacity:0.4;margin:2px 0px 0px 4px" href="{{ route('login') }}">se connecter</a>
+							<a class="btn btn-outline-secondary btn-sm" style="font-size:80%;opacity:0.4;margin:2px 0px 0px 4px" href="{{ route('login') }}">{{__('se connecter')}}</a>
 						</li>
 						@if (Route::has('register'))
 							<li class="nav-item">
-								<a class="btn btn-outline-secondary btn-sm " style="font-size:80%;opacity:0.4;margin:2px 0px 0px 4px" href="{{ route('register') }}">créer un compte</a>
+								<a class="btn btn-outline-secondary btn-sm " style="font-size:80%;opacity:0.4;margin:2px 0px 0px 4px" href="{{ route('register') }}">{{__('créer un compte')}}</a>
 							</li>
 						@endif
 					@else
@@ -41,7 +46,7 @@
 							<a class="btn btn-outline-secondary btn-sm" style="font-size:80%;opacity:0.4;margin:2px 0px 0px 4px" href="{{ route('logout') }}"
 							   onclick="event.preventDefault();
 											 document.getElementById('logout-form').submit();">
-								se déconnecter
+								{{__('se déconnecter')}}
 							</a>
 
 							<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
