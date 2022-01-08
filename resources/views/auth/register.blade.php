@@ -16,7 +16,7 @@
 					<h1>{{__('inscription')}}</h1>
 
 					<div class="card-body">
-						<form method="POST" action="{{ route('register', app()->getLocale()) }}">
+						<form method="POST" action="{{ route('register') }}">
 
 							@csrf
 

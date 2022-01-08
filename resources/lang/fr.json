@@ -48,7 +48,7 @@
     "donnees-personnelles": "donnees-personnelles",
 
     "se souvenir de moi": "se souvenir de moi",
-    "vous avez oublié votre mot de passe ?": "vous avez oublié votre mot de passe ?",    
+    "vous avez oublié votre mot de passe ?": "vous avez oublié votre mot de passe ?",
 
     "inscription": "inscription",
     "adresse courriel": "adresse courriel",
@@ -56,8 +56,20 @@
     "confirmation du mot de passe": "confirmation du mot de passe",
     "J autorise ce site à conserver les données transmises via ce formulaire. Ces données peuvent être supprimées à tout moment en sélectionnant \"supprimer ce compte\" dans la console.": "J'autorise ce site à conserver les données transmises via ce formulaire. Ces données peuvent être supprimées à tout moment en sélectionnant \"supprimer ce compte\" dans la console.",
 
-
-
+    "courriel de confirmation": "courriel de confirmation",
+    "Consultez votre boîte aux lettres": "Consultez votre boîte aux lettres",
+    "Un lien de vérification a été envoyé à l adresse courriel que vous avez indiquée lors de votre inscription.": "Un lien de vérification a été envoyé à l'adresse courriel que vous avez indiquée lors de votre inscription.",
+    "Adresse courriel indiquée lors de l inscription": "Adresse courriel indiquée lors de l'inscription",
+    "Vous allez recevoir dans quelques minutes un courriel de vérification. Ouvrez-le puis cliquez sur le lien pour valider votre inscription.": "Vous allez recevoir dans quelques minutes un courriel de vérification. Ouvrez-le puis cliquez sur le lien pour valider votre inscription.",
+    "Si le courriel n apparaît pas dans votre boîte de réception, vérifiez vos \"spams\".": "Si le courriel n'apparaît pas dans votre boîte de réception, vérifiez vos \"spams\".",
+    "Si vous ne l avez pas reçu après plusieurs minutes,": "Si vous ne l'avez pas reçu après plusieurs minutes,",
+    "cliquez ici": "cliquez ici",
+    "pour le renvoyer.": "pour le renvoyer.",
+    "Si vous avez commis une erreur lors de l inscription (adresse courriel erronée par exemple), complétez une": "Si vous avez commis une erreur lors de l'inscription (adresse courriel erronée par exemple), complétez une",
+    "nouvelle inscription": "nouvelle inscription",
+    "Si vous avez reçu le courriel de vérification, que vous avez cliqué sur le lien mais que vous arrivez tout de même sur cette page,": "Si vous avez reçu le courriel de vérification, que vous avez cliqué sur le lien mais que vous arrivez tout de même sur cette page,",
+    "pour vous connecter.": "pour vous connecter.",
+    "Si un problème persiste et vous empêche de vous connecter, vous pouvez écrire à": "Si un problème persiste et vous empêche de vous connecter, vous pouvez écrire à",
 
     "30 Days": "30 jours",
     "60 Days": "60 jours",
