@@ -4,7 +4,7 @@
 <head>
 	@include('inc-meta-puzzle')
     @include('inc-matomo')
-    <title>Code Puzzle | Puzzle {{ $jeton }}</title>
+    <title>{{ config('app.name') }} | Puzzle {{ $jeton }}</title>
 </head>
 
 <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">

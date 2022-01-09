@@ -9,6 +9,7 @@
     "RGPD": "GDPR",
     "données personnelles": "personal data",
 
+    "console": "dashboard",
     "nouveau puzzle": "new puzzle",
     "discussions": "discussions",
     "annonces": "announcements",
@@ -41,10 +42,16 @@
     "un correcteur automatique de code à utiliser avec prudence": "an automatic code checker to be used with caution",
     "Vous pouvez ajouter de fausses lignes de code qui seront mélangées aux lignes de code du code ci-dessus mais qui seront considérées comme des lignes inutiles qui ne doivent pas être placées dans le code final.": "You can add fake lines of code that will be mixed with the lines of code in the above code but will be treated as unnecessary lines that should not be placed in the final code.",
 
-
     "se-connecter": "login",
     "se-deconnecter": "logout",
     "creer-un-compte": "register",
+    "mot-de-passe": "password",
+    "courriel": "email",
+    "reinitialisation": "reset",
+    "confirmer": "confirm",
+    "verifier": "verify",
+    "renvoyer": "resend",
+
     "donnees-personnelles": "personal-data",
 
     "se souvenir de moi": "remember me",
@@ -70,6 +77,10 @@
     "Si vous avez reçu le courriel de vérification, que vous avez cliqué sur le lien mais que vous arrivez tout de même sur cette page,": "If you received the verification email, clicked on the link but still arrived on this page,",
     "pour vous connecter.": "to log in.",
     "Si un problème persiste et vous empêche de vous connecter, vous pouvez écrire à": "If a problem persists and prevents you from signing in, you can write to",
+
+    "Veuillez confirmer votre mot de passe avant de continuer": "Please confirm your password before continuing",
+    "Demande de réinitialisation du mot de passe": "Password reset request",
+    "Réinitialisation du mot de passe": "Reset password",
 
     "30 Days": "30 Days",
     "60 Days": "60 Days",

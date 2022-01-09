@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ConfirmPasswordController;
 use App\Http\Controllers\Auth\VerificationController;
 
@@ -43,9 +44,9 @@ Route::get('console/lang/{locale}', function ($locale){
 });
 
 
-// SETLOCALE & PREFIX BASED ON URL
-(in_array(request()->segment(1), ['en'])) ? app()->setLocale(request()->segment(1)) : app()->setLocale('fr');
-$lang = (in_array(request()->segment(1), ['en'])) ? request()->segment(1).'/' : '';
+// SETLOCALE & PREFIX BASED ON URL OR PREVIOUS URL
+(in_array(request()->segment(1), ['en']) OR strpos(url()->previous(), '/en/')) ? app()->setLocale('en') : app()->setLocale('fr');
+$lang = (in_array(request()->segment(1), ['en']) OR strpos(url()->previous(), '/en/')) ? 'en/' : '';
 
 
 // HOMEPAGE
@@ -81,38 +82,33 @@ Route::get($lang.__('creer-un-compte'), [RegisterController::class, 'showRegistr
 Route::post($lang.__('creer-un-compte'), [RegisterController::class, 'register']);
 
 // Password Reset Routes...
-Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
-Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+Route::get($lang.__('mot-de-passe').'/'.__('reinitialisation'), [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post($lang.__('mot-de-passe').'/'.__('courriel'), [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get($lang.__('mot-de-passe').'/'.__('reinitialisation').'/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post($lang.__('mot-de-passe').'/'.__('reinitialisation'), [ResetPasswordController::class, 'reset'])->name('password.update');
 
 // Password Confirmation Routes...
-Route::get('password/confirm', [ConfirmPasswordController::class, 'showConfirmForm'])->name('password.confirm');
-Route::post('password/confirm', [ConfirmPasswordController::class, 'confirm']);
+Route::get($lang.__('mot-de-passe').'/'.__('confirmer'), [ConfirmPasswordController::class, 'showConfirmForm'])->name('password.confirm');
+Route::post($lang.__('mot-de-passe').'/'.__('confirmer'), [ConfirmPasswordController::class, 'confirm']);
 
 // Email Verification Routes...
-Route::get('email/verify', [VerificationController::class, 'show'])->name('verification.notice');
-Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
-Route::post('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
+Route::get($lang.__('courriel').'/'.__('verifier'), [VerificationController::class, 'show'])->name('verification.notice');
+Route::get($lang.__('courriel').'/'.__('verifier').'/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
+Route::post($lang.__('courriel').'/'.__('renvoyer'), [VerificationController::class, 'resend'])->name('verification.resend');
 // ============================================================================
 
 
 // ============================================================================
 // CLEAR COOKIE
-Route::get('/direct-register', function(){
+Route::get($lang.'direct-'.__('creer-un-compte'), function(){
    Cookie::queue(Cookie::forget(strtolower(str_replace(' ', '_', config('app.name'))) . '_session'));
-   return redirect('/register');
-});
+   return redirect()->route('register');
+})->name('direct-register');
 
-Route::get('/direct-login', function(){
+Route::get($lang.'direct-'.__('se-connecter'), function(){
    Cookie::queue(Cookie::forget(strtolower(str_replace(' ', '_', config('app.name'))) . '_session'));
-   return redirect('/login');
-});
-
-Route::get('/direct-welcome', function(){
-   Cookie::queue(Cookie::forget(strtolower(str_replace(' ', '_', config('app.name'))) . '_session'));
-   return redirect('/');
-});
+   return redirect()->route('login');
+})->name('direct-login');
 // ============================================================================
 
 

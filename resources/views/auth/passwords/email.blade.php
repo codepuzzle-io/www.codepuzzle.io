@@ -3,7 +3,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
 	@include('inc-meta')
-    <title>{{ config('app.name', 'Laravel') }} | demande de réinitialisation du mot de passe</title>
+    <title>{{ config('app.name') }} | {{ __('Demande de réinitialisation du mot de passe') }}</title>
 </head>
 <body>
 
@@ -13,7 +13,7 @@
 		<div class="row justify-content-center">
 			<div class="col-md-8">
 				<div class="card mt-5 text-muted" style="background:none;border:none;">
-					<p><b>Demande de réinitialisation du mot de passe</b></p>
+					<p><b>{{ __('Demande de réinitialisation du mot de passe') }}</b></p>
 
 					<div class="card-body">
 						@if (session('status'))
@@ -26,7 +26,7 @@
 							@csrf
 
 							<div class="form-group row">
-								<label for="email" class="col-md-4 col-form-label text-md-right">adresse courriel</label>
+								<label for="email" class="col-md-4 col-form-label text-md-right">{{__('adresse courriel')}}</label>
 
 								<div class="col-md-6">
 									<input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autofocus />
@@ -41,7 +41,7 @@
 
 							<div class="form-group row mb-0">
 								<div class="col-md-6 offset-md-4">
-									<button type="submit" class="btn btn-warning"><i class="fas fa-check"></i></button>
+									<button type="submit" class="btn btn-primary"><i class="fas fa-check"></i></button>
 								</div>
 							</div>
 						</form>

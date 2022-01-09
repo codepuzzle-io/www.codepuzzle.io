@@ -3,7 +3,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
 	@include('inc-meta')
-    <title>{{ config('app.name', 'Laravel') }} | {{__('courriel de confirmation')}}</title>
+    <title>{{ config('app.name') }} | {{ ucfirst(__('courriel de confirmation')) }}</title>
 </head>
 <body>
 
@@ -37,10 +37,10 @@
 							</form>
 							</li>
 							<li class="mt-3">
-							{{__('Si vous avez commis une erreur lors de l inscription (adresse courriel erronée par exemple), complétez une')}} <a href="/direct-register" class="button text-center">{{__('nouvelle inscription')}}</a>.
+							{{__('Si vous avez commis une erreur lors de l inscription (adresse courriel erronée par exemple), complétez une')}} <a href="{{ route('direct-register') }}" class="button text-center">{{__('nouvelle inscription')}}</a>.
 							</li>
 							<li class="mt-3">
-							{{__('Si vous avez reçu le courriel de vérification, que vous avez cliqué sur le lien mais que vous arrivez tout de même sur cette page,')}} <a href="/direct-login" class="button text-center">{{__('cliquez ici')}}</a> {{__('pour vous connecter.')}}
+							{{__('Si vous avez reçu le courriel de vérification, que vous avez cliqué sur le lien mais que vous arrivez tout de même sur cette page,')}} <a href="{{ route('direct-login') }}" class="button text-center">{{__('cliquez ici')}}</a> {{__('pour vous connecter.')}}
 							</li>
 							<li class="mt-3">
 							{{__('Si un problème persiste et vous empêche de vous connecter, vous pouvez écrire à')}} <a href="mailto:contact@codepuzzle.io">contact@codepuzzle.io</a>.

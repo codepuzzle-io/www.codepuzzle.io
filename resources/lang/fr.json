@@ -9,7 +9,7 @@
     "RGPD": "RGPD",
     "données personnelles": "données personnelles",
 
-    "consolee": "dashboard",
+    "console": "console",
     "nouveau puzzle": "nouveau puzzle",
     "discussions": "discussions",
     "annonces": "annonces",
@@ -30,7 +30,7 @@
 
     "titre": "titre",
     "Visible par vous seulement": "Visible par vous seulement",
-    "'sous-titre": "'sous-titre",
+    "sous-titre": "'sous-titre",
     "optionnel": "optionnel",
     "titre élève": "titre élève",
     "Visible par l élève": "Visible par l'élève",
@@ -45,6 +45,13 @@
     "se-connecter": "se-connecter",
     "se-deconnecter": "se-deconnecter",
     "creer-un-compte": "creer-un-compte",
+    "mot-de-passe": "mot-de-passe",
+    "courriel": "courriel",
+    "reinitialisation": "reinitialisation",
+    "confirmer": "confirmer",
+    "verifier": "verifier",
+    "renvoyer": "renvoyer",
+
     "donnees-personnelles": "donnees-personnelles",
 
     "se souvenir de moi": "se souvenir de moi",
@@ -70,6 +77,11 @@
     "Si vous avez reçu le courriel de vérification, que vous avez cliqué sur le lien mais que vous arrivez tout de même sur cette page,": "Si vous avez reçu le courriel de vérification, que vous avez cliqué sur le lien mais que vous arrivez tout de même sur cette page,",
     "pour vous connecter.": "pour vous connecter.",
     "Si un problème persiste et vous empêche de vous connecter, vous pouvez écrire à": "Si un problème persiste et vous empêche de vous connecter, vous pouvez écrire à",
+
+    "Veuillez confirmer votre mot de passe avant de continuer": "Veuillez confirmer votre mot de passe avant de continuer",
+    "Demande de réinitialisation du mot de passe": "Demande de réinitialisation du mot de passe",
+    "Réinitialisation du mot de passe": "Réinitialisation du mot de passe",
+
 
     "30 Days": "30 jours",
     "60 Days": "60 jours",

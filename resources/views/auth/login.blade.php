@@ -3,7 +3,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
 	@include('inc-meta')
-    <title>{{ config('app.name', 'Laravel') }} | se connecter</title>
+    <title>{{ config('app.name') }} | {{ ucfirst(__('se connecter')) }}</title>
 </head>
 <body>
 

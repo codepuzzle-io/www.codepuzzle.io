@@ -3,7 +3,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
 	@include('inc-meta')
-    <title>Code Puzzle | Inscription</title>
+    <title>{{ config('app.name') }} | {{ ucfirst(__('inscription')) }}</title>
 </head>
 <body>
 

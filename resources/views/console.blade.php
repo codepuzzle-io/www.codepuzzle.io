@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     @include('inc-meta')
-    <title>Code Puzzle | Console</title>
+    <title>{{ config('app.name') }} | {{ ucfirst(__('console')) }}</title>
 </head>
 <body>
     @php

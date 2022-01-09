@@ -3,7 +3,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
 	@include('inc-meta')
-    <title>{{ config('app.name', 'Laravel') }} | confirmation du mot de passe</title>
+    <title>{{ config('app.name') }} | {{ ucfirst(__('confirmation du mot de passe')) }}</title>
 </head>
 <body>
 
@@ -13,16 +13,16 @@
 		<div class="row justify-content-center">
 			<div class="col-md-8">
 				<div class="card">
-					<div class="card-header">Confirmez votre mot de passe</div>
+					<div class="card-header">{{ ucfirst(__('confirmation du mot de passe')) }}</div>
 
 					<div class="card-body">
-						Veuillez confirmer votre mot de passe avant de continuer
+						{{__('Veuillez confirmer votre mot de passe avant de continuer')}}
 
 						<form method="POST" action="{{ route('password.confirm') }}">
 							@csrf
 
 							<div class="form-group row">
-								<label for="password" class="col-md-4 col-form-label text-md-right">mot de passe</label>
+								<label for="password" class="col-md-4 col-form-label text-md-right">{{__(mot de passe)}}</label>
 
 								<div class="col-md-6">
 									<input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" />
@@ -40,7 +40,7 @@
 									<button type="submit" class="btn btn-warning"><i class="fas fa-check"></i></button>
 
 									@if (Route::has('password.request'))
-										<a class="btn btn-link" href="{{ route('password.request') }}">Vous avez oublié votre mot de passe ?</a>
+										<a class="btn btn-link" href="{{ route('password.request') }}">{{__('vous avez oublié votre mot de passe ?')}}</a>
 									@endif
 								</div>
 							</div>

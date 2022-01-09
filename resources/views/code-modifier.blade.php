@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 	@include('inc-meta')
-    <title>Code Puzzle | Modifier</title>
+    <title>{{ config('app.name') }} | {{ ucfirst(__('modifier')) }}</title>
 </head>
 <body>
 

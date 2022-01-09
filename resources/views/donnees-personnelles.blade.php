@@ -7,7 +7,7 @@ $github_document = github_import('codepuzzle-io/www.codepuzzle.io/contents/donne
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
 	@include('inc-meta')
-    <title>Politique de protection des données</title>
+    <title>{{ config('app.name') }} | Politique de protection des données</title>
 </head>
 <body data-spy="scroll" data-target="#navbar-scrollspy" data-offset="20">
 

@@ -3,7 +3,7 @@
 <head>
 	@include('inc-meta')
 	@include('inc-matomo')
-    <title>CODE PUZZLE</title>
+    <title>{{ strtoupper(config('app.name')) }} |</title>
 </head>
 <body>
 	@php
