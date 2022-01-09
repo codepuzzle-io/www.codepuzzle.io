@@ -116,7 +116,7 @@ Route::get($lang.'direct-'.__('se-connecter'), function(){
 // == CONSOLE
 // ============================================================================
 
-Route::get('/console', [App\Http\Controllers\ConsoleController::class, 'console_get'])->name('console_get');
+Route::get('/console', [App\Http\Controllers\ConsoleController::class, 'console_get'])->name('console');
 
 // code creer
 Route::get('/console/code-creer', [App\Http\Controllers\ConsoleController::class, 'code_creer_get'])->name('code-creer-get');

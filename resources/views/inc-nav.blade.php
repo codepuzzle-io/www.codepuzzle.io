@@ -38,8 +38,8 @@
 						@endif
 					@else
 						<li class="nav-item">
-							<a class="btn btn-outline-secondary btn-sm" style="font-size:80%;opacity:0.4;margin:2px 0px 0px 4px" href="{{ url('/console') }}">
-								console
+							<a class="btn btn-outline-secondary btn-sm" style="font-size:80%;opacity:0.4;margin:2px 0px 0px 4px" href="{{ route('console') }}">
+								{{__('console')}}
 							</a>
 						</li>
 						<li class="nav-item">
