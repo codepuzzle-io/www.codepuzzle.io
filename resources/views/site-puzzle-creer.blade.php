@@ -1,8 +1,13 @@
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">
 <head>
+	@php
+		$description = ucfirst(__('créer un nouveau puzzle'));
+		$description_og = '| ' . ucfirst(__('créer un nouveau puzzle'));
+	@endphp
 	@include('inc-meta')
-    <title>{{ config('app.name') }} | {{ ucfirst(__('nouveau puzzle')) }}</title>
+	@include('inc-matomo')
+    <title>{{ config('app.name') }} | {{ ucfirst(__('créer un nouveau puzzle')) }}</title>
 </head>
 <body>
 

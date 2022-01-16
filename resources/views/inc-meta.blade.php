@@ -19,10 +19,13 @@
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 
+<!-- Description -->
+<meta name="description" content="CODE PUZZLE | {{ $description ?? '' }}" />
+
 <!-- Open Graph -->
 <meta property="og:title" content="Code Puzzle" />
 <meta property="og:type" content="website" />
-<meta property="og:description" content="Générateur de 'puzzles de Parsons'" />
+<meta property="og:description" content="{{__('Générateur et gestionnaire de puzzles de Parsons')}} {{ $description_og ?? '' }}" />
 <meta property="og:url" content="https://www.codepuzzle.io" />
 <meta property="og:image" content="{{ asset('img/open-graph.png') }}" />
 <meta property="og:image:alt" content="Code Puzzle" />
@@ -35,5 +38,5 @@
 <meta name="twitter:site" content="">
 <meta name="twitter:creator" content="">
 <meta name="twitter:title" content="Code Puzzle">
-<meta name="twitter:description" content="Générateur de 'puzzles de Parsons'">
+<meta name="twitter:description" content="{{__('Générateur et gestionnaire de puzzles de Parsons')}} {{ $description_og ?? '' }}">
 <meta name="twitter:image" content="{{ asset('img/open-graph.png') }}">

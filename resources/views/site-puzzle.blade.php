@@ -1,8 +1,13 @@
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">
 <head>
+    @php
+        $description = 'Puzzle Console - ' . strtoupper($jeton);
+        $description_og = '| Puzzle Console - ' . strtoupper($jeton);
+    @endphp
     @include('inc-meta')
-    <title>{{ config('app.name') }} | Puzzle {{$jeton}}</title>
+	@include('inc-matomo')
+    <title>{{ config('app.name') }} | Puzzle Console - {{strtoupper($jeton)}}</title>
 </head>
 <body>
 

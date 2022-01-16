@@ -1,9 +1,13 @@
 @include('inc-top')
 <html lang="{{ app()->getLocale() }}">
 <head>
+	@php
+		$description = __('Générateur et gestionnaire de puzzles de Parsons');
+		$description_og = '';
+	@endphp
 	@include('inc-meta')
 	@include('inc-matomo')
-    <title>{{ strtoupper(config('app.name')) }}</title>
+    <title>{{ strtoupper(config('app.name')) }} | {{__('Générateur et gestionnaire de puzzles de Parsons')}}</title>
 </head>
 <body>
 	@php
