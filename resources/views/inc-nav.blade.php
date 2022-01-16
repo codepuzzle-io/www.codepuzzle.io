@@ -12,7 +12,7 @@
 		</div>
 
 		<div class="col-md-6 text-center">
-			<a class="navbar-brand m-1" href="{{ url('/') }}"><img src="{{ asset('img/codepuzzle.png') }}" height="20" /></a><sup class="text-monospace" style="color:#d35400;font-size:70%;">beta</sup>
+			<h1><a class="navbar-brand m-1" href="{{ url('/') }}"><img src="{{ asset('img/codepuzzle.png') }}" height="20" alt="CODE PUZZLE" /></a></h1>
 		</div>
 
 		<div class="col-md-3">
@@ -29,21 +29,23 @@
 					<!-- Authentication Links -->
 					@guest
 						<li class="nav-item">
-							<a class="btn btn-outline-secondary btn-sm" style="font-size:80%;opacity:0.4;margin:2px 0px 0px 4px" href="{{ route('login') }}">{{__('se connecter')}}</a>
+							<a class="btn btn-outline-secondary btn-xs" style="opacity:0.4;margin:2px 0px 0px 4px" href="{{ route('login') }}">{{__('se connecter')}}</a>
 						</li>
+						<!--
 						@if (Route::has('register'))
 							<li class="nav-item">
 								<a class="btn btn-outline-secondary btn-sm " style="font-size:80%;opacity:0.4;margin:2px 0px 0px 4px" href="{{ route('register') }}">{{__('créer un compte')}}</a>
 							</li>
 						@endif
+					-->
 					@else
 						<li class="nav-item">
-							<a class="btn btn-outline-secondary btn-sm" style="font-size:80%;opacity:0.4;margin:2px 0px 0px 4px" href="{{ route('console') }}">
+							<a class="btn btn-outline-secondary btn-xs" style="opacity:0.4;margin:2px 0px 0px 4px" href="{{ route('console') }}">
 								{{__('console')}}
 							</a>
 						</li>
 						<li class="nav-item">
-							<a class="btn btn-outline-secondary btn-sm" style="font-size:80%;opacity:0.4;margin:2px 0px 0px 4px" href="{{ route('logout') }}"
+							<a class="btn btn-outline-secondary btn-xs" style="opacity:0.4;margin:2px 0px 0px 4px" href="{{ route('logout') }}"
 							   onclick="event.preventDefault();
 											 document.getElementById('logout-form').submit();">
 								{{__('se déconnecter')}}

@@ -1,5 +1,9 @@
 {
-    "Générateur de puzzles de Parsons": "\"<b style='color:#4cbf56'>Parsons puzzles</b>\" generator",
+    "Générateur de puzzles de Parsons": "\"<b style='color:#4cbf56'>Parsons puzzles</b>\" generator and manager",
+    "wikipedia_parsons": "Parsons problems are a form of an objective assessment in which respondents are asked to select from a selection of code fragments, some subset of which comprise the problem solution. The Parsons problem format is used in the learning and teaching of computer programming. Parson's programming puzzles became known as Parsons puzzles and then Parsons problems. Parsons problems have become popular as they are easier to grade than written code while capturing the students problem solving ability shown in a code creation process.",
+    "créer un puzzle": "create a puzzle",
+    "créer un nouveau puzzle": "create a new puzzle",    
+    "pour créer, sauvegarder, modifier et partager des puzzles": "to create, save, modify and share puzzles",
     "exemple 1": "example 1",
     "exemple 2": "example 2",
     "console": "dashboard",
@@ -45,6 +49,7 @@
     "se-connecter": "login",
     "se-deconnecter": "logout",
     "creer-un-compte": "register",
+    "creer-un-puzzle": "create-a-puzzle",
     "mot-de-passe": "password",
     "courriel": "email",
     "reinitialisation": "reset",

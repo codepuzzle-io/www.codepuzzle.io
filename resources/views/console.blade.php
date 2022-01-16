@@ -70,7 +70,7 @@
 
                         <div class="row mt-1">
                             <div class="col-md-12 text-monospace small text-muted">
-                                <i class="fas fa-share-alt ml-1 mr-1" style="cursor:help" data-toggle="tooltip" data-placement="top" title="{{__('lien à partager avec les élèves')}}"></i> <a href="p/{{ strtoupper($code->jeton) }}" target="_blank" data-toggle="tooltip" data-placement="top" title="{{__('ouvrir ce puzzle dans un nouvel onglet pour le tester')}}">https://www.codepuzzle.io/p/{{ strtoupper($code->jeton) }}</a>
+                                <i class="fas fa-share-alt ml-1 mr-1" style="cursor:help" data-toggle="tooltip" data-placement="top" title="{{__('lien à partager avec les élèves')}}"></i> <a href="/p/{{ strtoupper($code->jeton) }}" target="_blank" data-toggle="tooltip" data-placement="top" title="{{__('ouvrir ce puzzle dans un nouvel onglet pour le tester')}}">https://www.codepuzzle.io/p/{{ strtoupper($code->jeton) }}</a>
                             </div>
                         </div>
 

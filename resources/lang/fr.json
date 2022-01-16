@@ -1,5 +1,9 @@
 {
-    "Générateur de puzzles de Parsons": "Générateur de \"<b style='color:#4cbf56'>puzzles de Parsons</b>\"",
+    "Générateur de puzzles de Parsons": "Générateur et gestionnaire de \"<b style='color:#4cbf56'>puzzles de Parsons</b>\"",
+    "wikipedia_parsons": "Les problèmes de Parsons sont une forme d'évaluation objective dans laquelle les répondants sont invités à choisir parmi une sélection de fragments de code, dont certains sous-ensembles constituent la solution du problème. Le format de problème Parsons est utilisé dans l'apprentissage et l'enseignement de la programmation informatique. Les énigmes de programmation de Parson sont devenues connues sous le nom d'énigmes de Parsons, puis de problèmes de Parsons. Les problèmes de Parsons sont devenus populaires car ils sont plus faciles à noter que le code écrit tout en capturant la capacité de résolution de problèmes des étudiants montrée dans un processus de création de code.",
+    "créer un puzzle": "créer un puzzle",
+    "créer un nouveau puzzle": "créer un nouveau puzzle",    
+    "pour créer, sauvegarder, modifier et partager des puzzles": "pour créer, sauvegarder, modifier et partager des puzzles",
     "exemple 1": "exemple 1",
     "exemple 2": "exemple 2",
     "console": "console",
@@ -45,6 +49,7 @@
     "se-connecter": "se-connecter",
     "se-deconnecter": "se-deconnecter",
     "creer-un-compte": "creer-un-compte",
+    "creer-un-puzzle": "creer-un-puzzle",
     "mot-de-passe": "mot-de-passe",
     "courriel": "courriel",
     "reinitialisation": "reinitialisation",

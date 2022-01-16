@@ -58,19 +58,32 @@ Route::view($lang.__('donnees-personnelles'), 'donnees-personnelles')->name('don
 
 // ============================================================================
 // PUZZLES
+
+// code creer
+Route::get($lang.__('creer-un-puzzle'), [App\Http\Controllers\SiteController::class, 'puzzle_creer_get'])->name('site-puzzle-creer-get');
+Route::post($lang.__('creer-un-puzzle'), [App\Http\Controllers\SiteController::class, 'puzzle_creer_post'])->name('site-puzzle-creer-post');
+Route::get($lang.'puzzle/{jeton}', function($jeton) {
+    return view("site-puzzle", ["jeton"=>$jeton]);
+})->name('site-puzzle');
+
+
+// affichage
 Route::get('/p/{jeton}', function($jeton) {
     return view("puzzle", ["jeton"=>$jeton]);
 })->name('puzzle');
 
-// PUZZLE IFRAME
+// affichage iframe
 Route::get('/iframe/{jeton}', function($jeton) {
     return view("puzzle-iframe", ["jeton"=>$jeton]);
 })->name('puzzle-iframe');
+
 // ============================================================================
+
 
 // ============================================================================
 // AUTH ROUTES
 // Login Routes...
+
 Route::get($lang.__('se-connecter'), [LoginController::class, 'showLoginForm'])->name('login');
 Route::post($lang.__('se-connecter'), [LoginController::class, 'login']);
 
@@ -95,11 +108,13 @@ Route::post($lang.__('mot-de-passe').'/'.__('confirmer'), [ConfirmPasswordContro
 Route::get($lang.__('courriel').'/'.__('verifier'), [VerificationController::class, 'show'])->name('verification.notice');
 Route::get($lang.__('courriel').'/'.__('verifier').'/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
 Route::post($lang.__('courriel').'/'.__('renvoyer'), [VerificationController::class, 'resend'])->name('verification.resend');
+
 // ============================================================================
 
 
 // ============================================================================
 // CLEAR COOKIE
+
 Route::get($lang.'direct-'.__('creer-un-compte'), function(){
    Cookie::queue(Cookie::forget(strtolower(str_replace(' ', '_', config('app.name'))) . '_session'));
    return redirect()->route('register');
@@ -109,6 +124,7 @@ Route::get($lang.'direct-'.__('se-connecter'), function(){
    Cookie::queue(Cookie::forget(strtolower(str_replace(' ', '_', config('app.name'))) . '_session'));
    return redirect()->route('login');
 })->name('direct-login');
+
 // ============================================================================
 
 

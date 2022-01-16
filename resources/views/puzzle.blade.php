@@ -10,7 +10,16 @@
 <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 
     <?php
-    $code = App\Models\Code::where('jeton', $jeton)->first();
+	if (App\Models\Code::where('jeton', $jeton)->first() OR  App\Models\Site_puzzle::where('jeton', $jeton)->first()) {
+		if (App\Models\Code::where('jeton', $jeton)->first()) $code = App\Models\Code::where('jeton', $jeton)->first();
+		if (App\Models\Site_puzzle::where('jeton', $jeton)->first()) $code = App\Models\Site_puzzle::where('jeton', $jeton)->first();
+	} else {
+		echo '<div class="text-center text-muted mt-3" style="font-size:200px;"><i class="fas fa-skull-crossbones"></i></div>';
+		echo '<div class="text-center" style="font-size:40px;"><a href="/"><i class="fas fa-arrow-left"></i></a></div>';
+		echo '</body></html>';
+		exit;
+	}
+
 	$source = addcslashes($code->code, '\"');
 	$source = preg_replace("/\r?\n|\r/", '\n', $source);
 	$ipynb = '{"cells":[{"metadata":{"trusted":true},"cell_type":"code","source":"' . $source . '","execution_count":null,"outputs":[]}],"metadata":{"celltoolbar":"Format de la Cellule Texte Brut","colab":{"name":"python4tp.ipynb","provenance":[],"toc_visible":true},"kernelspec":{"display_name":"Python 3","language":"python","name":"python3"},"toc":{"base_numbering":"0","nav_menu":{"height":"369px","width":"618.333px"},"number_sections":true,"sideBar":true,"skip_h1_title":false,"title_cell":"Table des Matières","title_sidebar":"Sommaire","toc_cell":true,"toc_position":{"height":"calc(100% - 180px)","left":"10px","top":"150px","width":"165px"},"toc_section_display":true,"toc_window_display":true}},"nbformat":4,"nbformat_minor":2}';
@@ -19,11 +28,7 @@
 
     <div class="container">
 
-		<div class="row mt-4 mb-4">
-			<div class="col-md-12 text-center">
-				<a href="/" target="_blank" class="m-1"><img src="{{ asset('img/codepuzzle.png') }}" height="20" /></a><sup class="text-monospace" style="color:#d35400;font-size:70%;">beta</sup>
-			</div>
-		</div><!-- row -->
+		<h1 class="mt-2 mb-5 text-center"><a class="navbar-brand m-1" href="{{ url('/') }}"><img src="{{ asset('img/codepuzzle.png') }}" height="20" alt="CODE PUZZLE" /></a></h1>
 
         @if ($code->titre_eleve !== NULL OR $code->consignes_eleve !== NULL)
         <div class="row">
