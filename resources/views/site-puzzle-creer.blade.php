@@ -6,7 +6,6 @@
 		$description_og = '| ' . ucfirst(__('créer un nouveau puzzle'));
 	@endphp
 	@include('inc-meta')
-	@include('inc-matomo')
     <title>{{ config('app.name') }} | {{ ucfirst(__('créer un nouveau puzzle')) }}</title>
 </head>
 <body>

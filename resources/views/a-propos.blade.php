@@ -6,7 +6,6 @@
 		$description_og = '| ' . ucfirst(__('à propos'));
 	@endphp
 	@include('inc-meta')
-	@include('inc-matomo')
     <title>{{ strtoupper(config('app.name')) }} | {{ ucfirst(__('à propos')) }}</title>
 </head>
 <body>

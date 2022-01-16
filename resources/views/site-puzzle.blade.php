@@ -6,7 +6,6 @@
         $description_og = '| Puzzle Console - ' . strtoupper($jeton);
     @endphp
     @include('inc-meta')
-	@include('inc-matomo')
     <title>{{ config('app.name') }} | Puzzle Console - {{strtoupper($jeton)}}</title>
 </head>
 <body>

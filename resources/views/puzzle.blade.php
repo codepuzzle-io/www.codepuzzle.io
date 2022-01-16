@@ -26,7 +26,6 @@ app()->setLocale($code->lang)
         $description_og = '| Puzzle - ' . strtoupper($jeton);
     @endphp
 	@include('inc-meta-puzzle')
-    @include('inc-matomo')
     <title>{{ config('app.name') }} | Puzzle - {{ $jeton }}</title>
 </head>
 
@@ -64,19 +63,21 @@ app()->setLocale($code->lang)
             <div class="col-md-6 offset-md-3 text-center" style="position:relative;height:30px;">
 
 				<!-- bouton reinitialiser -->
-				<a id="reinitialiser" href="#" style="position:absolute;left:25px;top:10px;" class="text-muted" data-bs-toggle="tooltip" data-bs-placement="top"  data-bs-trigger="hover" title="réinitialiser"><i class="fas fa-sync-alt"></i></a>
+				<a id="reinitialiser" href="#" style="position:absolute;left:25px;top:10px;" class="text-muted" data-bs-toggle="tooltip" data-bs-placement="top"  data-bs-trigger="hover" title="{{__('réinitialiser')}}"><i class="fas fa-sync-alt"></i></a>
 
 				<!-- bouton verifier -->
-                <button id="feedbackLink" type="button" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="vérifier" style="display:inline"><i class="fas fa-check"></i></button>
+                <button id="feedbackLink" type="button" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="{{__('vérifier')}}" style="display:inline"><i class="fas fa-check"></i></button>
 
 				<!-- bouton copier -->
-                <span id="copyLink" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="éditer la cellule pour copier le code" style="display:none"></span>
+                <span id="copyLink" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="{{__('éditer la cellule pour copier le code')}}" style="display:none"></span>
 
-				<!-- bouton basthon -->
-                <span id="basthon" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="exécuter ce code avec Basthon" style="display:none"></span>
+				@if($code->lang == 'fr')
+					<!-- bouton basthon -->
+                	<span id="basthon" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="exécuter ce code avec Basthon" style="display:none"></span>
+				@endif
 
 				<!-- bouton kaggle -->
-                <span id="kaggle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="exécuter ce code avec Kaggle" style="display:none"></span>
+                <span id="kaggle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="{{__('exécuter ce code avec Kaggle')}}" style="display:none"></span>
 
             </div>
         </div>

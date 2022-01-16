@@ -62,3 +62,5 @@
 <meta name="twitter:title" content="Code Puzzle">
 <meta name="twitter:description" content="{{__('Générateur et gestionnaire de puzzles de Parsons')}} {{ $description_og ?? '' }}">
 <meta name="twitter:image" content="{{ asset('img/open-graph.png') }}">
+
+@include('inc-matomo')

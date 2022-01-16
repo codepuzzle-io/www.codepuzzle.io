@@ -4,7 +4,7 @@ $github_document = github_import('codepuzzle-io/www.codepuzzle.io/contents/donne
 ?>
 @include('inc-top')
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ app()->getLocale() }}">
 <head>
 	@include('inc-meta')
     <title>{{ config('app.name') }} | Politique de protection des données</title>

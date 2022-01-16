@@ -26,7 +26,6 @@ app()->setLocale($code->lang)
         $description_og = '| Puzzle - ' . strtoupper($jeton);
     @endphp
 	@include('inc-meta-puzzle')
-    @include('inc-matomo')
     <title>{{ config('app.name') }} | Puzzle - {{ $jeton }}</title>
 </head>
 
