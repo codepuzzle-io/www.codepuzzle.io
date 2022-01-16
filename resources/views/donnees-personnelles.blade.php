@@ -6,6 +6,10 @@ $github_document = github_import('codepuzzle-io/www.codepuzzle.io/contents/donne
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">
 <head>
+	@php
+		$description = 'Politique de protection des données';
+		$description_og = '| Politique de protection des données';
+	@endphp
 	@include('inc-meta')
     <title>{{ config('app.name') }} | Politique de protection des données</title>
 </head>

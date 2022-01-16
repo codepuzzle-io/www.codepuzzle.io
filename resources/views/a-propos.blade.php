@@ -2,7 +2,7 @@
 <html lang="{{ app()->getLocale() }}">
 <head>
 	@php
-		$description = __('Générateur et gestionnaire de puzzles de Parsons') . ' | ' . ucfirst(__('à propos'));
+		$description = ucfirst(__('à propos'));
 		$description_og = '| ' . ucfirst(__('à propos'));
 	@endphp
 	@include('inc-meta')
