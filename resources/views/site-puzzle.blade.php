@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="fr">
+<html lang="{{ app()->getLocale() }}">
 <head>
     @include('inc-meta')
     <title>{{ config('app.name') }} | Puzzle {{$jeton}}</title>

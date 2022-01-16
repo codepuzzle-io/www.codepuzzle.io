@@ -1,10 +1,14 @@
 <!doctype html>
-<html lang="fr">
+<html lang="{{ app()->getLocale() }}">
 <head>
 	@include('inc-meta')
     <title>{{ config('app.name') }} | {{ ucfirst(__('nouveau puzzle')) }}</title>
 </head>
 <body>
+
+	<?php
+	$lang = (app()->getLocale() == 'fr') ? '/':'/en';
+	?>
 
 	@include('inc-nav')
 
@@ -88,7 +92,7 @@
 		<div class="row">
 
 			<div class="col-md-2 text-center pt-4">
-				<a class="btn btn-light btn-sm" href="{{ url()->previous() }}" role="button"><i class="fas fa-arrow-left"></i></a>
+				<a class="btn btn-light btn-sm" href="{{ $lang }}" role="button"><i class="fas fa-arrow-left"></i></a>
 			</div>
 
 			<div class="col-md-9">

@@ -63,6 +63,14 @@ h3 {
 	color: #3490dc;
 }
 
+.a-propos {
+    color:#c0c5c9;
+}
+
+.a-propos:hover {
+    color:#4cbf56;
+}
+
 .wikipedia {
     background-color:white;
     color:#2c3e50;
@@ -123,9 +131,6 @@ h3 {
     /*box-shadow: 0 0 0 0.25rem rgb(49 132 253 / 50%);*/
     box-shadow: none;
 }
-
-
-
 
 
 /* BOUTON LIGHT */
@@ -463,8 +468,8 @@ svg {
 
 .btn-success {
     color: #fff;
-    background-color: #79c824;
-    border-color: #79c824;
+    background-color: #4cbf56;
+    border-color: #4cbf56;
 }
 
 .btn-success:hover {

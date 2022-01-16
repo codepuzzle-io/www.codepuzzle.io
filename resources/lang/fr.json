@@ -1,8 +1,8 @@
 {
-    "Générateur de puzzles de Parsons": "Générateur et gestionnaire de \"<b style='color:#4cbf56'>puzzles de Parsons</b>\"",
-    "wikipedia_parsons": "Les problèmes de Parsons sont une forme d'évaluation objective dans laquelle les répondants sont invités à choisir parmi une sélection de fragments de code, dont certains sous-ensembles constituent la solution du problème. Le format de problème Parsons est utilisé dans l'apprentissage et l'enseignement de la programmation informatique. Les énigmes de programmation de Parson sont devenues connues sous le nom d'énigmes de Parsons, puis de problèmes de Parsons. Les problèmes de Parsons sont devenus populaires car ils sont plus faciles à noter que le code écrit tout en capturant la capacité de résolution de problèmes des étudiants montrée dans un processus de création de code.",
+    "Générateur de puzzles de Parsons": "Générateur et gestionnaire de \"<b style='color:#4cbf56'>puzzles de Parsons</b>\"<sup><a href=':link' class='a-propos ml-1'><i class='fas fa-question-circle'></i></a></sup>",
+    "wikipedia_parsons": "Les problèmes de Parsons sont une forme d'évaluation objective dans laquelle les répondants sont invités à choisir parmi une sélection de fragments de code, dont certains sous-ensembles constituent la solution du problème. Le format de problème Parsons est utilisé dans l'apprentissage et l'enseignement de la programmation informatique. Les puzzles de programmation de Parson sont devenues connues sous le nom de puzzles de Parsons, puis de problèmes de Parsons. Les problèmes de Parsons sont devenus populaires car ils sont plus faciles à noter que le code écrit tout en prenant en compte la capacité de résolution de problèmes des étudiants montrée dans un processus de création de code.",
     "créer un puzzle": "créer un puzzle",
-    "créer un nouveau puzzle": "créer un nouveau puzzle",    
+    "créer un nouveau puzzle": "créer un nouveau puzzle",
     "pour créer, sauvegarder, modifier et partager des puzzles": "pour créer, sauvegarder, modifier et partager des puzzles",
     "exemple 1": "exemple 1",
     "exemple 2": "exemple 2",
@@ -11,6 +11,8 @@
     "se déconnecter": "se déconnecter",
     "créer un compte": "créer un compte",
     "RGPD": "RGPD",
+    "rgpd_popup": "Ce site n'utilise que des 'cookies' nécessaires au fonctionnement du site.<br />Ils permettent de gérer la navigation et d'éviter les attaques extérieures par injection de code malicieux via un formulaire.<br />Ces 'cookies' ne contiennent aucune donnée personnelle et ils ont une durée de vie de trois heures. Ces 'cookies' sont conformes au RGPD et <a href='https://www.cnil.fr/fr/cookies-traceurs-que-dit-la-loi' target='_blank'>ne nécessitent pas de consentement de la part de l'utilisateur</a>.",
+    "à propos": "à propos",
     "données personnelles": "données personnelles",
 
     "console": "console",
@@ -57,6 +59,7 @@
     "verifier": "verifier",
     "renvoyer": "renvoyer",
 
+    "a-propos": "a-propos",
     "donnees-personnelles": "donnees-personnelles",
 
     "se souvenir de moi": "se souvenir de moi",

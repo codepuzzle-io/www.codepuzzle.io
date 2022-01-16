@@ -49,8 +49,11 @@ Route::get('console/lang/{locale}', function ($locale){
 $lang = (in_array(request()->segment(1), ['en']) OR strpos(url()->previous(), '/en/')) ? 'en/' : '';
 
 
-// HOMEPAGE
-Route::view($lang, 'welcome');
+// ACCUEIL
+Route::view($lang, 'welcome')->name('home');
+
+// A PROPOS
+Route::view($lang.__('a-propos'), 'a-propos')->name('about');
 
 // DONNEE PERSONNELLES
 Route::view($lang.__('donnees-personnelles'), 'donnees-personnelles')->name('donnees-personnelles');

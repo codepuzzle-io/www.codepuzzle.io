@@ -1,8 +1,8 @@
 {
-    "Générateur de puzzles de Parsons": "\"<b style='color:#4cbf56'>Parsons puzzles</b>\" generator and manager",
+    "Générateur de puzzles de Parsons": "\"<b style='color:#4cbf56'>Parsons puzzles</b>\"<sup><a href=':link' class='a-propos ml-1'><i class='fas fa-question-circle'></i></a></sup> generator and manager",
     "wikipedia_parsons": "Parsons problems are a form of an objective assessment in which respondents are asked to select from a selection of code fragments, some subset of which comprise the problem solution. The Parsons problem format is used in the learning and teaching of computer programming. Parson's programming puzzles became known as Parsons puzzles and then Parsons problems. Parsons problems have become popular as they are easier to grade than written code while capturing the students problem solving ability shown in a code creation process.",
     "créer un puzzle": "create a puzzle",
-    "créer un nouveau puzzle": "create a new puzzle",    
+    "créer un nouveau puzzle": "create a new puzzle",
     "pour créer, sauvegarder, modifier et partager des puzzles": "to create, save, modify and share puzzles",
     "exemple 1": "example 1",
     "exemple 2": "example 2",
@@ -11,6 +11,8 @@
     "se déconnecter": "logout",
     "créer un compte": "register",
     "RGPD": "GDPR",
+    "rgpd_popup": "This site only uses cookies that are required to enable core website functionality.<br />They allow navigation to be managed and to prevent external attacks by injecting malicious code via a form.<br />These cookies do not contain any personal data and they have a lifespan of three hours. These cookies comply with the GDPR and <a href='https://www.cnil.fr/fr/cookies-traceurs-que-dit-la-loi' target='_blank'> do not require the consent of the user</a>.",
+    "à propos": "about",
     "données personnelles": "personal data",
 
     "console": "dashboard",
@@ -57,6 +59,7 @@
     "verifier": "verify",
     "renvoyer": "resend",
 
+    "a-propos": "about",
     "donnees-personnelles": "personal-data",
 
     "se souvenir de moi": "remember me",

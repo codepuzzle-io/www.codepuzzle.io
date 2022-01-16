@@ -11,8 +11,12 @@
 			</div>
 		</div>
 
+		@php
+		$lang = (app()->getLocale() == 'fr') ? '/':'/en';
+		@endphp
+
 		<div class="col-md-6 text-center">
-			<h1><a class="navbar-brand m-1" href="{{ url('/') }}"><img src="{{ asset('img/codepuzzle.png') }}" height="20" alt="CODE PUZZLE" /></a></h1>
+			<h1><a class="navbar-brand m-1" href="{{ $lang }}"><img src="{{ asset('img/codepuzzle.png') }}" height="20" alt="CODE PUZZLE" /></a></h1>
 		</div>
 
 		<div class="col-md-3">
