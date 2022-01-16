@@ -152,6 +152,8 @@
 
                     <input type="hidden" name="code_id" value="{{ $code_id }}">
 
+					<input id="lang" type="hidden" name="lang" value="{{app()->getLocale()}}" />
+
 					<button type="submit" class="btn btn-primary mt-4 pl-4 pr-4"><i class="fas fa-check"></i></button>
 
 				</form>
