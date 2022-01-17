@@ -32,6 +32,7 @@
     "Code à insérer dans un site web": "Code to insert in a website",
     "Remarque : ajuster la valeur de \"height\" en fonction de la taille du puzzle": "Note: adjust the value of \"height \" according to the size of the puzzle",
     "Code à insérer dans une cellule code d un notebook Jupyter": "Code to insert in a code cell of a Jupyter notebook",
+    "clic droit + Enregistrer l image sous... pour sauvegarder l image": "Right-click + \"Save image as...\" to save this image",
     "code": "code",
     "faux code": "fake code",
 
@@ -94,7 +95,7 @@
     "réinitialiser": "reset",
     "vérifier": "verify",
     "éditer la cellule pour copier le code": "edit the cell to copy the code",
-    "exécuter ce code avec Kaggle": "run this code with Kaggle",            
+    "exécuter ce code avec Kaggle": "run this code with Kaggle",
 
     "30 Days": "30 Days",
     "60 Days": "60 Days",
