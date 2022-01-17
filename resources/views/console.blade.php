@@ -93,7 +93,7 @@ IFrame('https://www.codepuzzle.io/iframe/{{ strtoupper($code->jeton) }}', width=
                                         <p class="text-monospace mt-1" style="margin-left:22px;font-size:90%";color:silver>{{__('Remarque : ajuster la valeur de "height" en fonction de la taille du puzzle')}}</p>
                                     </div>
                                     <div class="text-monospace text-muted mb-4 small">
-                                        <i class="fas fa-share-alt ml-1 mr-1"></i> QR code : <img src="https://api.qrserver.com/v1/create-qr-code/?data={{urlencode('https://www.codepuzzle.io/p/' . $code->jeton)}}&amp;size=100x100" style="width:100px" alt="mon-oral.net/c/{{$code->jeton}}" data-toggle="tooltip" data-placement="right" title="{{__('clic droit + Enregistrer l image sous... pour sauvegarder l image')}}" />
+                                        <i class="fas fa-share-alt ml-1 mr-1"></i> QR code : <img src="https://api.qrserver.com/v1/create-qr-code/?data={{urlencode('codepuzzle.io/p/' . $code->jeton)}}&amp;size=100x100" style="width:100px" alt="codepuzzle.io/p/{{$code->jeton}}" data-toggle="tooltip" data-placement="right" title="{{__('clic droit + Enregistrer l image sous... pour sauvegarder l image')}}" />
                                     </div>
                                     @if ($code->titre_eleve !== NULL OR $code->consignes_eleve !== NULL)
                                         <div class="card card-body">
