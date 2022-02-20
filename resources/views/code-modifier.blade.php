@@ -130,9 +130,11 @@
 					$with_chrono_checked = ($code->with_chrono == 0) ? "checked" : "";
 					$with_score_checked = ($code->with_score == 0) ? "checked" : "";
 					$with_shuffle_checked = ($code->with_shuffle == 0) ? "checked" : "";
-					$with_chrono_checked = (old('with_chrono') !== null AND old('with_chrono') == 0) ? "checked" : "";
-					$with_score_checked = (old('with_score') !== null AND old('with_score') == 0) ? "checked" : "";
-					$with_shuffle_checked = (old('with_shuffle') !== null AND old('with_shuffle') == 0) ? "checked" : "";
+					if (old()) {
+						$with_chrono_checked = (old('with_chrono') !== null) ? "checked" : "";
+						$with_score_checked = (old('with_score') !== null) ? "checked" : "";
+						$with_shuffle_checked = (old('with_shuffle') !== null) ? "checked" : "";
+					}
 					?>
 					<div class="form-check">
 						<input class="form-check-input" name="with_chrono" type="checkbox" value="0" id="with_chrono" {{$with_chrono_checked}} />

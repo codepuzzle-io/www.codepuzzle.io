@@ -116,6 +116,25 @@
 					</div>
 					<textarea class="form-control" name="consignes" id="consignes" rows="6">{{ old('consignes') }}</textarea>
 
+					<div class="mt-3 text-monospace">OPTIONS</div>
+					<?php
+					$with_chrono_checked = (old('with_chrono') !== null AND old('with_chrono') == 0) ? "checked" : "";
+					$with_score_checked = (old('with_score') !== null AND old('with_score') == 0) ? "checked" : "";
+					$with_shuffle_checked = (old('with_shuffle') !== null AND old('with_shuffle') == 0) ? "checked" : "";
+					?>
+					<div class="form-check">
+						<input class="form-check-input" name="with_chrono" type="checkbox" value="0" id="with_chrono" {{$with_chrono_checked}} />
+						<label class="form-check-label text-monospace text-muted small" for="with_chrono">ne pas afficher le chronomètre</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" name="with_score" type="checkbox" value="0" id="with_score" {{$with_score_checked}} />
+						<label class="form-check-label text-monospace text-muted small" for="with_score">ne pas afficher les points</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" name="with_shuffle" type="checkbox" value="0" id="is_shuffled" {{$with_shuffle_checked}} />
+						<label class="form-check-label text-monospace text-muted small" for="with_shuffle">ne pas mélanger les lignes de code</label>
+					</div>					
+
 					<div class="mt-3 text-monospace">{{strtoupper(__('code'))}}<sup class="text-danger small">*</span></div>
 					<div class="text-monospace text-muted small text-justify">
 						{{__('Avant de valider le formulaire, assurez-vous que votre code respecte les standards de formatage')}} <a href="https://pep8.org/" target="_blank">PEP8</a>.
@@ -124,6 +143,12 @@
 							<li>{{__('un vérificateur')}} : <a href="http://pep8online.com/" target="_blank">pep8online.com</a></li>
 							<li>{{__('un correcteur automatique de code à utiliser avec prudence')}} : <a href="https://black.vercel.app/" target="_blank">black.vercel.app</a></li>
 						</ul>
+					</div>
+
+					<div class="text-monospace text-muted small text-justify mb-2 p-2" style="border:solid 1px silver;border-radius:4px;">
+						SYNTAXE POUR CODE À TROUS<br />
+						Code à compléter: [?code?]</br>
+						Choix multiples: [?code_correct?distracteur1?distracteur2?distracteur3?]
 					</div>
 
 					<textarea name="code" style="display:none;" id="code"></textarea>
