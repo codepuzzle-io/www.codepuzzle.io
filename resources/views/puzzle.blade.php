@@ -38,10 +38,8 @@ app()->setLocale($code->lang)
     <title>{{ config('app.name') }} | Puzzle - {{ $jeton }}</title>
 </head>
 
-<!--
 <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
--->
-<body>
+
 
     <div class="container">
 
