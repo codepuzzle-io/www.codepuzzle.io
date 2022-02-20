@@ -63,7 +63,7 @@ app()->setLocale($code->lang)
 			@endif
 		</tr>
 	</table>
-	@endif	
+	@endif
 
     @if ($code->titre_eleve !== NULL OR $code->consignes_eleve !== NULL)
     <div class="row">
@@ -93,7 +93,7 @@ app()->setLocale($code->lang)
 				<a id="reinitialiser" href="#" style="position:absolute;left:25px;top:10px;" class="text-muted" data-bs-toggle="tooltip" data-bs-placement="top"  data-bs-trigger="hover" title="réinitialiser"><i class="fas fa-sync-alt"></i></a>
 
 				<!-- bouton verifier -->
-                <button id="feedbackLink" type="button" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="vérifier" style="display:inline"><i class="fas fa-check"></i></button>
+                <button id="feedbackLink" type="button" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-trigger="hover" title="vérifier" style="display:inline"><i class="fas fa-check"></i></button>
 
 				<!-- bouton copier -->
                 <span id="copyLink" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="éditer la cellule pour copier le code" style="display:none"></span>
