@@ -43,6 +43,9 @@ Route::get('console/lang/{locale}', function ($locale){
     return redirect('console/');
 });
 
+// CHECK CCM & CAT
+Route::post('/ccm_cat', [App\Http\Controllers\SiteController::class, 'ccm_cat_verifier']);
+
 
 // SETLOCALE & PREFIX BASED ON URL OR PREVIOUS URL
 (in_array(request()->segment(1), ['en']) OR strpos(url()->previous(), '/en/')) ? app()->setLocale('en') : app()->setLocale('fr');

@@ -157,6 +157,57 @@ h3 {
 
 /* ========================================================================== */
 /* PARSON */
+
+.dashboard {
+    border-radius: 4px;
+    background-color: #ecf0f1;
+    color:#bdc3c7;
+    padding: 5px 20px 5px 20px;
+    font-weight:bold;
+}
+
+select:focus, input:focus{
+    outline: none;
+}
+
+.ccm {
+    border-radius:3px;
+    color:white;
+    padding-left:4px;
+    height:18px;
+}
+
+.ccm_incorrect {
+    border: solid 1px #e74c3c;
+    background-color: #e74c3c;
+}
+
+.ccm_correct {
+    border: solid 1px #a1ca7c;
+    background-color:#a1ca7c;
+    color: #34495e;
+}
+
+.cat {
+    border-radius:3px;
+    text-align: center;
+    color: white;
+    height:18px;
+}
+
+.cat_incorrect {
+    border: solid 1px #e74c3c;
+    background-color: #e74c3c;
+}
+
+.cat_correct {
+    border: solid 1px #a1ca7c;
+    background-color: #a1ca7c;
+    color: #34495e;
+}
+
+
+
 .sortable-code ul {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;

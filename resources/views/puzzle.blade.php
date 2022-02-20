@@ -9,7 +9,16 @@ if (App\Models\Code::where('jeton', $jeton)->first() OR  App\Models\Site_puzzle:
 	exit;
 }
 
-$source = addcslashes($code->code, '\"');
+$code_cleaned = preg_replace_callback("/\[\?(.*?)\?\]/m", function($matches){
+    if (strpos($matches[1], '?')){
+        $items_array = explode('?', $matches[1]);
+        return $items_array[0];
+    } else {
+        return $matches[1];
+    }
+}, $code->code);
+
+$source = addcslashes($code_cleaned, '\"');
 $source = preg_replace("/\r?\n|\r/", '\n', $source);
 $ipynb = '{"cells":[{"metadata":{"trusted":true},"cell_type":"code","source":"' . $source . '","execution_count":null,"outputs":[]}],"metadata":{"celltoolbar":"Format de la Cellule Texte Brut","colab":{"name":"python4tp.ipynb","provenance":[],"toc_visible":true},"kernelspec":{"display_name":"Python 3","language":"python","name":"python3"},"toc":{"base_numbering":"0","nav_menu":{"height":"369px","width":"618.333px"},"number_sections":true,"sideBar":true,"skip_h1_title":false,"title_cell":"Table des Matières","title_sidebar":"Sommaire","toc_cell":true,"toc_position":{"height":"calc(100% - 180px)","left":"10px","top":"150px","width":"165px"},"toc_section_display":true,"toc_window_display":true}},"nbformat":4,"nbformat_minor":2}';
 file_put_contents('code/' . $code->uuid . '.ipynb', $ipynb);
@@ -29,11 +38,37 @@ app()->setLocale($code->lang)
     <title>{{ config('app.name') }} | Puzzle - {{ $jeton }}</title>
 </head>
 
+<!--
 <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
+-->
+<body>
 
     <div class="container">
 
 		<h1 class="mt-2 mb-5 text-center"><a class="navbar-brand m-1" href="{{ url('/') }}"><img src="{{ asset('img/codepuzzle.png') }}" height="20" alt="CODE PUZZLE" /></a></h1>
+
+		@if ($code->with_chrono == 1 OR $code->with_score == 1)
+		<table align="center" cellpadding="2" style="text-align:center;margin-bottom:20px;color:#bdc3c7;">
+			<tr>
+				@if ($code->with_chrono == 1)
+				<td><i class="fas fa-clock"></i></td>
+				@endif
+				@if ($code->with_score == 1)
+				<td><i class="fas fa-check"></i></td>
+				<td><i class="fas fa-graduation-cap"></i></td>
+				@endif
+			</tr>
+			<tr>
+				@if ($code->with_chrono == 1)
+				<td><span id="chrono" class="dashboard">00:00</span></td>
+				@endif
+				@if ($code->with_score == 1)
+				<td><span id="nb_tentatives" class="dashboard">0</span></td>
+				<td><span id="points" class="dashboard">0</span></td>
+				@endif
+			</tr>
+		</table>
+		@endif
 
         @if ($code->titre_eleve !== NULL OR $code->consignes_eleve !== NULL)
         <div class="row">
