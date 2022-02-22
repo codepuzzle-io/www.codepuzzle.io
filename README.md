@@ -1,3 +1,5 @@
-# TXTPUZZLE
+<img src="https://www.codepuzzle.io/img/codepuzzle.png" width="250" />
 
-Générateur et gestionnaire de "Textes Puzzles" (textes à trous, choix multiples, lignes mélangées) pour le français, les langues,
+Créer, sauvegarder, modifier et partager des puzzles de Parsons.
+
+Create, save, modify and share Parsons puzzles.

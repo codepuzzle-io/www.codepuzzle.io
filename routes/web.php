@@ -55,25 +55,23 @@ $lang = (in_array(request()->segment(1), ['en']) OR strpos(url()->previous(), '/
 // ACCUEIL
 Route::view($lang, 'welcome')->name('home');
 
+// A PROPOS
+Route::view($lang.__('a-propos'), 'a-propos')->name('about');
 
 // DONNEE PERSONNELLES
 Route::view($lang.__('donnees-personnelles'), 'donnees-personnelles')->name('donnees-personnelles');
 
 
 // ============================================================================
-// GUEST PUZZLES
+// PUZZLES
 
-// puzzle creer
-Route::get($lang.__('creer-un-puzzle'), [App\Http\Controllers\SiteController::class, 'puzzle_creer_get'])->name('guest-puzzle-creer-get');
-Route::post($lang.__('creer-un-puzzle'), [App\Http\Controllers\SiteController::class, 'puzzle_creer_post'])->name('guest-puzzle-creer-post');
+// code creer
+Route::get($lang.__('creer-un-puzzle'), [App\Http\Controllers\SiteController::class, 'puzzle_creer_get'])->name('site-puzzle-creer-get');
+Route::post($lang.__('creer-un-puzzle'), [App\Http\Controllers\SiteController::class, 'puzzle_creer_post'])->name('site-puzzle-creer-post');
 Route::get($lang.'puzzle/{jeton}', function($jeton) {
-    return view("guest-puzzle", ["jeton"=>$jeton]);
-})->name('guest-puzzle');
+    return view("site-puzzle", ["jeton"=>$jeton]);
+})->name('site-puzzle');
 
-
-
-// ============================================================================
-// AFFICHAGE PUZZLES
 
 // affichage
 Route::get('/p/{jeton}', function($jeton) {
@@ -142,15 +140,15 @@ Route::get($lang.'direct-'.__('se-connecter'), function(){
 
 Route::get('/console', [App\Http\Controllers\ConsoleController::class, 'console_get'])->name('console');
 
-// puzzle creer
-Route::get('/console/puzzle-creer', [App\Http\Controllers\ConsoleController::class, 'puzzle_creer_get'])->name('puzzle-creer-get');
-Route::post('/console/puzzle-creer', [App\Http\Controllers\ConsoleController::class, 'puzzle_creer_post'])->name('puzzle-creer-post');
+// code creer
+Route::get('/console/code-creer', [App\Http\Controllers\ConsoleController::class, 'code_creer_get'])->name('code-creer-get');
+Route::post('/console/code-creer', [App\Http\Controllers\ConsoleController::class, 'code_creer_post'])->name('code-creer-post');
 
-// puzzle modifier
-Route::get('/console/puzzle-modifier/', [App\Http\Controllers\ConsoleController::class, 'redirect']);
-Route::get('/console/puzzle-modifier/{code_id}', [App\Http\Controllers\ConsoleController::class, 'puzzle_modifier_get'])->name('puzzle-modifier-get');
-Route::post('/console/puzzle-modifier', [App\Http\Controllers\ConsoleController::class, 'puzzle_modifier_post'])->name('puzzle-modifier-post');
+// code modifier
+Route::get('/console/code-modifier/', [App\Http\Controllers\ConsoleController::class, 'redirect']);
+Route::get('/console/code-modifier/{code_id}', [App\Http\Controllers\ConsoleController::class, 'code_modifier_get'])->name('code-modifier-get');
+Route::post('/console/code-modifier', [App\Http\Controllers\ConsoleController::class, 'code_modifier_post'])->name('code-modifier-post');
 
-// puzzle supprimer
-Route::any('/console/puzzle-supprimer', [App\Http\Controllers\ConsoleController::class, 'redirect']);
-Route::any('/console/puzzle-supprimer/{code_id}', [App\Http\Controllers\ConsoleController::class, 'puzzle_supprimer'])->name('puzzle-supprimer');
+// code supprimer
+Route::any('/console/code-supprimer', [App\Http\Controllers\ConsoleController::class, 'redirect']);
+Route::any('/console/code-supprimer/{code_id}', [App\Http\Controllers\ConsoleController::class, 'code_supprimer'])->name('code-supprimer');

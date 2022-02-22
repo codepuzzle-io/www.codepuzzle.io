@@ -94,16 +94,16 @@
 
             <div class="col-md-9 pt-4">
 
-				<form method="POST" action="{{route('puzzle-modifier-post')}}">
+				<form method="POST" action="{{route('code-modifier-post')}}">
 
 					@csrf
 
                     <?php
-                    $puzzle = App\Models\Auth_puzzle::where([['user_id', Auth::id()], ['id', Crypt::decryptString($puzzle_id)]])->first();
+                    $code = App\Models\Code::where([['user_id', Auth::id()], ['id', Crypt::decryptString($code_id)]])->first();
                     ?>
 					<div class="text-monospace">TITRE<sup class="text-danger small">*</span></div>
 					<div class="text-monospace text-muted small text-justify mb-1">Visible par vous seulement</div>
-					<input id="titre_enseignant" type="text" class="form-control @error('titre_enseignant') is-invalid @enderror" name="titre_enseignant" value="{{ old('titre_enseignant', $puzzle->titre_enseignant) }}" autofocus>
+					<input id="titre_enseignant" type="text" class="form-control @error('titre_enseignant') is-invalid @enderror" name="titre_enseignant" value="{{ old('titre_enseignant', $code->titre_enseignant) }}" autofocus>
 					@error('titre_enseignant')
 						<span class="invalid-feedback" role="alert">
 							<strong>{{ $message }}</strong>
@@ -112,24 +112,24 @@
 
 					<div class="mt-3 text-monospace">SOUS-TITRE <span class="font-italic small" style="color:silver;">optionnel</span></div>
 					<div class="text-monospace text-muted small text-justify mb-1">Visible par vous seulement</div>
-					<input id="sous_titre_enseignant" type="text" class="form-control @error('sous_titre_enseignant') is-invalid @enderror" name="sous_titre_enseignant" value="{{ old('sous_titre_enseignant', $puzzle->sous_titre_enseignant) }}" autofocus>
+					<input id="sous_titre_enseignant" type="text" class="form-control @error('sous_titre_enseignant') is-invalid @enderror" name="sous_titre_enseignant" value="{{ old('sous_titre_enseignant', $code->sous_titre_enseignant) }}" autofocus>
 
 					<div class="mt-3 text-monospace">TITRE ÉLÈVE <span class="font-italic small" style="color:silver;">optionnel</span></div>
 					<div class="text-monospace text-muted small text-justify mb-1">Visible par l'élève</div>
-					<input id="titre_eleve" type="text" class="form-control @error('titre_eleve') is-invalid @enderror" name="titre_eleve" value="{{ old('titre_eleve', $puzzle->titre_eleve) }}" autofocus>
+					<input id="titre_eleve" type="text" class="form-control @error('titre_eleve') is-invalid @enderror" name="titre_eleve" value="{{ old('titre_eleve', $code->titre_eleve) }}" autofocus>
 
 					<div class="mt-3 text-monospace">
 						CONSIGNES <span class="font-italic small" style="color:silver;">optionnel</span>
 						<i class="fas fa-info-circle pl-1" style="cursor:pointer;color:#e74c3c;opacity:0.5" data-toggle="modal" data-target="#markdown_help"></i>
 					</div>
 					<div class="text-monospace text-muted small text-justify mb-1">Consignes pour l'élève</div>
-					<textarea class="form-control" name="consignes_eleve" id="consignes_eleve" rows="6">{{ old('consignes_eleve', $puzzle->consignes_eleve) }}</textarea>
+					<textarea class="form-control" name="consignes_eleve" id="consignes_eleve" rows="6">{{ old('consignes_eleve', $code->consignes_eleve) }}</textarea>
 
 					<div class="mt-3 text-monospace">OPTIONS</div>
 					<?php
-					$with_chrono_checked = ($puzzle->with_chrono == 0) ? "checked" : "";
-					$with_score_checked = ($puzzle->with_score == 0) ? "checked" : "";
-					$with_shuffle_checked = ($puzzle->with_shuffle == 0) ? "checked" : "";
+					$with_chrono_checked = ($code->with_chrono == 0) ? "checked" : "";
+					$with_score_checked = ($code->with_score == 0) ? "checked" : "";
+					$with_shuffle_checked = ($code->with_shuffle == 0) ? "checked" : "";
 					if (old()) {
 						$with_chrono_checked = (old('with_chrono') !== null) ? "checked" : "";
 						$with_score_checked = (old('with_score') !== null) ? "checked" : "";
@@ -146,24 +146,40 @@
 					</div>
 					<div class="form-check">
 						<input class="form-check-input" name="with_shuffle" type="checkbox" value="0" id="is_shuffled" {{$with_shuffle_checked}} />
-						<label class="form-check-label text-monospace text-muted small" for="with_shuffle">ne pas mélanger les lignes</label>
+						<label class="form-check-label text-monospace text-muted small" for="with_shuffle">ne pas mélanger les lignes de code</label>
 					</div>
 
-					<div class="mt-3 text-monospace">TEXTE<sup class="text-danger small">*</span></div>
-						<div class="text-monospace text-muted small text-justify mb-2 p-3" style="background-color: #f3f5f7;border-radius:4px;">
-							SYNTAXE<br />
-							Trou: [?texte?]</br>
-							Choix multiples: [?texte_correct?distracteur1?distracteur2?distracteur3?]
-						</div>
+					<div class="mt-3 text-monospace">CODE<sup class="text-danger small">*</span></div>
+					<div class="text-monospace text-muted small text-justify">
+						Avant de valider le formulaire, assurez-vous que votre code respecte les standards de formatage <a href="https://pep8.org/" target="_blank">PEP8</a>.
+						Pour vous aider:
+						<ul>
+							<li>un vérificateur : <a href="http://pep8online.com/" target="_blank">pep8online.com</a></li>
+							<li>un correcteur automatique de code à utiliser avec prudence : <a href="https://black.vercel.app/" target="_blank">black.vercel.app</a></li>
+						</ul>
+					</div>
+					<div class="text-monospace text-muted small text-justify mb-2 p-2" style="border:solid 1px silver;border-radius:4px;">
+						SYNTAXE POUR CODE À TROUS<br />
+						Code à compléter: [?code?]</br>
+						Choix multiples: [?code_correct?distracteur1?distracteur2?distracteur3?]
+					</div>
 
-					<textarea id="puzzle" name="puzzle" class="form-control" rows="8">{{ old('puzzle', $puzzle->puzzle) }}</textarea>
-					@error('puzzle')
+					<textarea name="code" style="display:none;" id="code"></textarea>
+					<div style="width:100%;margin:0px auto 0px auto;"><div id="editor_code" style="border-radius:5px;">{{ old('code', $code->code) }}</div></div>
+					@error('code')
 						<span class="invalid-feedback d-block" role="alert">
 							<strong>{{ $message }}</strong>
 						</span>
 					@enderror
 
-                    <input type="hidden" name="puzzle_id" value="{{ $puzzle_id }}" />
+					<div class="mt-3 text-monospace">FAUX CODE <span class="font-italic small" style="color:silver;">optionnel</span></div>
+					<div class="text-monospace text-muted small text-justify mb-1">
+						Vous pouvez ajouter de fausses lignes de code qui seront mélangées aux lignes de code du code ci-dessus mais qui seront considérées comme des lignes inutiles qui ne doivent pas être placées dans le code final.
+					</div>
+					<textarea name="fakecode" style="display:none;" id="fakecode"></textarea>
+					<div style="width:100%;margin:0px auto 0px auto;"><div id="editor_fakecode" style="border-radius:5px;">{{ old('fakecode', $code->fakecode) }}</div></div>
+
+                    <input type="hidden" name="code_id" value="{{ $code_id }}" />
 
 					<input id="lang" type="hidden" name="lang" value="{{app()->getLocale()}}" />
 
@@ -178,6 +194,80 @@
 	</div><!-- container -->
 
 	@include('inc-bottom-js')
+
+	<script src="{{ asset('js/ace/ace.js') }}" type="text/javascript" charset="utf-8"></script>
+	<script>
+		var editor_code = ace.edit("editor_code", {
+			theme: "ace/theme/puzzle_code",
+			mode: "ace/mode/python",
+			maxLines: 500,
+			minLines: 4,
+			fontSize: 14,
+			wrap: true,
+			useWorker: false,
+			autoScrollEditorIntoView: true,
+			highlightActiveLine: false,
+			highlightSelectedWord: false,
+			highlightGutterLine: true,
+			showPrintMargin: false,
+			displayIndentGuides: true,
+			showLineNumbers: true,
+			showGutter: true,
+			showFoldWidgets: false,
+			useSoftTabs: true,
+			navigateWithinSoftTabs: false,
+			tabSize: 4
+		});
+
+		var editor_fakecode = ace.edit("editor_fakecode", {
+			theme: "ace/theme/puzzle_fakecode",
+			mode: "ace/mode/python",
+			maxLines: 500,
+			minLines: 4,
+			fontSize: 14,
+			wrap: true,
+			useWorker: false,
+			autoScrollEditorIntoView: true,
+			highlightActiveLine: false,
+			highlightSelectedWord: false,
+			highlightGutterLine: true,
+			showPrintMargin: false,
+			displayIndentGuides: true,
+			showLineNumbers: true,
+			showGutter: true,
+			showFoldWidgets: false,
+			useSoftTabs: true,
+			navigateWithinSoftTabs: false,
+			tabSize: 4
+		});
+
+		editor_code.container.style.lineHeight = 1.5;
+		editor_fakecode.container.style.lineHeight = 1.5;
+
+		var textarea_code = $('#code');
+		editor_code.getSession().on('change', function () {
+			textarea_code.val(editor_code.getSession().getValue());
+		});
+		textarea_code.val(editor_code.getSession().getValue());
+
+		var textarea_fakecode = $('#fakecode');
+		editor_fakecode.getSession().on('change', function () {
+			textarea_fakecode.val(editor_fakecode.getSession().getValue());
+		});
+		textarea_fakecode.val(editor_fakecode.getSession().getValue());
+
+	</script>
+
+	<?php
+	/*
+	   IMPORTANT
+	   To add 20px on top and bottom :
+	   - modify .ace_gutter {padding-top: 20px;} and .ace_scroller {top: 20px;} see custom.css
+	   - modify ace.js line 18642 "(this.$extraHeight || 0)" to "(this.$extraHeight || 30)"
+	   OTHER MOFDIFICATION
+	   Add margin left and right > change line 18074 "this.setPadding(20);" instead "this.setPadding(4);"
+	*/
+	?>
 
 </body>
 </html>

@@ -10,12 +10,6 @@
 	@include('inc-nav')
 
 	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<a class="navbar-brand" href="/"><img src="{{ asset('img/txtpuzzle.png') }}" width="150" alt="CODE PUZZLE" /></a>
-			</div>
-		</div>
-
 		<div class="row justify-content-center">
 			<div class="col-md-8">
 				<div class="card mt-5 text-muted" style="background:none;border:none;">

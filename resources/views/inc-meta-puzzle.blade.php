@@ -24,7 +24,7 @@
 <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('js/underscore-min.js') }}"></script>
 <script src="{{ asset('js/lis.js') }}"></script>
-
+<script src="{{ asset('js/prettify.js') }}"></script>
 <script src="{{ asset('js/parsons.js') }}"></script>
 <script src="{{ asset('js/jquery.ui.touch-punch.min.js') }}"></script>
 
@@ -42,24 +42,25 @@
 <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 
 <!-- Description -->
-<meta name="description" content="TXT PUZZLE | {{ $description ?? '' }}" />
+<meta name="description" content="CODE PUZZLE | {{ $description ?? '' }}" />
 
 <!-- Open Graph -->
-<meta property="og:title" content="Txt Puzzle" />
+<meta property="og:title" content="Code Puzzle" />
 <meta property="og:type" content="website" />
-<meta property="og:description" content="{{__('Générateur et gestionnaire de Textes Puzzles')}} {{ $description_og ?? '' }}" />
+<meta property="og:description" content="{{__('Générateur et gestionnaire de puzzles de Parsons')}} {{ $description_og ?? '' }}" />
 <meta property="og:url" content="https://www.codepuzzle.io" />
 <meta property="og:image" content="{{ asset('img/open-graph.png') }}" />
-<meta property="og:image:alt" content="Txt Puzzle" />
+<meta property="og:image:alt" content="Code Puzzle" />
 <meta property="og:image:type" content="image/png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="@txtpuzzle">
-<meta name="twitter:title" content="Txt Puzzle">
-<meta name="twitter:description" content="{{__('Générateur et gestionnaire de Textes Puzzles')}} {{ $description_og ?? '' }}">
+<meta name="twitter:site" content="">
+<meta name="twitter:creator" content="">
+<meta name="twitter:title" content="Code Puzzle">
+<meta name="twitter:description" content="{{__('Générateur et gestionnaire de puzzles de Parsons')}} {{ $description_og ?? '' }}">
 <meta name="twitter:image" content="{{ asset('img/open-graph.png') }}">
 
 @include('inc-matomo')
