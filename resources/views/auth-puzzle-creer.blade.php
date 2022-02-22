@@ -96,7 +96,7 @@
 
 				<h1>{{__('nouveau puzzle')}}</h1>
 
-				<form method="POST" action="{{route('code-creer-post')}}">
+				<form method="POST" action="{{route('puzzle-creer-post')}}">
 
 					@csrf
 
@@ -140,39 +140,22 @@
 					</div>
 					<div class="form-check">
 						<input class="form-check-input" name="with_shuffle" type="checkbox" value="0" id="is_shuffled" {{$with_shuffle_checked}} />
-						<label class="form-check-label text-monospace text-muted small" for="with_shuffle">ne pas mélanger les lignes de code</label>
+						<label class="form-check-label text-monospace text-muted small" for="with_shuffle">ne pas mélanger les lignes</label>
 					</div>
 
-					<div class="mt-3 text-monospace">{{strtoupper(__('code'))}}<sup class="text-danger small">*</span></div>
-					<div class="text-monospace text-muted small text-justify">
-						{{__('Avant de valider le formulaire, assurez-vous que votre code respecte les standards de formatage')}} <a href="https://pep8.org/" target="_blank">PEP8</a>.
-						{{__('Pour vous aider')}}:
-						<ul>
-							<li>{{__('un vérificateur')}} : <a href="http://pep8online.com/" target="_blank">pep8online.com</a></li>
-							<li>{{__('un correcteur automatique de code à utiliser avec prudence')}} : <a href="https://black.vercel.app/" target="_blank">black.vercel.app</a></li>
-						</ul>
-					</div>
+					<div class="mt-3 text-monospace">TEXTE<sup class="text-danger small">*</span></div>
+						<div class="text-monospace text-muted small text-justify mb-2 p-3" style="background-color: #f3f5f7;border-radius:4px;">
+							SYNTAXE<br />
+							Trou: [?texte?]</br>
+							Choix multiples: [?texte_correct?distracteur1?distracteur2?distracteur3?]
+						</div>
 
-					<div class="text-monospace text-muted small text-justify mb-2 p-2" style="border:solid 1px silver;border-radius:4px;">
-						SYNTAXE POUR CODE À TROUS<br />
-						Code à compléter: [?code?]</br>
-						Choix multiples: [?code_correct?distracteur1?distracteur2?distracteur3?]
-					</div>
-
-					<textarea name="code" style="display:none;" id="code"></textarea>
-					<div style="width:100%;margin:0px auto 0px auto;"><div id="editor_code" style="border-radius:5px;">{{ old('code') }}</div></div>
-					@error('code')
+					<textarea id="puzzle" name="puzzle" class="form-control" rows="8">{{ old('puzzle') }}</textarea>
+					@error('puzzle')
 						<span class="invalid-feedback d-block" role="alert">
 							<strong>{{ $message }}</strong>
 						</span>
 					@enderror
-
-					<div class="mt-3 text-monospace">{{strtoupper(__('faux code'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
-					<div class="text-monospace text-muted small text-justify mb-1">
-						{{__('Vous pouvez ajouter de fausses lignes de code qui seront mélangées aux lignes de code du code ci-dessus mais qui seront considérées comme des lignes inutiles qui ne doivent pas être placées dans le code final.')}}
-					</div>
-					<textarea name="fakecode" style="display:none;" id="fakecode"></textarea>
-					<div style="width:100%;margin:0px auto 0px auto;"><div id="editor_fakecode" style="border-radius:5px;">{{ old('fakecode') }}</div></div>
 
 					<input id="lang" type="hidden" name="lang" value="{{app()->getLocale()}}" />
 
@@ -187,80 +170,6 @@
 	</div><!-- container -->
 
 	@include('inc-bottom-js')
-
-	<script src="{{ asset('js/ace/ace.js') }}" type="text/javascript" charset="utf-8"></script>
-	<script>
-		var editor_code = ace.edit("editor_code", {
-			theme: "ace/theme/puzzle_code",
-			mode: "ace/mode/python",
-			maxLines: 500,
-			minLines: 4,
-			fontSize: 14,
-			wrap: true,
-			useWorker: false,
-			autoScrollEditorIntoView: true,
-			highlightActiveLine: false,
-			highlightSelectedWord: false,
-			highlightGutterLine: true,
-			showPrintMargin: false,
-			displayIndentGuides: true,
-			showLineNumbers: true,
-			showGutter: true,
-			showFoldWidgets: false,
-			useSoftTabs: true,
-			navigateWithinSoftTabs: false,
-			tabSize: 4
-		});
-
-		var editor_fakecode = ace.edit("editor_fakecode", {
-			theme: "ace/theme/puzzle_fakecode",
-			mode: "ace/mode/python",
-			maxLines: 500,
-			minLines: 4,
-			fontSize: 14,
-			wrap: true,
-			useWorker: false,
-			autoScrollEditorIntoView: true,
-			highlightActiveLine: false,
-			highlightSelectedWord: false,
-			highlightGutterLine: true,
-			showPrintMargin: false,
-			displayIndentGuides: true,
-			showLineNumbers: true,
-			showGutter: true,
-			showFoldWidgets: false,
-			useSoftTabs: true,
-			navigateWithinSoftTabs: false,
-			tabSize: 4
-		});
-
-		editor_code.container.style.lineHeight = 1.5;
-		editor_fakecode.container.style.lineHeight = 1.5;
-
-		var textarea_code = $('#code');
-		editor_code.getSession().on('change', function () {
-			textarea_code.val(editor_code.getSession().getValue());
-		});
-		textarea_code.val(editor_code.getSession().getValue());
-
-		var textarea_fakecode = $('#fakecode');
-		editor_fakecode.getSession().on('change', function () {
-			textarea_fakecode.val(editor_fakecode.getSession().getValue());
-		});
-		textarea_fakecode.val(editor_fakecode.getSession().getValue());
-
-	</script>
-
-	<?php
-	/*
-	   IMPORTANT
-	   To add 20px on top and bottom :
-	   - modify .ace_gutter {padding-top: 20px;} and .ace_scroller {top: 20px;} see custom.css
-	   - modify ace.js line 18642 "(this.$extraHeight || 0)" to "(this.$extraHeight || 30)"
-	   OTHER MOFDIFICATION
-	   Add margin left and right > change line 18074 "this.setPadding(20);" instead "this.setPadding(4);"
-	*/
-	?>
 
 </body>
 </html>

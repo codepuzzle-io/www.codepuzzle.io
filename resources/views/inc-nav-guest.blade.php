@@ -4,7 +4,7 @@
 			<div>
 				<img src="{{ asset('img/nav-home.png') }}" width="40" />
 				<br />
-				<span class="text-monospace small" style="color:#c5c7c9;">{{__('console')}}</span>
+				<span class="text-monospace small" style="color:#c5c7c9;">puzzle</span>
 			</div>
 
 		</div>
@@ -24,18 +24,6 @@
 				</div>
 
 				<li class="nav-item dropdown">
-
-					<a id="navbarDropdown" class="nav-link dropdown-toggle small" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-						{{ Auth::user()->email }}<span class="caret"></span>
-					</a>
-
-					<div class="dropdown-menu dropdown-menu-right p-2" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item btn btn-light text-center" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><span class="small text-muted">{{__('se déconnecter')}}</span></a>
-
-						<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-							@csrf
-						</form>
-					</div>
 				</li>
 
 			</ul>
