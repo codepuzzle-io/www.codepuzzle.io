@@ -138,20 +138,12 @@
 						<input class="form-check-input" name="with_score" type="checkbox" value="0" id="with_score" {{$with_score_checked}} />
 						<label class="form-check-label text-monospace text-muted small" for="with_score">ne pas afficher les points</label>
 					</div>
-					<div class="form-check">
+					<div class="form-check" style="display:none">
 						<input class="form-check-input" name="with_shuffle" type="checkbox" value="0" id="is_shuffled" {{$with_shuffle_checked}} />
 						<label class="form-check-label text-monospace text-muted small" for="with_shuffle">ne pas mélanger les lignes de code</label>
 					</div>
 
 					<div class="mt-3 text-monospace">{{strtoupper(__('code'))}}<sup class="text-danger small">*</span></div>
-					<div class="text-monospace text-muted small text-justify">
-						{{__('Avant de valider le formulaire, assurez-vous que votre code respecte les standards de formatage')}} <a href="https://pep8.org/" target="_blank">PEP8</a>.
-						{{__('Pour vous aider')}}:
-						<ul>
-							<li>{{__('un vérificateur')}} : <a href="http://pep8online.com/" target="_blank">pep8online.com</a></li>
-							<li>{{__('un correcteur automatique de code à utiliser avec prudence')}} : <a href="https://black.vercel.app/" target="_blank">black.vercel.app</a></li>
-						</ul>
-					</div>
 
 					<div class="text-monospace text-muted small text-justify mb-2 p-2" style="border:solid 1px silver;border-radius:4px;">
 						SYNTAXE POUR CODE À TROUS<br />
