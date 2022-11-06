@@ -144,6 +144,14 @@
 					</div>
 
 					<div class="mt-3 text-monospace">{{strtoupper(__('code'))}}<sup class="text-danger small">*</span></div>
+					<div class="text-monospace text-muted small text-justify" style="display:none">
+						{{__('Avant de valider le formulaire, assurez-vous que votre code respecte les standards de formatage')}} <a href="https://pep8.org/" target="_blank">PEP8</a>.
+						{{__('Pour vous aider')}}:
+						<ul>
+							<li>{{__('un vérificateur')}} : <a href="http://pep8online.com/" target="_blank">pep8online.com</a></li>
+							<li>{{__('un correcteur automatique de code à utiliser avec prudence')}} : <a href="https://black.vercel.app/" target="_blank">black.vercel.app</a></li>
+						</ul>
+					</div>
 
 					<div class="text-monospace text-muted small text-justify mb-2 p-2" style="border:solid 1px silver;border-radius:4px;">
 						SYNTAXE POUR CODE À TROUS<br />
