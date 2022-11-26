@@ -132,22 +132,22 @@
 					?>
 					<div class="form-check">
 						<input class="form-check-input" name="with_chrono" type="checkbox" value="0" id="with_chrono" {{$with_chrono_checked}} />
-						<label class="form-check-label text-monospace text-muted small" for="with_chrono">ne pas afficher le chronomètre</label>
+						<label class="form-check-label text-monospace text-muted small" for="with_chrono">{{__('ne pas afficher le chronomètre')}}</label>
 					</div>
 					<div class="form-check">
 						<input class="form-check-input" name="with_score" type="checkbox" value="0" id="with_score" {{$with_score_checked}} />
-						<label class="form-check-label text-monospace text-muted small" for="with_score">ne pas afficher les points</label>
+						<label class="form-check-label text-monospace text-muted small" for="with_score">{{__('ne pas afficher les points')}}</label>
 					</div>
 					<div class="form-check" style="display:none">
 						<input class="form-check-input" name="with_shuffle" type="checkbox" value="0" id="is_shuffled" {{$with_shuffle_checked}} />
-						<label class="form-check-label text-monospace text-muted small" for="with_shuffle">ne pas mélanger les lignes de code</label>
+						<label class="form-check-label text-monospace text-muted small" for="with_shuffle">{{__('ne pas mélanger les lignes de code')}}</label>
 					</div>
 
 					<div class="mt-3 text-monospace">{{strtoupper(__('code'))}}<sup class="text-danger small">*</span></div>
 					<div class="text-monospace text-muted small text-justify mb-2 p-2" style="border:solid 1px silver;border-radius:4px;">
-						SYNTAXE POUR CODE À TROUS<br />
-						Code à compléter: [?code?]</br>
-						Choix multiples: [?code_correct?distracteur1?distracteur2?distracteur3?]
+						{{strtoupper(__('Syntaxe pour code à trous'))}}<br />
+						{{__('Code à compléter')}}: [?code?]</br>
+						{{__('Choix multiples')}}: {{__('[?code_correct?distracteur1?distracteur2?distracteur3?]')}}
 					</div>
 
 					<textarea name="code" style="display:none;" id="code"></textarea>

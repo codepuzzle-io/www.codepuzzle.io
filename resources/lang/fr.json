@@ -44,6 +44,16 @@
     "Visible par l élève": "Visible par l'élève",
     "consignes": "consignes",
     "Consignes pour l élève": "Consignes pour l'élève",
+    "ne pas afficher le chronomètre": "ne pas afficher le chronomètre",
+    "ne pas afficher les points": "ne pas afficher les points",
+    "ne pas mélanger les lignes de code": "ne pas mélanger les lignes de code",
+
+
+    "Syntaxe pour code à trous": "Syntaxe pour code à trous",
+    "Code à compléter": "Code à compléter",
+    "Choix multiples": "Choix multiples",
+    "[?code_correct?distracteur1?distracteur2?distracteur3?]": "[?code_correct?distracteur1?distracteur2?distracteur3?]",
+
     "Avant de valider le formulaire, assurez-vous que votre code respecte les standards de formatage": "Avant de valider le formulaire, assurez-vous que votre code respecte les standards de formatage",
     "Pour vous aider": "Pour vous aider",
     "un vérificateur": "un vérificateur",
