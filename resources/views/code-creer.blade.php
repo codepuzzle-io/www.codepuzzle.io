@@ -165,6 +165,9 @@
 					<textarea name="fakecode" style="display:none;" id="fakecode"></textarea>
 					<div style="width:100%;margin:0px auto 0px auto;"><div id="editor_fakecode" style="border-radius:5px;">{{ old('fakecode') }}</div></div>
 
+
+
+
 					<input id="lang" type="hidden" name="lang" value="{{app()->getLocale()}}" />
 
 					<button type="submit" class="btn btn-primary mt-4 pl-4 pr-4"><i class="fas fa-check"></i></button>
