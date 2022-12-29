@@ -152,3 +152,7 @@ Route::post('/console/code-modifier', [App\Http\Controllers\ConsoleController::c
 // code supprimer
 Route::any('/console/code-supprimer', [App\Http\Controllers\ConsoleController::class, 'redirect']);
 Route::any('/console/code-supprimer/{code_id}', [App\Http\Controllers\ConsoleController::class, 'code_supprimer'])->name('code-supprimer');
+
+// defi creer
+Route::get('/console/defi-creer', [App\Http\Controllers\ConsoleController::class, 'defi_creer_get'])->name('defi-creer-get');
+Route::post('/console/defi-creer', [App\Http\Controllers\ConsoleController::class, 'defi_creer_post'])->name('defi-creer-post');

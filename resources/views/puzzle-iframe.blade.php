@@ -110,7 +110,7 @@ app()->setLocale($code->lang)
             </div>
         </div>
 
-        @if ($code->fakecode !== NULL)
+        @if ($code->fakecode !== NULL OR $code->with_dragdrop)
             <div class="row mt-3">
                 <div class="col-md-6">
                     <div id="sortableTrash" class="sortable-code"></div>

@@ -124,24 +124,31 @@
 					<div class="text-monospace text-muted small text-justify mb-1">{{__('Consignes pour l élève')}}</div>
 					<textarea class="form-control" name="consignes_eleve" id="consignes_eleve" rows="6">{{ old('consignes_eleve') }}</textarea>
 
+					<!-- OPTIONS -->
 					<div class="mt-3 text-monospace">OPTIONS</div>
 					<?php
-					$with_chrono_checked = (old('with_chrono') !== null AND old('with_chrono') == 0) ? "checked" : "";
-					$with_score_checked = (old('with_score') !== null AND old('with_score') == 0) ? "checked" : "";
-					$with_shuffle_checked = (old('with_shuffle') !== null AND old('with_shuffle') == 0) ? "checked" : "";
+					$with_dragdrop_checked = (old('with_dragdrop') !== null) ? "checked" : "";
+					$with_chrono_checked = (old('with_chrono') !== null) ? "checked" : "";
+					$with_score_checked = (old('with_score') !== null) ? "checked" : "";
+					$with_shuffle_checked = (old('with_shuffle') !== null) ? "checked" : "";
 					?>
 					<div class="form-check">
-						<input class="form-check-input" name="with_chrono" type="checkbox" value="0" id="with_chrono" {{$with_chrono_checked}} />
+						<input class="form-check-input" name="with_dragdrop" type="checkbox" id="with_dragdrop" {{$with_dragdrop_checked}} />
+						<label class="form-check-label text-monospace text-muted small" for="with_dragdrop">{{__('mode "glisser-déposer" même si le puzzle ne comporte pas de fausses lignes de code')}}</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" name="with_chrono" type="checkbox" id="with_chrono" {{$with_chrono_checked}} />
 						<label class="form-check-label text-monospace text-muted small" for="with_chrono">{{__('ne pas afficher le chronomètre')}}</label>
 					</div>
 					<div class="form-check">
-						<input class="form-check-input" name="with_score" type="checkbox" value="0" id="with_score" {{$with_score_checked}} />
+						<input class="form-check-input" name="with_score" type="checkbox" id="with_score" {{$with_score_checked}} />
 						<label class="form-check-label text-monospace text-muted small" for="with_score">{{__('ne pas afficher les points')}}</label>
 					</div>
 					<div class="form-check" style="display:none">
-						<input class="form-check-input" name="with_shuffle" type="checkbox" value="0" id="is_shuffled" {{$with_shuffle_checked}} />
+						<input class="form-check-input" name="with_shuffle" type="checkbox" id="with_shuffle" {{$with_shuffle_checked}} />
 						<label class="form-check-label text-monospace text-muted small" for="with_shuffle">{{__('ne pas mélanger les lignes de code')}}</label>
 					</div>
+					<!-- /OPTIONS -->
 
 					<div class="mt-3 text-monospace">{{strtoupper(__('code'))}}<sup class="text-danger small">*</span></div>
 					<div class="text-monospace text-muted small text-justify mb-2 p-2" style="border:solid 1px silver;border-radius:4px;">
@@ -164,9 +171,6 @@
 					</div>
 					<textarea name="fakecode" style="display:none;" id="fakecode"></textarea>
 					<div style="width:100%;margin:0px auto 0px auto;"><div id="editor_fakecode" style="border-radius:5px;">{{ old('fakecode') }}</div></div>
-
-
-
 
 					<input id="lang" type="hidden" name="lang" value="{{app()->getLocale()}}" />
 

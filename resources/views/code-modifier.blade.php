@@ -127,25 +127,31 @@
 
 					<div class="mt-3 text-monospace">OPTIONS</div>
 					<?php
+					$with_dragdrop_checked = ($code->with_dragdrop == 1) ? "checked" : "";
 					$with_chrono_checked = ($code->with_chrono == 0) ? "checked" : "";
 					$with_score_checked = ($code->with_score == 0) ? "checked" : "";
 					$with_shuffle_checked = ($code->with_shuffle == 0) ? "checked" : "";
 					if (old()) {
+						$with_dragdrop_checked = (old('with_dragdrop') !== null) ? "checked" : "";
 						$with_chrono_checked = (old('with_chrono') !== null) ? "checked" : "";
 						$with_score_checked = (old('with_score') !== null) ? "checked" : "";
 						$with_shuffle_checked = (old('with_shuffle') !== null) ? "checked" : "";
 					}
 					?>
 					<div class="form-check">
-						<input class="form-check-input" name="with_chrono" type="checkbox" value="0" id="with_chrono" {{$with_chrono_checked}} />
+						<input class="form-check-input" name="with_dragdrop" type="checkbox" id="with_dragdrop" {{$with_dragdrop_checked}} />
+						<label class="form-check-label text-monospace text-muted small" for="with_dragdrop">{{__('mode "glisser-déposer" même si le puzzle ne comporte pas de fausses lignes de code')}}</label>
+					</div>					
+					<div class="form-check">
+						<input class="form-check-input" name="with_chrono" type="checkbox" id="with_chrono" {{$with_chrono_checked}} />
 						<label class="form-check-label text-monospace text-muted small" for="with_chrono">ne pas afficher le chronomètre</label>
 					</div>
 					<div class="form-check">
-						<input class="form-check-input" name="with_score" type="checkbox" value="0" id="with_score" {{$with_score_checked}} />
+						<input class="form-check-input" name="with_score" type="checkbox" id="with_score" {{$with_score_checked}} />
 						<label class="form-check-label text-monospace text-muted small" for="with_score">ne pas afficher les points</label>
 					</div>
 					<div class="form-check" style="display:none">
-						<input class="form-check-input" name="with_shuffle" type="checkbox" value="0" id="is_shuffled" {{$with_shuffle_checked}} />
+						<input class="form-check-input" name="with_shuffle" type="checkbox" id="with_shuffle" {{$with_shuffle_checked}} />
 						<label class="form-check-label text-monospace text-muted small" for="with_shuffle">ne pas mélanger les lignes de code</label>
 					</div>
 
