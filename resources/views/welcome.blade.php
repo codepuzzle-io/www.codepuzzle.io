@@ -2,11 +2,11 @@
 <html lang="{{ app()->getLocale() }}">
 <head>
 	@php
-		$description = __('Générateur et gestionnaire de puzzles de Parsons');
-		$description_og = '';
+		$description = __('Puzzles de Parsons & Défis pour apprendre Python');
+		$description_og = __('Puzzles de Parsons & Défis pour apprendre Python');
 	@endphp
 	@include('inc-meta')
-    <title>{{ strtoupper(config('app.name')) }} | {{__('Générateur et gestionnaire de puzzles de Parsons')}}</title>
+    <title>{{ strtoupper(config('app.name')) }} | {{__('Puzzles de Parsons & Défis')}}</title>
 </head>
 <body>
 	@php
@@ -16,30 +16,39 @@
 
 	<div class="container mt-3">
 		<div class="row pt-3">
-			<div class="intro col-md-2">
-			</div>
-			<div class="intro col-md-8 text-monospace">
-				<h2>{!!__('Générateur de puzzles de Parsons', ['link' => route('about')])!!}</h2>
-				<div class="mx-auto mt-4 text-center" style="width:160px">
-					<a class="btn btn-success btn-sm btn-block" href="{{ route('site-puzzle-creer-get')}}" role="button">{{__('créer un puzzle')}}</a>
-					<a class="btn btn-outline-secondary btn-sm btn-block mt-5 mb-1" style="font-size:80%;opacity:0.4" href="{{route('register')}}" role="button">{{__('créer un compte')}}</a>
-					<span style="font-size:70%;color:#dadfe2;">{{__('pour créer, sauvegarder, modifier et partager des puzzles')}}</span>
+
+			<div class="intro col-md-4 offset-md-2 text-monospace">
+				<h2>{!!__('Créer et partager des puzzles de Parsons', ['link' => route('about')])!!}</h2>
+				<div class="mx-auto mt-3 text-center" style="width:160px">
+					<a class="btn btn-success btn-sm btn-block" href="{{ route('puzzle-creer-get')}}" role="button">{{__('créer un puzzle')}}</a>
 				</div>
-				<!--
-				<p class="small text-justify">{{__('wikipedia_parsons')}} <a href="" target="_blank" class="wikipedia">w</a></p>
-				-->
+			</div>
+			<div class="intro col-md-4 text-monospace">
+				<h2>{!!__('Créer et partager des défis', ['link' => route('about')])!!}</h2>				
+				<div class="mx-auto mt-3 text-center" style="width:160px">
+					<a class="btn btn-success btn-sm btn-block" href="{{ route('defi-creer-get')}}" role="button">{{__('créer un défi')}}</a>
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<p class="text-monospace text-muted small text-center mt-5">
-		<a class="btn btn-light btn-sm mr-1" href="https://www.codepuzzle.io/p/NHVL" target="_blank" role="button">{{__('exemple 1')}}</a>
-		<a class="btn btn-light btn-sm ml-1" href="https://www.codepuzzle.io/p/39K2" target="_blank" role="button">{{__('exemple 2')}}</a>
-	</p>
 
-	<p class="text-center mt-3 pt-3">
-		<img src="{{ asset('img/demo.gif') }}" class="img-fluid" />
-	</p>
+		<div class="mx-auto mt-4 text-center" style="width:160px">
+			<a class="btn btn-outline-secondary btn-sm btn-block mt-5 mb-1" style="font-size:80%;opacity:0.4" href="{{route('register')}}" role="button">{{__('créer un compte')}}</a>
+			<span style="font-size:70%;color:#dadfe2;">{{__('pour créer, sauvegarder, modifier et partager des puzzles et les défis')}}</span>
+		</div>
+
+		<div class="row mt-5 text-center text-monospace">
+			<div class="col-md-3 offset-3">
+				<div><a class="btn btn-light btn-sm mr-1" href="https://www.codepuzzle.io/PNHVL" target="_blank" role="button">{{__('exemple 1')}}</a></div>
+				<div class="mt-3 mb-5"><img src="{{ asset('img/codepuzzle-puzzle.png') }}" class="img-fluid" /></div>
+			</div>
+			<div class="col-md-3">
+				<div><a class="btn btn-light btn-sm ml-1" href="https://www.codepuzzle.io/P39K2" target="_blank" role="button">{{__('exemple 2')}}</a></div>
+				<div class="mt-3 mb-5"><img src="{{ asset('img/codepuzzle-challenge.png') }}" class="img-fluid" /></div>
+			</div>
+		</div>
+
+	</div><!--container -->
 
 	@include('inc-footer')
 	@include('inc-bottom-js')

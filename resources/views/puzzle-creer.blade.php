@@ -2,11 +2,15 @@
 <html lang="fr">
 <head>
 	@include('inc-meta')
-    <title>{{ config('app.name') }} | {{ ucfirst(__('modifier')) }}</title>
+    <title>{{ config('app.name') }} | {{ ucfirst(__('nouveau puzzle')) }}</title>
 </head>
 <body>
 
-    @include('inc-nav-console')
+	@if(Auth::check())
+		@include('inc-nav-console')
+	@else
+		@include('inc-nav')
+	@endif
 
 	<!-- MODAL MARKDOWN HELP -->
 	<div class="modal fade" id="markdown_help" tabindex="-1" aria-labelledby="markdown_helpLabel" aria-hidden="true">
@@ -84,104 +88,115 @@
 	<!-- MODAL MARKDOWN HELP -->
 
 
-    <div class="container mt-4 mb-5">
+	<div class="container mt-4 mb-5">
 
 		<div class="row">
 
-            <div class="col-md-2 text-center pt-4">
-				<a class="btn btn-light btn-sm" href="/console" role="button"><i class="fas fa-arrow-left"></i></a>
+			<div class="col-md-2 text-right">
+				@if(Auth::check())
+				<a class="btn btn-light btn-sm" href="/console/puzzles" role="button"><i class="fas fa-arrow-left"></i></a>
+				@else
+				<a class="btn btn-light btn-sm" href="/" role="button"><i class="fas fa-arrow-left"></i></a>
+				@endif				
 			</div>
 
-            <div class="col-md-9 pt-4">
+			<div class="col-md-10 pl-4 pr-4">
 
-				<form method="POST" action="{{route('code-modifier-post')}}">
+				<h1>{{__('nouveau puzzle')}}</h1>
+
+				<form method="POST" action="{{route('puzzle-creer-post')}}">
 
 					@csrf
 
-                    <?php
-                    $code = App\Models\Code::where([['user_id', Auth::id()], ['id', Crypt::decryptString($code_id)]])->first();
-                    ?>
-					<div class="text-monospace">TITRE<sup class="text-danger small">*</span></div>
-					<div class="text-monospace text-muted small text-justify mb-1">Visible par vous seulement</div>
-					<input id="titre_enseignant" type="text" class="form-control @error('titre_enseignant') is-invalid @enderror" name="titre_enseignant" value="{{ old('titre_enseignant', $code->titre_enseignant) }}" autofocus>
+					<!-- TITRE -->
+					@if(Auth::check())
+					<div class="text-monospace">{{strtoupper(__('titre'))}}<sup class="text-danger small">*</sup></div>
+					<div class="text-monospace text-muted small text-justify mb-1">{{__('Visible par vous seulement')}}</div>
+					<input id="titre_enseignant" type="text" class="form-control @error('titre_enseignant') is-invalid @enderror" name="titre_enseignant" value="{{ old('titre_enseignant') }}" autofocus>
 					@error('titre_enseignant')
 						<span class="invalid-feedback" role="alert">
 							<strong>{{ $message }}</strong>
 						</span>
 					@enderror
+					@endif
+					<!-- /TITRE -->
 
-					<div class="mt-3 text-monospace">SOUS-TITRE <span class="font-italic small" style="color:silver;">optionnel</span></div>
-					<div class="text-monospace text-muted small text-justify mb-1">Visible par vous seulement</div>
-					<input id="sous_titre_enseignant" type="text" class="form-control @error('sous_titre_enseignant') is-invalid @enderror" name="sous_titre_enseignant" value="{{ old('sous_titre_enseignant', $code->sous_titre_enseignant) }}" autofocus>
+					<!-- SOUS TITRE -->
+					@if(Auth::check())
+					<div class="mt-3 text-monospace">{{strtoupper(__('sous-titre'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
+					<div class="text-monospace text-muted small text-justify mb-1">{{__('Visible par vous seulement')}}</div>
+					<input id="sous_titre_enseignant" type="text" class="form-control @error('sous_titre_enseignant') is-invalid @enderror" name="sous_titre_enseignant" value="{{ old('sous_titre_enseignant') }}" autofocus>
+					@endif
+					<!-- /SOUS TITRE -->
 
-					<div class="mt-3 text-monospace">TITRE ÉLÈVE <span class="font-italic small" style="color:silver;">optionnel</span></div>
-					<div class="text-monospace text-muted small text-justify mb-1">Visible par l'élève</div>
-					<input id="titre_eleve" type="text" class="form-control @error('titre_eleve') is-invalid @enderror" name="titre_eleve" value="{{ old('titre_eleve', $code->titre_eleve) }}" autofocus>
+					<!-- TITRE ELEVE -->
+					@if(Auth::check())
+					<div class="mt-3 text-monospace">{{strtoupper(__('titre élève'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
+					<div class="text-monospace text-muted small text-justify mb-1">{{__('Visible par l élève')}}</div>
+					<input id="titre_eleve" type="text" class="form-control @error('titre_eleve') is-invalid @enderror" name="titre_eleve" value="{{ old('titre_eleve') }}" autofocus>
+					@endif
+					<!-- /TITRE ELEVE -->
 
+					<!-- CONSIGNES -->
 					<div class="mt-3 text-monospace">
-						CONSIGNES <span class="font-italic small" style="color:silver;">optionnel</span>
+						{{strtoupper(__('consignes'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span>
 						<i class="fas fa-info-circle pl-1" style="cursor:pointer;color:#e74c3c;opacity:0.5" data-toggle="modal" data-target="#markdown_help"></i>
 					</div>
-					<div class="text-monospace text-muted small text-justify mb-1">Consignes pour l'élève</div>
-					<textarea class="form-control" name="consignes_eleve" id="consignes_eleve" rows="6">{{ old('consignes_eleve', $code->consignes_eleve) }}</textarea>
-
-					<div class="mt-3 text-monospace">OPTIONS</div>
-					<?php
-					$with_dragdrop_checked = ($code->with_dragdrop == 1) ? "checked" : "";
-					$with_chrono_checked = ($code->with_chrono == 0) ? "checked" : "";
-					$with_score_checked = ($code->with_score == 0) ? "checked" : "";
-					$with_shuffle_checked = ($code->with_shuffle == 0) ? "checked" : "";
-					if (old()) {
-						$with_dragdrop_checked = (old('with_dragdrop') !== null) ? "checked" : "";
-						$with_chrono_checked = (old('with_chrono') !== null) ? "checked" : "";
-						$with_score_checked = (old('with_score') !== null) ? "checked" : "";
-						$with_shuffle_checked = (old('with_shuffle') !== null) ? "checked" : "";
-					}
-					?>
-					<div class="form-check">
-						<input class="form-check-input" name="with_dragdrop" type="checkbox" id="with_dragdrop" {{$with_dragdrop_checked}} />
-						<label class="form-check-label text-monospace text-muted small" for="with_dragdrop">{{__('mode "glisser-déposer" même si le puzzle ne comporte pas de fausses lignes de code')}}</label>
-					</div>					
-					<div class="form-check">
-						<input class="form-check-input" name="with_chrono" type="checkbox" id="with_chrono" {{$with_chrono_checked}} />
-						<label class="form-check-label text-monospace text-muted small" for="with_chrono">ne pas afficher le chronomètre</label>
-					</div>
-					<div class="form-check">
-						<input class="form-check-input" name="with_score" type="checkbox" id="with_score" {{$with_score_checked}} />
-						<label class="form-check-label text-monospace text-muted small" for="with_score">ne pas afficher les points</label>
-					</div>
-					<div class="form-check" style="display:none">
-						<input class="form-check-input" name="with_shuffle" type="checkbox" id="with_shuffle" {{$with_shuffle_checked}} />
-						<label class="form-check-label text-monospace text-muted small" for="with_shuffle">ne pas mélanger les lignes de code</label>
-					</div>
-
-					<div class="mt-3 text-monospace">CODE<sup class="text-danger small">*</span></div>
+					@if(Auth::check())
+					<div class="text-monospace text-muted small text-justify mb-1">{{__('Consignes pour l élève')}}</div>
+					@endif
+					<textarea class="form-control" name="consignes_eleve" id="consignes_eleve" rows="4">{{ old('consignes_eleve') }}</textarea>
+					<!-- /CONSIGNES -->
+					
+					<!-- CODE -->
+					<div class="mt-3 text-monospace">{{strtoupper(__('code'))}}<sup class="text-danger small">*</sup></div>
 					<div class="text-monospace text-muted small text-justify mb-2 p-2" style="border:solid 1px silver;border-radius:4px;">
-						SYNTAXE POUR CODE À TROUS<br />
-						Code à compléter: [?code?]</br>
-						Choix multiples: [?code_correct?distracteur1?distracteur2?distracteur3?]
+						{{strtoupper(__('Syntaxe pour code à trous'))}}<br />
+						{{__('Code à compléter')}}: [?code?]</br>
+						{{__('Choix multiples')}}: {{__('[?code_correct?distracteur1?distracteur2?distracteur3?]')}}
 					</div>
-
 					<textarea name="code" style="display:none;" id="code"></textarea>
-					<div style="width:100%;margin:0px auto 0px auto;"><div id="editor_code" style="border-radius:5px;">{{ old('code', $code->code) }}</div></div>
+					<div style="width:100%;margin:0px auto 0px auto;"><div id="editor_code" style="border-radius:5px;">{{ old('code') }}</div></div>
 					@error('code')
 						<span class="invalid-feedback d-block" role="alert">
 							<strong>{{ $message }}</strong>
 						</span>
 					@enderror
+					<!-- /CODE -->
 
-					<div class="mt-3 text-monospace">FAUX CODE <span class="font-italic small" style="color:silver;">optionnel</span></div>
+					<!-- FAUX CODE -->
+					<div class="mt-3 text-monospace">{{strtoupper(__('faux code'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
 					<div class="text-monospace text-muted small text-justify mb-1">
-						Vous pouvez ajouter de fausses lignes de code qui seront mélangées aux lignes de code du code ci-dessus mais qui seront considérées comme des lignes inutiles qui ne doivent pas être placées dans le code final.
+						{{__('Vous pouvez ajouter de fausses lignes de code qui seront mélangées aux lignes de code du code ci-dessus mais qui seront considérées comme des lignes inutiles qui ne doivent pas être placées dans le code final.')}}
 					</div>
 					<textarea name="fakecode" style="display:none;" id="fakecode"></textarea>
-					<div style="width:100%;margin:0px auto 0px auto;"><div id="editor_fakecode" style="border-radius:5px;">{{ old('fakecode', $code->fakecode) }}</div></div>
+					<div style="width:100%;margin:0px auto 0px auto;"><div id="editor_fakecode" style="border-radius:5px;">{{ old('fakecode') }}</div></div>
+					<!-- /FAUX CODE -->
 
-                    <input type="hidden" name="code_id" value="{{ $code_id }}" />
+					<!-- OPTIONS -->
+					<div class="mt-3 text-monospace">OPTIONS</div>
+					<?php
+					$with_dragdrop_checked = (old('with_dragdrop') !== null) ? "checked" : "";
+					$with_chrono_checked = (old('with_chrono') !== null) ? "checked" : "";
+					$with_nbverif_checked = (old('with_nbverif') !== null) ? "checked" : "";
+					?>
+					<div class="form-check">
+						<input class="form-check-input" name="with_dragdrop" type="checkbox" id="with_dragdrop" {{$with_dragdrop_checked}} />
+						<label class="form-check-label text-monospace text-muted small" for="with_dragdrop">{{__('mode "glisser-déposer" même si le puzzle ne comporte pas de fausses lignes de code')}}</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" name="with_chrono" type="checkbox" id="with_chrono" {{$with_chrono_checked}} />
+						<label class="form-check-label text-monospace text-muted small" for="with_chrono">{{__('ne pas afficher le chronomètre')}}</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" name="with_nbverif" type="checkbox" id="with_nbverif" {{$with_nbverif_checked}} />
+						<label class="form-check-label text-monospace text-muted small" for="with_nbverif">{{__('ne pas afficher le nombre de vérifications')}}</label>
+					</div>				
+					<!-- /OPTIONS -->					
 
 					<input id="lang" type="hidden" name="lang" value="{{app()->getLocale()}}" />
 
-					<button type="submit" class="btn btn-primary mt-4 pl-4 pr-4"><i class="fas fa-check"></i></button>
+					<button type="submit" class="btn btn-primary mt-4 pl-4 pr-4 mb-5"><i class="fas fa-check"></i></button>
 
 				</form>
 

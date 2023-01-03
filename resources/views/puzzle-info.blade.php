@@ -2,37 +2,37 @@
 <html lang="{{ app()->getLocale() }}">
 <head>
     @php
-        $description = 'Puzzle Console - ' . strtoupper($jeton);
-        $description_og = '| Puzzle Console - ' . strtoupper($jeton);
+        $description = 'Puzzle - ' . strtoupper($puzzle_jeton);
+        $description_og = '| Puzzle - ' . strtoupper($puzzle_jeton);
     @endphp
     @include('inc-meta')
-    <title>{{ config('app.name') }} | Puzzle Console - {{strtoupper($jeton)}}</title>
+    <title>{{ config('app.name') }} | Puzzle - {{strtoupper($puzzle_jeton)}}</title>
 </head>
 <body>
 
     @include('inc-nav')
 
     <?php
-    $puzzle = App\Models\Site_puzzle::where('jeton', $jeton)->first();
+    $puzzle = App\Models\Puzzle::where('jeton', $puzzle_jeton)->first();
     $lang = ($puzzle->lang == 'fr') ? '/':'/en';
     ?>
 
 	<div class="container mt-5 mb-5">
 
         <div class="text-monospace font-weight-bolder text-center" style="font-size:1.5em;color:silver">
-            <a href="/p/{{ strtoupper($puzzle->jeton) }}" target="_blank">www.codepuzzle.io/p/{{ strtoupper($puzzle->jeton) }}</a>
+            <a href="/P{{ strtoupper($puzzle->jeton) }}" target="_blank">www.codepuzzle.io/P{{ strtoupper($puzzle->jeton) }}</a>
         </div>
         <div class="text-center mt-2 mb-4">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?data={{urlencode('www.codepuzzle.io/p/' . $puzzle->jeton)}}&amp;size=100x100" style="width:100px" alt="www.codepuzzle.io/p/{{$puzzle->jeton}}" data-toggle="tooltip" data-placement="right" title="{{__('clic droit + Enregistrer l image sous... pour sauvegarder l image')}}" />
+            <img src="https://api.qrserver.com/v1/create-qr-code/?data={{urlencode('https://www.codepuzzle.io/P' . strtoupper($puzzle->jeton))}}&amp;size=100x100" style="width:100px" alt="www.codepuzzle.io/P{{strtoupper($puzzle->jeton)}}" data-toggle="tooltip" data-placement="right" title="{{__('clic droit + Enregistrer l image sous... pour sauvegarder l image')}}" />
         </div>
 
 		<div class="row pt-3">
 
 			<div class="col-md-2">
 
-                <a class="btn btn-light btn-sm mb-4" href="{{$lang}}" role="button"><i class="fas fa-arrow-left"></i></a>
+                <div class="text-right"><a class="btn btn-light btn-sm mb-4" href="{{$lang}}" role="button"><i class="fas fa-arrow-left"></i></a></div>
 
-                <a class="btn btn-success btn-sm mb-4" href="{{route('site-puzzle-creer-get')}}" role="button" style="width:100%;">{{__('créer un nouveau puzzle')}}</a>
+                <a class="btn btn-success btn-sm mb-4 text-monospace" href="{{route('puzzle-creer-get')}}" role="button" style="width:100%;">{{__('créer un nouveau puzzle')}}</a>
 
                 <a href="https://github.com/codepuzzle-io/www.codepuzzle.io/discussions" target="_blank" role="button" class="mt-2 btn btn-light btn-sm text-left text-muted" style="width:100%;opacity:0.8;">
                 	<span style="font-size:80%"><i class="fas fa-comment-alt" style="float:left;margin:4px 8px 5px 0px;"></i> {{__('discussions')}} <span style="opacity:0.6;font-size:90%;">&</span> {{__('annonces')}}</span>
@@ -57,7 +57,7 @@
                             <div class="text-monospace text-muted mb-3 small">
                                 <i class="fas fa-share-alt ml-1 mr-1"></i> {{__('Code à insérer dans un site web')}}
                                 <div class="mt-1" style="margin-left:22px;">
-                                    <input class="form-control form-control-sm" type="text" value='<iframe src="https://www.codepuzzle.io/iframe/{{ strtoupper($puzzle->jeton) }}" width="100%" height="600" frameborder="0"></iframe>' disabled readonly />
+                                    <input class="form-control form-control-sm" type="text" value='<iframe src="https://www.codepuzzle.io/IP{{ strtoupper($puzzle->jeton) }}" width="100%" height="600" frameborder="0"></iframe>' disabled readonly />
                                 </div>
                                 <p class="text-monospace mt-1" style="margin-left:22px;font-size:90%";color:silver>{{__('Remarque : ajuster la valeur de "height" en fonction de la taille du puzzle')}}</p>
                             </div>
@@ -65,7 +65,7 @@
                                 <i class="fas fa-share-alt ml-1 mr-1"></i> {{__('Code à insérer dans une cellule code d un notebook Jupyter')}}
                                 <div class="mt-1" style="margin-left:22px;">
                                     <textarea class="form-control form-control-sm" rows="2" disabled readonly>from IPython.display import IFrame
-IFrame('https://www.codepuzzle.io/iframe/{{ strtoupper($puzzle->jeton) }}', width='100%', height=600)</textarea>
+IFrame('https://www.codepuzzle.io/IP{{ strtoupper($puzzle->jeton) }}', width='100%', height=600)</textarea>
                                 </div>
                                 <p class="text-monospace mt-1" style="margin-left:22px;font-size:90%";color:silver>{{__('Remarque : ajuster la valeur de "height" en fonction de la taille du puzzle')}}</p>
                             </div>

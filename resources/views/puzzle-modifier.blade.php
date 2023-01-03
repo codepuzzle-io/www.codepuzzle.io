@@ -1,20 +1,12 @@
 <!doctype html>
-<html lang="{{ app()->getLocale() }}">
+<html lang="fr">
 <head>
-	@php
-		$description = ucfirst(__('créer un nouveau puzzle'));
-		$description_og = '| ' . ucfirst(__('créer un nouveau puzzle'));
-	@endphp
 	@include('inc-meta')
-    <title>{{ config('app.name') }} | {{ ucfirst(__('créer un nouveau puzzle')) }}</title>
+    <title>{{ config('app.name') }} | Puzzle | {{ ucfirst(__('modifier')) }}</title>
 </head>
 <body>
 
-	<?php
-	$lang = (app()->getLocale() == 'fr') ? '/':'/en';
-	?>
-
-	@include('inc-nav')
+    @include('inc-nav-console')
 
 	<!-- MODAL MARKDOWN HELP -->
 	<div class="modal fade" id="markdown_help" tabindex="-1" aria-labelledby="markdown_helpLabel" aria-hidden="true">
@@ -91,37 +83,58 @@
 	</div>
 	<!-- MODAL MARKDOWN HELP -->
 
-	<div class="container mt-4 mb-5">
+
+    <div class="container mt-4 mb-5">
 
 		<div class="row">
 
-			<div class="col-md-2 text-center pt-4">
-				<a class="btn btn-light btn-sm" href="{{ $lang }}" role="button"><i class="fas fa-arrow-left"></i></a>
+            <div class="col-md-2 text-center pt-4">
+				<a class="btn btn-light btn-sm" href="/console" role="button"><i class="fas fa-arrow-left"></i></a>
 			</div>
 
-			<div class="col-md-9">
+            <div class="col-md-9 pt-4">
 
-				<h1>{{__('nouveau puzzle')}}</h1>
-
-				<form method="POST" action="{{route('site-puzzle-creer-post')}}">
+				<form method="POST" action="{{route('puzzle-modifier-post')}}">
 
 					@csrf
 
-					<div class="text-monospace">{{strtoupper(__('titre'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
-					<input id="titre" type="text" class="form-control @error('titre') is-invalid @enderror" name="titre" value="{{ old('titre') }}" autofocus />
+                    <?php
+                    $puzzle = App\Models\Puzzle::where([['user_id', Auth::id()], ['id', Crypt::decryptString($puzzle_id)]])->first();
+                    ?>
+					<div class="text-monospace">TITRE<sup class="text-danger small">*</span></div>
+					<div class="text-monospace text-muted small text-justify mb-1">Visible par vous seulement</div>
+					<input id="titre_enseignant" type="text" class="form-control @error('titre_enseignant') is-invalid @enderror" name="titre_enseignant" value="{{ old('titre_enseignant', $puzzle->titre_enseignant) }}" autofocus>
+					@error('titre_enseignant')
+						<span class="invalid-feedback" role="alert">
+							<strong>{{ $message }}</strong>
+						</span>
+					@enderror
+
+					<div class="mt-3 text-monospace">SOUS-TITRE <span class="font-italic small" style="color:silver;">optionnel</span></div>
+					<div class="text-monospace text-muted small text-justify mb-1">Visible par vous seulement</div>
+					<input id="sous_titre_enseignant" type="text" class="form-control @error('sous_titre_enseignant') is-invalid @enderror" name="sous_titre_enseignant" value="{{ old('sous_titre_enseignant', $puzzle->sous_titre_enseignant) }}" autofocus>
+
+					<div class="mt-3 text-monospace">TITRE ÉLÈVE <span class="font-italic small" style="color:silver;">optionnel</span></div>
+					<div class="text-monospace text-muted small text-justify mb-1">Visible par l'élève</div>
+					<input id="titre_eleve" type="text" class="form-control @error('titre_eleve') is-invalid @enderror" name="titre_eleve" value="{{ old('titre_eleve', $puzzle->titre_eleve) }}" autofocus>
 
 					<div class="mt-3 text-monospace">
-						{{strtoupper(__('consignes'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span>
+						CONSIGNES <span class="font-italic small" style="color:silver;">optionnel</span>
 						<i class="fas fa-info-circle pl-1" style="cursor:pointer;color:#e74c3c;opacity:0.5" data-toggle="modal" data-target="#markdown_help"></i>
 					</div>
-					<textarea class="form-control" name="consignes" id="consignes" rows="6">{{ old('consignes') }}</textarea>
+					<div class="text-monospace text-muted small text-justify mb-1">Consignes pour l'élève</div>
+					<textarea class="form-control" name="consignes_eleve" id="consignes_eleve" rows="6">{{ old('consignes_eleve', $puzzle->consignes_eleve) }}</textarea>
 
 					<div class="mt-3 text-monospace">OPTIONS</div>
 					<?php
-					$with_dragdrop_checked = (old('with_dragdrop') !== null) ? "checked" : "";
-					$with_chrono_checked = (old('with_chrono') !== null AND old('with_chrono') == 0) ? "checked" : "";
-					$with_score_checked = (old('with_score') !== null AND old('with_score') == 0) ? "checked" : "";
-					$with_shuffle_checked = (old('with_shuffle') !== null AND old('with_shuffle') == 0) ? "checked" : "";
+					$with_dragdrop_checked = ($puzzle->with_dragdrop == 1) ? "checked" : "";
+					$with_chrono_checked = ($puzzle->with_chrono == 0) ? "checked" : "";
+					$with_nbverif_checked = ($puzzle->with_nbverif == 0) ? "checked" : "";
+					if (old()) {
+						$with_dragdrop_checked = (old('with_dragdrop') !== null) ? "checked" : "";
+						$with_chrono_checked = (old('with_chrono') !== null) ? "checked" : "";
+						$with_nbverif_checked = (old('with_nbverif') !== null) ? "checked" : "";
+					}
 					?>
 					<div class="form-check">
 						<input class="form-check-input" name="with_dragdrop" type="checkbox" id="with_dragdrop" {{$with_dragdrop_checked}} />
@@ -129,42 +142,40 @@
 					</div>					
 					<div class="form-check">
 						<input class="form-check-input" name="with_chrono" type="checkbox" id="with_chrono" {{$with_chrono_checked}} />
-						<label class="form-check-label text-monospace text-muted small" for="with_chrono">{{__('ne pas afficher le chronomètre')}}</label>
+						<label class="form-check-label text-monospace text-muted small" for="with_chrono">ne pas afficher le chronomètre</label>
 					</div>
 					<div class="form-check">
-						<input class="form-check-input" name="with_score" type="checkbox" id="with_score" {{$with_score_checked}} />
-						<label class="form-check-label text-monospace text-muted small" for="with_score">{{__('ne pas afficher les points')}}</label>
-					</div>
-					<div class="form-check" style="display:none">
-						<input class="form-check-input" name="with_shuffle" type="checkbox" id="with_shuffle" {{$with_shuffle_checked}} />
-						<label class="form-check-label text-monospace text-muted small" for="with_shuffle">{{__('ne pas mélanger les lignes de code')}}</label>
-					</div>
+						<input class="form-check-input" name="with_nbverif" type="checkbox" id="with_nbverif" {{$with_nbverif_checked}} />
+						<label class="form-check-label text-monospace text-muted small" for="with_nbverif">ne pas afficher le nombre de tentatives</label>
+					</div>			
 
-					<div class="mt-3 text-monospace">{{strtoupper(__('code'))}}<sup class="text-danger small">*</span></div>
+					<div class="mt-3 text-monospace">CODE<sup class="text-danger small">*</span></div>
 					<div class="text-monospace text-muted small text-justify mb-2 p-2" style="border:solid 1px silver;border-radius:4px;">
-						{{strtoupper(__('Syntaxe pour code à trous'))}}<br />
-						{{__('Code à compléter')}}: [?code?]</br>
-						{{__('Choix multiples')}}: {{__('[?code_correct?distracteur1?distracteur2?distracteur3?]')}}
+						SYNTAXE POUR CODE À TROUS<br />
+						Code à compléter: [?code?]</br>
+						Choix multiples: [?code_correct?distracteur1?distracteur2?distracteur3?]
 					</div>
 
 					<textarea name="code" style="display:none;" id="code"></textarea>
-					<div style="width:100%;margin:0px auto 0px auto;"><div id="editor_code" style="border-radius:5px;">{{ old('code') }}</div></div>
+					<div style="width:100%;margin:0px auto 0px auto;"><div id="editor_code" style="border-radius:5px;">{{ old('code', $puzzle->code) }}</div></div>
 					@error('code')
 						<span class="invalid-feedback d-block" role="alert">
 							<strong>{{ $message }}</strong>
 						</span>
 					@enderror
 
-					<div class="mt-3 text-monospace">{{strtoupper(__('faux code'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
+					<div class="mt-3 text-monospace">FAUX CODE <span class="font-italic small" style="color:silver;">optionnel</span></div>
 					<div class="text-monospace text-muted small text-justify mb-1">
-						{{__('Vous pouvez ajouter de fausses lignes de code qui seront mélangées aux lignes de code du code ci-dessus mais qui seront considérées comme des lignes inutiles qui ne doivent pas être placées dans le code final.')}}
+						Vous pouvez ajouter de fausses lignes de code qui seront mélangées aux lignes de code du code ci-dessus mais qui seront considérées comme des lignes inutiles qui ne doivent pas être placées dans le code final.
 					</div>
 					<textarea name="fakecode" style="display:none;" id="fakecode"></textarea>
-					<div style="width:100%;margin:0px auto 0px auto;"><div id="editor_fakecode" style="border-radius:5px;">{{ old('fakecode') }}</div></div>
+					<div style="width:100%;margin:0px auto 0px auto;"><div id="editor_fakecode" style="border-radius:5px;">{{ old('fakecode', $puzzle->fakecode) }}</div></div>
+
+                    <input type="hidden" name="puzzle_id" value="{{ $puzzle_id }}" />
 
 					<input id="lang" type="hidden" name="lang" value="{{app()->getLocale()}}" />
 
-					<button type="submit" class="btn btn-primary mt-4 pl-4 pr-4"><i class="fas fa-check"></i></button>
+					<button type="submit" class="btn btn-primary mt-4 pl-4 pr-4 mb-5"><i class="fas fa-check"></i></button>
 
 				</form>
 

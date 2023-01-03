@@ -2,15 +2,11 @@
 <html lang="fr">
 <head>
 	@include('inc-meta')
-    <title>{{ config('app.name') }} | {{ ucfirst(__('nouveau défi')) }}</title>
+    <title>{{ config('app.name') }} | {{ ucfirst(__('défi')) }} | {{ ucfirst(__('modifier')) }}</title>
 </head>
 <body>
 
-	@if(Auth::check())
-		@include('inc-nav-console')
-	@else
-		@include('inc-nav')
-	@endif
+    @include('inc-nav-console')
 
 	<!-- MODAL MARKDOWN HELP -->
 	<div class="modal fade" id="markdown_help" tabindex="-1" aria-labelledby="markdown_helpLabel" aria-hidden="true">
@@ -87,54 +83,46 @@
 	</div>
 	<!-- MODAL MARKDOWN HELP -->
 
+	<?php
+        $defi = App\Models\Defi::where([['user_id', Auth::id()], ['id', Crypt::decryptString($defi_id)]])->first();
+		$tests = unserialize($defi->tests);
+    ?>
 
-	<div class="container mt-4 mb-5">
+    <div class="container mt-4 mb-5">
 
 		<div class="row">
 
-			<div class="col-md-2 text-right">
-				@if(Auth::check())
-				<a class="btn btn-light btn-sm" href="/console/defis" role="button"><i class="fas fa-arrow-left"></i></a>
-				@else
-				<a class="btn btn-light btn-sm" href="/" role="button"><i class="fas fa-arrow-left"></i></a>
-				@endif
+            <div class="col-md-2 text-center pt-4">
+				<a class="btn btn-light btn-sm" href="/console" role="button"><i class="fas fa-arrow-left"></i></a>
 			</div>
 
-			<div class="col-md-10 pl-4 pr-4">
+            <div class="col-md-9 pt-4">
 
-				<h1>{{__('nouveau défi')}}</h1>
-
-				<form method="POST" action="{{route('defi-creer-post')}}">
+				<form method="POST" action="{{route('defi-modifier-post')}}">
 
 					@csrf
-				
+
 					<!-- TITRE -->
-					@if(Auth::check())
 					<div class="text-monospace">{{strtoupper(__('titre'))}}<sup class="text-danger small">*</sup></div>
 					<div class="text-monospace text-muted small text-justify mb-1">{{__('Visible par vous seulement')}}</div>
-					<input id="titre_enseignant" type="text" class="form-control @error('titre_enseignant') is-invalid @enderror" name="titre_enseignant" value="{{ old('titre_enseignant') }}" autofocus>
+					<input id="titre_enseignant" type="text" class="form-control @error('titre_enseignant') is-invalid @enderror" name="titre_enseignant" value="{{ old('titre_enseignant', $defi->titre_enseignant) }}" autofocus>
 					@error('titre_enseignant')
 						<span class="invalid-feedback" role="alert">
 							<strong>{{ $message }}</strong>
 						</span>
 					@enderror
-					@endif
 					<!-- /TITRE -->
 
 					<!-- SOUS TITRE -->
-					@if(Auth::check())
 					<div class="mt-3 text-monospace">{{strtoupper(__('sous-titre'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
 					<div class="text-monospace text-muted small text-justify mb-1">{{__('Visible par vous seulement')}}</div>
-					<input id="sous_titre_enseignant" type="text" class="form-control @error('sous_titre_enseignant') is-invalid @enderror" name="sous_titre_enseignant" value="{{ old('sous_titre_enseignant') }}" autofocus>
-					@endif
+					<input id="sous_titre_enseignant" type="text" class="form-control @error('sous_titre_enseignant') is-invalid @enderror" name="sous_titre_enseignant" value="{{ old('sous_titre_enseignant', $defi->sous_titre_enseignant) }}" autofocus>
 					<!-- /SOUS TITRE -->
 
 					<!-- TITRE ELEVE -->
-					@if(Auth::check())
 					<div class="mt-3 text-monospace">{{strtoupper(__('titre élève'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
 					<div class="text-monospace text-muted small text-justify mb-1">{{__('Visible par l élève')}}</div>
-					<input id="titre_eleve" type="text" class="form-control @error('titre_eleve') is-invalid @enderror" name="titre_eleve" value="{{ old('titre_eleve') }}" autofocus>
-					@endif
+					<input id="titre_eleve" type="text" class="form-control @error('titre_eleve') is-invalid @enderror" name="titre_eleve" value="{{ old('titre_eleve, $defi->titre_eleve') }}" autofocus>
 					<!-- /TITRE ELEVE -->
 
 					<!-- CONSIGNES -->
@@ -142,16 +130,14 @@
 						{{strtoupper(__('consignes'))}}<sup class="text-danger small">*</sup>
 						<i class="fas fa-info-circle" style="cursor:pointer;color:#e74c3c;opacity:0.5" data-toggle="modal" data-target="#markdown_help"></i>
 					</div>
-					@if(Auth::check())
 					<div class="text-monospace text-muted small text-justify mb-1">{{__('Consignes pour l élève')}}</div>
-					@endif
-					<textarea class="form-control @error('consignes_eleve') is-invalid @enderror" name="consignes_eleve" id="consignes_eleve" rows="6">{{ old('consignes_eleve') }}</textarea>
+					<textarea class="form-control @error('consignes_eleve') is-invalid @enderror" name="consignes_eleve" id="consignes_eleve" rows="6">{{ old('consignes_eleve', $defi->consignes_eleve) }}</textarea>
 					@error('consignes_eleve')
 						<span class="invalid-feedback" role="alert">
 							<strong>{{ $message }}</strong>
 						</span>
 					@enderror
-
+					<!-- /CONSIGNES -->
 
 					<!-- TESTS -->
 					<a id="tests_anchor"></a>
@@ -163,20 +149,30 @@
 							<td class="pl-4"></td>
 						</tr>
 						<tr>
-							<td class="align-top"><input type="text" class="form-control @error('condition.0') is-invalid @enderror" name="condition[]" value="{{old('condition.0')}}" autofocus></td>
-							<td class="align-top"><input type="text" class="form-control" name="description[]" value="{{old('description.0')}}" autofocus></td>
+							<td class="align-top"><input type="text" class="form-control @error('condition.0') is-invalid @enderror" name="condition[]" value="{{old('condition.0', $tests[0][0])}}" autofocus></td>
+							<td class="align-top"><input type="text" class="form-control" name="description[]" value="{{old('description.0', $tests[0][1])}}" autofocus></td>
 							<td></td>
 						</tr>					
 						@if (!empty(old('condition')))
-						@foreach(old('condition') as $key => $condition)
-						@if ($key !== 0)
-							<tr>
-								<td><input type="text" class="form-control" name="condition[]" value="{{$condition}}" autofocus></td>
-								<td><input type="text" class="form-control" name="description[]" value="{{old('description')[$key]}}" autofocus></td>
-								<td><a href="#tests_anchor" onclick="removeTest(this)"><i class="ml-2 fas fa-trash" aria-hidden="true"></i></a></td>
-							</tr>
-						@endif
-						@endforeach
+							@foreach(old('condition') as $key => $condition)
+							@if ($key !== 0)
+								<tr>
+									<td><input type="text" class="form-control" name="condition[]" value="{{$condition}}" autofocus></td>
+									<td><input type="text" class="form-control" name="description[]" value="{{old('description')[$key]}}" autofocus></td>
+									<td><a href="#tests_anchor" onclick="removeTest(this)"><i class="ml-2 fas fa-trash" aria-hidden="true"></i></a></td>
+								</tr>
+							@endif
+							@endforeach
+						@else
+							@foreach($tests as $key => $test)
+							@if ($key !== 0)
+								<tr>
+									<td><input type="text" class="form-control" name="condition[]" value="{{$test[0]}}" autofocus></td>
+									<td><input type="text" class="form-control" name="description[]" value="{{$test[1]}}" autofocus></td>
+									<td><a href="#tests_anchor" onclick="removeTest(this)"><i class="ml-2 fas fa-trash" aria-hidden="true"></i></a></td>
+								</tr>
+							@endif
+							@endforeach							
 						@endif
 					</table>
 					<a id="add_button" class="btn btn-light btn-sm mt-1" href="#tests_anchor" role="button"><i class="fas fa-plus"></i></a>		
@@ -185,39 +181,46 @@
 					<!-- SOLUTION POSSIBLE --> 
 					<div class="mt-3 text-monospace">{{strtoupper(__('solution possible'))}}</div>
 					<textarea name="code" style="display:none;" id="code"></textarea>
-					<div style="width:100%;margin:0px auto 0px auto;"><div id="editor_code" style="border-radius:5px;">{{old('code')}}</div></div>
+					<div style="width:100%;margin:0px auto 0px auto;"><div id="editor_code" style="border-radius:5px;">{{old('code', $defi->code)}}</div></div>
 					<!-- /SOLUTION POSSIBLE --> 
 
 					<!-- OPTIONS -->
 					<div class="mt-3 text-monospace">OPTIONS</div>
 					<?php
-					$with_chrono_checked = (old('with_chrono') !== null) ? "checked" : "";
-					$with_nbverif_checked = (old('with_nbverif') !== null) ? "checked" : "";
-					$with_message_checked = (old('with_message') !== null) ? "checked" : "";
-					$with_console_checked = (old('with_console') !== null) ? "checked" : "";
-					?>
+					$with_chrono_checked = ($defi->with_chrono == 0) ? "checked" : "";
+					$with_nbverif_checked = ($defi->with_nbverif == 0) ? "checked" : "";
+					$with_message_checked = ($defi->with_message == 0) ? "checked" : "";
+					$with_console_checked = ($defi->with_console == 0) ? "checked" : "";
+					if (old()) {
+						$with_chrono_checked = (old('with_chrono') !== null) ? "checked" : "";
+						$with_nbverif_checked = (old('with_nbverif') !== null) ? "checked" : "";
+						$with_message_checked = (old('with_message') !== null) ? "checked" : "";
+						$with_console_checked = (old('with_console') !== null) ? "checked" : "";
+					}
+					?>					
 					<div class="form-check">
 						<input class="form-check-input" name="with_chrono" type="checkbox" value="0" id="with_chrono" {{$with_chrono_checked}} />
 						<label class="form-check-label text-monospace text-muted small" for="with_chrono">{{__('ne pas afficher le chronomètre')}}</label>
 					</div>
 					<div class="form-check">
-						<input class="form-check-input" name="with_nbverif" type="checkbox" id="with_nbverif" {{$with_nbverif_checked}} />
+						<input class="form-check-input" name="with_nbverif" type="checkbox" value="0" id="with_nbverif" {{$with_nbverif_checked}} />
 						<label class="form-check-label text-monospace text-muted small" for="with_nbverif">{{__('ne pas afficher le nombre de vérifications')}}</label>
-					</div>		
+					</div>
 					<div class="form-check">
-						<input class="form-check-input" name="with_message" type="checkbox" id="with_message" {{$with_message_checked}} />
+						<input class="form-check-input" name="with_message" type="checkbox" value="0" id="with_message" {{$with_message_checked}} />
 						<label class="form-check-label text-monospace text-muted small" for="with_message">{{__('ne pas afficher les messages des tests')}}</label>
 					</div>	
 					<div class="form-check">
-						<input class="form-check-input" name="with_console" type="checkbox" id="with_console" {{$with_console_checked}} />
+						<input class="form-check-input" name="with_console" type="checkbox" value="0" id="with_mwith_console" {{$with_console_checked}} />
 						<label class="form-check-label text-monospace text-muted small" for="with_console">{{__('ne pas afficher la console')}}</label>
-					</div>													
-					<!-- /OPTIONS -->
+					</div>						
+					<!-- /OPTIONS -->				
 
+                    <input type="hidden" name="defi_id" value="{{ $defi_id }}" />
 					<input id="lang" type="hidden" name="lang" value="{{app()->getLocale()}}" />
 
 					<button type="submit" class="btn btn-primary mt-4 mb-5 pl-4 pr-4"><i class="fas fa-check"></i></button>
-					
+
 				</form>
 
 			</div>
@@ -251,9 +254,7 @@
 			navigateWithinSoftTabs: false,
 			tabSize: 4
 		});
-
 		editor_code.container.style.lineHeight = 1.5;
-
 		var textarea_code = $('#code');
 		editor_code.getSession().on('change', function () {
 			textarea_code.val(editor_code.getSession().getValue());
@@ -282,7 +283,7 @@
 			tag.parentNode.parentNode.remove();
 		}
 		document.getElementById('add_button').addEventListener('click', addTest);
-	</script>
+	</script>	
 
 	<?php
 	/*

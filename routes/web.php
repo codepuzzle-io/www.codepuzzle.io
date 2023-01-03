@@ -1,30 +1,26 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ConfirmPasswordController;
 use App\Http\Controllers\Auth\VerificationController;
-
 use Illuminate\Support\Facades\Session;
 
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+// ============================================================================
+// == SETLOCALE & PREFIX BASED ON URL OR PREVIOUS URL
+// ============================================================================
 
-// LANGUAGES
-// Lang Public
+(in_array(request()->segment(1), ['en']) OR strpos(url()->previous(), '/en/')) ? app()->setLocale('en') : app()->setLocale('fr');
+$lang = (in_array(request()->segment(1), ['en']) OR strpos(url()->previous(), '/en/')) ? 'en/' : '';
+
+
+// ============================================================================
+// == LANGUAGES
+// ============================================================================
+
 Route::get('lang/{locale}', function ($locale){
     if (in_array($locale, ['en'])) {
         Session::put('lang',$locale);
@@ -43,52 +39,10 @@ Route::get('console/lang/{locale}', function ($locale){
     return redirect('console/');
 });
 
-// CHECK CCM & CAT
-Route::post('/ccm_cat', [App\Http\Controllers\SiteController::class, 'ccm_cat_verifier']);
-
-
-// SETLOCALE & PREFIX BASED ON URL OR PREVIOUS URL
-(in_array(request()->segment(1), ['en']) OR strpos(url()->previous(), '/en/')) ? app()->setLocale('en') : app()->setLocale('fr');
-$lang = (in_array(request()->segment(1), ['en']) OR strpos(url()->previous(), '/en/')) ? 'en/' : '';
-
-
-// ACCUEIL
-Route::view($lang, 'welcome')->name('home');
-
-// A PROPOS
-Route::view($lang.__('a-propos'), 'a-propos')->name('about');
-
-// DONNEE PERSONNELLES
-Route::view($lang.__('donnees-personnelles'), 'donnees-personnelles')->name('donnees-personnelles');
-
 
 // ============================================================================
-// PUZZLES
-
-// code creer
-Route::get($lang.__('creer-un-puzzle'), [App\Http\Controllers\SiteController::class, 'puzzle_creer_get'])->name('site-puzzle-creer-get');
-Route::post($lang.__('creer-un-puzzle'), [App\Http\Controllers\SiteController::class, 'puzzle_creer_post'])->name('site-puzzle-creer-post');
-Route::get($lang.'puzzle/{jeton}', function($jeton) {
-    return view("site-puzzle", ["jeton"=>$jeton]);
-})->name('site-puzzle');
-
-
-// affichage
-Route::get('/p/{jeton}', function($jeton) {
-    return view("puzzle", ["jeton"=>$jeton]);
-})->name('puzzle');
-
-// affichage iframe
-Route::get('/iframe/{jeton}', function($jeton) {
-    return view("puzzle-iframe", ["jeton"=>$jeton]);
-})->name('puzzle-iframe');
-
+// == AUTH ROUTES
 // ============================================================================
-
-
-// ============================================================================
-// AUTH ROUTES
-// Login Routes...
 
 Route::get($lang.__('se-connecter'), [LoginController::class, 'showLoginForm'])->name('login');
 Route::post($lang.__('se-connecter'), [LoginController::class, 'login']);
@@ -115,11 +69,89 @@ Route::get($lang.__('courriel').'/'.__('verifier'), [VerificationController::cla
 Route::get($lang.__('courriel').'/'.__('verifier').'/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
 Route::post($lang.__('courriel').'/'.__('renvoyer'), [VerificationController::class, 'resend'])->name('verification.resend');
 
+
 // ============================================================================
+// == LIENS USUELS
+// ============================================================================
+
+// ACCUEIL
+Route::view($lang, 'welcome')->name('home');
+
+// A PROPOS
+Route::view($lang.__('a-propos'), 'a-propos')->name('about');
+
+// DONNEE PERSONNELLES
+Route::view($lang.__('donnees-personnelles'), 'donnees-personnelles')->name('donnees-personnelles');
 
 
 // ============================================================================
-// CLEAR COOKIE
+// == CONSOLE CONTROLLER
+// ============================================================================
+
+Route::any('/console', [App\Http\Controllers\ConsoleController::class, 'console'])->name('console');
+Route::any('/console/puzzles', [App\Http\Controllers\ConsoleController::class, 'console_puzzles'])->name('console-puzzles');
+Route::any('/console/defis', [App\Http\Controllers\ConsoleController::class, 'console_defis'])->name('console-defis');
+
+// puzzle modifier
+Route::get('/console/puzzle-modifier/', [App\Http\Controllers\ConsoleController::class, 'redirect']);
+Route::get('/console/puzzle-modifier/{puzzle_id}', [App\Http\Controllers\ConsoleController::class, 'puzzle_modifier_get'])->name('puzzle-modifier-get');
+Route::post('/console/puzzle-modifier', [App\Http\Controllers\ConsoleController::class, 'puzzle_modifier_post'])->name('puzzle-modifier-post');
+
+// defi modifier
+Route::get('/console/defi-modifier/', [App\Http\Controllers\ConsoleController::class, 'redirect']);
+Route::get('/console/defi-modifier/{defi_id}', [App\Http\Controllers\ConsoleController::class, 'defi_modifier_get'])->name('defi-modifier-get');
+Route::post('/console/defi-modifier', [App\Http\Controllers\ConsoleController::class, 'defi_modifier_post'])->name('defi-modifier-post');
+
+// puzzle supprimer
+Route::any('/console/puzzle-supprimer', [App\Http\Controllers\ConsoleController::class, 'redirect']);
+Route::any('/console/puzzle-supprimer/{puzzle_id}', [App\Http\Controllers\ConsoleController::class, 'puzzle_supprimer'])->name('puzzle-supprimer');
+
+// defi supprimer
+Route::any('/console/defi-supprimer', [App\Http\Controllers\ConsoleController::class, 'redirect']);
+Route::any('/console/defi-supprimer/{defi_id}', [App\Http\Controllers\ConsoleController::class, 'defi_supprimer'])->name('defi-supprimer');
+
+
+// ============================================================================
+// == SITE CONTROLLER
+// ============================================================================
+
+// puzzle creer
+Route::get('/puzzle-creer', [App\Http\Controllers\SiteController::class, 'puzzle_creer_get'])->name('puzzle-creer-get');
+Route::post('/puzzle-creer', [App\Http\Controllers\SiteController::class, 'puzzle_creer_post'])->name('puzzle-creer-post');
+
+// puzzle info
+Route::any('/puzzle-info/{puzzle_jeton}', [App\Http\Controllers\SiteController::class, 'puzzle_info'])->name('puzzle-info');
+
+// defi creer
+Route::get('/defi-creer', [App\Http\Controllers\SiteController::class, 'defi_creer_get'])->name('defi-creer-get');
+Route::post('/defi-creer', [App\Http\Controllers\SiteController::class, 'defi_creer_post'])->name('defi-creer-post');
+
+// defi info
+Route::any('/defi-info/{defi_jeton}', [App\Http\Controllers\SiteController::class, 'defi_info'])->name('defi-info');
+
+// ============================================================================
+// == RETRO COMPATIBILITE
+// ============================================================================
+Route::any('/p/{puzzle_jeton}', function ($puzzle_jeton) {
+    return view('puzzle')->with(['jeton' => $puzzle_jeton, 'iframe' => false]);
+});
+
+Route::any('/iframe/{puzzle_jeton}', function ($puzzle_jeton) {
+    return view('puzzle')->with(['jeton' => $puzzle_jeton, 'iframe' => true]);
+});
+
+
+
+// ============================================================================
+// == HUB
+// ============================================================================
+
+Route::any('/{hub_jeton}', [App\Http\Controllers\SiteController::class, 'hub'])->name('hub');
+
+
+// ============================================================================
+// == CLEAR COOKIE
+// ============================================================================
 
 Route::get($lang.'direct-'.__('creer-un-compte'), function(){
    Cookie::queue(Cookie::forget(strtolower(str_replace(' ', '_', config('app.name'))) . '_session'));
@@ -130,29 +162,3 @@ Route::get($lang.'direct-'.__('se-connecter'), function(){
    Cookie::queue(Cookie::forget(strtolower(str_replace(' ', '_', config('app.name'))) . '_session'));
    return redirect()->route('login');
 })->name('direct-login');
-
-// ============================================================================
-
-
-// ============================================================================
-// == CONSOLE
-// ============================================================================
-
-Route::get('/console', [App\Http\Controllers\ConsoleController::class, 'console_get'])->name('console');
-
-// code creer
-Route::get('/console/code-creer', [App\Http\Controllers\ConsoleController::class, 'code_creer_get'])->name('code-creer-get');
-Route::post('/console/code-creer', [App\Http\Controllers\ConsoleController::class, 'code_creer_post'])->name('code-creer-post');
-
-// code modifier
-Route::get('/console/code-modifier/', [App\Http\Controllers\ConsoleController::class, 'redirect']);
-Route::get('/console/code-modifier/{code_id}', [App\Http\Controllers\ConsoleController::class, 'code_modifier_get'])->name('code-modifier-get');
-Route::post('/console/code-modifier', [App\Http\Controllers\ConsoleController::class, 'code_modifier_post'])->name('code-modifier-post');
-
-// code supprimer
-Route::any('/console/code-supprimer', [App\Http\Controllers\ConsoleController::class, 'redirect']);
-Route::any('/console/code-supprimer/{code_id}', [App\Http\Controllers\ConsoleController::class, 'code_supprimer'])->name('code-supprimer');
-
-// defi creer
-Route::get('/console/defi-creer', [App\Http\Controllers\ConsoleController::class, 'defi_creer_get'])->name('defi-creer-get');
-Route::post('/console/defi-creer', [App\Http\Controllers\ConsoleController::class, 'defi_creer_post'])->name('defi-creer-post');
