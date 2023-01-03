@@ -39,11 +39,11 @@
 
 		<div class="row mt-5 text-center text-monospace">
 			<div class="col-md-3 offset-3">
-				<div><a class="btn btn-light btn-sm mr-1" href="https://www.codepuzzle.io/PNHVL" target="_blank" role="button">{{__('exemple 1')}}</a></div>
+				<div><a class="btn btn-light btn-sm mr-1" href="https://www.codepuzzle.io/PNHVL" target="_blank" role="button" style="font-size:70%">{{__('exemple 1')}}</a><a class="btn btn-light btn-sm ml-1" href="https://www.codepuzzle.io/P39K2" target="_blank" role="button" style="font-size:70%">{{__('exemple 2')}}</a></div>
 				<div class="mt-3 mb-5"><img src="{{ asset('img/codepuzzle-puzzle.png') }}" class="img-fluid" /></div>
 			</div>
 			<div class="col-md-3">
-				<div><a class="btn btn-light btn-sm ml-1" href="https://www.codepuzzle.io/P39K2" target="_blank" role="button">{{__('exemple 2')}}</a></div>
+				<div><a class="btn btn-light btn-sm mr-1" href="https://www.codepuzzle.io/DEHW2" target="_blank" role="button" style="font-size:70%">{{__('exemple 1')}}</a><a class="btn btn-light btn-sm ml-1" href="https://www.codepuzzle.io/DMH3R" target="_blank" role="button" style="font-size:70%">{{__('exemple 2')}}</a></div>
 				<div class="mt-3 mb-5"><img src="{{ asset('img/codepuzzle-challenge.png') }}" class="img-fluid" /></div>
 			</div>
 		</div>
