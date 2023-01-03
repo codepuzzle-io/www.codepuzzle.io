@@ -88,8 +88,8 @@
 
 		<div class="row">
 
-            <div class="col-md-2 text-center pt-4">
-				<a class="btn btn-light btn-sm" href="/console" role="button"><i class="fas fa-arrow-left"></i></a>
+            <div class="col-md-2 text-right pt-4">
+				<a class="btn btn-light btn-sm" href="/console/puzzles" role="button"><i class="fas fa-arrow-left"></i></a>
 			</div>
 
             <div class="col-md-9 pt-4">
@@ -125,29 +125,7 @@
 					<div class="text-monospace text-muted small text-justify mb-1">Consignes pour l'élève</div>
 					<textarea class="form-control" name="consignes_eleve" id="consignes_eleve" rows="6">{{ old('consignes_eleve', $puzzle->consignes_eleve) }}</textarea>
 
-					<div class="mt-3 text-monospace">OPTIONS</div>
-					<?php
-					$with_dragdrop_checked = ($puzzle->with_dragdrop == 1) ? "checked" : "";
-					$with_chrono_checked = ($puzzle->with_chrono == 0) ? "checked" : "";
-					$with_nbverif_checked = ($puzzle->with_nbverif == 0) ? "checked" : "";
-					if (old()) {
-						$with_dragdrop_checked = (old('with_dragdrop') !== null) ? "checked" : "";
-						$with_chrono_checked = (old('with_chrono') !== null) ? "checked" : "";
-						$with_nbverif_checked = (old('with_nbverif') !== null) ? "checked" : "";
-					}
-					?>
-					<div class="form-check">
-						<input class="form-check-input" name="with_dragdrop" type="checkbox" id="with_dragdrop" {{$with_dragdrop_checked}} />
-						<label class="form-check-label text-monospace text-muted small" for="with_dragdrop">{{__('mode "glisser-déposer" même si le puzzle ne comporte pas de fausses lignes de code')}}</label>
-					</div>					
-					<div class="form-check">
-						<input class="form-check-input" name="with_chrono" type="checkbox" id="with_chrono" {{$with_chrono_checked}} />
-						<label class="form-check-label text-monospace text-muted small" for="with_chrono">ne pas afficher le chronomètre</label>
-					</div>
-					<div class="form-check">
-						<input class="form-check-input" name="with_nbverif" type="checkbox" id="with_nbverif" {{$with_nbverif_checked}} />
-						<label class="form-check-label text-monospace text-muted small" for="with_nbverif">ne pas afficher le nombre de tentatives</label>
-					</div>			
+	
 
 					<div class="mt-3 text-monospace">CODE<sup class="text-danger small">*</span></div>
 					<div class="text-monospace text-muted small text-justify mb-2 p-2" style="border:solid 1px silver;border-radius:4px;">
@@ -170,6 +148,32 @@
 					</div>
 					<textarea name="fakecode" style="display:none;" id="fakecode"></textarea>
 					<div style="width:100%;margin:0px auto 0px auto;"><div id="editor_fakecode" style="border-radius:5px;">{{ old('fakecode', $puzzle->fakecode) }}</div></div>
+
+					<!-- OPTIONS -->
+					<div class="mt-3 text-monospace">OPTIONS</div>
+					<?php
+					$with_dragdrop_checked = ($puzzle->with_dragdrop == 1) ? "checked" : "";
+					$with_chrono_checked = ($puzzle->with_chrono == 0) ? "checked" : "";
+					$with_nbverif_checked = ($puzzle->with_nbverif == 0) ? "checked" : "";
+					if (old()) {
+						$with_dragdrop_checked = (old('with_dragdrop') !== null) ? "checked" : "";
+						$with_chrono_checked = (old('with_chrono') !== null) ? "checked" : "";
+						$with_nbverif_checked = (old('with_nbverif') !== null) ? "checked" : "";
+					}
+					?>
+					<div class="form-check">
+						<input class="form-check-input" name="with_dragdrop" type="checkbox" id="with_dragdrop" {{$with_dragdrop_checked}} />
+						<label class="form-check-label text-monospace text-muted small" for="with_dragdrop">{{__('mode "glisser-déposer" même si le puzzle ne comporte pas de fausses lignes de code')}}</label>
+					</div>					
+					<div class="form-check">
+						<input class="form-check-input" name="with_chrono" type="checkbox" id="with_chrono" {{$with_chrono_checked}} />
+						<label class="form-check-label text-monospace text-muted small" for="with_chrono">ne pas afficher le chronomètre</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" name="with_nbverif" type="checkbox" id="with_nbverif" {{$with_nbverif_checked}} />
+						<label class="form-check-label text-monospace text-muted small" for="with_nbverif">ne pas afficher le nombre de tentatives</label>
+					</div>	
+					<!-- /OPTIONS -->	
 
                     <input type="hidden" name="puzzle_id" value="{{ $puzzle_id }}" />
 

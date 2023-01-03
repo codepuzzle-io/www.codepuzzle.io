@@ -92,8 +92,8 @@
 
 		<div class="row">
 
-            <div class="col-md-2 text-center pt-4">
-				<a class="btn btn-light btn-sm" href="/console" role="button"><i class="fas fa-arrow-left"></i></a>
+            <div class="col-md-2 text-right pt-4">
+				<a class="btn btn-light btn-sm" href="/console/defis" role="button"><i class="fas fa-arrow-left"></i></a>
 			</div>
 
             <div class="col-md-9 pt-4">

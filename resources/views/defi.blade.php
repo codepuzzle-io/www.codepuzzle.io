@@ -286,7 +286,8 @@ $asserts = '[' . trim($asserts, ',') . ']';
 				}
 				
 				if (ok) {
-					bravo()
+					error_message = "Code correct et tests validés. Bravo!";
+					bravo();
 				} 	
 			} catch (err) {
 				// erreur python
