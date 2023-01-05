@@ -88,7 +88,8 @@ IFrame('https://www.codepuzzle.io/ID{{ strtoupper($defi->jeton) }}', width='100%
                                     </div>
                                 </div>
                             @endif
-                            <div class="mt-3 text-monospace text-muted small">{{__('solution possible')}}</div>
+                            <div class="mt-4 text-monospace">{{strtoupper(__('code'))}}</div>
+					        <div class="text-monospace text-muted small text-justify mb-1">{{__('Ce code sera proposé comme point de départ du défi')}}</div>
                             <div style="width:100%;margin:0px auto 0px auto;"><div id="editor_code" style="border-radius:5px;">{{$defi->code}}</div></div>
                         </div>
                     </div>
@@ -98,32 +99,44 @@ IFrame('https://www.codepuzzle.io/ID{{ strtoupper($defi->jeton) }}', width='100%
         </div>
 	</div><!-- /container -->
 
-    <script src="{{ asset('js/ace/ace.js') }}" type="text/javascript" charset="utf-8"></script>
+	<script src="{{ asset('js/ace/ace.js') }}" type="text/javascript" charset="utf-8"></script>
 	<script>
-        editor_code = 'editor_code';
-        editor_fakecode = 'editor_fakecode';
-		var editor_code = ace.edit(editor_code, {
-			theme: "ace/theme/puzzle_code",
-			mode: "ace/mode/python",
-			maxLines: 500,
-			fontSize: 12,
-			wrap: true,
-			useWorker: false,
-            highlightActiveLine: false,
-            highlightGutterLine: false,
-			showPrintMargin: false,
-			displayIndentGuides: true,
-			showLineNumbers: true,
-			showGutter: true,
-			showFoldWidgets: false,
-			useSoftTabs: true,
-			navigateWithinSoftTabs: false,
-			tabSize: 4,
-            readOnly: true
-		});
-
-        editor_code.container.style.lineHeight = 1.5;
-
+		// Chargement de ace et initialisation des éditeurs.
+		var editor_code;
+		async function init_editors() {
+			editor_code = ace.edit("editor_code", {
+				theme: "ace/theme/puzzle_code",
+				mode: "ace/mode/python",
+				maxLines: 500,
+				minLines: 4,
+				fontSize: 14,
+				wrap: true,
+				useWorker: false,
+				autoScrollEditorIntoView: true,
+				highlightActiveLine: false,
+				highlightSelectedWord: false,
+				highlightGutterLine: true,
+				showPrintMargin: false,
+				displayIndentGuides: true,
+				showLineNumbers: true,
+				showGutter: true,
+				showFoldWidgets: false,
+				useSoftTabs: true,
+				navigateWithinSoftTabs: false,
+				tabSize: 4
+			});
+			editor_code.container.style.lineHeight = 1.5;
+			editor_code.getSession().on('change', function () {
+				document.getElementById('code').value = editor_code.getSession().getValue();
+			});
+			document.getElementById('code').value = editor_code.getSession().getValue();
+		}
+		(async function() {
+			// Chargement asynchrone de ace et initialisation des éditeurs
+			const editors_initialized_promise = init_editors();
+			// Pour être sur que ace est chargé et les éditeurs initialisés.
+			await editors_initialized_promise;		
+		})();	
 	</script>
 
 	@include('inc-bottom-js')

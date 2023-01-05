@@ -114,19 +114,19 @@
 					<!-- /TITRE -->
 
 					<!-- SOUS TITRE -->
-					<div class="mt-3 text-monospace">{{strtoupper(__('sous-titre'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
+					<div class="mt-4 text-monospace">{{strtoupper(__('sous-titre'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
 					<div class="text-monospace text-muted small text-justify mb-1">{{__('Visible par vous seulement')}}</div>
 					<input id="sous_titre_enseignant" type="text" class="form-control @error('sous_titre_enseignant') is-invalid @enderror" name="sous_titre_enseignant" value="{{ old('sous_titre_enseignant', $defi->sous_titre_enseignant) }}" autofocus>
 					<!-- /SOUS TITRE -->
 
 					<!-- TITRE ELEVE -->
-					<div class="mt-3 text-monospace">{{strtoupper(__('titre élève'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
+					<div class="mt-4 text-monospace">{{strtoupper(__('titre élève'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
 					<div class="text-monospace text-muted small text-justify mb-1">{{__('Visible par l élève')}}</div>
 					<input id="titre_eleve" type="text" class="form-control @error('titre_eleve') is-invalid @enderror" name="titre_eleve" value="{{ old('titre_eleve, $defi->titre_eleve') }}" autofocus>
 					<!-- /TITRE ELEVE -->
 
 					<!-- CONSIGNES -->
-					<div class="mt-3 text-monospace">
+					<div class="mt-4 text-monospace">
 						{{strtoupper(__('consignes'))}}<sup class="text-danger small">*</sup>
 						<i class="fas fa-info-circle" style="cursor:pointer;color:#e74c3c;opacity:0.5" data-toggle="modal" data-target="#markdown_help"></i>
 					</div>
@@ -141,7 +141,7 @@
 
 					<!-- TESTS -->
 					<a id="tests_anchor"></a>
-					<div class="mt-3 text-monospace">{{strtoupper(__('tests'))}}</div>
+					<div class="mt-4 text-monospace">{{strtoupper(__('tests'))}}</div>
 					<table id="tests_table">
 						<tr>
 							<td class="text-monospace text-muted small text-justify mb-1 w-50">{{__('Condition')}}<sup class="text-danger small">*</sup></td>
@@ -178,14 +178,15 @@
 					<a id="add_button" class="btn btn-light btn-sm mt-1" href="#tests_anchor" role="button"><i class="fas fa-plus"></i></a>		
 					<!-- /TESTS -->
 
-					<!-- SOLUTION POSSIBLE --> 
-					<div class="mt-3 text-monospace">{{strtoupper(__('solution possible'))}}</div>
+					<!-- CODE --> 
+					<div class="mt-4 text-monospace">{{strtoupper(__('code'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
+					<div class="text-monospace text-muted small text-justify mb-1">{{__('Ce code sera proposé comme point de départ du défi')}}</div>
 					<textarea name="code" style="display:none;" id="code"></textarea>
-					<div style="width:100%;margin:0px auto 0px auto;"><div id="editor_code" style="border-radius:5px;">{{old('code', $defi->code)}}</div></div>
-					<!-- /SOLUTION POSSIBLE --> 
+					<div id="editor_code" style="border-radius:5px;">{{old('code', $defi->code)}}</div>
+					<!-- /CODE --> 
 
 					<!-- OPTIONS -->
-					<div class="mt-3 text-monospace">OPTIONS</div>
+					<div class="mt-4 text-monospace">OPTIONS</div>
 					<?php
 					$with_chrono_checked = ($defi->with_chrono == 0) ? "checked" : "";
 					$with_nbverif_checked = ($defi->with_nbverif == 0) ? "checked" : "";
@@ -233,33 +234,42 @@
 
 	<script src="{{ asset('js/ace/ace.js') }}" type="text/javascript" charset="utf-8"></script>
 	<script>
-		var editor_code = ace.edit("editor_code", {
-			theme: "ace/theme/puzzle_code",
-			mode: "ace/mode/python",
-			maxLines: 500,
-			minLines: 4,
-			fontSize: 14,
-			wrap: true,
-			useWorker: false,
-			autoScrollEditorIntoView: true,
-			highlightActiveLine: false,
-			highlightSelectedWord: false,
-			highlightGutterLine: true,
-			showPrintMargin: false,
-			displayIndentGuides: true,
-			showLineNumbers: true,
-			showGutter: true,
-			showFoldWidgets: false,
-			useSoftTabs: true,
-			navigateWithinSoftTabs: false,
-			tabSize: 4
-		});
-		editor_code.container.style.lineHeight = 1.5;
-		var textarea_code = $('#code');
-		editor_code.getSession().on('change', function () {
-			textarea_code.val(editor_code.getSession().getValue());
-		});
-		textarea_code.val(editor_code.getSession().getValue());
+		// Chargement de ace et initialisation des éditeurs.
+		var editor_code;
+		async function init_editors() {
+			editor_code = ace.edit("editor_code", {
+				theme: "ace/theme/puzzle_code",
+				mode: "ace/mode/python",
+				maxLines: 500,
+				minLines: 4,
+				fontSize: 14,
+				wrap: true,
+				useWorker: false,
+				autoScrollEditorIntoView: true,
+				highlightActiveLine: false,
+				highlightSelectedWord: false,
+				highlightGutterLine: true,
+				showPrintMargin: false,
+				displayIndentGuides: true,
+				showLineNumbers: true,
+				showGutter: true,
+				showFoldWidgets: false,
+				useSoftTabs: true,
+				navigateWithinSoftTabs: false,
+				tabSize: 4
+			});
+			editor_code.container.style.lineHeight = 1.5;
+			editor_code.getSession().on('change', function () {
+				document.getElementById('code').value = editor_code.getSession().getValue();
+			});
+			document.getElementById('code').value = editor_code.getSession().getValue();
+		}
+		(async function() {
+			// Chargement asynchrone de ace et initialisation des éditeurs
+			const editors_initialized_promise = init_editors();
+			// Pour être sur que ace est chargé et les éditeurs initialisés.
+			await editors_initialized_promise;		
+		})();	
 	</script>
 
 	<script>

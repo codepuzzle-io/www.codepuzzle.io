@@ -123,7 +123,7 @@
 
 					<!-- SOUS TITRE -->
 					@if(Auth::check())
-					<div class="mt-3 text-monospace">{{strtoupper(__('sous-titre'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
+					<div class="mt-4 text-monospace">{{strtoupper(__('sous-titre'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
 					<div class="text-monospace text-muted small text-justify mb-1">{{__('Visible par vous seulement')}}</div>
 					<input id="sous_titre_enseignant" type="text" class="form-control @error('sous_titre_enseignant') is-invalid @enderror" name="sous_titre_enseignant" value="{{ old('sous_titre_enseignant') }}" autofocus>
 					@endif
@@ -131,14 +131,14 @@
 
 					<!-- TITRE ELEVE -->
 					@if(Auth::check())
-					<div class="mt-3 text-monospace">{{strtoupper(__('titre élève'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
+					<div class="mt-4 text-monospace">{{strtoupper(__('titre élève'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
 					<div class="text-monospace text-muted small text-justify mb-1">{{__('Visible par l élève')}}</div>
 					<input id="titre_eleve" type="text" class="form-control @error('titre_eleve') is-invalid @enderror" name="titre_eleve" value="{{ old('titre_eleve') }}" autofocus>
 					@endif
 					<!-- /TITRE ELEVE -->
 
 					<!-- CONSIGNES -->
-					<div class="mt-3 text-monospace">
+					<div class="mt-4 text-monospace">
 						{{strtoupper(__('consignes'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span>
 						<i class="fas fa-info-circle pl-1" style="cursor:pointer;color:#e74c3c;opacity:0.5" data-toggle="modal" data-target="#markdown_help"></i>
 					</div>
@@ -149,14 +149,14 @@
 					<!-- /CONSIGNES -->
 					
 					<!-- CODE -->
-					<div class="mt-3 text-monospace">{{strtoupper(__('code'))}}<sup class="text-danger small">*</sup></div>
+					<div class="mt-4 text-monospace">{{strtoupper(__('code'))}}<sup class="text-danger small">*</sup></div>
 					<div class="text-monospace text-muted small text-justify mb-2 p-2" style="border:solid 1px silver;border-radius:4px;">
 						{{strtoupper(__('Syntaxe pour code à trous'))}}<br />
 						{{__('Code à compléter')}}: [?code?]</br>
 						{{__('Choix multiples')}}: {{__('[?code_correct?distracteur1?distracteur2?distracteur3?]')}}
 					</div>
 					<textarea name="code" style="display:none;" id="code"></textarea>
-					<div style="width:100%;margin:0px auto 0px auto;"><div id="editor_code" style="border-radius:5px;">{{ old('code') }}</div></div>
+					<div id="editor_code" style="border-radius:5px;">{{ old('code') }}</div>
 					@error('code')
 						<span class="invalid-feedback d-block" role="alert">
 							<strong>{{ $message }}</strong>
@@ -165,16 +165,16 @@
 					<!-- /CODE -->
 
 					<!-- FAUX CODE -->
-					<div class="mt-3 text-monospace">{{strtoupper(__('faux code'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
+					<div class="mt-4 text-monospace">{{strtoupper(__('faux code'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
 					<div class="text-monospace text-muted small text-justify mb-1">
 						{{__('Vous pouvez ajouter de fausses lignes de code qui seront mélangées aux lignes de code du code ci-dessus mais qui seront considérées comme des lignes inutiles qui ne doivent pas être placées dans le code final.')}}
 					</div>
 					<textarea name="fakecode" style="display:none;" id="fakecode"></textarea>
-					<div style="width:100%;margin:0px auto 0px auto;"><div id="editor_fakecode" style="border-radius:5px;">{{ old('fakecode') }}</div></div>
+					<div id="editor_fakecode" style="border-radius:5px;">{{ old('fakecode') }}</div>
 					<!-- /FAUX CODE -->
 
 					<!-- OPTIONS -->
-					<div class="mt-3 text-monospace">OPTIONS</div>
+					<div class="mt-4 text-monospace">OPTIONS</div>
 					<?php
 					$with_dragdrop_checked = (old('with_dragdrop') !== null) ? "checked" : "";
 					$with_chrono_checked = (old('with_chrono') !== null) ? "checked" : "";
