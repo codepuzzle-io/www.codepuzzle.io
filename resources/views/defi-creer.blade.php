@@ -189,6 +189,15 @@
 					<div id="editor_code" style="border-radius:5px;">{{old('code')}}</div>
 					<!-- /CODE --> 
 
+					<!-- SOLUTION --> 
+					@if(Auth::check())
+					<div class="mt-4 text-monospace">{{strtoupper(__('solution possible'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
+					<div class="text-monospace text-muted small text-justify mb-1">{{__('Cette soluton possible ne sera pas publiée. Elle sert seulement de référence.')}}</div>
+					<textarea name="solution" style="display:none;" id="solution"></textarea>
+					<div id="editor_solution" style="border-radius:5px;">{{old('solution')}}</div>
+					@endif
+					<!-- /SOLUTION --> 					
+
 					<!-- OPTIONS -->
 					<div class="mt-4 text-monospace">OPTIONS</div>
 					<?php
@@ -233,6 +242,7 @@
 	<script>
 		// Chargement de ace et initialisation des éditeurs.
 		var editor_code;
+		
 		async function init_editors() {
 			editor_code = ace.edit("editor_code", {
 				theme: "ace/theme/puzzle_code",
@@ -260,6 +270,34 @@
 				document.getElementById('code').value = editor_code.getSession().getValue();
 			});
 			document.getElementById('code').value = editor_code.getSession().getValue();
+
+			var editor_solution;
+			editor_solution = ace.edit("editor_solution", {
+				theme: "ace/theme/puzzle_fakecode",
+				mode: "ace/mode/python",
+				maxLines: 500,
+				minLines: 4,
+				fontSize: 14,
+				wrap: true,
+				useWorker: false,
+				autoScrollEditorIntoView: true,
+				highlightActiveLine: false,
+				highlightSelectedWord: false,
+				highlightGutterLine: true,
+				showPrintMargin: false,
+				displayIndentGuides: true,
+				showLineNumbers: true,
+				showGutter: true,
+				showFoldWidgets: false,
+				useSoftTabs: true,
+				navigateWithinSoftTabs: false,
+				tabSize: 4
+			});
+			editor_solution.container.style.lineHeight = 1.5;
+			editor_solution.getSession().on('change', function () {
+				document.getElementById('solution').value = editor_solution.getSession().getValue();
+			});
+			document.getElementById('solution').value = editor_solution.getSession().getValue();
 		}
 		(async function() {
 			// Chargement asynchrone de ace et initialisation des éditeurs
