@@ -17,9 +17,6 @@ jobs:
         protocol: ftp
         server-dir: www/codepuzzledotio/
         exclude: |
-          **/.git*
-          **/.git*/**
-          **/node_modules/**
-          /bootstrap
-          /tests
-          /vendor
+          **/bootstrap/**
+          **/tests/**
+          **/vendor/**
