@@ -156,14 +156,17 @@
 					<!-- TESTS -->
 					<a id="tests_anchor"></a>
 					<div class="mt-4 text-monospace">{{strtoupper(__('tests'))}}</div>
+					<div class="text-monospace small pb-1">
+						<span style="color:#af00db">assert</span> <span style="color:#000000">condition</span>,&nbsp;<span style="color:#a31515">message</span>
+					</div>
 					<table id="tests_table">
 						<tr>
-							<td class="text-monospace text-muted small text-justify mb-1 w-50">{{__('Condition')}}<sup class="text-danger small">*</sup></td>
-							<td class="text-monospace text-muted small text-justify mb-1 w-50">{{__('Message')}}</td>
+							<td class="text-monospace text-muted small text-justify mb-1 w-50">{{__('condition')}}<sup class="text-danger small">*</sup></td>
+							<td class="text-monospace text-muted small text-justify mb-1 w-50">{{__('message')}}</td>
 							<td class="pl-4"></td>
 						</tr>
 						<tr>
-							<td class="align-top"><input type="text" class="form-control @error('condition.0') is-invalid @enderror" name="condition[]" value="{{old('condition.0')}}" autofocus></td>
+							<td class="align-top pr-2"><input type="text" class="form-control @error('condition.0') is-invalid @enderror" name="condition[]" value="{{old('condition.0')}}" autofocus></td>
 							<td class="align-top"><input type="text" class="form-control" name="description[]" value="{{old('description.0')}}" autofocus></td>
 							<td></td>
 						</tr>					
@@ -171,8 +174,8 @@
 						@foreach(old('condition') as $key => $condition)
 						@if ($key !== 0)
 							<tr>
-								<td><input type="text" class="form-control" name="condition[]" value="{{$condition}}" autofocus></td>
-								<td><input type="text" class="form-control" name="description[]" value="{{old('description')[$key]}}" autofocus></td>
+								<td class="align-top pr-2"><input type="text" class="form-control" name="condition[]" value="{{$condition}}" autofocus></td>
+								<td class="align-top"><input type="text" class="form-control" name="description[]" value="{{old('description')[$key]}}" autofocus></td>
 								<td><a href="#tests_anchor" onclick="removeTest(this)"><i class="ml-2 fas fa-trash" aria-hidden="true"></i></a></td>
 							</tr>
 						@endif
@@ -318,6 +321,9 @@
 			newCell1 = newRow.insertCell();
 			newCell2 = newRow.insertCell();
 			newCell3 = newRow.insertCell();
+			newCell1.classList.add("align-top");
+			newCell1.classList.add("pr-2");
+			newCell2.classList.add("align-top");
 			newCell1.innerHTML = '<input type="text" class="form-control" name="condition[]" />';
 			newCell2.innerHTML = '<input type="text" class="form-control" name="description[]" />';
 			newCell3.appendChild(removeButton);		
