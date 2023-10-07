@@ -12,6 +12,42 @@ $asserts = '[' . trim($asserts, ',') . ']';
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">
 <head>
+<script src="{{ asset('js/html2canvas.min.js') }}" type="text/javascript" charset="utf-8"></script>
+	<script>
+		html2canvas(document.getElementById('consignes_hidden'), {
+			onclone: function (clonedDoc) {
+				clonedDoc.getElementById('consignes_hidden').style.display = 'block';
+			}	
+		}).then(function (canvas) {
+
+			var imgData = canvas.toDataURL('image/png');
+			// Envoie des données de l'image au serveur (voir l'étape suivante)
+			var formData = new URLSearchParams();
+			formData.append('imgData', imgData);
+			formData.append('jeton', '{{ 'D'.$jeton }}');
+			fetch('/save-opengraph-image', {
+				method: 'POST',
+				mode: "cors",
+				headers: {"Content-Type": "application/x-www-form-urlencoded", "X-CSRF-Token": "{{ csrf_token() }}"},
+				body: formData
+			})
+			.then(response => {
+				if (response.ok) {
+					// Le serveur a répondu avec succès, vous pouvez traiter la réponse ici
+					return response.text();
+				}
+				throw new Error('Erreur lors de la sauvegarde de la capture d\'écran.');
+			})
+			.then(data => {
+				console.log('Capture d\'écran sauvegardée avec succès sur le serveur.');
+				console.log('Chemin de l\'image sauvegardée : ' + data);
+			})
+			.catch(error => {
+				// Il y a eu une erreur lors de la requête
+				console.error(error);
+			});
+		});
+	</script>
 	@php
         $description = __('Générateur et gestionnaire de puzzles de Parsons') . ' | Défi - ' . strtoupper($jeton);
         $description_og = '| Défi - ' . strtoupper($jeton);
@@ -128,45 +164,6 @@ $asserts = '[' . trim($asserts, ',') . ']';
     </div><!-- container -->
 
     @include('inc-bottom-js')
-
-	@if(!file_exists('img/opengraph/D'.$jeton.'.png')){)
-		<script src="{{ asset('js/html2canvas.min.js') }}" type="text/javascript" charset="utf-8"></script>
-		<script>
-			html2canvas(document.getElementById('consignes_hidden'), {
-				onclone: function (clonedDoc) {
-					clonedDoc.getElementById('consignes_hidden').style.display = 'block';
-				}	
-			}).then(function (canvas) {
-
-				var imgData = canvas.toDataURL('image/png');
-				// Envoie des données de l'image au serveur (voir l'étape suivante)
-				var formData = new URLSearchParams();
-				formData.append('imgData', imgData);
-				formData.append('jeton', '{{ 'D'.$jeton }}');
-				fetch('/save-opengraph-image', {
-					method: 'POST',
-					mode: "cors",
-					headers: {"Content-Type": "application/x-www-form-urlencoded", "X-CSRF-Token": "{{ csrf_token() }}"},
-					body: formData
-				})
-				.then(response => {
-					if (response.ok) {
-						// Le serveur a répondu avec succès, vous pouvez traiter la réponse ici
-						return response.text();
-					}
-					throw new Error('Erreur lors de la sauvegarde de la capture d\'écran.');
-				})
-				.then(data => {
-					console.log('Capture d\'écran sauvegardée avec succès sur le serveur.');
-					console.log('Chemin de l\'image sauvegardée : ' + data);
-				})
-				.catch(error => {
-					// Il y a eu une erreur lors de la requête
-					console.error(error);
-				});
-			});
-		</script>
-	@endif
 
 	<script src="{{ asset('js/ace/ace.js') }}" type="text/javascript" charset="utf-8"></script>
 	<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>	
