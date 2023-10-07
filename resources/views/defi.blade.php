@@ -69,7 +69,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 
 					<div id="consignes_hidden" style="padding:40px 20px 0px 20px;font-size:14px;width:1200px;background-color:white;display:none;">
 						<img src="{{ asset('img/codepuzzle.png') }}" height="20" />
-						<div class="font-monospace text-muted consignes" style="text-align:justify;padding:20px 40px 40px 40px;margin-top:20px;border-top-left-radius:10px;border-top-right-radius:10px;height:550px;font-size:40px;background-color:#F8FAFC;">
+						<div class="font-monospace text-muted consignes text-monospace" style="text-align:justify;padding:20px 40px 40px 40px;margin-top:20px;border-top-left-radius:10px;border-top-right-radius:10px;height:550px;font-size:40px;background-color:#F8FAFC;">
 							<?php
 							$Parsedown = new Parsedown();
 							echo $Parsedown->text($defi->consignes_eleve);
