@@ -58,8 +58,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
                         <div class="font-monospace small mb-1">{{ $defi->titre_eleve }}</div>
                     @endif
                     @if ($defi->consignes_eleve !== NULL)
-
-                        <div class="font-monospace text-muted consignes">
+                        <div class="text-monospace text-muted consignes" style="text-align:justify;">
                             <?php
                             $Parsedown = new Parsedown();
                             echo $Parsedown->text($defi->consignes_eleve);
