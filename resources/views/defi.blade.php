@@ -13,8 +13,8 @@ $asserts = '[' . trim($asserts, ',') . ']';
 <html lang="{{ app()->getLocale() }}">
 <head>
 	@php
-        $description = __('Générateur et gestionnaire de puzzles de Parsons') . ' | Défi - ' . strtoupper($jeton);
-        $description_og = '| Défi - ' . strtoupper($jeton);
+        $description = __('Générateur et gestionnaire de puzzles de Parsons') . ' | Défi - D' . strtoupper($jeton);
+        $description_og = '| Défi - D' . strtoupper($jeton);
     @endphp
 	@include('inc-meta-jeton')
     <script src="https://cdn.jsdelivr.net/pyodide/v0.21.3/full/pyodide.js"></script>
