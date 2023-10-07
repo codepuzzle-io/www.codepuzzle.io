@@ -21,7 +21,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
     <title>{{ config('app.name') }} | Défi - D{{ $jeton }}</title>
 </head>
 
-<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
+<body class="no-mathjax" oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 
     <div class="container">
 
@@ -58,7 +58,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
                         <div class="font-monospace small mb-1">{{ $defi->titre_eleve }}</div>
                     @endif
                     @if ($defi->consignes_eleve !== NULL)
-                        <div class="text-monospace text-muted consignes" style="text-align:justify;">
+                        <div class="text-monospace text-muted consignes mathjax" style="text-align:justify;">
                             <?php
                             $Parsedown = new Parsedown();
                             echo $Parsedown->text($defi->consignes_eleve);
@@ -66,7 +66,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
                         </div>
 					@endif
 
-					<div id="consignes_hidden" style="padding:40px 20px 0px 20px;font-size:14px;width:1200px;background-color:white;display:none;">
+					<div id="consignes_hidden" class="mathjax" style="padding:40px 20px 0px 20px;font-size:14px;width:1200px;background-color:white;display:none;">
 						<img src="{{ asset('img/codepuzzle.png') }}" height="20" />
 						<div class="font-monospace text-muted consignes text-monospace" style="text-align:justify;padding:20px 40px 40px 40px;margin-top:20px;border-top-left-radius:10px;border-top-right-radius:10px;height:550px;font-size:40px;background-color:#F8FAFC;">
 							<?php
@@ -166,6 +166,24 @@ $asserts = '[' . trim($asserts, ',') . ']';
 	</script>
 	<script src="{{ asset('js/ace/ace.js') }}" type="text/javascript" charset="utf-8"></script>
 	<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>	
+
+    <script>
+        MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+		options: {
+			ignoreHtmlClass: "no-mathjax",
+			processHtmlClass: "mathjax"
+		},
+        svg: {
+            fontCache: 'global'
+        }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script> 	
 
 	<script>
 		var editor_code = ace.edit("editor_code", {
