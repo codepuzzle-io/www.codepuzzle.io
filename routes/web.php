@@ -85,6 +85,35 @@ Route::view($lang.__('donnees-personnelles'), 'donnees-personnelles')->name('don
 
 
 // ============================================================================
+// == SAVE OPENGRAPH IMAGE
+// ============================================================================
+Route::get('/save-opengraph-image', [App\Http\Controllers\SiteController::class, 'redirect']);
+Route::post('/save-opengraph-image', [App\Http\Controllers\SiteController::class, 'save_opengraph_image']);
+
+
+
+// ============================================================================
+// == EVAL
+// ============================================================================
+
+/*
+Route::view('/eval', 'eval_welcome');
+Route::get('/eval/creer', [App\Http\Controllers\SiteController::class, 'eval_creer_get']);
+Route::post('/eval/creer', [App\Http\Controllers\SiteController::class, 'eval_creer_post']);
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+// ============================================================================
 // == CONSOLE CONTROLLER
 // ============================================================================
 

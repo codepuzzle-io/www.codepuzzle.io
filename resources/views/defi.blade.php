@@ -16,9 +16,9 @@ $asserts = '[' . trim($asserts, ',') . ']';
         $description = __('Générateur et gestionnaire de puzzles de Parsons') . ' | Défi - ' . strtoupper($jeton);
         $description_og = '| Défi - ' . strtoupper($jeton);
     @endphp
-	@include('inc-meta')
+	@include('inc-meta-jeton')
     <script src="https://cdn.jsdelivr.net/pyodide/v0.21.3/full/pyodide.js"></script>
-    <title>{{ config('app.name') }} | Défi - {{ $jeton }}</title>
+    <title>{{ config('app.name') }} | Défi - D{{ $jeton }}</title>
 </head>
 
 <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
@@ -58,12 +58,24 @@ $asserts = '[' . trim($asserts, ',') . ']';
                         <div class="font-monospace small mb-1">{{ $defi->titre_eleve }}</div>
                     @endif
                     @if ($defi->consignes_eleve !== NULL)
+
                         <div class="font-monospace text-muted consignes">
                             <?php
                             $Parsedown = new Parsedown();
                             echo $Parsedown->text($defi->consignes_eleve);
                             ?>
                         </div>
+
+                        <div id="consignes_hidden" style="padding:20px;font-size:14px;width:1200px;background-color:white;display:none">
+							<img src="{{ asset('img/codepuzzle.png') }}" height="20" />
+							<div class="font-monospace text-muted consignes p-4 mt-3" style="border-radius:6px;min-height:600px;font-size:40px;background-color:#F8FAFC;">
+								<?php
+								$Parsedown = new Parsedown();
+								echo $Parsedown->text($defi->consignes_eleve);
+								?>
+							</div>
+                        </div>
+
                     @endif
                 </div>
             </div>
@@ -117,8 +129,47 @@ $asserts = '[' . trim($asserts, ',') . ']';
 
     @include('inc-bottom-js')
 
+	@if(!file_exists('img/opengraph/D'.$jeton.'.png')){)
+		<script src="{{ asset('js/html2canvas.min.js') }}" type="text/javascript" charset="utf-8"></script>
+		<script>
+			html2canvas(document.getElementById('consignes_hidden'), {
+				onclone: function (clonedDoc) {
+					clonedDoc.getElementById('consignes_hidden').style.display = 'block';
+				}	
+			}).then(function (canvas) {
+
+				var imgData = canvas.toDataURL('image/png');
+				// Envoie des données de l'image au serveur (voir l'étape suivante)
+				var formData = new URLSearchParams();
+				formData.append('imgData', imgData);
+				formData.append('jeton', '{{ 'D'.$jeton }}');
+				fetch('/save-opengraph-image', {
+					method: 'POST',
+					mode: "cors",
+					headers: {"Content-Type": "application/x-www-form-urlencoded", "X-CSRF-Token": "{{ csrf_token() }}"},
+					body: formData
+				})
+				.then(response => {
+					if (response.ok) {
+						// Le serveur a répondu avec succès, vous pouvez traiter la réponse ici
+						return response.text();
+					}
+					throw new Error('Erreur lors de la sauvegarde de la capture d\'écran.');
+				})
+				.then(data => {
+					console.log('Capture d\'écran sauvegardée avec succès sur le serveur.');
+					console.log('Chemin de l\'image sauvegardée : ' + data);
+				})
+				.catch(error => {
+					// Il y a eu une erreur lors de la requête
+					console.error(error);
+				});
+			});
+		</script>
+	@endif
+
 	<script src="{{ asset('js/ace/ace.js') }}" type="text/javascript" charset="utf-8"></script>
-	<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>	
 
 	<script>
 		var editor_code = ace.edit("editor_code", {
