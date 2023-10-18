@@ -41,8 +41,16 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                 	<span style="font-size:80%"><i class="fas fa-bug" style="float:left;margin:4px 8px 5px 0px;"></i> {{__('signalement de bogue')}} <span style="opacity:0.6;font-size:90%;">&</span> {{__('questions techniques')}}</span>
                 </a>
 
-                <div class="mt-3 text-muted text-monospace pl-1 mb-5" style="font-size:70%;opacity:0.8;">
+                <div class="mt-3 text-muted text-monospace pl-1 mb-3" style="font-size:70%;opacity:0.8;">
                 	<span><i class="fa fa-envelope"></i> contact@codepuzzle.io</span>
+                </div>
+
+                <div class="text-danger border border-danger rounded text-monospace p-2" style="font-size:70%;text-align:justify;">
+                    Statut: alpha<br/>
+                    <br/>
+                    A faire:<br/>
+                    * page pour modifier le sujet d'un entraînement<br />
+                    * pouvoir supprimer une copie d'élève<br />
                 </div>
 
             </div>
@@ -54,7 +62,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                     <div class="row">
                         <div class="col-md-12">
 
-                            @if(isset($_GET['w']))
+                            @if(isset($_GET['i']))
                                 <div class="text-monospace text-danger text-center font-weight-bold m-2">SAUVEGARDEZ LES INFORMATIONS CI-DESSOUS AVANT DE QUITTER CETTE PAGE</div>
                             @endif
 

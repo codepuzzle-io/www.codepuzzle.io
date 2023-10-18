@@ -24,7 +24,7 @@
 					@csrf
 
 					<div class="form-group">
-						<label for="code-entrainement" style="line-height:1em">Choisir un identifiant <sup style="color:red">*</sup><br /><span class="text-monospace" style="font-size:70%;color:silver">entre 4 et 6 lettres/chiffres</span></label>
+						<label for="code-entrainement" style="line-height:1em">Choisir un identifiant <sup style="color:red">*</sup><br /><span class="text-monospace" style="font-size:70%;color:silver">entre 3 et 10 lettres/chiffres</span></label>
 						<input id="pseudo" class="form-control @error('pseudo') is-invalid d-block @enderror" type="text" name="pseudo" value="{{ old('pseudo') }}"  />
 						@error('pseudo')
 							<span class="invalid-feedback d-block" role="alert">

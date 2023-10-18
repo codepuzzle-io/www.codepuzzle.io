@@ -6,11 +6,7 @@
 </head>
 <body>
 
-	@if(Auth::check())
-		@include('inc-nav-console')
-	@else
-		@include('inc-nav')
-	@endif
+	@include('inc-nav')
 
 	<!-- MODAL MARKDOWN HELP -->
 	<div class="modal fade" id="markdown_help" tabindex="-1" aria-labelledby="markdown_helpLabel" aria-hidden="true">
@@ -93,11 +89,7 @@
 		<div class="row">
 
 			<div class="col-md-2 text-right">
-				@if(Auth::check())
-				<a class="btn btn-light btn-sm" href="/console/devoirs" role="button"><i class="fas fa-arrow-left"></i></a>
-				@else
 				<a class="btn btn-light btn-sm" href="/" role="button"><i class="fas fa-arrow-left"></i></a>
-				@endif
 			</div>
 
 			<div class="col-md-10 pl-4 pr-4">
@@ -108,46 +100,11 @@
 
 					@csrf
 				
-					<!-- TITRE -->
-					@if(Auth::check())
-					<div class="text-monospace">{{strtoupper(__('titre'))}}<sup class="text-danger small">*</sup></div>
-					<div class="text-monospace text-muted small text-justify mb-1">{{__('Visible par vous seulement')}}</div>
-					<input id="titre_enseignant" type="text" class="form-control @error('titre_enseignant') is-invalid @enderror" name="titre_enseignant" value="{{ old('titre_enseignant') }}" autofocus>
-					@error('titre_enseignant')
-						<span class="invalid-feedback" role="alert">
-							<strong>{{ $message }}</strong>
-						</span>
-					@enderror
-					@endif
-					<!-- /TITRE -->
-
-
-					<!-- SOUS TITRE -->
-					@if(Auth::check())
-					<div class="mt-4 text-monospace">{{strtoupper(__('sous-titre'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
-					<div class="text-monospace text-muted small text-justify mb-1">{{__('Visible par vous seulement')}}</div>
-					<input id="sous_titre_enseignant" type="text" class="form-control @error('sous_titre_enseignant') is-invalid @enderror" name="sous_titre_enseignant" value="{{ old('sous_titre_enseignant') }}" autofocus>
-					@endif
-					<!-- /SOUS TITRE -->
-
-
-					<!-- TITRE ELEVE -->
-					@if(Auth::check())
-					<div class="mt-4 text-monospace">{{strtoupper(__('titre élève'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
-					<div class="text-monospace text-muted small text-justify mb-1">{{__('Visible par l élève')}}</div>
-					<input id="titre_eleve" type="text" class="form-control @error('titre_eleve') is-invalid @enderror" name="titre_eleve" value="{{ old('titre_eleve') }}" autofocus>
-					@endif
-					<!-- /TITRE ELEVE -->
-
-
 					<!-- CONSIGNES -->
 					<div class="mt-4 text-monospace">
 						{{strtoupper(__('consignes'))}}<sup class="text-danger small">*</sup>
 						<i class="fas fa-info-circle" style="cursor:pointer;color:#e74c3c;opacity:0.5" data-toggle="modal" data-target="#markdown_help"></i>
 					</div>
-					@if(Auth::check())
-					<div class="text-monospace text-muted small text-justify mb-1">{{__('Consignes pour l élève')}}</div>
-					@endif
 					<textarea class="form-control @error('consignes_eleve') is-invalid @enderror" name="consignes_eleve" id="consignes_eleve" rows="6">{{ old('consignes_eleve') }}</textarea>
 					@error('consignes_eleve')
 						<span class="invalid-feedback" role="alert">
@@ -164,7 +121,7 @@
 
 					<!-- CODE ENSEIGNANT --> 
 					<div class="mt-4 text-monospace">{{strtoupper(__("code enseignant"))}} <span class="font-italic small" style="color:silver;">{{__("optionnel")}}</span></div>
-					<div class="text-monospace text-muted small text-justify mb-1">{{__("Pour les enseignants seulement. Vous pouvez y placer un jeu de tests par exemple. Ce code sera executé en même que celui de l'élève pendant l'évaluation de l'entraînement quand l'entraînement apparaitra dans la console de l'enseignant.")}}</div>
+					<div class="text-monospace text-muted small text-justify mb-1">{{__("Pour les enseignants seulement. Vous pouvez y placer un jeu de tests par exemple. Ce code pourra être executé en même que celui de l'élève ou seul pendant l'évaluation de l'entraînement quand l'entraînement apparaitra dans la console de l'enseignant.")}}</div>
 					<textarea name="code_enseignant" style="display:none;" id="code_enseignant"></textarea>
 					<div id="editor_code_enseignant" style="border-radius:5px;">{{old('code_enseignant')}}</div>
 					<!-- /CODE ENSEIGNANT -->

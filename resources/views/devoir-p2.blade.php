@@ -47,9 +47,11 @@ $devoir_eleve = App\Models\Devoir_eleve::where('jeton_copie', Session::get('jeto
 <body class="no-mathjax" oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 
     <!-- Écran de démarrage -->
+	@if ($devoir->with_console == 1)
     <div id="splashscreen" class="splashscreen">
         <i class="fas fa-spinner fa-spin" style="color:black;opacity:1;z-index:2000"></i>
     </div>
+	@endif
 
 	<div class="bg-danger text-white p-2 text-monospace text-center mb-4">ne pas quitter cette page - ne pas recharger cette page - ne pas cliquer en-dehors de cette page</div>
 
@@ -63,7 +65,6 @@ $devoir_eleve = App\Models\Devoir_eleve::where('jeton_copie', Session::get('jeto
 				@if ($devoir->with_nbverif == 1)
 				<td class="dashboard"><i class="fas fa-check"></i>&nbsp;&nbsp;<span id="nbverif">{{ $devoir_eleve->nbverif }}</span></td>
 				@endif
-
 				<td class="m-0 p-0">
 					<a tabindex='0' class='btn btn-success text-monospace' role='button'  style="cursor:pointer;outline:none;" data-toggle="popover" data-trigger="focus" data-placement="left" data-html="true" data-sanitize="false" data-content="<a href='#' id='rendre' class='btn btn-danger btn-sm text-light' role='button'>{{__('confirmer')}}</a><a class='btn btn-light btn-sm ml-2' href='#' role='button'>{{__('annuler')}}</a>">rendre</a>
 				</td>
@@ -100,16 +101,20 @@ $devoir_eleve = App\Models\Devoir_eleve::where('jeton_copie', Session::get('jeto
                 <textarea name="code" style="display:none;" id="code"></textarea>
 		        <div style="width:100%;margin:0px auto 0px auto;"><div id="editor_code" style="border-radius:5px;">{{$devoir_eleve->code_eleve}}</div></div>
                 <!-- bouton verifier -->
+				@if ($devoir->with_console == 1)
                 <button onclick="evaluatePython()" type="button" class="btn btn-primary btn-sm mt-2 text-monospace" style="display:inline">exécuter le code</button>
+				@endif
             </div>
         </div>
         
-        <div class="row mt-3" @if(!$devoir->with_console) style="display:none" @endif  >
+		@if ($devoir->with_console == 1)
+        <div class="row mt-3">
             <div class="col-md-6 offset-md-3">
                 <div>Console</div>
                 <pre id="output1" class="bg-dark text-monospace p-3 small text-white" style="border-radius:4px;border:1px solid silver"></pre>
             </div>
         </div>    
+		@endif
 		  
     </div><!-- container -->
 
@@ -197,6 +202,7 @@ $devoir_eleve = App\Models\Devoir_eleve::where('jeton_copie', Session::get('jeto
 		chrono.start();	
 	</script>
 
+	@if ($devoir->with_console == 1)
     <script>
 		// PYTHON
 		const code = document.getElementById("code");
@@ -244,14 +250,23 @@ $devoir_eleve = App\Models\Devoir_eleve::where('jeton_copie', Session::get('jeto
 			}				
 		}
 	</script>
+	@endif
 
 	<script>
 		// autosave
 		setInterval(function() {
 			var formData = new URLSearchParams();
 			formData.append('code', encodeURIComponent(document.getElementById('code').value));
-			formData.append('chrono', count);
-			formData.append('nbverif', nbverif);
+			@if ($devoir->with_chrono == 1)
+				formData.append('chrono', count);
+			@else
+				formData.append('chrono', 0);
+			@endif
+			@if ($devoir->with_nbverif == 1)
+				formData.append('nbverif', nbverif);
+			@else
+				formData.append('nbverif', 0);
+			@endif
 			formData.append('jeton_copie', '{{ Session::get('jeton_copie') }}');
 
 			fetch('/devoir-autosave', {
@@ -265,11 +280,11 @@ $devoir_eleve = App\Models\Devoir_eleve::where('jeton_copie', Session::get('jeto
 			})
 			.then(function(data) {
 				// Affiche la réponse du serveur dans la console
-				//console.log(data); 
+				console.log(data); 
 			})
 			.catch(function(error) {
 				// Gère les erreurs liées à la requête Fetch
-				//console.error('Erreur:', error); 
+				console.error('Erreur:', error); 
 			});
 		}, 10000);
 	</script>
@@ -282,8 +297,16 @@ $devoir_eleve = App\Models\Devoir_eleve::where('jeton_copie', Session::get('jeto
 		function rendre() {
 			var formData = new URLSearchParams();
 			formData.append('code', encodeURIComponent(document.getElementById('code').value));
-			formData.append('chrono', count);
-			formData.append('nbverif', nbverif);
+			@if ($devoir->with_chrono == 1)
+				formData.append('chrono', count);
+			@else
+				formData.append('chrono', 0);
+			@endif
+			@if ($devoir->with_nbverif == 1)
+				formData.append('nbverif', nbverif);
+			@else
+				formData.append('nbverif', 0);
+			@endif
 			formData.append('jeton_copie', '{{ Session::get('jeton_copie') }}');
 
 			fetch('/devoir-rendre', {
