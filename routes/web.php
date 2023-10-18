@@ -91,28 +91,6 @@ Route::get('/save-opengraph-image', [App\Http\Controllers\SiteController::class,
 Route::post('/save-opengraph-image', [App\Http\Controllers\SiteController::class, 'save_opengraph_image']);
 
 
-
-// ============================================================================
-// == EVAL
-// ============================================================================
-
-/*
-Route::view('/eval', 'eval_welcome');
-Route::get('/eval/creer', [App\Http\Controllers\SiteController::class, 'eval_creer_get']);
-Route::post('/eval/creer', [App\Http\Controllers\SiteController::class, 'eval_creer_post']);
-*/
-
-
-
-
-
-
-
-
-
-
-
-
 // ============================================================================
 // == CONSOLE CONTROLLER
 // ============================================================================
@@ -158,6 +136,20 @@ Route::post('/defi-creer', [App\Http\Controllers\SiteController::class, 'defi_cr
 // defi info
 Route::any('/defi-info/{defi_jeton}', [App\Http\Controllers\SiteController::class, 'defi_info'])->name('defi-info');
 
+// devoirs
+Route::get('/devoir-creer', [App\Http\Controllers\SiteController::class, 'devoir_creer_get'])->name('devoir-creer-get');
+Route::post('/devoir-creer', [App\Http\Controllers\SiteController::class, 'devoir_creer_post'])->name('devoir-creer-post');
+Route::any('/devoir-info', [App\Http\Controllers\SiteController::class, 'redirect']);
+Route::any('/devoir-info/{jeton_secret}', [App\Http\Controllers\SiteController::class, 'devoir_info'])->name('devoir-info');
+Route::post('/devoir', [App\Http\Controllers\SiteController::class, 'devoir_post'])->name('devoir_post');
+Route::get('/devoir', [App\Http\Controllers\SiteController::class, 'devoir_get'])->name('devoir_get');
+Route::post('/devoir-unlock', [App\Http\Controllers\SiteController::class, 'devoir_unlock'])->name('devoir_unlock');
+Route::post('/devoir-autosave', [App\Http\Controllers\SiteController::class, 'devoir_autosave']);
+Route::post('/devoir-save-commentaires', [App\Http\Controllers\SiteController::class, 'devoir_save_commentaires']);
+Route::post('/devoir-rendre', [App\Http\Controllers\SiteController::class, 'devoir_rendre']);
+Route::post('/devoir-fin', [App\Http\Controllers\SiteController::class, 'devoir_rendre']);
+Route::any('/devoir-console/{jeton_secret}', [App\Http\Controllers\SiteController::class, 'devoir_console'])->name('devoir-console');
+
 // ============================================================================
 // == RETRO COMPATIBILITE
 // ============================================================================
@@ -170,6 +162,11 @@ Route::any('/iframe/{puzzle_jeton}', function ($puzzle_jeton) {
 });
 
 
+// ============================================================================
+// == DEVOIR
+// ============================================================================
+
+Route::view('/devoir-fin', 'devoir-fin');
 
 // ============================================================================
 // == HUB

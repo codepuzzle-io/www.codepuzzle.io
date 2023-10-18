@@ -3,15 +3,16 @@ html {
 }
 
 body {
-  margin: 0;
-  font-family: "Nunito", sans-serif;
-  font-size: 0.9rem;
-  font-weight: 400;
-  line-height: 1.6;
-  color: #212529;
-  text-align: left;
-  background-color: #f8fafc;
-  height:100%;
+    margin: 0;
+    padding: 0;
+    font-family: "Nunito", sans-serif;
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #212529;
+    text-align: left;
+    background-color: #f8fafc;
+    height:100%;
 }
 
 a {
@@ -66,6 +67,19 @@ h3 {
 	font-size: 14px;
 	text-transform: uppercase;
 	color: #3490dc;
+}
+
+.splashscreen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: #747070;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 80px;
+    opacity:0.6;
+    z-index:1000;
 }
 
 .a-propos {
@@ -192,7 +206,6 @@ h3 {
     background-color: #ecf0f1;
     color:#bdc3c7;
     padding: 5px 20px 5px 20px;
-    font-weight:bold;
 }
 
 select:focus, input:focus{
