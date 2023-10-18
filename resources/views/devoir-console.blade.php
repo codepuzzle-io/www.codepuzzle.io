@@ -45,12 +45,13 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                 	<span><i class="fa fa-envelope"></i> contact@codepuzzle.io</span>
                 </div>
 
-                <div class="text-danger border border-danger rounded text-monospace p-2" style="font-size:70%;text-align:justify;">
+                <div class="text-danger border border-danger rounded text-monospace p-2" style="font-size:70%;">
                     Statut: alpha<br/>
                     <br/>
                     A faire:<br/>
                     * page pour modifier le sujet d'un entraînement<br />
                     * pouvoir supprimer une copie d'élève<br />
+                    * système d'envoi des commentaires aux élèves<br />
                 </div>
 
             </div>
@@ -156,11 +157,14 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 
                                 <div class="collapse" id="collapseEntrainement-{{$loop->iteration}}">
 
+                                    <!-- CODE ELEVE --> 
                                     <div class="text-monospace mt-2">Code élève <i class="text-muted small">en lecture seule</i></div>
                                     <div>
                                         <div id="editor_code_eleve_devoir-{{$loop->iteration}}" style="border-radius:5px;">{{$devoir_eleve->code_eleve}}</div>
                                     </div>
+                                    <!-- /CODE ELEVE --> 
 
+                                    <!-- CODE ENSEIGNANT --> 
                                     <div class="text-monospace mt-2">Code enseignant</div>
                                     <div>
                                         <?php
@@ -172,6 +176,9 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                                         ?>
                                         <div id="editor_code_enseignant_devoir-{{$loop->iteration}}" style="border-radius:5px;">{{$code_enseignant}}</div>
                                     </div>
+                                    <!-- /CODE ENSEIGNANT --> 
+
+                                    <div class="p-1 pl-2 pr-2 rounded mt-1 mb-3 text-monospace small" style="background-color:#ffe791;color:#cfb140;"><i class="far fa-lightbulb"></i> Recharger cette page entre deux élèves afin de supprimer les variables et fonctions en mémoire.</div>
 
                                     <table class="mt-2 mb-2" style="width:100%">
                                         <tr>
