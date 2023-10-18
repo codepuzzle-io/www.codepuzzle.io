@@ -6,8 +6,6 @@
 </head>
 <body>
 
-	@include('inc-nav')
-
 	<!-- MODAL MARKDOWN HELP -->
 	<div class="modal fade" id="markdown_help" tabindex="-1" aria-labelledby="markdown_helpLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
