@@ -151,7 +151,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                                         @if($devoir_eleve->revised == 1)
                                             <i class="fas fa-check-circle" style="color:#94C58C;"></i>
                                         @else
-                                            <i class="fas fa-check-circle" style="color:silver;"></i>
+                                            <i class="fas fa-check-circle" style="color:#ecf0f1;"></i>
                                         @endif
                                     </div>
                                     <a data-toggle="collapse" class="text-dark" href="#collapseEntrainement-{{$loop->iteration}}" role="button" aria-expanded="false" aria-controls="collapseEntrainement-{{$loop->iteration}}"><i class="fas fa-plus-square"></i></a>
