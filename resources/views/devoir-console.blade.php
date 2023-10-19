@@ -218,7 +218,8 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 
                                     <div class="text-monospace text-success font-weight-bold mt-2">Commentaires</div>
                                     <textarea id="commentaires-{{$loop->iteration}}" class="form-control border border-success text-success" rows="6">{{$devoir_eleve->commentaires}}</textarea>
-                                    <button onclick="save_commentaires({{$loop->iteration}}, {{$devoir_eleve->id}})" type="button" class="btn btn-success btn-sm text-monospace mt-2 pt-2 pb-2 pl-3 pr-3" style="display:inline"><i class="fas fa-save"></i></button>
+                                    <a id="save-{{$loop->iteration}}" href="#" onclick="save_commentaires({{$loop->iteration}}, {{$devoir_eleve->id}}, event)" role="button" class="btn btn-sm text-monospace mt-2 pt-2 pb-2 pl-3 pr-3" style="background-color:#4cbf56;color:white;"><i class="fas fa-save"></i></a>
+                                    <span id="save-confirmation-{{$loop->iteration}}" style="opacity:0"><i class="pl-2 fas fa-check" style="color:#4cbf56"></i></span>
                                 
                                 </div>
 
@@ -446,7 +447,8 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 
 
     <script>
-        function save_commentaires(i, id) {
+        function save_commentaires(i, id, event) {
+            event.preventDefault();
             var formData = new URLSearchParams();
             formData.append('devoir_eleve_id', id);
             formData.append('code_enseignant', encodeURIComponent(editor_code_enseignant_devoir[i].getValue()));
@@ -458,7 +460,20 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
             })
             .then(function(response) {
                 // Renvoie la réponse du serveur (peut contenir un message de confirmation)
+                //return response.text();
+
+                // confirmation de l'enregistrement
+                document.getElementById('save-' + i).blur();
+                var element = document.getElementById("save-confirmation-" + i)
+                element.style.opacity = 1;
+                var intervalID = setInterval(function() {
+                    element.style.opacity = element.style.opacity - 0.01;
+                }, 30); 
+                setTimeout(function() {
+                    clearInterval(intervalID);
+                }, 3000);
                 return response.text();
+                
             })
             .then(function(data) {
                 // Affiche la réponse du serveur dans la console
