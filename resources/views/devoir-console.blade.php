@@ -429,11 +429,17 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                 }
 			} catch (err) {
 				// erreur python
-				let error_message = err.message.split("File \"<exec>\", ");
-				error_message = "Error " + error_message[1];
-                if (typeof(error_message) !== 'undefined'){
-                    document.getElementById("terminal-" + i).innerText += error_message
-                }
+                console.log(err);
+                let error_message = "";
+				let errors = err.message.split("File \"<exec>\", ");
+                errors.forEach((error) => {
+                    error = "Error " + error;
+                    error = error.replace(", in <module>", "")
+                    if (typeof(error) !== 'undefined' && !error.includes('Traceback')) {
+                        error_message += error.trim() + "\n\n";
+                    }
+                });
+                document.getElementById("terminal-" + i).innerText = error_message.trim();
 			}		
 		}
 	</script>
