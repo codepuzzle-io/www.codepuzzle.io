@@ -145,11 +145,15 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 
                                 <div class="text-monospace">
                                     <div style="float:right;right:10px">
-                                        @if($devoir_eleve->revised == 1)
-                                            <i class="fas fa-check-circle text-success"></i></div>
-                                        @else
-                                            <i class="fas fa-check-circle" style="color:silver;"></i></div>
+                                        @if($devoir_eleve->submitted == 1)
+                                            <span class="text-white mr-3" style="font-size:70%;background-color:#94C58C;padding:2px 8px;border-radius:3px;">rendu</span>
                                         @endif
+                                        @if($devoir_eleve->revised == 1)
+                                            <i class="fas fa-check-circle text-success"></i>
+                                        @else
+                                            <i class="fas fa-check-circle" style="color:silver;"></i>
+                                        @endif
+                                    </div>
                                     <a data-toggle="collapse" class="text-dark" href="#collapseEntrainement-{{$loop->iteration}}" role="button" aria-expanded="false" aria-controls="collapseEntrainement-{{$loop->iteration}}"><i class="fas fa-plus-square"></i></a>
 
                                     <span class="">{{$devoir_eleve->pseudo}}</span>
