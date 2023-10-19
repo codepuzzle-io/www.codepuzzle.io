@@ -149,7 +149,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                                             <span class="text-white mr-3" style="font-size:70%;background-color:#94C58C;padding:2px 8px;border-radius:3px;">rendu</span>
                                         @endif
                                         @if($devoir_eleve->revised == 1)
-                                            <i class="fas fa-check-circle text-success"></i>
+                                            <i class="fas fa-check-circle" style="color:#94C58C;"></i>
                                         @else
                                             <i class="fas fa-check-circle" style="color:silver;"></i>
                                         @endif
