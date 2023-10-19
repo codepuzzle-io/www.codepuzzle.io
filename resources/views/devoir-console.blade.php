@@ -217,7 +217,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                                     </div>
 
                                     <div class="text-monospace text-success font-weight-bold mt-2">Commentaires</div>
-                                    <textarea id="commentaires-{{$loop->iteration}}" class="form-control border border-success text-success" rows="3">{{$devoir_eleve->commentaires}}</textarea>
+                                    <textarea id="commentaires-{{$loop->iteration}}" class="form-control border border-success text-success" rows="6">{{$devoir_eleve->commentaires}}</textarea>
                                     <button onclick="save_commentaires({{$loop->iteration}}, {{$devoir_eleve->id}})" type="button" class="btn btn-success btn-sm text-monospace mt-2 pt-2 pb-2 pl-3 pr-3" style="display:inline"><i class="fas fa-save"></i></button>
                                 
                                 </div>
