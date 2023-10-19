@@ -4,7 +4,7 @@ if (!$devoir){
     echo "<pre>Cet entraînement n'existe pas</pre>";
     exit();
 }
-$devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)->get();
+$devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)->orderBy('pseudo')->get();
 ?>
 <!doctype html>
 <html lang="fr">
@@ -135,7 +135,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                         </div>
                     </div>
 
-                </div>                
+                </div>      
 
                 <div class="row mt-3 mb-5">
                     <div class="col-md-12">
