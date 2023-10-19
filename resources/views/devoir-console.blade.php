@@ -74,9 +74,9 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                                     <td class="text-center font-weight-bold p-0" style="width:33%">lien élèves</td>
                                 </tr>
                                 <tr>
-                                    <td class="text-center text-white p-2 text-break align-middle" style="background-color:#d14d41;border-radius:3px;"><a href="/console-devoir/E{{strtoupper($devoir->jeton_secret)}}" target="_blank" class="text-white">www.codepuzzle.net/console-devoir/E{{strtoupper($devoir->jeton_secret)}}</a></td>
+                                    <td class="text-center text-white p-2 text-break align-middle" style="background-color:#d14d41;border-radius:3px;"><a href="/devoir-console/{{strtoupper($devoir->jeton_secret)}}" target="_blank" class="text-white">www.codepuzzle.io/devoir-console/{{strtoupper($devoir->jeton_secret)}}</a></td>
                                     <td class="text-center text-white p-2 text-break align-middle" style="background-color:#d0a215;border-radius:3px;">{{$devoir->mot_secret}}</td>
-                                    <td class="text-center text-white p-2 text-break align-middle" style="background-color:#879a39;border-radius:3px;"><a href="/E{{strtoupper($devoir->jeton)}}" target="_blank" class="text-white">www.codepuzzle.net/E{{strtoupper($devoir->jeton)}}</a></td>
+                                    <td class="text-center text-white p-2 text-break align-middle" style="background-color:#879a39;border-radius:3px;"><a href="/E{{strtoupper($devoir->jeton)}}" target="_blank" class="text-white">www.codepuzzle.io/E{{strtoupper($devoir->jeton)}}</a></td>
                                 </tr>
                                 <tr>
                                     <td class="small text-muted p-0"><span class="text-danger"><i class="fas fa-exclamation-circle"></i> Ne pas partager ce lien</span><br />Il permet d'accéder à la console de l'entraînement (sujet, lien pour les élèves, correction...).</td>
