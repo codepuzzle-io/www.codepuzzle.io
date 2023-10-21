@@ -24,13 +24,23 @@
 							<td class="p-2 text-center">RENDU</td>
 						</tr>
 						<tr>
+							<td class="p-2">CODE DANS DU TEXTE</td>
+							<td class="p-2 text-monospace text-muted">Écrire la fonction `puissance(a, n)`.</td>
+							<td class="p-2" style="vertical-align:top">Écrire la fonction <code>puissance(a, n)</code>.</td>
+						</tr>		
+						<tr>
+							<td class="p-2">BLOC DE CODE</td>
+							<td class="p-2 text-monospace text-muted">Soit la fonction:<br />```<br />def carre(n)<br />&nbsp;&nbsp;&nbsp;&nbsp;return n**2<br />```</td>
+							<td class="p-2" style="vertical-align:top">Soit la fonction:<pre>def carre(n)<br />&nbsp;&nbsp;&nbsp;&nbsp;return n**2<br /></pre></td>
+						</tr>					
+						<tr>
 							<td class="p-2">PARAGRAPHES</td>
 							<td class="p-2 text-monospace text-muted">paragraphe<br /><br />paragraphe<p class="mt-2 mb-0" style="color:silver">Laisser une ligne vide pour marquer un nouveau paragraphe.</p></td>
 							<td class="p-2" style="vertical-align:top"><p class="mb-1">paragraphe</p>paragraphe</td>
 						</tr>
 						<tr>
 							<td class="p-2">RETOUR À LA LIGNE</td>
-							<td class="p-2 text-monospace text-muted">ligne \<br />ligne<p class="mt-2 mb-0" style="color:silver">Ajouter un \ en bout de ligne pour forcer le retour à la ligne.</p></td>
+							<td class="p-2 text-monospace text-muted">ligne &lt;br&gt;<br />ligne<p class="mt-2 mb-0" style="color:silver">Ajouter &lt;br&gt; en bout de ligne pour forcer le retour à la ligne.</p></td>
 							<td class="p-2" style="vertical-align:top">ligne<br />ligne</td>
 						</tr>
 						<tr>
@@ -70,8 +80,8 @@
 							</td>
 							<td class="p-2">
 								<p><br /></p>
-								<p class="mb-1">Un <a href="http://pep8online.com/" target="_blank">lien</a> vers PEP8 online.</p>
-								<p class="mb-0">Un lien vers <a href="http://pep8online.com/" target="_blank">PEP8 online</a>.</p>
+								<p class="mb-1">Un <a href="http://pep8online.com/" target="_blank">lien</a> vers Eduscol.</p>
+								<p class="mb-0">Un lien vers <a href="http://pep8online.com/" target="_blank">Eduscol</a>.</p>
 							</td>
 						</tr>
 					</table>
