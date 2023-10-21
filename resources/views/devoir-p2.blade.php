@@ -47,15 +47,20 @@ $devoir_eleve = App\Models\Devoir_eleve::where('jeton_copie', Session::get('jeto
 <body class="no-mathjax" oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 
     <!-- Écran de démarrage -->
-	@if ($devoir->with_console == 1)
-    <div id="splashscreen" class="splashscreen">
-        <i class="fas fa-spinner fa-spin" style="color:black;opacity:1;z-index:2000"></i>
+    <div id="demarrer" class="demarrer">
+		<div id="commencer" style="display:none">
+			<button onclick="commencer()" type="button" class="btn btn-primary btn-lg text-monospace" style="width:180px;font-size:100%;">commencer</button>
+			<br/><br/>
+			<i class="fas fa-exclamation-triangle text-danger"></i>
+			<br />
+			<span class="text-monospace text-danger">ne pas quitter le mode<br />plein écran</span>
+		</div>
+		<button id="attendre" type="button" class="btn btn-primary btn-lg text-monospace" style="width:180px;" disabled><img src="{{ asset('img/chargement.gif') }}" width="40" /></button>
     </div>
-	@endif
 
-	<div class="bg-danger text-white p-2 text-monospace text-center mb-4">ne pas quitter cette page - ne pas recharger cette page - ne pas cliquer en-dehors de cette page</div>
+	<div class="bg-danger text-white p-2 text-monospace text-center mb-4">ne pas quitter cette page - ne pas recharger cette page - ne pas cliquer en-dehors de cette page - ne pas quitter le mode plein écran</div>
 
-    <div class="container">
+    <div class="container mt-5">
 
 		<table align="center" cellpadding="2" style="text-align:center;margin-bottom:20px;color:#bdc3c7;border-spacing:5px;border-collapse:separate;">
 			<tr>
@@ -111,7 +116,7 @@ $devoir_eleve = App\Models\Devoir_eleve::where('jeton_copie', Session::get('jeto
         <div class="row mt-3">
             <div class="col-md-6 offset-md-3">
                 <div>Console</div>
-                <pre id="output1" class="bg-dark text-monospace p-3 small text-white" style="border-radius:4px;border:1px solid silver"></pre>
+                <pre id="output1" class="bg-dark text-monospace p-3 small text-white" style="border-radius:4px;border:1px solid silver;min-height:100px;"></pre>
             </div>
         </div>    
 		@endif
@@ -218,7 +223,8 @@ $devoir_eleve = App\Models\Devoir_eleve::where('jeton_copie', Session::get('jeto
 		// init Pyodide
 		async function main() {
 			let pyodide = await loadPyodide();
-			document.getElementById('splashscreen').remove();
+			document.getElementById('attendre').style.display = 'none';
+			document.getElementById('commencer').style.display = 'block';
 			console.log("Prêt!");
 			return pyodide;
 		}
@@ -323,6 +329,37 @@ $devoir_eleve = App\Models\Devoir_eleve::where('jeton_copie', Session::get('jeto
 			});
 		}
 	</script>			
+
+	<script>
+		function commencer() {
+			if (document.documentElement.requestFullscreen) {
+				document.documentElement.requestFullscreen(); // Méthode pour les navigateurs récents
+			} else if (document.documentElement.mozRequestFullScreen) {
+				document.documentElement.mozRequestFullScreen(); // Méthode pour Firefox
+			} else if (document.documentElement.webkitRequestFullscreen) {
+				document.documentElement.webkitRequestFullscreen(); // Méthode pour Chrome, Safari et Opera
+			} else if (document.documentElement.msRequestFullscreen) {
+				document.documentElement.msRequestFullscreen(); // Méthode pour Internet Explorer/Edge
+			}
+			document.getElementById('demarrer').remove();
+		}
+
+		// Ajoutez un gestionnaire d'événements à l'événement 'fullscreenchange'
+		document.addEventListener('fullscreenchange', exitFullscreenHandler);
+		document.addEventListener('webkitfullscreenchange', exitFullscreenHandler);
+		document.addEventListener('mozfullscreenchange', exitFullscreenHandler);
+		document.addEventListener('MSFullscreenChange', exitFullscreenHandler);
+
+		function exitFullscreenHandler() {
+			if (document.fullscreenElement === null || // Standard de la W3C
+				document.webkitFullscreenElement === null || // Anciens navigateurs Webkit
+				document.mozFullScreenElement === null || // Anciens navigateurs Firefox
+				document.msFullscreenElement === null) { // Anciens navigateurs Internet Explorer/Edge
+				console.log('La sortie du mode plein écran a été détectée.');
+				window.location.replace("/devoir");
+			}
+		}
+	</script>
 
     <script>
 		var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))

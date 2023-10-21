@@ -69,16 +69,13 @@ h3 {
 	color: #3490dc;
 }
 
-.splashscreen {
+.demarrer {
     position: fixed;
     width: 100%;
     height: 100%;
-    background-color: #747070;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 80px;
-    opacity:0.6;
+    background-color: white;
+    text-align:center;
+    padding-top:200px;
     z-index:1000;
 }
 
