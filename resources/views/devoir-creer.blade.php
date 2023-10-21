@@ -30,8 +30,8 @@
 						</tr>		
 						<tr>
 							<td class="p-2">BLOC DE CODE</td>
-							<td class="p-2 text-monospace text-muted">Soit la fonction:<br />```<br />def carre(n)<br />&nbsp;&nbsp;&nbsp;&nbsp;return n**2<br />```</td>
-							<td class="p-2" style="vertical-align:top">Soit la fonction:<pre>def carre(n)<br />&nbsp;&nbsp;&nbsp;&nbsp;return n**2<br /></pre></td>
+							<td class="p-2 text-monospace text-muted">Soit la fonction:<br />```<br />def carre(n):<br />&nbsp;&nbsp;&nbsp;&nbsp;return n**2<br />```</td>
+							<td class="p-2" style="vertical-align:top">Soit la fonction:<pre>def carre(n):<br />&nbsp;&nbsp;&nbsp;&nbsp;return n**2<br /></pre></td>
 						</tr>					
 						<tr>
 							<td class="p-2">PARAGRAPHES</td>
