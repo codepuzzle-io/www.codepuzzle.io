@@ -17,8 +17,8 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 <body>
 
     <!-- Écran de démarrage -->
-    <div id="splashscreen" class="splashscreen">
-        <i class="fas fa-spinner fa-spin" style="color:black;opacity:1;z-index:2000"></i>
+    <div id="demarrer" class="demarrer" style="opacity:0.9">
+        <img src="{{ asset('img/chargement.gif') }}" width="30" />
     </div>
 
 	<div class="container mb-5">
@@ -395,7 +395,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 		async function main() {
 			let pyodide = await loadPyodide();
 			//document.getElementById("output").innerText = "Prêt!\n";
-            document.getElementById('splashscreen').remove();
+            document.getElementById('demarrer').remove();
             console.log("Prêt!");
 			return pyodide;
 		}

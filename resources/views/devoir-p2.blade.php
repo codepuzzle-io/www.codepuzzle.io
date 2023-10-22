@@ -36,10 +36,13 @@ $devoir_eleve = App\Models\Devoir_eleve::where('jeton_copie', Session::get('jeto
 	<link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 
 	@include('inc-matomo')
+
 	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta http-equiv="Expires" content="0" />
+
     <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
+
     <title>ENTRAÎNEMENT</title>
 
 </head>
@@ -55,7 +58,7 @@ $devoir_eleve = App\Models\Devoir_eleve::where('jeton_copie', Session::get('jeto
 			<br />
 			<span class="text-monospace text-danger">ne pas quitter le mode<br />plein écran</span>
 		</div>
-		<button id="attendre" type="button" class="btn btn-primary btn-lg text-monospace" style="width:180px;" disabled><img src="{{ asset('img/chargement.gif') }}" width="40" /></button>
+		<button id="attendre" type="button" class="btn btn-primary btn-lg text-monospace" style="width:180px;" disabled><img src="{{ asset('img/chargement.gif') }}" width="30" /></button>
     </div>
 
 	<div class="bg-danger text-white p-2 text-monospace text-center mb-4">ne pas quitter cette page - ne pas recharger cette page - ne pas cliquer en-dehors de cette page - ne pas quitter le mode plein écran</div>
@@ -123,250 +126,7 @@ $devoir_eleve = App\Models\Devoir_eleve::where('jeton_copie', Session::get('jeto
 		  
     </div><!-- container -->
 
-    @include('inc-bottom-js')
-
-    <script>
-        MathJax = {
-			tex: {
-				inlineMath: [['$', '$'], ['\\(', '\\)']]
-			},
-			options: {
-				ignoreHtmlClass: "no-mathjax",
-				processHtmlClass: "mathjax"
-			},
-			svg: {
-				fontCache: 'global'
-			}
-        };
-    </script>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script> 	
-
-	<script src="{{ asset('js/ace/ace.js') }}" type="text/javascript" charset="utf-8"></script>
-	<script>
-		var editor_code = ace.edit("editor_code", {
-			theme: "ace/theme/puzzle_code",
-			mode: "ace/mode/python",
-			maxLines: 500,
-			minLines: 10,
-			fontSize: 14,
-			wrap: true,
-			useWorker: false,
-			autoScrollEditorIntoView: true,
-			highlightActiveLine: false,
-			highlightSelectedWord: false,
-			highlightGutterLine: true,
-			showPrintMargin: false,
-			displayIndentGuides: true,
-			showLineNumbers: true,
-			showGutter: true,
-			showFoldWidgets: false,
-			useSoftTabs: true,
-			navigateWithinSoftTabs: false,
-			tabSize: 4
-		});
-		editor_code.container.style.lineHeight = 1.5;
-		var textarea_code = $('#code');
-		editor_code.getSession().on('change', function () {
-			textarea_code.val(editor_code.getSession().getValue());
-		});
-		textarea_code.val(editor_code.getSession().getValue());
-	</script>   
-
-	<script>
-		// CHRONO
-		var count;
-		var intervalRef = null;
-
-		var chrono = {
-			start: function () {
-				let start = new Date();
-				intervalRef = setInterval(_ => {
-					let current = new Date();
-					count = {{ $devoir_eleve->chrono }} + +current - +start;
-					let s = Math.floor((count /  1000)) % 60;
-					let m = Math.floor((count / 60000)) % 60;
-					if (s < 10) {
-						s_display = '0' + s;
-					} else {
-						s_display = s;
-					}
-					if (m < 10) {
-						m_display = '0' + m;
-					} else {
-						m_display = m;
-					}
-					$('#chrono').text(m_display + ":" + s_display);
-				}, 1000);
-			},
-			stop: function () {
-				clearInterval(intervalRef);
-				delete intervalRef;
-			},
-		}
-		chrono.start();	
-	</script>
-
-	@if ($devoir->with_console == 1)
-    <script>
-		// PYTHON
-		const code = document.getElementById("code");
-		var nbverif = {{ $devoir_eleve->nbverif }};
-
-		function addToOutput(output_content) {
-			//document.getElementById("output1").innerText = ""
-			if (typeof(output_content) !== 'undefined'){
-				document.getElementById("output1").innerText += output_content
-			}
-		}
-
-		// init Pyodide
-		async function main() {
-			let pyodide = await loadPyodide();
-			document.getElementById('attendre').style.display = 'none';
-			document.getElementById('commencer').style.display = 'block';
-			console.log("Prêt!");
-			return pyodide;
-		}
-
-		let pyodideReadyPromise = main();
-
-		async function evaluatePython() {
-			console.log('EVALUATE PYTHON')
-			nbverif++;
-			document.getElementById('nbverif').innerText = nbverif;
-			let pyodide = await pyodideReadyPromise;
-			await pyodide.loadPackagesFromImports(code.value);
-			
-			try {
-				// pas d'erreur python
-				document.getElementById("output1").innerText = "";
-				pyodide.setStdout({batched: (str) => {
-					document.getElementById("output1").innerText += str+"\n";
-					console.log(str);
-				}})
-				let output = pyodide.runPython(code.value);
-				
-				addToOutput(output); 
-			} catch (err) {
-				// erreur python
-				let error_message = err.message.split("File \"<exec>\", ");
-				error_message = "Error " + error_message[1];
-				addToOutput(error_message);
-			}				
-		}
-	</script>
-	@endif
-
-	<script>
-		// autosave
-		setInterval(function() {
-			var formData = new URLSearchParams();
-			formData.append('code', encodeURIComponent(document.getElementById('code').value));
-			@if ($devoir->with_chrono == 1)
-				formData.append('chrono', count);
-			@else
-				formData.append('chrono', 0);
-			@endif
-			@if ($devoir->with_nbverif == 1)
-				formData.append('nbverif', nbverif);
-			@else
-				formData.append('nbverif', 0);
-			@endif
-			formData.append('jeton_copie', '{{ Session::get('jeton_copie') }}');
-
-			fetch('/devoir-autosave', {
-				method: 'POST',
-				headers: {"Content-Type": "application/x-www-form-urlencoded", "X-CSRF-Token": "{{ csrf_token() }}"},
-				body: formData
-			})
-			.then(function(response) {
-				// Renvoie la réponse du serveur (peut contenir un message de confirmation)
-				return response.text();
-			})
-			.then(function(data) {
-				// Affiche la réponse du serveur dans la console
-				console.log(data); 
-			})
-			.catch(function(error) {
-				// Gère les erreurs liées à la requête Fetch
-				console.error('Erreur:', error); 
-			});
-		}, 10000);
-	</script>
-
-	<script>
-		// rendre
-		$(document).on("click", "#rendre", function() {
-			rendre();
-		});
-		function rendre() {
-			var formData = new URLSearchParams();
-			formData.append('code', encodeURIComponent(document.getElementById('code').value));
-			@if ($devoir->with_chrono == 1)
-				formData.append('chrono', count);
-			@else
-				formData.append('chrono', 0);
-			@endif
-			@if ($devoir->with_nbverif == 1)
-				formData.append('nbverif', nbverif);
-			@else
-				formData.append('nbverif', 0);
-			@endif
-			formData.append('jeton_copie', '{{ Session::get('jeton_copie') }}');
-
-			fetch('/devoir-rendre', {
-				method: 'POST',
-				headers: {"Content-Type": "application/x-www-form-urlencoded", "X-CSRF-Token": "{{ csrf_token() }}"},
-				body: formData
-			})
-			.then(function(response) {
-				window.location.replace("/devoir-fin");
-			})
-			.catch(function(error) {
-				// Gère les erreurs liées à la requête Fetch
-				//console.error('Erreur:', error); 
-			});
-		}
-	</script>			
-
-	<script>
-		function commencer() {
-			if (document.documentElement.requestFullscreen) {
-				document.documentElement.requestFullscreen(); // Méthode pour les navigateurs récents
-			} else if (document.documentElement.mozRequestFullScreen) {
-				document.documentElement.mozRequestFullScreen(); // Méthode pour Firefox
-			} else if (document.documentElement.webkitRequestFullscreen) {
-				document.documentElement.webkitRequestFullscreen(); // Méthode pour Chrome, Safari et Opera
-			} else if (document.documentElement.msRequestFullscreen) {
-				document.documentElement.msRequestFullscreen(); // Méthode pour Internet Explorer/Edge
-			}
-			document.getElementById('demarrer').remove();
-		}
-
-		// Ajoutez un gestionnaire d'événements à l'événement 'fullscreenchange'
-		document.addEventListener('fullscreenchange', exitFullscreenHandler);
-		document.addEventListener('webkitfullscreenchange', exitFullscreenHandler);
-		document.addEventListener('mozfullscreenchange', exitFullscreenHandler);
-		document.addEventListener('MSFullscreenChange', exitFullscreenHandler);
-
-		function exitFullscreenHandler() {
-			if (document.fullscreenElement === null || // Standard de la W3C
-				document.webkitFullscreenElement === null || // Anciens navigateurs Webkit
-				document.mozFullScreenElement === null || // Anciens navigateurs Firefox
-				document.msFullscreenElement === null) { // Anciens navigateurs Internet Explorer/Edge
-				console.log('La sortie du mode plein écran a été détectée.');
-				window.location.replace("/devoir");
-			}
-		}
-	</script>
-
-    <script>
-		var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-		var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-		  return new bootstrap.Tooltip(tooltipTriggerEl)
-		})
-	</script>
+    @include('inc-js-devoir-p2')
 
 </body>
 </html>
