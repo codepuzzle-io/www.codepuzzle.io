@@ -103,7 +103,7 @@
             if (response.ok) {
                 return response.text();
             } else {
-                //window.location.replace("/devoir-fin?s1");
+                window.location.replace("/devoir-fin?s1");
             }
         })
         .then(function(data) {
