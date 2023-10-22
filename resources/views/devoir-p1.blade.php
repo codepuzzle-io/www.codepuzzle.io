@@ -43,7 +43,7 @@
 					</div>					
 
 					<p class="text-center mt-3">
-						<button id="commencer" type="submit" class="btn btn-primary mt-2 pl-4 pr-4" disabled>commencer</button>
+						<button id="commencer" type="submit" class="btn btn-primary mt-2 pl-4 pr-4" disabled><i class="fas fa-check"></i></button>
 					</p>
 
 				</form>
