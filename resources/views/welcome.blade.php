@@ -6,6 +6,7 @@
 		$description_og = __('Puzzles de Parsons & Défis pour apprendre Python');
 	@endphp
 	@include('inc-meta')
+	<a rel="me" href="https://mastodon.social/@codepuzzle">Mastodon</a>
     <title>{{ strtoupper(config('app.name')) }} | {{__('Puzzles de Parsons & Défis')}}</title>
 </head>
 <body>
