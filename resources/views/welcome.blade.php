@@ -51,7 +51,7 @@
 	</div><!--container -->
 
 	@include('inc-footer')
-	<a rel="me" href="https://mastodon.social/@codepuzzle" target="_blank"><button type="button" class="btn btn-light btn-sm text-muted ml-1 mr-1 pt-2"><i class="fa-brands fa-mastodon"></i></button></a>
+	<div class="text-center"><a rel="me" href="https://mastodon.social/@codepuzzle" target="_blank"><kbd>m</kbd></a></div>
 
 	@include('inc-bottom-js')
 
