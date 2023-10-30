@@ -51,7 +51,10 @@
 	</div><!--container -->
 
 	@include('inc-footer')
-	<div class="text-center"><a rel="me" href="https://mastodon.social/@codepuzzle" target="_blank"><kbd>m</kbd></a></div>
+	<div class="text-center">
+		<a rel="me" href="https://mastodon.social/@codepuzzle" target="_blank"><kbd>m</kbd></a>
+		<a rel="me" href="https://twitter.com/codepuzzleio" target="_blank"><kbd>t</kbd></a>
+	</div>
 
 	@include('inc-bottom-js')
 
