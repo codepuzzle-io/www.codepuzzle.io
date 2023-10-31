@@ -27,6 +27,12 @@ a:hover {
     background-color: transparent;
 }
 
+code {
+    font-size: 100%;
+    color: #f66d9b;
+    word-wrap: break-word;
+}
+
 
 h1 {
 	font-size: 24px;
