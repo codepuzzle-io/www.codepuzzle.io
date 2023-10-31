@@ -97,8 +97,8 @@
 				<div class="small text-muted">avec quatre tests</div>
 			</div>
 			<div class="col-md-10">
-				<div id="exemple3_div">
-					<iframe id="exemple3_iframe" src="https://www.codepuzzle.io/IDZLB8" height="100%" width="100%" frameborder="0"></iframe>
+				<div id="exemple4_div">
+					<iframe id="exemple4_iframe" src="https://www.codepuzzle.io/IDZLB8" height="100%" width="100%" frameborder="0"></iframe>
 				</div>
 			</div>
 		</div>		
@@ -111,7 +111,7 @@
 	@include('inc-bottom-js')
 
 	<script>
-		for (var i = 1; i <= 3; i++) {
+		for (var i = 1; i <= 4; i++) {
 			(function(index) {
 				document.getElementById('exemple' + index + '_iframe').addEventListener('load', function() {
 					var iframeHeight = document.getElementById('exemple' + index + '_iframe').contentWindow.document.body.scrollHeight;
