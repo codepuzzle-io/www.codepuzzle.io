@@ -79,7 +79,7 @@
 
 		<div class="row mt-5 text-monospace">
 			<div class="col-md-2">
-				<div class="font-weight-bold">Exemple 2</div>
+				<div class="font-weight-bold">Exemple 3</div>
 				<div class="font-weight-bold text-success">PUZZLE DE PARSONS</div>
 				<div class="small text-muted">en mode "réorganiser" avec code à compléter</div>
 			</div>
@@ -89,6 +89,19 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="row mt-5 text-monospace">
+			<div class="col-md-2">
+				<div class="font-weight-bold">Exemple 4</div>
+				<div class="font-weight-bold text-success">DÉFI</div>
+				<div class="small text-muted">avec quatre tests</div>
+			</div>
+			<div class="col-md-10">
+				<div id="exemple3_div">
+					<iframe id="exemple3_iframe" src="https://www.codepuzzle.io/IDZLB8" height="100%" width="100%" frameborder="0"></iframe>
+				</div>
+			</div>
+		</div>		
 
 
 
