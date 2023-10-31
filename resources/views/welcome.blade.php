@@ -17,46 +17,84 @@
 	<div class="container mt-3">
 		<div class="row pt-3">
 
-			<div class="intro col-md-4 offset-md-2 text-monospace">
-				<h2>{!!__('Créer et partager des puzzles de Parsons', ['link' => route('about')])!!}</h2>
-				<div class="mx-auto mt-3 text-center" style="width:160px">
-					<a class="btn btn-success btn-sm btn-block" href="{{ route('puzzle-creer-get')}}" role="button">{{__('créer un puzzle')}}</a>
+			<div class="intro col-md-4 text-monospace">
+				<div class="add">
+					<h2>{!!__('Créer et partager des puzzles de Parsons', ['link' => route('about')])!!}</h2>
+					<div class="mx-auto mt-3 text-center" style="width:180px">
+						<a class="btn btn-success btn-sm btn-block p-2" href="{{ route('puzzle-creer-get')}}" role="button"><i class="fa-solid fa-circle-plus pt-1 pb-1"></i><br />{!!__('puzzle')!!}</a>
+					</div>
 				</div>
 			</div>
 			<div class="intro col-md-4 text-monospace">
-				<h2>{!!__('Créer et partager des défis', ['link' => route('about')])!!}</h2>				
-				<div class="mx-auto mt-3 text-center" style="width:160px">
-					<a class="btn btn-success btn-sm btn-block" href="{{ route('defi-creer-get')}}" role="button">{{__('créer un défi')}}</a>
+				<div class="add">
+					<h2>{!!__('Créer et partager des défis')!!}</h2>				
+					<div class="mx-auto mt-3 text-center" style="width:180px">
+						<a class="btn btn-success btn-sm btn-block p-2" href="{{ route('defi-creer-get')}}" role="button"><i class="fa-solid fa-circle-plus pt-1 pb-1"></i><br />{!!__('défi')!!}</a>
+					</div>
+				</div>
+			</div>
+			<div class="intro col-md-4 text-monospace">
+				<div class="add">
+					<h2>{!!__('Créer et partager des entraînements / devoirs')!!} <sup class="text-lowercase text-danger">bêta</sup></h2>				
+					<div class="mx-auto mt-3 text-center" style="width:180px">
+						<a class="btn btn-success btn-sm btn-block p-2" href="{{ route('devoir-creer-get')}}" role="button"><i class="fa-solid fa-circle-plus pt-1 pb-1"></i><br />{!!__('entraînement / devoir')!!}</a>
+					</div>
+				</div>
+			</div>			
+		</div>
+
+
+		<div class="mx-auto text-center" style="width:200px">
+			<a class="btn btn-secondary btn-sm btn-block mt-5 mb-1" style="font-size:80%;opacity:0.6" href="{{route('register')}}" role="button">{{__('créer un compte')}}</a>
+			<span style="font-size:70%;color:silver;">{{__('pour créer, sauvegarder, modifier et partager les activités proposées aux élèves')}}</span>
+		</div>
+
+
+		{{--
+		<div class="row mt-5 text-monospace">
+			<div class="col-md-2">
+				<div class="font-weight-bold">Exemple 1</div>
+				<div class="font-weight-bold text-success">PUZZLE DE PARSONS</div>
+				<div class="small text-muted">en mode "glisser-déposer"</div>
+			</div>
+			<div class="col-md-10">
+				<div id="exemple1_div">
+					<iframe id="exemple1_iframe" src="/IP4M9D" height="100%" width="100%" frameborder="0"></iframe>
 				</div>
 			</div>
 		</div>
 
-
-		<div class="mx-auto mt-4 text-center" style="width:160px">
-			<a class="btn btn-outline-secondary btn-sm btn-block mt-5 mb-1" style="font-size:80%;opacity:0.4" href="{{route('register')}}" role="button">{{__('créer un compte')}}</a>
-			<span style="font-size:70%;color:#dadfe2;">{{__('pour créer, sauvegarder, modifier et partager des puzzles et les défis')}}</span>
-		</div>
-
-		<div class="row mt-5 text-center text-monospace">
-			<div class="col-md-3 offset-3">
-				<div><a class="btn btn-light btn-sm mr-1" href="https://www.codepuzzle.io/PNHVL" target="_blank" role="button" style="font-size:70%">{{__('exemple 1')}}</a><a class="btn btn-light btn-sm ml-1" href="https://www.codepuzzle.io/P39K2" target="_blank" role="button" style="font-size:70%">{{__('exemple 2')}}</a></div>
-				<div class="mt-3 mb-5"><img src="{{ asset('img/codepuzzle-puzzle.png') }}" class="img-fluid" /></div>
+		<div class="row mt-5 text-monospace">
+			<div class="col-md-2">
+				<div class="font-weight-bold">Exemple 2</div>
+				<div class="font-weight-bold text-success">PUZZLE DE PARSONS</div>
+				<div class="small text-muted">en mode "glisser-déposer" avec code à compléter</div>
 			</div>
-			<div class="col-md-3">
-				<div><a class="btn btn-light btn-sm mr-1" href="https://www.codepuzzle.io/DEHW2" target="_blank" role="button" style="font-size:70%">{{__('exemple 1')}}</a><a class="btn btn-light btn-sm ml-1" href="https://www.codepuzzle.io/DMH3R" target="_blank" role="button" style="font-size:70%">{{__('exemple 2')}}</a></div>
-				<div class="mt-3 mb-5"><img src="{{ asset('img/codepuzzle-challenge.png') }}" class="img-fluid" /></div>
+			<div class="col-md-10">
+				<div id="exemple2_div">
+					<iframe id="exemple2_iframe" src="/IP4M9D" height="100%" width="100%" frameborder="0"></iframe>
+				</div>
 			</div>
 		</div>
+		--}}
+
 
 	</div><!--container -->
 
 	@include('inc-footer')
-	<div class="text-center">
-		<a rel="me" href="https://mastodon.social/@codepuzzle" target="_blank"><kbd>m</kbd></a>
-		<a rel="me" href="https://twitter.com/codepuzzleio" target="_blank"><kbd>t</kbd></a>
-	</div>
-
 	@include('inc-bottom-js')
+
+	<script>
+		for (var i = 1; i <= 2; i++) {
+			(function(index) {
+				document.getElementById('exemple' + index + '_iframe').addEventListener('load', function() {
+					var iframeHeight = document.getElementById('exemple' + index + '_iframe').contentWindow.document.body.scrollHeight;
+					document.getElementById('exemple' + index + '_div').style.height = iframeHeight + 'px';
+				});
+			})(i);
+		}
+	</script>
+
 
 </body>
 </html>

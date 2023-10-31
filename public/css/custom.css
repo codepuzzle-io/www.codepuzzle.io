@@ -52,7 +52,22 @@ h2 {
     font-weight:bold;
 }
 
-.intro h2 {
+.text-success {
+    color: #71bb22 !important;
+}
+
+.add {
+    border-radius:4px;
+    border:1px solid #eef0f2;
+    padding:20px;
+    background-color:white;
+}
+
+.add:hover {
+    background-color: #f3f5f7;
+}
+
+.add h2 {
 	font-size: 0.8rem;
 	text-transform: uppercase;
     text-align:center;
@@ -556,44 +571,46 @@ svg {
     border-color: #f8fafc;
 }
 
+
+
 .btn-success {
     color: #fff;
-    background-color: #4cbf56;
-    border-color: #4cbf56;
+    background-color: #71bb22;
+    border-color: #71bb22;
 }
 
 .btn-success:hover {
     color: #fff;
-    background-color: #71bb22;
-    border-color: #71bb22;
+    background-color: #68ac1f;
+    border-color: #68ac1f;
 }
 
 .btn-check:active+.btn-success, .btn-check:checked+.btn-success, .btn-success.active, .btn-success:active, .show>.btn-success.dropdown-toggle {
     color: #fff;
-    background-color: #71bb22;
-    border-color: #71bb22;
+    background-color: #68ac1f;
+    border-color: #68ac1f;
 }
 
 .btn-success:hover {
     color: #fff;
-    background-color: #71bb22;
-    border-color: #71bb22;
+    background-color: #68ac1f;
+    border-color: #68ac1f;
 }
 
 .btn-success:focus,
 .btn-success.focus {
   color: #fff;
-  background-color: #71bb22;
-  border-color: #71bb22;
-  box-shadow: 0 0 0 0.2rem rgba(86, 202, 135, 0.5);
+  background-color: #68ac1f;
+  border-color: #68ac1f;
+  box-shadow: 0 0 0 0.2rem rgba(103, 171, 31, 0.5);
 }
 
 .btn-success:not(:disabled):not(.disabled):active,
 .btn-success:not(:disabled):not(.disabled).active,
 .show > .btn-success.dropdown-toggle {
   color: #fff;
-  background-color: #71bb22;
-  border-color: #71bb22;
+  background-color: #4cbf56;
+  border-color: #4cbf56;
 }
 
 .btn-success.disabled, .btn-success:disabled {
@@ -601,6 +618,9 @@ svg {
     background-color: silver;
     border-color: silver;
 }
+
+
+
 
 
 

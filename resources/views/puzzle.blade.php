@@ -36,10 +36,10 @@ app()->setLocale($puzzle->lang)
 
 <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 
-    <div class="container">
+    <div class="container-fluid">
 
         @if(!$iframe)
-        <h1 class="mt-2 mb-5 text-center"><a class="navbar-brand m-1" href="{{ url('/') }}"><img src="{{ asset('img/codepuzzle.png') }}" height="20" alt="CODE PUZZLE" /></a></h1>
+        <h1 class="mt-2 mb-5 text-center"><a class="navbar-brand m-1" href="{{ url('/') }}"><img src="{{ asset('img/codepuzzle.png') }}" width="200" alt="CODE PUZZLE" /></a></h1>
         @endif
 
 		@if ($puzzle->with_chrono == 1 OR $puzzle->with_chrono == 1)
@@ -65,7 +65,7 @@ app()->setLocale($puzzle->lang)
 
         @if ($puzzle->titre_eleve !== NULL OR $puzzle->consignes_eleve !== NULL)
         <div class="row">
-            <div class="col-md-6 offset-md-3">
+            <div class="col-md-12">
                 <div class="frame">
                     @if ($puzzle->titre_eleve !== NULL)
                         <div class="font-monospace small mb-1">{{ $puzzle->titre_eleve }}</div>
@@ -85,7 +85,7 @@ app()->setLocale($puzzle->lang)
 
     </div>
 
-    <div class="container-fluid p-4">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-6 offset-md-3 text-center" style="position:relative;height:30px;">
 
@@ -120,7 +120,7 @@ app()->setLocale($puzzle->lang)
             </div>
         @else
             <div class="row mt-3">
-                <div class="col-md-6 offset-md-3">
+                <div class="col-md-12">
                     <div id="sortable" class="sortable-code"></div>
                     <div id="codesource" style="width:100%;margin:0px auto 0px auto;"><div id="editor_codesource" style="border-radius:5px;"></div></div>
                 </div>
