@@ -20,25 +20,34 @@
 			<div class="intro col-md-4 text-monospace">
 				<div class="add">
 					<h2>{!!__('Créer et partager des puzzles de Parsons', ['link' => route('about')])!!}</h2>
-					<div class="mx-auto mt-3 text-center" style="width:180px">
+					<div class="mx-auto mt-3 text-center" style="width:60%">
 						<a class="btn btn-success btn-sm btn-block p-2" href="{{ route('puzzle-creer-get')}}" role="button"><i class="fa-solid fa-circle-plus pt-1 pb-1"></i><br />{!!__('puzzle')!!}</a>
+					</div>
+					<div class="mt-3 small text-muted text-justify">
+						Puzzles de Parsons en mode "réorganiser" ou "glisser-déposer" avec ou sans code à compléter.
 					</div>
 				</div>
 			</div>
 			<div class="intro col-md-4 text-monospace">
 				<div class="add">
 					<h2>{!!__('Créer et partager des défis')!!}</h2>				
-					<div class="mx-auto mt-3 text-center" style="width:180px">
+					<div class="mx-auto mt-3 text-center" style="width:60%">
 						<a class="btn btn-success btn-sm btn-block p-2" href="{{ route('defi-creer-get')}}" role="button"><i class="fa-solid fa-circle-plus pt-1 pb-1"></i><br />{!!__('défi')!!}</a>
 					</div>
+					<div class="mt-3 small text-muted text-justify">
+						Défis avec jeux de tests. Écrire une fonction en suivant les consignes fournies.
+					</div>					
 				</div>
 			</div>
 			<div class="intro col-md-4 text-monospace">
 				<div class="add">
 					<h2>{!!__('Créer et partager des entraînements / devoirs')!!} <sup class="text-lowercase text-danger">bêta</sup></h2>				
-					<div class="mx-auto mt-3 text-center" style="width:180px">
+					<div class="mx-auto mt-3 text-center" style="width:60%">
 						<a class="btn btn-success btn-sm btn-block p-2" href="{{ route('devoir-creer-get')}}" role="button"><i class="fa-solid fa-circle-plus pt-1 pb-1"></i><br />{!!__('entraînement / devoir')!!}</a>
 					</div>
+					<div class="mt-3 small text-muted text-justify">
+						Activités en classe de type examen dans un environnement anti-triche.
+					</div>						
 				</div>
 			</div>			
 		</div>
