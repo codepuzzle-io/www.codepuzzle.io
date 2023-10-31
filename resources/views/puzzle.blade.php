@@ -87,7 +87,7 @@ app()->setLocale($puzzle->lang)
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-6 offset-md-3 text-center" style="position:relative;height:30px;">
+            <div class="col-md-12 text-center" style="position:relative;height:30px;">
 
 				<!-- bouton reinitialiser -->
 				<a id="reinitialiser" href="#" style="position:absolute;left:25px;top:10px;" class="text-muted" data-bs-toggle="tooltip" data-bs-placement="top"  data-bs-trigger="hover" title="{{__('réinitialiser')}}"><i class="fas fa-sync-alt"></i></a>
