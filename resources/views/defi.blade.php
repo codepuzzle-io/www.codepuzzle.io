@@ -23,7 +23,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 
 <body class="no-mathjax" oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 
-	<div class="container-fluid p-4">
+	<div class="container-fluid">
 
 		@if(!$iframe)
 		<h1 class="mt-2 mb-5 text-center"><a class="navbar-brand m-1" href="{{ url('/') }}"><img src="{{ asset('img/codepuzzle.png') }}" height="20" alt="CODE PUZZLE" /></a></h1>
@@ -92,7 +92,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
         </div>
 
         <div class="row mt-3">
-            <div class="col-md-6 offset-md-3 text-center">
+            <div class="col-md-8 offset-md-2 text-center">
                 <textarea name="code" style="display:none;" id="code"></textarea>
 		        <div style="width:100%;margin:0px auto 0px auto;"><div id="editor_code" style="border-radius:5px;">{{$defi->code}}</div></div>
                 <!-- bouton verifier -->
