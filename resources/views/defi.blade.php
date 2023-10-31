@@ -85,14 +85,14 @@ $asserts = '[' . trim($asserts, ',') . ']';
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-6 offset-md-3 text-center" style="position:relative;height:30px;">
+            <div class="col-md-10 offset-md-1 text-center" style="position:relative;height:30px;">
 				<!-- bouton reinitialiser -->
 				<a id="reinitialiser" href="{{ request()->fullUrl() }}" style="position:absolute;left:25px;top:10px;" class="text-muted" data-bs-toggle="tooltip" data-bs-placement="top"  data-bs-trigger="hover" title="{{__('réinitialiser')}}"><i class="fas fa-sync-alt"></i></a>
             </div>
         </div>
 
         <div class="row mt-3">
-            <div class="col-md-8 offset-md-2 text-center">
+            <div class="col-md-10 offset-md-1 text-center">
                 <textarea name="code" style="display:none;" id="code"></textarea>
 		        <div style="width:100%;margin:0px auto 0px auto;"><div id="editor_code" style="border-radius:5px;">{{$defi->code}}</div></div>
                 <!-- bouton verifier -->
