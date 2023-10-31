@@ -50,16 +50,16 @@
 		</div>
 
 
-		{{--
+
 		<div class="row mt-5 text-monospace">
 			<div class="col-md-2">
 				<div class="font-weight-bold">Exemple 1</div>
 				<div class="font-weight-bold text-success">PUZZLE DE PARSONS</div>
-				<div class="small text-muted">en mode "glisser-déposer"</div>
+				<div class="small text-muted">en mode "réorganiser"</div>
 			</div>
 			<div class="col-md-10">
 				<div id="exemple1_div">
-					<iframe id="exemple1_iframe" src="/IP4M9D" height="100%" width="100%" frameborder="0"></iframe>
+					<iframe id="exemple1_iframe" src="https://www.codepuzzle.io/IPNHVL" height="100%" width="100%" frameborder="0"></iframe>
 				</div>
 			</div>
 		</div>
@@ -68,15 +68,28 @@
 			<div class="col-md-2">
 				<div class="font-weight-bold">Exemple 2</div>
 				<div class="font-weight-bold text-success">PUZZLE DE PARSONS</div>
-				<div class="small text-muted">en mode "glisser-déposer" avec code à compléter</div>
+				<div class="small text-muted">en mode "glisser-déposer" avec des lignes de code inutiles</div>
 			</div>
 			<div class="col-md-10">
 				<div id="exemple2_div">
-					<iframe id="exemple2_iframe" src="/IP4M9D" height="100%" width="100%" frameborder="0"></iframe>
+					<iframe id="exemple2_iframe" src="https://www.codepuzzle.io/IP39K2" height="100%" width="100%" frameborder="0"></iframe>
 				</div>
 			</div>
 		</div>
-		--}}
+
+		<div class="row mt-5 text-monospace">
+			<div class="col-md-2">
+				<div class="font-weight-bold">Exemple 2</div>
+				<div class="font-weight-bold text-success">PUZZLE DE PARSONS</div>
+				<div class="small text-muted">en mode "réorganiser" avec code à compléter</div>
+			</div>
+			<div class="col-md-10">
+				<div id="exemple3_div">
+					<iframe id="exemple3_iframe" src="https://www.codepuzzle.io/IPUAH8" height="100%" width="100%" frameborder="0"></iframe>
+				</div>
+			</div>
+		</div>
+
 
 
 	</div><!--container -->
@@ -85,7 +98,7 @@
 	@include('inc-bottom-js')
 
 	<script>
-		for (var i = 1; i <= 2; i++) {
+		for (var i = 1; i <= 3; i++) {
 			(function(index) {
 				document.getElementById('exemple' + index + '_iframe').addEventListener('load', function() {
 					var iframeHeight = document.getElementById('exemple' + index + '_iframe').contentWindow.document.body.scrollHeight;
