@@ -23,7 +23,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 
 <body class="no-mathjax" oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 
-    <div class="container">
+	<div class="container-fluid p-4">
 
 		@if(!$iframe)
 		<h1 class="mt-2 mb-5 text-center"><a class="navbar-brand m-1" href="{{ url('/') }}"><img src="{{ asset('img/codepuzzle.png') }}" height="20" alt="CODE PUZZLE" /></a></h1>
@@ -52,13 +52,13 @@ $asserts = '[' . trim($asserts, ',') . ']';
 
         @if ($defi->titre_eleve !== NULL OR $defi->consignes_eleve !== NULL)
         <div class="row">
-            <div class="col-md-6 offset-md-3">
+            <div class="col-md-12">
                 <div class="frame">
                     @if ($defi->titre_eleve !== NULL)
                         <div class="font-monospace small mb-1">{{ $defi->titre_eleve }}</div>
                     @endif
                     @if ($defi->consignes_eleve !== NULL)
-                        <div class="text-monospace text-muted consignes mathjax" style="text-align:justify;">
+                        <div class="text-monospace text-muted small consignes mathjax" style="text-align:justify;">
                             <?php
                             $Parsedown = new Parsedown();
                             echo $Parsedown->text($defi->consignes_eleve);
