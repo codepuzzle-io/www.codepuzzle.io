@@ -83,7 +83,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 
     </div>
 
-    <div class="container-fluid p-4">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-6 offset-md-3 text-center" style="position:relative;height:30px;">
 				<!-- bouton reinitialiser -->
