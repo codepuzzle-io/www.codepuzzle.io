@@ -17,44 +17,47 @@
 	<div class="container mt-3">
 		<div class="row pt-3">
 
-			<div class="intro col-md-4 text-monospace">
-				<div class="add">
+			<div class="intro col-md-4 text-monospace mb-3">
+				<div class="add h-100">
 					<h2>{!!__('Créer et partager des puzzles de Parsons', ['link' => route('about')])!!}</h2>
 					<div class="mx-auto mt-3 text-center" style="width:60%">
 						<a class="btn btn-success btn-sm btn-block p-2" href="{{ route('puzzle-creer-get')}}" role="button"><i class="fa-solid fa-circle-plus pt-1 pb-1"></i><br />{!!__('puzzle')!!}</a>
 					</div>
 					<div class="mt-3 small text-muted text-justify">
-						Puzzles de Parsons en mode "réorganiser" ou "glisser-déposer" avec ou sans code à compléter.
+						Puzzles de Parsons en mode "réorganiser" ou "glisser-déposer".<br />Avec ou sans code à compléter.
 					</div>
 				</div>
 			</div>
-			<div class="intro col-md-4 text-monospace">
-				<div class="add">
+
+			<div class="intro col-md-4 text-monospace mb-3">
+				<div class="add h-100">
 					<h2>{!!__('Créer et partager des défis')!!}</h2>				
 					<div class="mx-auto mt-3 text-center" style="width:60%">
 						<a class="btn btn-success btn-sm btn-block p-2" href="{{ route('defi-creer-get')}}" role="button"><i class="fa-solid fa-circle-plus pt-1 pb-1"></i><br />{!!__('défi')!!}</a>
 					</div>
 					<div class="mt-3 small text-muted text-justify">
-						Défis avec jeux de tests. Écrire une fonction en suivant les consignes fournies.
+						Défis avec jeux de tests à valider.<br />Écrire une fonction en suivant les consignes fournies.
 					</div>					
 				</div>
 			</div>
-			<div class="intro col-md-4 text-monospace">
-				<div class="add">
+
+			<div class="intro col-md-4 text-monospace mb-3">
+				<div class="add h-100">
 					<h2>{!!__('Créer et partager des entraînements / devoirs')!!} <sup class="text-lowercase text-danger">bêta</sup></h2>				
 					<div class="mx-auto mt-3 text-center" style="width:60%">
 						<a class="btn btn-success btn-sm btn-block p-2" href="{{ route('devoir-creer-get')}}" role="button"><i class="fa-solid fa-circle-plus pt-1 pb-1"></i><br />{!!__('entraînement / devoir')!!}</a>
 					</div>
 					<div class="mt-3 small text-muted text-justify">
-						Activités en classe de type examen dans un environnement anti-triche.
+						Activités en classe de type examen dans un environnement anti-triche.<br />Récupération automatique des travaux avec exécution du code et correction en ligne.
 					</div>						
 				</div>
-			</div>			
+			</div>		
+
 		</div>
 
 
 		<div class="mx-auto text-center" style="width:200px">
-			<a class="btn btn-secondary btn-sm btn-block mt-5 mb-1" style="font-size:80%;opacity:0.6" href="{{route('register')}}" role="button">{{__('créer un compte')}}</a>
+			<a class="btn btn-secondary btn-sm btn-block mt-3 mb-1" style="font-size:80%;opacity:0.6" href="{{route('register')}}" role="button">{{__('créer un compte')}}</a>
 			<span style="font-size:70%;color:silver;">{{__('pour créer, sauvegarder, modifier et partager les activités proposées aux élèves')}}</span>
 		</div>
 
