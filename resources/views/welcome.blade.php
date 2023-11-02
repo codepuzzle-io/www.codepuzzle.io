@@ -30,7 +30,7 @@
 						</div>	
 					</div>
 					<div class="text-center pt-2">
-						<a class="btn btn-light btn-sm pl-3 pr-3" href="#puzzle" role="button"><i class="fa-solid fa-circle-info"></i></a>
+						<a class="btn btn-light btn-sm pl-3 pr-3" href="#puzzle" role="button"><i class="fa-solid fa-circle-info pt-1"></i></a>
 					</div>
 				</div>
 
@@ -45,7 +45,7 @@
 						</div>	
 					</div>
 					<div class="text-center pt-2">
-						<a class="btn btn-light btn-sm pl-3 pr-3" href="#defi" role="button"><i class="fa-solid fa-circle-info"></i></a>
+						<a class="btn btn-light btn-sm pl-3 pr-3" href="#defi" role="button"><i class="fa-solid fa-circle-info pt-1"></i></a>
 					</div>
 				</div>
 
@@ -60,7 +60,7 @@
 						</div>	
 					</div>
 					<div class="text-center pt-2">
-						<a class="btn btn-light btn-sm pl-3 pr-3" href="#entrainement" role="button"><i class="fa-solid fa-circle-info"></i></a>
+						<a class="btn btn-light btn-sm pl-3 pr-3" href="#entrainement" role="button"><i class="fa-solid fa-circle-info pt-1"></i></a>
 					</div>
 				</div>
 
