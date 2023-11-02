@@ -30,8 +30,8 @@
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="">
-<meta name="twitter:creator" content="">
+<meta name="twitter:site" content="@codepuzzleio">
+<meta name="twitter:creator" content="@codepuzzleio">
 <meta name="twitter:title" content="Code Puzzle">
 <meta name="twitter:description" content="{{ $description_og ?? '' }}">
 <meta name="twitter:image" content="{{ asset('img/open-graph.png') }}">

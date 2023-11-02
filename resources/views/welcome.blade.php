@@ -2,8 +2,8 @@
 <html lang="{{ app()->getLocale() }}">
 <head>
 	@php
-		$description = __('Puzzles de Parsons & Défis pour apprendre Python');
-		$description_og = __('Puzzles de Parsons & Défis pour apprendre Python');
+		$description = __('Puzzles de Parsons, défis & entraînements/devoirs pour apprendre Python');
+		$description_og = __('Puzzles de Parsons, défis & entraînements/devoirs pour apprendre Python');
 	@endphp
 	@include('inc-meta')
     <title>{{ strtoupper(config('app.name')) }} | {{__('Puzzles de Parsons & Défis')}}</title>
