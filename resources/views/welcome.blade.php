@@ -76,13 +76,10 @@
 				<span style="font-size:70%;color:silver;">{{__('pour créer, sauvegarder, modifier et partager les activités proposées aux élèves')}}</span>
 			</div>
 		</div>
-	</div>
 
-	<div class="container mt-3">	
-
+		<a name="puzzle"></a>
 		<div class="row mt-5 text-monospace">
 			<div class="col-md-2">
-				<a name="puzzle"></a>
 				<div class="font-weight-bold text-success">PUZZLE DE PARSONS</div>
 				<div class="font-weight-bold">Exemple 1</div>
 				<div class="small text-muted">en mode "réorganiser"</div>
@@ -118,9 +115,9 @@
 			</div>
 		</div>
 
+		<a name="defi"></a>
 		<div class="row mt-5 text-monospace">
 			<div class="col-md-2">
-				<a name="defi"></a>
 				<div class="font-weight-bold text-success">DÉFI</div>
 				<div class="font-weight-bold">Exemple</div>
 				<div class="small text-muted">avec quatre tests</div>
@@ -132,9 +129,9 @@
 			</div>
 		</div>	
 		
+		<a name="entrainement"></a>
 		<div class="row mt-5 text-monospace">
 			<div class="col-md-2">
-				<a name="entrainement"></a>
 				<div class="font-weight-bold text-success">ENTRAÎNEMENTS / DEVOIRS</div>
 				<div class="font-weight-bold">Diaporama</div>
 			</div>
