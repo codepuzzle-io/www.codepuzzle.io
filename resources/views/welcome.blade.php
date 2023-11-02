@@ -192,6 +192,7 @@
 	</div><!--container -->
 
 	@include('inc-footer')
+	<br style="margin-bottom:1000px;" />
 	@include('inc-bottom-js')
 
 	<script>
