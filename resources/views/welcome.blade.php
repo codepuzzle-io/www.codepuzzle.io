@@ -15,10 +15,10 @@
 	@include('inc-nav')
 
 	<div class="container mt-3">
+
 		<div class="row pt-3">
-
 			<div class="card-deck text-monospace">
-
+				
 				<div class="card">
 					<div class="card-body p-0">
 						<h2>{!!__('Créer et partager des puzzles de Parsons', ['link' => route('about')])!!}</h2>
@@ -76,10 +76,13 @@
 				<span style="font-size:70%;color:silver;">{{__('pour créer, sauvegarder, modifier et partager les activités proposées aux élèves')}}</span>
 			</div>
 		</div>
+	</div>
+
+	<div class="container mt-3">	
 
 		<div class="row mt-5 text-monospace">
 			<div class="col-md-2">
-				<a name="puzzle">
+				<a name="puzzle"></a>
 				<div class="font-weight-bold text-success">PUZZLE DE PARSONS</div>
 				<div class="font-weight-bold">Exemple 1</div>
 				<div class="small text-muted">en mode "réorganiser"</div>
@@ -117,7 +120,7 @@
 
 		<div class="row mt-5 text-monospace">
 			<div class="col-md-2">
-				<a name="defi">
+				<a name="defi"></a>
 				<div class="font-weight-bold text-success">DÉFI</div>
 				<div class="font-weight-bold">Exemple</div>
 				<div class="small text-muted">avec quatre tests</div>
@@ -131,7 +134,7 @@
 		
 		<div class="row mt-5 text-monospace">
 			<div class="col-md-2">
-				<a name="entrainement">
+				<a name="entrainement"></a>
 				<div class="font-weight-bold text-success">ENTRAÎNEMENTS / DEVOIRS</div>
 				<div class="font-weight-bold">Diaporama</div>
 			</div>
