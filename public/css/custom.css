@@ -58,22 +58,49 @@ h2 {
     font-weight:bold;
 }
 
+.carousel-caption {
+    position: absolute;
+    right: 15%;
+    top: -110px;
+    left: 15%;
+    z-index: 10;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: #fff;
+    text-align: center;
+}
+
+.carousel-control-prev, .carousel-control-next {
+    position: absolute;
+    top: 65;
+    bottom: 0;
+    z-index: 1000;
+    display: block;
+    align-items: center;
+    justify-content: center;
+    width: 15%;
+    color: #fff;
+    text-align: center;
+    opacity: 1;
+    transition: opacity 0.15s ease;
+}
+
 .text-success {
     color: #71bb22 !important;
 }
 
-.add {
+.card {
     border-radius:4px;
-    border:1px solid #eef0f2;
+    border:1px solid #eef0f2 !important;
     padding:20px;
-    background-color:white;
+    background-color:white !important;
 }
 
-.add:hover {
-    background-color: #f3f5f7;
+.card:hover {
+    background-color: #f3f5f7  !important;
 }
 
-.add h2 {
+.card h2 {
 	font-size: 0.8rem;
 	text-transform: uppercase;
     text-align:center;
