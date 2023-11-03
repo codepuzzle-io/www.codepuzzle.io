@@ -14,6 +14,7 @@
 
     <?php
     $jetons = [
+        'DT4VZ6',
         'DCDG3', // [EP23] - 1.1
         'D83WJ', // [EP23] - 2.1
         'DXC9G', // [EP23] - 3.1
@@ -55,16 +56,39 @@
                 @foreach($jetons as $jeton)
                     <?php
                         $defi = App\Models\Defi::where('jeton', substr($jeton, 1))->first();
+                        $url_twitter = 'https://twitter.com/intent/tweet?text='.rawurlencode("🧩 Défi ".$jeton."\n\n➡️ https://www.codepuzzle.io/".$jeton."\n\n#Python #NSI #SNT");
+                        $url_mastodon = '/share?text='.rawurlencode("🧩 Défi ".$jeton."\n\n➡️ https://www.codepuzzle.io/".$jeton."\n\n#Python #NSI #SNT");
                     ?>
                     @if ($defi)
                         <div id="frame_{{$loop->iteration}}" class="frame p-3">
 
-                            <div class="text-monospace text-muted small consignes text-justify">
+                            <div style="float:right;">
+                                <a href='#'
+                                    class="mastodon_button"
+                                    data-toggle="popover"
+                                    data-container="body"
+                                    data-placement="left"
+                                    data-content="
+                                        <div class='form-group text-monospace'>
+                                            <label for='intance'>Instance Mastodon</label>
+                                            <input id='instance_{{$loop->iteration}}' type='text' class='form-control form-control-sm' placeholder='mastodon.social'>
+                                            <input id='url_{{$loop->iteration}}' type='hidden' class='form-control form-control-sm' value='{{$url_mastodon}}'>
+                                        </div>
+                                        <button class='btn btn-secondary btn-sm' type='button' onclick='mastodon({{$loop->iteration}})'><i class='fas fa-paper-plane'></i></button>
+                                        ">
+                                    <i class="fa-brands fa-mastodon fa-lg"></i>
+                                </a>
+                                <br />
+                                <a href='{{$url_twitter}}' target="_blank" rel='noopener noreferrer' data-toggle="tooltip" data-placement="top" title="partager sur Twitter"><i class="fa-brands fa-square-twitter fa-lg"></i></a>
+                            </div>                       
+
+                            <div class="text-monospace text-muted small consignes text-justify pr-5">
                                 <?php
                                 $Parsedown = new Parsedown();
                                 echo $Parsedown->text($defi->consignes_eleve);
                                 ?>
                             </div>
+
                             <div class="text-monospace  text-muted pt-3">
                                 <i class="fas fa-share-alt ml-1 mr-1 align-middle"></i> <a href="/{{ strtoupper($jeton) }}" target="_blank">www.codepuzzle.io/{{ strtoupper($jeton) }}</a>
                             </div>
@@ -102,6 +126,33 @@
 	</div><!-- /container -->
 
 	@include('inc-bottom-js')
+
+    <script>
+        $(".mastodon_button").popover({
+            html: true,
+            sanitize: false
+        });
+
+        jQuery(function ($) {
+            $("[data-toggle='popover']").popover({trigger: "click"}).click(function (event) {
+                event.stopPropagation();
+
+            }).on('inserted.bs.popover', function () {
+                $(".popover").click(function (event) {
+                event.stopPropagation();
+                })
+            })
+
+            $(document).click(function () {
+                $("[data-toggle='popover']").popover('hide')
+            })
+        })
+
+        function mastodon(item) {
+            url = 'https://'+document.getElementById('instance_'+item).value+document.getElementById('url_'+item).value;
+            window.open(url, "_blank");
+        }
+    </script>
 
 </body>
 </html>
