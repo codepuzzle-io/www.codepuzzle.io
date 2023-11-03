@@ -14,7 +14,6 @@
 
     <?php
     $jetons = [
-        'DT4VZ6',
         'DCDG3', // [EP23] - 1.1
         'D83WJ', // [EP23] - 2.1
         'DXC9G', // [EP23] - 3.1
