@@ -78,7 +78,7 @@
                                     <i class="fa-brands fa-mastodon fa-lg"></i>
                                 </a>
                                 <br />
-                                <a href='{{$url_twitter}}' target="_blank" rel='noopener noreferrer' data-toggle="tooltip" data-placement="top" title="partager sur Twitter"><i class="fa-brands fa-square-twitter fa-lg"></i></a>
+                                <a href='{{$url_twitter}}' target="_blank" rel='noopener noreferrer'><i class="fa-brands fa-square-twitter fa-lg"></i></a>
                             </div>                       
 
                             <div class="text-monospace text-muted small consignes text-justify pr-5">
