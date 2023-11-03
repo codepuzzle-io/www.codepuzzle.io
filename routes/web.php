@@ -84,6 +84,10 @@ Route::view($lang.__('a-propos'), 'a-propos')->name('about');
 Route::view($lang.__('donnees-personnelles'), 'donnees-personnelles')->name('donnees-personnelles');
 
 
+// DEFIS BANQUE
+Route::view($lang.__('defis-banque'), 'defis-banque')->name('defis-banque');
+
+
 // ============================================================================
 // == SAVE OPENGRAPH IMAGE
 // ============================================================================
