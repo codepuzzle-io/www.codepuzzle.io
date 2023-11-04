@@ -110,6 +110,12 @@ h2 {
     padding:0px;
 }
 
+.card-footer {
+    padding: 0;
+    background-color: transparent;
+    border-top: none;
+}
+
 h3 {
 	margin-top:30px;
 	font-size: 14px;

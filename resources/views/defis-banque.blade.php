@@ -14,6 +14,11 @@
 
     <?php
     $jetons = [
+        'DT4VZ6',
+        'DBEAKN',
+        'DRLXQ',
+        'DQHXM',
+        'DSZ5G',
         'DCDG3', // [EP23] - 1.1
         'D83WJ', // [EP23] - 2.1
         'DXC9G', // [EP23] - 3.1
@@ -94,6 +99,10 @@
                                         <i class="fas fa-share-alt ml-1 mr-1 align-middle"></i> <a href="/{{ strtoupper($jeton) }}" target="_blank">www.codepuzzle.io/{{ strtoupper($jeton) }}</a>
                                     </div>
 
+                                </div>
+
+                                <div class="card-footer">
+
                                     <div class="text-center mt-2 mb-2">
                                         <a class='text-muted' data-toggle="collapse" href="#collapse-{{$loop->iteration}}" role='button' aria-expanded="false" aria-controls="collapse-{{$loop->iteration}}" ><i class="fas fa-bars" style="margin-top:0px;" data-toggle="tooltip" data-placement="top" title="{{__('déplier plier')}}"></i></a>
                                     </div>
@@ -118,6 +127,7 @@ IFrame('https://www.codepuzzle.io/I{{ strtoupper($jeton) }}', width='100%', heig
                                             <i class="fas fa-share-alt ml-1 mr-1"></i> QR code : <img src="https://api.qrserver.com/v1/create-qr-code/?data={{urlencode('https://www.codepuzzle.io/' . strtoupper($jeton))}}&amp;size=100x100" style="width:100px" alt="wwww.codepuzzle.io/{{strtoupper($jeton)}}" data-toggle="tooltip" data-placement="right" title="{{__('clic droit + Enregistrer l image sous... pour sauvegarder l image')}}" />
                                         </div>                                            
                                     </div> 
+                                
 
                                 </div>    
                             </div>    
