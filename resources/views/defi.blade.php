@@ -14,7 +14,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 <head>
 	@php
         $description = __('Générateur et gestionnaire de puzzles de Parsons') . ' | Défi - D' . strtoupper($jeton);
-        $description_og = '| Défi - D' . strtoupper($jeton);
+        $description_og = 'Défi - D' . strtoupper($jeton);
     @endphp
 	@include('inc-meta-jeton')
     <script src="https://cdn.jsdelivr.net/pyodide/v0.21.3/full/pyodide.js"></script>
@@ -66,9 +66,9 @@ $asserts = '[' . trim($asserts, ',') . ']';
                         </div>
 					@endif
 
-					<div id="consignes_hidden" class="mathjax" style="padding:40px 20px 0px 20px;font-size:14px;width:1200px;background-color:white;display:none;">
-						<img src="{{ asset('img/codepuzzle.png') }}" height="20" />
-						<div class="font-monospace text-muted consignes text-monospace" style="text-align:justify;padding:20px 40px 40px 40px;margin-top:20px;border-top-left-radius:10px;border-top-right-radius:10px;height:550px;font-size:40px;background-color:#F8FAFC;">
+					<div id="consignes_hidden" class="mathjax" style="padding:30px 20px 0px 20px;width:1200px;height:630px;background-color:white;display:none;">
+						<img src="{{ asset('img/codepuzzle.png') }}" height="30" />
+						<div class="font-monospace text-muted consignes text-monospace" style="text-align:justify;padding:20px 40px 20px 40px;margin-top:25px;border-radius:10px;font-size:28px;background-color:#F8FAFC;">
 							<?php
 							$Parsedown = new Parsedown();
 							echo $Parsedown->text($defi->consignes_eleve);
