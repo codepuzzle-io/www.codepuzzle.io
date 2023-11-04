@@ -26,7 +26,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 	<div class="container-fluid">
 
 		@if(!$iframe)
-		<h1 class="mt-2 mb-5 text-center"><a class="navbar-brand m-1" href="{{ url('/') }}"><img src="{{ asset('img/codepuzzle.png') }}" height="20" alt="CODE PUZZLE" /></a></h1>
+		<h1 class="mt-2 mb-5 text-center"><a class="navbar-brand m-1" href="{{ url('/') }}"><img src="{{ asset('img/codepuzzle.png') }}" height="25" alt="CODE PUZZLE" /></a></h1>
 		@endif
 
 		@if ($defi->with_chrono == 1 OR $defi->with_nbverif == 1)
