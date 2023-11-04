@@ -52,7 +52,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 
         @if ($defi->titre_eleve !== NULL OR $defi->consignes_eleve !== NULL)
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-10 offset-md-1">
                 <div class="frame">
                     @if ($defi->titre_eleve !== NULL)
                         <div class="font-monospace small mb-1">{{ $defi->titre_eleve }}</div>
