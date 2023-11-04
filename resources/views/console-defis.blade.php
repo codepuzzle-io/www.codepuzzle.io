@@ -4,7 +4,7 @@
     @include('inc-meta')
     <title>{{ config('app.name') }} | {{ ucfirst(__('console')) }}</title>
 </head>
-<body>
+<body class="no-mathjax">
     @php
 		$lang_switch = '<a href="/console/lang/fr" class="kbd mr-1">fr</a><a href="/console/lang/en" class="kbd">en</a>';
 	@endphp
@@ -107,7 +107,7 @@ IFrame('https://www.codepuzzle.io/ID{{ strtoupper($defi->jeton) }}', width='100%
                                                 <div class="text-monospace small mb-1">{{ $defi->titre_eleve }}</div>
                                             @endif
                                             @if ($defi->consignes_eleve !== NULL)
-                                                <div class="text-monospace text-muted small consignes">
+                                                <div class="text-monospace text-muted small mathjax consignes">
                                                     <?php
                                                     $Parsedown = new Parsedown();
                                                     echo $Parsedown->text($defi->consignes_eleve);
@@ -157,6 +157,24 @@ IFrame('https://www.codepuzzle.io/ID{{ strtoupper($defi->jeton) }}', width='100%
             editor_code.container.style.lineHeight = 1.5;
         }
 	</script>
+
+    <script>
+        MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+		options: {
+			ignoreHtmlClass: "no-mathjax",
+			processHtmlClass: "mathjax"
+		},
+        svg: {
+            fontCache: 'global'
+        }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script> 
 
 	@include('inc-bottom-js')
 
