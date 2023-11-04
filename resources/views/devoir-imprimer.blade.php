@@ -14,6 +14,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
     @media print {
         body * {
             visibility: hidden;
+            background-color:white;
         }
 
         #print_content, #print_content * {
@@ -42,7 +43,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
             </div>
             <div class="col-md-8">
                 <h1 class="text-center pt-0">COMMENTAIRES / CORRECTION / CONSEILS</h1>
-                <p class="text-center"><button class="btn btn-primary btn-sm" onclick="window.print();">imprimer</button></p>
+                <p class="text-center"><button class="btn btn-dark" onclick="window.print();"><i class="fa-solid fa-print mr-2"></i> imprimer</button></p>
             </div>
         </div>
     </div>
@@ -54,23 +55,21 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 
         <!-- CONSIGNES -->
         <div class="text-monospace mt-3">{{strtoupper(__('consignes'))}}</div>
-        <div class="card card-body">
-            <div class="text-monospace consignes">
-                <?php
-                $Parsedown = new Parsedown();
-                echo $Parsedown->text($devoir->consignes_eleve);
-                ?>
-            </div>
+        <div style="padding:12px 15px 0px 15px;border-radius:4px;border:solid 1px gray;background-color:white;">
+            <?php
+            $Parsedown = new Parsedown();
+            echo $Parsedown->text($devoir->consignes_eleve);
+            ?>
         </div>
-        <!-- CONSIGNES -->                       
+        <!-- CONSIGNES -->                    
 
         <!-- SOLUTION --> 
-        <div class="mt-2 text-monospace">{{strtoupper(__('solution possible'))}}</div>
-        <div id="editor_code" style="border-radius:5px;border:solid 1px gray;">{{ $devoir->solution }}</div>
+        <div class="mt-3 text-monospace">{{strtoupper(__('solution possible'))}}</div>
+        <div id="editor_code" style="border-radius:4px;border:solid 1px gray;">{{ $devoir->solution }}</div>
         <!-- /SOLUTION --> 	
 
         <!-- COMMENTAIRES --> 
-        <div class="mt-2 text-monospace">{{strtoupper(__('commentaires'))}}</div>
+        <div class="mt-3 text-monospace">{{strtoupper(__('commentaires'))}}</div>
         <table class="table table-borderless mt-2">
             @foreach($devoir_eleves as $devoir_eleve)
                 <tr>
@@ -80,7 +79,8 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
             @endforeach
         </table>
         <!-- COMMENTAIRES --> 
-        <p class="text-monospace text-center mt-1 small text-muted">comptes rendus individuelles sur les pages suivantes</p>
+
+        <p class="text-monospace text-center mt-1 small text-muted">comptes-rendus individuels sur les pages suivantes</p>
 
         <div style="page-break-after: always;">&nbsp;</div>
 
@@ -93,20 +93,30 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                 <div class="text-monospace font-weight-bold mt-2 text-uppercase">{{$devoir_eleve->pseudo}}</div>
                 <!-- /ELEVE --> 
 
+                <!-- CONSIGNES -->
+                <div class="text-monospace mt-3">{{strtoupper(__('consignes'))}}</div>
+                <div style="padding:12px 15px 0px 15px;border-radius:4px;border:solid 1px gray;background-color:white;">
+                    <?php
+                    $Parsedown = new Parsedown();
+                    echo $Parsedown->text($devoir->consignes_eleve);
+                    ?>
+                </div>
+                <!-- CONSIGNES -->                  
+
                 <!-- CODE ELEVE --> 
-                <div class="text-monospace mt-2 text-uppercase">Code élève</div>
-                <div id="editor_code_eleve_devoir-{{$loop->iteration}}" style="border-radius:5px;border:solid 1px gray;">{{$devoir_eleve->code_eleve}}</div>
+                <div class="text-monospace mt-3 text-uppercase">Code élève</div>
+                <div id="editor_code_eleve_devoir-{{$loop->iteration}}" style="border-radius:4px;border:solid 1px gray;">{{$devoir_eleve->code_eleve}}</div>
                 <!-- /CODE ELEVE --> 
 
                 @if ($devoir->solution)
                     <!-- SOLUTION --> 
-                    <div class="mt-2 text-monospace">{{strtoupper(__('solution possible'))}}</div>
-                    <div id="editor_code_solution_devoir-{{$loop->iteration}}" style="border-radius:5px;border:solid 1px gray;">{{$devoir->solution}}</div>
+                    <div class="mt-3 text-monospace">{{strtoupper(__('solution possible'))}}</div>
+                    <div id="editor_code_solution_devoir-{{$loop->iteration}}" style="border-radius:4px;border:solid 1px gray;">{{$devoir->solution}}</div>
                     <!-- /SOLUTION --> 	
                 @endif
 
                 <!-- COMMENTAIRES / CORRECTION / CONSEILS --> 	
-                <div class="mt-2 text-monospace">COMMENTAIRES / CORRECTION / CONSEILS</div>
+                <div class="mt-3 text-monospace">COMMENTAIRES / CORRECTION / CONSEILS</div>
                 <div class="form-control border border-success text-dark">{{$devoir_eleve->commentaires}}</div>
                 <div style="page-break-after: always;">&nbsp;</div>
                 <!-- /COMMENTAIRES / CORRECTION / CONSEILS --> 	

@@ -97,7 +97,6 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 
                             <div class="text-monospace font-weight-bold"><a data-toggle="collapse" href="#collapseSujet" role="button" aria-expanded="false" aria-controls="collapseSujet"><i class="fas fa-plus-square"></i></a> SUJET</div>
                             
-
                             <div class="collapse mb-3" id="collapseSujet">
 
                                 <!-- CONSIGNES -->
@@ -135,7 +134,9 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                         </div>
                     </div>
 
-                </div>      
+                </div>  
+                
+                <div class="text-center mt-4 mb-4"><a class="btn btn-dark btn-sm" href="/devoir-imprimer/{{$jeton_secret}}" role="button"><i class="fa-solid fa-print mr-2"></i> imprimer les comptes-rendus</a></div>
 
                 <div class="row mt-3 mb-5">
                     <div class="col-md-12">
