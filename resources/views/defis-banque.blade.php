@@ -14,6 +14,15 @@
 
     <?php
     $jetons = [
+        'DT4VZ6',
+        'DBEAKN',
+        'DRLXQ',
+        'DQHXM',
+        'DSZ5G',
+        'D8T5D',
+        'DBXWT',
+        'DQ4YS',
+        'DY2EZ',
         'DCDG3', // [EP23] - 1.1
         'D83WJ', // [EP23] - 2.1
         'DXC9G', // [EP23] - 3.1
@@ -54,7 +63,7 @@
 
                 <h1>Banque de défis</h1>
 
-                <div class="row row-cols-1 row-cols-md-2 mb-5">
+                <div class="card-columns mb-5">
                     @foreach($jetons as $jeton)
                         <?php
                             $defi = App\Models\Defi::where('jeton', substr($jeton, 1))->first();
@@ -62,8 +71,8 @@
                             $url_mastodon = '/share?text='.rawurlencode("🧩 Défi ".$jeton."\n\n➡️ https://www.codepuzzle.io/".$jeton."\n\n#Python #NSI #SNT");
                         ?>
                         @if ($defi)
-                            <div class="col mb-4">
-                                <div class="card h-100" style="padding:20px 20px 0px 20px;">
+                            
+                                <div class="card" style="padding:20px 20px 0px 20px;">
                                     <div class="card-body p-0">
                                     
                                         <div style="float:right;">
@@ -129,7 +138,7 @@ IFrame('https://www.codepuzzle.io/I{{ strtoupper($jeton) }}', width='100%', heig
 
                                     </div>    
                                 </div>    
-                            </div>    
+                              
                         @endif        
                     @endforeach
                 </div>
