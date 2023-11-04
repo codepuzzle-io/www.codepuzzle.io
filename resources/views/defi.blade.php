@@ -299,11 +299,11 @@ $asserts = '[' . trim($asserts, ',') . ']';
 			}
 		}
 
-		output.innerText = "Initializing...\n";
+		output.innerText = "Initialisation...\n";
 		// init Pyodide
 		async function main() {
 			let pyodide = await loadPyodide();
-			output.innerText = "Ready!\n";
+			output.innerText = "Prêt!\n";
 			return pyodide;
 		}
 		
