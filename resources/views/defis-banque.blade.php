@@ -14,17 +14,13 @@
 
     <?php
     $jetons = [
-        'DT4VZ6',
-        'DBEAKN',
-        'DRLXQ',
-        'DQHXM',
-        'DSZ5G',
         'DCDG3', // [EP23] - 1.1
         'D83WJ', // [EP23] - 2.1
         'DXC9G', // [EP23] - 3.1
         'DW5F2', // [EP23] - 4.1
         'DL4SC', // [EP23] - 6.1
         'DJMQH', // [EP23] - 7.1
+        'DQMSK', // [EP23] - 8.1
     ];
     $lang ='/';
     ?>
