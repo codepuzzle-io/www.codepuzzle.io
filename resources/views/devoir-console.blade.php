@@ -136,7 +136,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 
                 </div>  
                 
-                <div class="row mt-3 mb-5">
+                <div class="row mt-3">
                     <div class="col-md-4 offset-4 text-center mt-4 mb-4">
                         <a class="btn btn-dark btn-sm d-block" href="/devoir-imprimer/{{$jeton_secret}}" role="button"><i class="fa-solid fa-print mr-2"></i> imprimer les comptes-rendus</a>
                         <div class="text-muted small mt-1">pour les annoter si nécessaire et les distribuer aux élèves</div>
