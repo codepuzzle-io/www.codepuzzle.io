@@ -32,7 +32,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
     </style>  
     <title>COMMENTAIRES / CORRECTION / CONSEILS</title>
 </head>
-<body>
+<body class="no-mathjax">
 
     <div id="header" class="container pt-3">
         <div class="row pt-3">
@@ -55,7 +55,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 
         <!-- CONSIGNES -->
         <div class="text-monospace mt-3">{{strtoupper(__('consignes'))}}</div>
-        <div style="padding:12px 15px 0px 15px;border-radius:4px;border:solid 1px gray;background-color:white;">
+        <div class="mathjax" style="padding:12px 15px 0px 15px;border-radius:4px;border:solid 1px gray;background-color:white;">
             <?php
             $Parsedown = new Parsedown();
             echo $Parsedown->text($devoir->consignes_eleve);
@@ -95,7 +95,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 
                 <!-- CONSIGNES -->
                 <div class="text-monospace mt-3">{{strtoupper(__('consignes'))}}</div>
-                <div style="padding:12px 15px 0px 15px;border-radius:4px;border:solid 1px gray;background-color:white;">
+                <div class="mathjax" style="padding:12px 15px 0px 15px;border-radius:4px;border:solid 1px gray;background-color:white;">
                     <?php
                     $Parsedown = new Parsedown();
                     echo $Parsedown->text($devoir->consignes_eleve);
