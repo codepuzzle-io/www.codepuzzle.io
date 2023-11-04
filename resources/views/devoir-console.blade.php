@@ -163,23 +163,20 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 
                                     <!-- CODE ELEVE --> 
                                     <div class="text-monospace mt-2">Code élève <i class="text-muted small">en lecture seule</i></div>
-                                    <div>
-                                        <div id="editor_code_eleve_devoir-{{$loop->iteration}}" style="border-radius:5px;">{{$devoir_eleve->code_eleve}}</div>
-                                    </div>
+                                    <div id="editor_code_eleve_devoir-{{$loop->iteration}}" style="border-radius:5px;">{{$devoir_eleve->code_eleve}}</div>
                                     <!-- /CODE ELEVE --> 
 
                                     <!-- CODE ENSEIGNANT --> 
                                     <div class="text-monospace mt-2">Code enseignant</div>
-                                    <div>
-                                        <?php
-                                        if($devoir_eleve->code_enseignant == NULL){
-                                            $code_enseignant = $devoir->code_enseignant;
-                                        }else{
-                                            $code_enseignant = $devoir_eleve->code_enseignant;
-                                        }
-                                        ?>
-                                        <div id="editor_code_enseignant_devoir-{{$loop->iteration}}" style="border-radius:5px;">{{$code_enseignant}}</div>
-                                    </div>
+                                    <?php
+                                    if ($devoir_eleve->code_enseignant == NULL){
+                                        $code_enseignant = $devoir->code_enseignant;
+                                    } else {
+                                        $code_enseignant = $devoir_eleve->code_enseignant;
+                                    }
+                                    ?>
+                                    <div id="editor_code_enseignant_devoir-{{$loop->iteration}}" style="border-radius:5px;">{{$code_enseignant}}</div>
+
                                     <!-- /CODE ENSEIGNANT --> 
 
                                     <div class="p-1 pl-2 pr-2 rounded mt-1 mb-3 text-monospace small" style="background-color:#ffe791;color:#cfb140;"><i class="far fa-lightbulb"></i> Recharger cette page entre deux élèves afin de supprimer les variables et fonctions en mémoire.</div>
@@ -191,7 +188,6 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                                                     <div class="form-check d-block m-0 text-right">
                                                         <span class="text-monospace small text-muted">code élève</span>
                                                         <input id="code_option_1_devoir-{{$loop->iteration}}" name="code_option_devoir-{{$loop->iteration}}" class="align-middle" style="display:inline;cursor:pointer" type="radio" />
-                                                        
                                                     </div>
                                                     <div class="form-check d-block m-0 text-right">
                                                         <span class="text-monospace small text-muted">code élève + code enseignant</span>
@@ -256,8 +252,6 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 
 	<script>
 		// Chargement de ace et initialisation des éditeurs.
-		
-		
 		async function init_editors() {
 			var editor_code_eleve = ace.edit("editor_code_eleve", {
 				theme: "ace/theme/puzzle_code",
@@ -340,50 +334,50 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 			await editors_initialized_promise;		
 		})();	
 
-            var editor_code_eleve_devoir = []
-            var editor_code_enseignant_devoir = []
-            for (var i = 1; i <= {{$devoir_eleves->count() }}; i++) {
-                editor_code_eleve_devoir[i] = ace.edit('editor_code_eleve_devoir-' + i, {
-                    theme: "ace/theme/puzzle_code",
-                    mode: "ace/mode/python",
-                    maxLines: 500,
-                    fontSize: 14,
-                    wrap: true,
-                    useWorker: false,
-                    highlightActiveLine: false,
-                    highlightGutterLine: false,
-                    showPrintMargin: false,
-                    displayIndentGuides: true,
-                    showLineNumbers: true,
-                    showGutter: true,
-                    showFoldWidgets: false,
-                    useSoftTabs: true,
-                    navigateWithinSoftTabs: false,
-                    tabSize: 4,
-                    readOnly: true
-                });
-                editor_code_eleve_devoir[i].container.style.lineHeight = 1.5;
+        var editor_code_eleve_devoir = []
+        var editor_code_enseignant_devoir = []
+        for (var i = 1; i <= {{$devoir_eleves->count() }}; i++) {
+            editor_code_eleve_devoir[i] = ace.edit('editor_code_eleve_devoir-' + i, {
+                theme: "ace/theme/puzzle_code",
+                mode: "ace/mode/python",
+                maxLines: 500,
+                fontSize: 14,
+                wrap: true,
+                useWorker: false,
+                highlightActiveLine: false,
+                highlightGutterLine: false,
+                showPrintMargin: false,
+                displayIndentGuides: true,
+                showLineNumbers: true,
+                showGutter: true,
+                showFoldWidgets: false,
+                useSoftTabs: true,
+                navigateWithinSoftTabs: false,
+                tabSize: 4,
+                readOnly: true
+            });
+            editor_code_eleve_devoir[i].container.style.lineHeight = 1.5;
 
-                editor_code_enseignant_devoir[i] = ace.edit('editor_code_enseignant_devoir-' + i, {
-                    theme: "ace/theme/puzzle_code",
-                    mode: "ace/mode/python",
-                    maxLines: 500,
-                    fontSize: 14,
-                    wrap: true,
-                    useWorker: false,
-                    highlightActiveLine: false,
-                    highlightGutterLine: false,
-                    showPrintMargin: false,
-                    displayIndentGuides: true,
-                    showLineNumbers: true,
-                    showGutter: true,
-                    showFoldWidgets: false,
-                    useSoftTabs: true,
-                    navigateWithinSoftTabs: false,
-                    tabSize: 4
-                });
-                editor_code_enseignant_devoir[i].container.style.lineHeight = 1.5;
-            }        
+            editor_code_enseignant_devoir[i] = ace.edit('editor_code_enseignant_devoir-' + i, {
+                theme: "ace/theme/puzzle_code",
+                mode: "ace/mode/python",
+                maxLines: 500,
+                fontSize: 14,
+                wrap: true,
+                useWorker: false,
+                highlightActiveLine: false,
+                highlightGutterLine: false,
+                showPrintMargin: false,
+                displayIndentGuides: true,
+                showLineNumbers: true,
+                showGutter: true,
+                showFoldWidgets: false,
+                useSoftTabs: true,
+                navigateWithinSoftTabs: false,
+                tabSize: 4
+            });
+            editor_code_enseignant_devoir[i].container.style.lineHeight = 1.5;
+        }        
 
 	</script>
 
