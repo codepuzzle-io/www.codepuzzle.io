@@ -11,24 +11,32 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 <head>
     @include('inc-meta')
     <style>
-    @media print {
-        body * {
-            visibility: hidden;
-            background-color:white;
+        .ace-chrome .ace_gutter {
+            background: white;
         }
+        .ace-chrome .ace_gutter-active-line {
+            background-color: white;
+        }
+        @media print {
+            body {
+                background-color:white;
+            }
+            body * {
+                visibility: hidden;
+            }
 
-        #print_content, #print_content * {
-            visibility: visible;
-        }
+            #print_content, #print_content * {
+                visibility: visible;
+            }
 
-        #print_content {
-            width:100vw !important;
-        }
+            #print_content {
+                width:100vw !important;
+            }
 
-        #header {
-            display:none;
+            #header {
+                display:none;
+            }
         }
-    }
     </style>  
     <title>COMMENTAIRES / CORRECTION / CONSEILS</title>
 </head>
@@ -51,7 +59,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
     {{-- PRINT --}}
     <div id="print_content" class="container text-monospace">
 
-        <p class="text-center pt-5 mt-5" style="font-size:120%;">RÉCAPITULATIF</p>
+        <p class="text-center mt-5" style="font-size:120%;">RÉCAPITULATIF</p>
 
         <!-- CONSIGNES -->
         <div class="text-monospace mt-3">{{strtoupper(__('consignes'))}}</div>
@@ -87,7 +95,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
         
         @foreach($devoir_eleves as $devoir_eleve)
 
-            <div class="mt-5 pt-5">
+            <div class="mt-5">
 
                 <!-- ELEVE --> 
                 <div class="text-monospace font-weight-bold mt-2 text-uppercase">{{$devoir_eleve->pseudo}}</div>
@@ -128,8 +136,6 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
     </div>
     {{-- /PRINT --}}
 
-
-
     @include('inc-bottom-js')
 
     <script>
@@ -140,51 +146,38 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
             options: {
                 ignoreHtmlClass: "no-mathjax",
                 processHtmlClass: "mathjax"
-            },
-            svg: {
-                fontCache: 'global'
             }
         };
     </script>    
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script> 	
+    <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script> 	
 
+    
     <script src="{{ asset('js/ace/ace.js') }}" type="text/javascript" charset="utf-8"></script>
-
     <script>
-        // Chargement de ace et initialisation des éditeurs.
-        async function init_editors() {
-            var editor_code = ace.edit("editor_code", {
-                theme: "ace/theme/chrome",
-                mode: "ace/mode/python",
-                maxLines: 500,
-                minLines: 1,
-                fontSize: 14,
-                wrap: true,
-                useWorker: false,
-                autoScrollEditorIntoView: true,
-                highlightActiveLine: false,
-                highlightSelectedWord: false,
-                highlightGutterLine: true,
-                showPrintMargin: false,
-                displayIndentGuides: true,
-                showLineNumbers: true,
-                showGutter: true,
-                showFoldWidgets: false,
-                useSoftTabs: true,
-                navigateWithinSoftTabs: false,
-                readOnly: true,
-                tabSize: 4
-            });
-            editor_code.container.style.lineHeight = 1.4;
-        }
-
-        (async function() {
-            // Chargement asynchrone de ace et initialisation des éditeurs
-            const editors_initialized_promise = init_editors();
-            // Pour être sur que ace est chargé et les éditeurs initialisés.
-            await editors_initialized_promise;		
-        })();	
+        var editor_code = ace.edit("editor_code", {
+            theme: "ace/theme/chrome",
+            mode: "ace/mode/python",
+            maxLines: 500,
+            minLines: 1,
+            fontSize: 14,
+            wrap: true,
+            useWorker: false,
+            autoScrollEditorIntoView: true,
+            highlightActiveLine: false,
+            highlightSelectedWord: false,
+            highlightGutterLine: true,
+            showPrintMargin: false,
+            displayIndentGuides: true,
+            showLineNumbers: true,
+            showGutter: true,
+            showFoldWidgets: false,
+            useSoftTabs: true,
+            navigateWithinSoftTabs: false,
+            readOnly: true,
+            tabSize: 4
+        });
+        editor_code.container.style.lineHeight = 1.4;
 
         var editor_code_eleve_devoir = []
         var editor_code_solution_devoir = []
