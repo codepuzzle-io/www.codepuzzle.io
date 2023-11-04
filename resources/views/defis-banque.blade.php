@@ -95,7 +95,7 @@
                                         ?>
                                     </div>
 
-                                    <div class="text-monospace  text-muted pt-3">
+                                    <div class="text-monospace  text-muted pt-3 pb-2">
                                         <i class="fas fa-share-alt ml-1 mr-1 align-middle"></i> <a href="/{{ strtoupper($jeton) }}" target="_blank">www.codepuzzle.io/{{ strtoupper($jeton) }}</a>
                                     </div>
 
