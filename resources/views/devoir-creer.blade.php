@@ -1,12 +1,14 @@
 <?php
-$devoir = App\Models\Devoir::where('jeton_secret', $jeton_secret)->first();
-$consignes = $devoir->consignes_eleve;
-$code_eleve = $devoir->code_eleve;
-$code_enseignant = $devoir->code_enseignant;
-$solution = $devoir->solution;
-$with_chrono = $devoir->with_chrono;
-$with_nbverif = $devoir->with_nbverif;
-$with_console = $devoir->with_console;
+if (isset($jeton_secret)) {
+	$devoir = App\Models\Devoir::where('jeton_secret', $jeton_secret)->first();
+	$consignes = $devoir->consignes_eleve;
+	$code_eleve = $devoir->code_eleve;
+	$code_enseignant = $devoir->code_enseignant;
+	$solution = $devoir->solution;
+	$with_chrono = $devoir->with_chrono;
+	$with_nbverif = $devoir->with_nbverif;
+	$with_console = $devoir->with_console;
+}
 ?>
 <!doctype html>
 <html lang="fr">
@@ -123,7 +125,7 @@ $with_console = $devoir->with_console;
 						{{strtoupper(__('consignes'))}}<sup class="text-danger small">*</sup>
 						<i class="fas fa-info-circle" style="cursor:pointer;color:#e74c3c;opacity:0.5" data-toggle="modal" data-target="#markdown_help"></i>
 					</div>
-					<textarea class="form-control @error('consignes_eleve') is-invalid @enderror" name="consignes_eleve" id="consignes_eleve" rows="6">{{ old('consignes_eleve') ?? $consignes }}</textarea>
+					<textarea class="form-control @error('consignes_eleve') is-invalid @enderror" name="consignes_eleve" id="consignes_eleve" rows="6">{{ old('consignes_eleve') ?? $consignes ?? '' }}</textarea>
 					@error('consignes_eleve')
 						<span class="invalid-feedback" role="alert">
 							<strong>{{ $message }}</strong>
@@ -134,21 +136,21 @@ $with_console = $devoir->with_console;
 					<div class="mt-4 text-monospace">{{strtoupper(__("code ÉlÈve"))}} <span class="font-italic small" style="color:silver;">{{__("optionnel")}}</span></div>
 					<div class="text-monospace text-muted small text-justify mb-1">{{__("Ce code sera proposé à l'élève comme point de départ de l'entraînement.")}}</div>
 					<textarea name="code_eleve" style="display:none;" id="code_eleve"></textarea>
-					<div id="editor_code_eleve" style="border-radius:5px;">{{ old('code_eleve') ?? $code_eleve }}</div>
+					<div id="editor_code_eleve" style="border-radius:5px;">{{ old('code_eleve') ?? $code_eleve ?? '' }}</div>
 					<!-- /CODE ELEVE -->
 
 					<!-- CODE ENSEIGNANT --> 
 					<div class="mt-4 text-monospace">{{strtoupper(__("code enseignant"))}} <span class="font-italic small" style="color:silver;">{{__("optionnel")}}</span></div>
 					<div class="text-monospace text-muted small text-justify mb-1">{{__("Pour les enseignants seulement. Vous pouvez y placer un jeu de tests par exemple. Ce code pourra être executé en même que celui de l'élève ou seul pendant l'évaluation de l'entraînement quand l'entraînement apparaitra dans la console de l'enseignant.")}}</div>
 					<textarea name="code_enseignant" style="display:none;" id="code_enseignant"></textarea>
-					<div id="editor_code_enseignant" style="border-radius:5px;">{{ old('code_enseignant') ?? $code_enseignant }}</div>
+					<div id="editor_code_enseignant" style="border-radius:5px;">{{ old('code_enseignant') ?? $code_enseignant ?? '' }}</div>
 					<!-- /CODE ENSEIGNANT -->
 
 					<!-- SOLUTION --> 
 					<div class="mt-4 text-monospace">{{strtoupper(__('solution possible'))}} <span class="font-italic small" style="color:silver;">{{__("optionnel")}}</span></div>
 					<div class="text-monospace text-muted small text-justify mb-1">{{__("Pour les enseignants seulement. Cette soluton possible sert seulement de référence.")}}</div>
 					<textarea name="solution" style="display:none;" id="solution"></textarea>
-					<div id="editor_solution" style="border-radius:5px;">{{ old('solution') ?? $solution }}</div>
+					<div id="editor_solution" style="border-radius:5px;">{{ old('solution') ?? $solution ?? '' }}</div>
 					<!-- /SOLUTION --> 					
 
 					<!-- OPTIONS -->
@@ -159,9 +161,9 @@ $with_console = $devoir->with_console;
 						$with_nbverif_checked = (old('with_nbverif') !== null) ? "checked" : "";
 						$with_console_checked = (old('with_console') !== null) ? "checked" : "";
 					} else {
-						$with_chrono_checked = ($with_chrono == 0) ? "checked" : "";
-						$with_nbverif_checked = ($with_nbverif == 0) ? "checked" : "";
-						$with_console_checked = ($with_console == 0) ? "checked" : "";	
+						$with_chrono_checked = (isset($with_chrono) and $with_chrono == 0) ? "checked" : "";
+						$with_nbverif_checked = (isset($with_nbverif) and $with_nbverif == 0) ? "checked" : "";
+						$with_console_checked = (isset($with_console) and $with_console == 0) ? "checked" : "";	
 					}
 					?>
 					<div class="form-check">
@@ -180,7 +182,7 @@ $with_console = $devoir->with_console;
 
 					<input id="lang" type="hidden" name="lang" value="{{app()->getLocale()}}" />
 
-					@if ($jeton_secret)
+					@if (isset($jeton_secret))
 						<input type="hidden" name="jeton_secret" value="{{$jeton_secret}}" />
 					@endif
 
