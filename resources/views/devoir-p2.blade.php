@@ -51,17 +51,25 @@ $devoir_eleve = App\Models\Devoir_eleve::where('jeton_copie', Session::get('jeto
 
     <!-- Écran de démarrage -->
     <div id="demarrer" class="demarrer">
-		<div id="commencer" style="display:none">
-			<button onclick="commencer()" type="button" class="btn btn-primary btn-lg text-monospace" style="width:180px;font-size:100%;">commencer</button>
-			<br/><br/>
+		<div id="commencer" @if ($devoir->with_console == 1) style="display:none" @endif>
 			<i class="fas fa-exclamation-triangle text-danger"></i>
 			<br />
-			<span class="text-monospace text-danger">ne pas quitter le mode<br />plein écran</span>
+			<div class="text-monospace text-danger text-left" style="width:320px;margin:0px auto 0px auto;">
+			&#8226; ne pas quitter le mode plein écran<br />
+			&#8226; ne pas revenir en arrière<br />
+			&#8226; ne pas quitter la page<br />
+			&#8226; ne pas recharger la page<br />
+			&#8226; ne pas cliquer en-dehors de la page
+			</div>
+			<br/>
+			<button onclick="commencer()" type="button" class="btn btn-primary btn-lg text-monospace" style="width:80px;font-size:100%;"><i class="fas fa-check"></i></button>
 		</div>
+		@if ($devoir->with_console == 1)
 		<button id="attendre" type="button" class="btn btn-primary btn-lg text-monospace" style="width:180px;" disabled><img src="{{ asset('img/chargement.gif') }}" width="30" /></button>
+		@endif
     </div>
 
-	<div class="bg-danger text-white p-2 text-monospace text-center mb-4">ne pas quitter cette page - ne pas recharger cette page - ne pas cliquer en-dehors de cette page - ne pas quitter le mode plein écran</div>
+	<div class="bg-danger text-white p-2 text-monospace text-center mb-4">ne pas revenir en arrière - ne pas quitter cette page - ne pas recharger cette page - ne pas cliquer en-dehors de cette page - ne pas quitter le mode plein écran</div>
 
     <div class="container mt-5">
 

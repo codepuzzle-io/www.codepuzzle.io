@@ -1,3 +1,8 @@
+<?php
+header("Cache-Control: no-cache, max-age=0, no-store, must-revalidate"); // HTTP 1.1.
+header("Pragma: no-cache"); // HTTP 1.0.
+header("Expires: 0"); // Proxies.
+?>
 @include('inc-top')
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">
@@ -7,7 +12,7 @@
         $description_og = '| Devoir';
     @endphp
 	@include('inc-meta')
-	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Cache-Control" content="no-cache, max-age=0, no-store, must-revalidate" />
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta http-equiv="Expires" content="0" />
     <title>ENTRAÎNEMENT</title>

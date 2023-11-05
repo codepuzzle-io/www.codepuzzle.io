@@ -142,6 +142,7 @@ Route::any('/defi-info/{defi_jeton}', [App\Http\Controllers\SiteController::clas
 
 // devoirs
 Route::get('/devoir-creer', [App\Http\Controllers\SiteController::class, 'devoir_creer_get'])->name('devoir-creer-get');
+Route::get('/devoir-creer/{jeton_secret}', [App\Http\Controllers\SiteController::class, 'devoir_modifier_get'])->name('devoir-modifier-get');
 Route::post('/devoir-creer', [App\Http\Controllers\SiteController::class, 'devoir_creer_post'])->name('devoir-creer-post');
 Route::any('/devoir-info', [App\Http\Controllers\SiteController::class, 'redirect']);
 Route::any('/devoir-info/{jeton_secret}', [App\Http\Controllers\SiteController::class, 'devoir_info'])->name('devoir-info');
@@ -168,7 +169,7 @@ Route::any('/iframe/{puzzle_jeton}', function ($puzzle_jeton) {
 
 
 // ============================================================================
-// == DEVOIR
+// == DEVOIR FIN
 // ============================================================================
 
 Route::view('/devoir-fin', 'devoir-fin');

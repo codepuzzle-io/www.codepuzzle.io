@@ -46,12 +46,10 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                 </div>
 
                 <div class="text-danger border border-danger rounded text-monospace p-2" style="font-size:70%;">
-                    Statut: alpha<br/>
+                    Statut: bêta<br/>
                     <br/>
                     A faire:<br/>
-                    * page pour modifier le sujet d'un entraînement<br />
                     * pouvoir supprimer une copie d'élève<br />
-                    * système d'envoi des commentaires aux élèves<br />
                 </div>
 
             </div>
@@ -84,11 +82,15 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                                     <td class="small text-muted p-0">Lien à fournir aux élèves.<br />QR code: <img src="https://api.qrserver.com/v1/create-qr-code/?data={{urlencode('https://www.codepuzzle.io/E' . strtoupper($devoir->jeton))}}&amp;size=200x200" style="width:50px" alt="www.codepuzzle.io/E{{strtoupper($devoir->jeton)}}" data-toggle="tooltip" data-placement="bottom" title="{{__('clic droit + Enregistrer l image sous... pour sauvegarder l image')}}" /></td>
                                 </tr>
                             </table>
-
+                            <div class="text-center mt-2 mb-2">
+                                <a class="btn btn-dark btn-sm" href="/devoir-creer/{{$jeton_secret}}" role="button"><i class="fa-solid fa-pen mr-2"></i> modifier</a>
+                            </div>
                         </div>
                     </div>
 
                 </div>
+
+
 
                 <div id="frame" class="frame">
 
