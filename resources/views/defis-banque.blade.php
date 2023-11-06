@@ -90,7 +90,7 @@
                                                         </div>
                                                         <button class='btn btn-secondary btn-sm' type='button' onclick='mastodon({{$loop->iteration}})'><i class='fas fa-paper-plane'></i></button>
                                                         ">
-                                                    <i class="fa-brands fa-mastodon"></i>
+                                                    <i class="fa-brands fa-mastodon fa-lg"></i>
                                                 </a>
                                                 <a href='{{$url_twitter}}' target="_blank" rel='noopener noreferrer'><i class="fa-brands fa-square-twitter fa-lg"></i></a>
                                             </div> 
