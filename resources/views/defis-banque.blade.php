@@ -75,7 +75,7 @@
                                 <div class="card" style="padding:20px 20px 0px 20px;">
                                     <div class="card-body p-0">
                                     
-                                        <div class="text-monospace text-muted small font-weight-bold">
+                                        <div class="text-monospace text-muted small font-weight-bold mb-1">
                                             <div style="float:right;">
                                                 <a href='#'
                                                     class="mastodon_button"
