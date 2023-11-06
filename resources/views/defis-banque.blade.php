@@ -95,6 +95,7 @@
                                             <a href='{{$url_twitter}}' target="_blank" rel='noopener noreferrer'><i class="fa-brands fa-square-twitter"></i></a>
                                         </div>                       
 
+                                        <div class="text-monospace text-muted small font-weight-bold">{{$defi->titre_enseignant}}</div>
                                         <div class="text-monospace text-muted small consignes mathjax text-justify pr-5">
                                             <?php
                                             $Parsedown = new Parsedown();
