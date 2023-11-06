@@ -75,28 +75,28 @@
                                 <div class="card" style="padding:20px 20px 0px 20px;">
                                     <div class="card-body p-0">
                                     
-                                        <div style="float:right;">
-                                            <a href='#'
-                                                class="mastodon_button"
-                                                data-toggle="popover"
-                                                data-container="body"
-                                                data-placement="left"
-                                                data-content="
-                                                    <div class='form-group text-monospace'>
-                                                        <label for='intance'>Instance Mastodon</label>
-                                                        <input id='instance_{{$loop->iteration}}' type='text' class='form-control form-control-sm' placeholder='mastodon.social'>
-                                                        <input id='url_{{$loop->iteration}}' type='hidden' class='form-control form-control-sm' value='{{$url_mastodon}}'>
-                                                    </div>
-                                                    <button class='btn btn-secondary btn-sm' type='button' onclick='mastodon({{$loop->iteration}})'><i class='fas fa-paper-plane'></i></button>
-                                                    ">
-                                                <i class="fa-brands fa-mastodon"></i>
-                                            </a>
-                                            <br />
-                                            <a href='{{$url_twitter}}' target="_blank" rel='noopener noreferrer'><i class="fa-brands fa-square-twitter"></i></a>
-                                        </div>                       
-
                                         <div class="text-monospace text-muted small font-weight-bold">{{$defi->titre_enseignant}}</div>
                                         <div class="text-monospace text-muted small consignes mathjax text-justify pr-5">
+                                            <div style="float:right;">
+                                                <a href='#'
+                                                    class="mastodon_button"
+                                                    data-toggle="popover"
+                                                    data-container="body"
+                                                    data-placement="left"
+                                                    data-content="
+                                                        <div class='form-group text-monospace'>
+                                                            <label for='intance'>Instance Mastodon</label>
+                                                            <input id='instance_{{$loop->iteration}}' type='text' class='form-control form-control-sm' placeholder='mastodon.social'>
+                                                            <input id='url_{{$loop->iteration}}' type='hidden' class='form-control form-control-sm' value='{{$url_mastodon}}'>
+                                                        </div>
+                                                        <button class='btn btn-secondary btn-sm' type='button' onclick='mastodon({{$loop->iteration}})'><i class='fas fa-paper-plane'></i></button>
+                                                        ">
+                                                    <i class="fa-brands fa-mastodon"></i>
+                                                </a>
+                                                <br />
+                                                <a href='{{$url_twitter}}' target="_blank" rel='noopener noreferrer'><i class="fa-brands fa-square-twitter"></i></a>
+                                            </div> 
+
                                             <?php
                                             $Parsedown = new Parsedown();
                                             echo $Parsedown->text($defi->consignes_eleve);
