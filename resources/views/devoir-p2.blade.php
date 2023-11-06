@@ -69,18 +69,14 @@ $devoir_eleve = App\Models\Devoir_eleve::where('jeton_copie', Session::get('jeto
 		@endif
     </div>
 
-	<div class="bg-danger text-white p-2 text-monospace text-center mb-4">ne pas revenir en arrière - ne pas quitter cette page - ne pas recharger cette page - ne pas cliquer en-dehors de cette page - ne pas quitter le mode plein écran</div>
+	<div class="bg-danger text-white p-2 text-monospace text-center mb-4">ne pas quitter cette page - ne pas recharger cette page - ne pas cliquer en-dehors de cette page - ne pas quitter le mode plein écran</div>
 
     <div class="container mt-5">
 
 		<table align="center" cellpadding="2" style="text-align:center;margin-bottom:20px;color:#bdc3c7;border-spacing:5px;border-collapse:separate;">
 			<tr>
-				@if ($devoir->with_chrono == 1)
-				<td class="dashboard"><i class="fas fa-clock"></i>&nbsp;&nbsp;<span id="chrono">00:00</span></td>
-				@endif
-				@if ($devoir->with_nbverif == 1)
-				<td class="dashboard"><i class="fas fa-check"></i>&nbsp;&nbsp;<span id="nbverif">{{ $devoir_eleve->nbverif }}</span></td>
-				@endif
+				<td class="dashboard" @if ($devoir->with_chrono == 0) style="display:none" @endif><i class="fas fa-clock"></i>&nbsp;&nbsp;<span id="chrono">00:00</span></td>
+				<td class="dashboard" @if ($devoir->with_nbverif == 0) style="display:none" @endif><i class="fas fa-check"></i>&nbsp;&nbsp;<span id="nbverif">{{ $devoir_eleve->nbverif }}</span></td>
 				<td class="m-0 p-0">
 					<a tabindex='0' class='btn btn-success text-monospace' role='button'  style="cursor:pointer;outline:none;" data-toggle="popover" data-trigger="focus" data-placement="left" data-html="true" data-sanitize="false" data-content="<a href='#' id='rendre' class='btn btn-danger btn-sm text-light' role='button'>{{__('confirmer')}}</a><a class='btn btn-light btn-sm ml-2' href='#' role='button'>{{__('annuler')}}</a>">rendre</a>
 				</td>
