@@ -76,7 +76,7 @@
                                     <div class="card-body p-0">
                                     
                                         <div class="text-monospace text-muted small font-weight-bold">{{$defi->titre_enseignant}}</div>
-                                        <div class="text-monospace text-muted small consignes mathjax text-justify pr-5">
+                                        <div>
                                             <div style="float:right;">
                                                 <a href='#'
                                                     class="mastodon_button"
@@ -96,11 +96,12 @@
                                                 <br />
                                                 <a href='{{$url_twitter}}' target="_blank" rel='noopener noreferrer'><i class="fa-brands fa-square-twitter"></i></a>
                                             </div> 
-
-                                            <?php
-                                            $Parsedown = new Parsedown();
-                                            echo $Parsedown->text($defi->consignes_eleve);
-                                            ?>
+                                            <div class="text-monospace text-muted small consignes mathjax text-justify pr-5">
+                                                <?php
+                                                $Parsedown = new Parsedown();
+                                                echo $Parsedown->text($defi->consignes_eleve);
+                                                ?>
+                                            </div>
                                         </div>
 
                                         <div class="text-monospace  text-muted pt-3 pb-2">
