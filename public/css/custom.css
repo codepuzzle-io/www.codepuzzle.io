@@ -15,6 +15,12 @@ body {
     height:100%;
 }
 
+pre {
+    display: block;
+    font-size: 100%;
+    color: #212529;
+}
+
 a {
     color: #3498db;
     text-decoration: none;
