@@ -96,7 +96,7 @@
                                                 <br />
                                                 <a href='{{$url_twitter}}' target="_blank" rel='noopener noreferrer'><i class="fa-brands fa-square-twitter"></i></a>
                                             </div> 
-                                            <div class="text-monospace text-muted small consignes mathjax text-justify pr-5">
+                                            <div class="text-monospace text-muted small consignes mathjax text-justify" style="padding-right:25px;">
                                                 <?php
                                                 $Parsedown = new Parsedown();
                                                 echo $Parsedown->text($defi->consignes_eleve);
