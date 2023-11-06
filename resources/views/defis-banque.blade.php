@@ -75,8 +75,7 @@
                                 <div class="card" style="padding:20px 20px 0px 20px;">
                                     <div class="card-body p-0">
                                     
-                                        <div class="text-monospace text-muted small font-weight-bold">{{$defi->titre_enseignant}}</div>
-                                        <div>
+                                        <div class="text-monospace text-muted small font-weight-bold">
                                             <div style="float:right;">
                                                 <a href='#'
                                                     class="mastodon_button"
@@ -93,15 +92,16 @@
                                                         ">
                                                     <i class="fa-brands fa-mastodon"></i>
                                                 </a>
-                                                <br />
                                                 <a href='{{$url_twitter}}' target="_blank" rel='noopener noreferrer'><i class="fa-brands fa-square-twitter"></i></a>
                                             </div> 
-                                            <div class="text-monospace text-muted small consignes mathjax text-justify" style="padding-right:30px;">
-                                                <?php
-                                                $Parsedown = new Parsedown();
-                                                echo $Parsedown->text($defi->consignes_eleve);
-                                                ?>
-                                            </div>
+                                            {{$defi->titre_enseignant}}
+                                        </div>
+
+                                        <div class="text-monospace text-muted small consignes mathjax text-justify" style="padding-right:30px;">
+                                            <?php
+                                            $Parsedown = new Parsedown();
+                                            echo $Parsedown->text($defi->consignes_eleve);
+                                            ?>
                                         </div>
 
                                         <div class="text-monospace  text-muted pt-3 pb-2">
