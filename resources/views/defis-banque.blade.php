@@ -77,8 +77,8 @@
                                                     data-placement="left"
                                                     data-content="
                                                         <div class='form-group text-monospace'>
-                                                            <label for='intance'>Instance Mastodon</label>
-                                                            <input id='instance_{{$loop->iteration}}' type='text' class='form-control form-control-sm' placeholder='mastodon.social'>
+                                                            <span>Instance Mastodon</span>
+                                                            <input id='instance_{{$loop->iteration}}' type='text' name='instance' class='form-control form-control-sm' placeholder='mastodon.social'>
                                                             <input id='url_{{$loop->iteration}}' type='hidden' class='form-control form-control-sm' value='{{$url_mastodon}}'>
                                                         </div>
                                                         <button class='btn btn-secondary btn-sm' type='button' onclick='mastodon({{$loop->iteration}})'><i class='fas fa-paper-plane'></i></button>
