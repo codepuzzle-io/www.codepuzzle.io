@@ -182,7 +182,6 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                                     }
                                     ?>
                                     <div id="editor_code_enseignant_devoir-{{$loop->iteration}}" style="border-radius:5px;">{{$code_enseignant}}</div>
-
                                     <!-- /CODE ENSEIGNANT --> 
 
                                     <div class="p-1 pl-2 pr-2 rounded mt-1 mb-3 text-monospace small" style="background-color:#ffe791;color:#cfb140;"><i class="far fa-lightbulb"></i> Recharger cette page entre deux élèves afin de supprimer les variables et fonctions en mémoire.</div>
@@ -343,6 +342,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
         var editor_code_eleve_devoir = []
         var editor_code_enseignant_devoir = []
         for (var i = 1; i <= {{$devoir_eleves->count() }}; i++) {
+
             editor_code_eleve_devoir[i] = ace.edit('editor_code_eleve_devoir-' + i, {
                 theme: "ace/theme/puzzle_code",
                 mode: "ace/mode/python",

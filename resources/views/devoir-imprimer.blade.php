@@ -182,6 +182,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
         var editor_code_eleve_devoir = []
         var editor_code_solution_devoir = []
         for (var i = 1; i <= {{$devoir_eleves->count() }}; i++) {
+
             editor_code_eleve_devoir[i] = ace.edit('editor_code_eleve_devoir-' + i, {
                 theme: "ace/theme/chrome",
                 mode: "ace/mode/python",
@@ -203,25 +204,27 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
             });
             editor_code_eleve_devoir[i].container.style.lineHeight = 1.4;
 
-            editor_code_solution_devoir[i] = ace.edit('editor_code_solution_devoir-' + i, {
-                theme: "ace/theme/chrome",
-                mode: "ace/mode/python",
-                maxLines: 500,
-                fontSize: 14,
-                wrap: true,
-                useWorker: false,
-                highlightActiveLine: false,
-                highlightGutterLine: false,
-                showPrintMargin: false,
-                displayIndentGuides: true,
-                showLineNumbers: true,
-                showGutter: true,
-                showFoldWidgets: false,
-                useSoftTabs: true,
-                navigateWithinSoftTabs: false,
-                tabSize: 4
-            });
-            editor_code_solution_devoir[i].container.style.lineHeight = 1.4;
+            @if ($devoir->solution)
+                editor_code_solution_devoir[i] = ace.edit('editor_code_solution_devoir-' + i, {
+                    theme: "ace/theme/chrome",
+                    mode: "ace/mode/python",
+                    maxLines: 500,
+                    fontSize: 14,
+                    wrap: true,
+                    useWorker: false,
+                    highlightActiveLine: false,
+                    highlightGutterLine: false,
+                    showPrintMargin: false,
+                    displayIndentGuides: true,
+                    showLineNumbers: true,
+                    showGutter: true,
+                    showFoldWidgets: false,
+                    useSoftTabs: true,
+                    navigateWithinSoftTabs: false,
+                    tabSize: 4
+                });
+                editor_code_solution_devoir[i].container.style.lineHeight = 1.4;
+            @endif
         }    
 
     </script>
