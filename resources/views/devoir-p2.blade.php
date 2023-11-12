@@ -1,6 +1,11 @@
 <?php
 $devoir = App\Models\Devoir::where('jeton', Session::get('jeton_devoir'))->first();
 $devoir_eleve = App\Models\Devoir_eleve::where('jeton_copie', Session::get('jeton_copie'))->first();
+if ($devoir_eleve->code_eleve == "") {
+	$code_eleve = $devoir->code_eleve;
+} else {
+	$code_eleve = $devoir_eleve->code_eleve;
+}
 ?>
 @include('inc-top')
 <!doctype html>
@@ -111,7 +116,7 @@ $devoir_eleve = App\Models\Devoir_eleve::where('jeton_copie', Session::get('jeto
         <div class="row">
             <div class="col-md-8 offset-md-2 text-center">
                 <textarea name="code" style="display:none;" id="code"></textarea>
-		        <div style="width:100%;margin:0px auto 0px auto;"><div id="editor_code" style="border-radius:5px;">{{$devoir_eleve->code_eleve}}</div></div>
+		        <div style="width:100%;margin:0px auto 0px auto;"><div id="editor_code" style="border-radius:5px;">{{$code_eleve}}</div></div>
                 <!-- bouton verifier -->
 				@if ($devoir->with_console == 1)
                 <button onclick="evaluatePython()" type="button" class="btn btn-primary btn-sm mt-2 text-monospace" style="display:inline">exécuter le code</button>

@@ -90,8 +90,6 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 
                 </div>
 
-
-
                 <div id="frame" class="frame">
 
                     <div class="row">

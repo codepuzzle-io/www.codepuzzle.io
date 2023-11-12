@@ -17,12 +17,12 @@
 
 			<div class="col-md-12 text-center">
 				@if(isset($_GET['s0']))
-					<div><img src="{{ asset('img/bravo.png') }}" height="200" alt="BRAVO!" /></div>
-					<h1 class="text-center mt-4">BRAVO!</h1>
-					<a class="btn btn-light mt-4 text-monospace" href="/" role="button">quitter</a>
+					<div><img src="{{ asset('img/rendu.png') }}" height="200" alt="BRAVO!" /></div>
+					<h1 class="text-center mt-4">TRAVAIL RENDU!</h1>
+					<button type="button" class="btn btn-light mt-4 text-monospace" onclick="window.close()">quitter</button>
 				@else
 					<h1 class="text-center mt-4">DÉJÀ RENDU!</h1>
-					<a class="btn btn-light mt-4 text-monospace" href="/" role="button">quitter</a>
+					<button type="button" class="btn btn-light mt-4 text-monospace" onclick="window.close()">quitter</button>
 				@endif
 			</div>
 		</div>
