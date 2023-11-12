@@ -82,7 +82,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
             @foreach($devoir_eleves as $devoir_eleve)
                 <tr>
                     <td class="p-2 font-weight-bold text-uppercase">{{$devoir_eleve->pseudo}}</td>
-                    <td style="width:100%;vertical-align:top;padding:5px 0px 5px 0px;"><div class="form-control border border-success text-dark">{{$devoir_eleve->commentaires}}</div></td>
+                    <td style="width:100%;vertical-align:top;padding:5px 0px 5px 0px;"><div class="border border-success rounded text-dark pt-2 pb-2 pl-3 pr-3">{!! nl2br($devoir_eleve->commentaires) !!}</div></td>
                 </tr>
             @endforeach
         </table>
@@ -125,7 +125,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 
                 <!-- COMMENTAIRES / CORRECTION / CONSEILS --> 	
                 <div class="mt-3 text-monospace">COMMENTAIRES / CORRECTION / CONSEILS</div>
-                <div class="form-control border border-success text-dark">{{$devoir_eleve->commentaires}}</div>
+                <div class="border border-success rounded text-dark pt-2 pb-2 pl-3 pr-3">{!! nl2br($devoir_eleve->commentaires) !!}</div>
                 <div style="page-break-after: always;">&nbsp;</div>
                 <!-- /COMMENTAIRES / CORRECTION / CONSEILS --> 	
 
