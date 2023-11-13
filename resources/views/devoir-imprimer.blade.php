@@ -11,6 +11,10 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 <head>
     @include('inc-meta')
     <style>
+        body {
+            line-height:1.2;
+            font-size:0.8em;
+        }
         .ace-chrome .ace_gutter {
             background: white;
         }
@@ -63,7 +67,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 
         <!-- CONSIGNES -->
         <div class="text-monospace mt-3">{{strtoupper(__('consignes'))}}</div>
-        <div class="mathjax" style="padding:12px 15px 0px 15px;border-radius:4px;border:solid 1px gray;background-color:white;">
+        <div class="mathjax" style="padding:10px 15px 0px 15px;border-radius:4px;border:solid 1px gray;background-color:white;">
             <?php
             $Parsedown = new Parsedown();
             echo $Parsedown->text($devoir->consignes_eleve);
@@ -160,7 +164,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
             mode: "ace/mode/python",
             maxLines: 500,
             minLines: 1,
-            fontSize: 14,
+            fontSize: 13,
             wrap: true,
             useWorker: false,
             autoScrollEditorIntoView: true,
@@ -177,7 +181,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
             readOnly: true,
             tabSize: 4
         });
-        editor_code.container.style.lineHeight = 1.4;
+        editor_code.container.style.lineHeight = 1.2;
 
         var editor_code_eleve_devoir = []
         var editor_code_solution_devoir = []
@@ -187,7 +191,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                 theme: "ace/theme/chrome",
                 mode: "ace/mode/python",
                 maxLines: 500,
-                fontSize: 14,
+                fontSize: 13,
                 wrap: true,
                 useWorker: false,
                 highlightActiveLine: false,
@@ -202,14 +206,14 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                 tabSize: 4,
                 readOnly: true
             });
-            editor_code_eleve_devoir[i].container.style.lineHeight = 1.4;
+            editor_code_eleve_devoir[i].container.style.lineHeight = 1.2;
 
             @if ($devoir->solution)
                 editor_code_solution_devoir[i] = ace.edit('editor_code_solution_devoir-' + i, {
                     theme: "ace/theme/chrome",
                     mode: "ace/mode/python",
                     maxLines: 500,
-                    fontSize: 14,
+                    fontSize: 13,
                     wrap: true,
                     useWorker: false,
                     highlightActiveLine: false,
@@ -223,7 +227,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                     navigateWithinSoftTabs: false,
                     tabSize: 4
                 });
-                editor_code_solution_devoir[i].container.style.lineHeight = 1.4;
+                editor_code_solution_devoir[i].container.style.lineHeight = 1.2;
             @endif
         }    
 
