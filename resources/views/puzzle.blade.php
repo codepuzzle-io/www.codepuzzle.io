@@ -64,7 +64,7 @@ app()->setLocale($puzzle->lang)
 		@endif
 
         @if ($puzzle->titre_eleve !== NULL OR $puzzle->consignes_eleve !== NULL)
-        <div class="row" style="margin-top:10px;>
+        <div class="row" style="padding-top:10px;">
             <div class="col-md-12">
                 <div class="frame">
                     @if ($puzzle->titre_eleve !== NULL)
