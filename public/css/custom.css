@@ -64,6 +64,12 @@ h2 {
     font-weight:bold;
 }
 
+.exemple {
+    background-color: #eef0f2;
+    padding:10px;
+    border-radius:5px; 
+}
+
 .carousel-caption {
     position: absolute;
     right: 15%;

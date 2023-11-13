@@ -85,7 +85,7 @@
 				<div class="font-weight-bold">Exemple 1</div>
 				<div class="small text-muted">en mode "réorganiser"</div>
 			</div>
-			<div class="col-md-10">
+			<div class="col-md-10 exemple">
 				<div id="exemple1_div">
 					<iframe id="exemple1_iframe" src="https://www.codepuzzle.io/IPNHVL" height="100%" width="100%" frameborder="0"></iframe>
 				</div>
@@ -97,7 +97,7 @@
 				<div class="font-weight-bold">Exemple 2</div>
 				<div class="small text-muted">en mode "glisser-déposer" avec des lignes de code inutiles</div>
 			</div>
-			<div class="col-md-10">
+			<div class="col-md-10 exemple">
 				<div id="exemple2_div">
 					<iframe id="exemple2_iframe" src="https://www.codepuzzle.io/IP39K2" height="100%" width="100%" frameborder="0"></iframe>
 				</div>
@@ -109,7 +109,7 @@
 				<div class="font-weight-bold">Exemple 3</div>
 				<div class="small text-muted">en mode "réorganiser" avec code à compléter</div>
 			</div>
-			<div class="col-md-10">
+			<div class="col-md-10 exemple">
 				<div id="exemple3_div">
 					<iframe id="exemple3_iframe" src="https://www.codepuzzle.io/IPUAH8" height="100%" width="100%" frameborder="0"></iframe>
 				</div>
@@ -123,7 +123,7 @@
 				<div class="font-weight-bold">Exemple</div>
 				<div class="small text-muted">avec quatre tests</div>
 			</div>
-			<div class="col-md-10">
+			<div class="col-md-10 exemple">
 				<div id="exemple4_div">
 					<iframe id="exemple4_iframe" src="https://www.codepuzzle.io/IDZLB8" height="100%" width="100%" frameborder="0"></iframe>
 				</div>
@@ -136,7 +136,7 @@
 				<div class="font-weight-bold text-success">ENTRAÎNEMENTS / DEVOIRS</div>
 				<div class="font-weight-bold">Diaporama</div>
 			</div>
-			<div class="col-md-10">
+			<div class="col-md-10 exemple">
 
 				<div id="carouselCaptions" class="carousel slide" data-interval="false">
 					<div class="carousel-inner">
