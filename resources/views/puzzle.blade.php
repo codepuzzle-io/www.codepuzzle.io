@@ -43,7 +43,7 @@ app()->setLocale($puzzle->lang)
         @endif
 
 		@if ($puzzle->with_chrono == 1 OR $puzzle->with_chrono == 1)
-        <table align="center" cellpadding="2" style="text-align:center;margin-bottom:20px;color:#bdc3c7;">
+        <table align="center" cellpadding="2" style="text-align:center;margin-bottom:10px;color:#bdc3c7;">
             <tr>
                 @if ($puzzle->with_chrono == 1)
                 <td><i class="fas fa-clock"></i></td>
@@ -64,7 +64,7 @@ app()->setLocale($puzzle->lang)
 		@endif
 
         @if ($puzzle->titre_eleve !== NULL OR $puzzle->consignes_eleve !== NULL)
-        <div class="row">
+        <div class="row" style="margin-top:10px;>
             <div class="col-md-12">
                 <div class="frame">
                     @if ($puzzle->titre_eleve !== NULL)

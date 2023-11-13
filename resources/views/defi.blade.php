@@ -30,7 +30,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 		@endif
 
 		@if ($defi->with_chrono == 1 OR $defi->with_nbverif == 1)
-		<table align="center" cellpadding="2" style="text-align:center;margin-bottom:20px;color:#bdc3c7;">
+		<table align="center" cellpadding="2" style="text-align:center;margin-bottom:10px;color:#bdc3c7;">
 			<tr>
 				@if ($defi->with_chrono == 1)
 				<td><i class="fas fa-clock"></i></td>
@@ -51,7 +51,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 		@endif
 
         @if ($defi->titre_eleve !== NULL OR $defi->consignes_eleve !== NULL)
-        <div class="row">
+        <div class="row" style="margin-top:10px;>
             <div class="col-md-10 offset-md-1">
                 <div class="frame">
                     @if ($defi->titre_eleve !== NULL)
