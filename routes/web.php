@@ -154,6 +154,7 @@ Route::post('/devoir-save-commentaires', [App\Http\Controllers\SiteController::c
 Route::post('/devoir-rendre', [App\Http\Controllers\SiteController::class, 'devoir_rendre']);
 Route::post('/devoir-fin', [App\Http\Controllers\SiteController::class, 'devoir_rendre']);
 Route::any('/devoir-console/{jeton_secret}', [App\Http\Controllers\SiteController::class, 'devoir_console'])->name('devoir-console');
+Route::any('/devoir-supervision/{jeton_secret}', [App\Http\Controllers\SiteController::class, 'devoir_supervision'])->name('devoir-supervision');
 Route::any('/devoir-imprimer/{jeton_secret}', [App\Http\Controllers\SiteController::class, 'devoir_imprimer'])->name('devoir-imprimer');
 
 // ============================================================================

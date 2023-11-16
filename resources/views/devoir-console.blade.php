@@ -82,13 +82,17 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                                     <td class="small text-muted p-0">Lien à fournir aux élèves.<br />QR code: <img src="https://api.qrserver.com/v1/create-qr-code/?data={{urlencode('https://www.codepuzzle.io/E' . strtoupper($devoir->jeton))}}&amp;size=200x200" style="width:50px" alt="www.codepuzzle.io/E{{strtoupper($devoir->jeton)}}" data-toggle="tooltip" data-placement="bottom" title="{{__('clic droit + Enregistrer l image sous... pour sauvegarder l image')}}" /></td>
                                 </tr>
                             </table>
-                            <div class="text-center mt-2 mb-2">
-                                <a class="btn btn-dark btn-sm" href="/devoir-creer/{{$jeton_secret}}" role="button"><i class="fa-solid fa-pen mr-2"></i> modifier</a>
-                            </div>
                         </div>
                     </div>
 
                 </div>
+
+                <div class="row mt-3 mb-3">
+                    <div class="col-md-4 offset-4 text-center">
+                        <a class="btn btn-dark btn-sm" href="/devoir-creer/{{$jeton_secret}}" role="button"><i class="fa-solid fa-pen mr-2"></i> modifier</a>
+                    </div>
+                </div>
+
 
                 <div id="frame" class="frame">
 
