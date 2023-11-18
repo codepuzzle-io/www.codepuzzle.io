@@ -6,7 +6,6 @@ if (isset($jeton_secret)) {
 	$code_enseignant = $devoir->code_enseignant;
 	$solution = $devoir->solution;
 	$with_chrono = $devoir->with_chrono;
-	$with_nbverif = $devoir->with_nbverif;
 	$with_console = $devoir->with_console;
 }
 ?>
@@ -158,11 +157,9 @@ if (isset($jeton_secret)) {
 					<?php
 					if ($errors->any()){
 						$with_chrono_checked = (old('with_chrono') !== null) ? "checked" : "";
-						$with_nbverif_checked = (old('with_nbverif') !== null) ? "checked" : "";
 						$with_console_checked = (old('with_console') !== null) ? "checked" : "";
 					} else {
 						$with_chrono_checked = (isset($with_chrono) and $with_chrono == 0) ? "checked" : "";
-						$with_nbverif_checked = (isset($with_nbverif) and $with_nbverif == 0) ? "checked" : "";
 						$with_console_checked = (isset($with_console) and $with_console == 0) ? "checked" : "";	
 					}
 					?>
@@ -170,10 +167,6 @@ if (isset($jeton_secret)) {
 						<input class="form-check-input" name="with_chrono" type="checkbox" id="with_chrono" {{$with_chrono_checked}} />
 						<label class="form-check-label text-monospace text-muted small" for="with_chrono">{{__('ne pas afficher le chronomètre')}}</label>
 					</div>
-					<div class="form-check">
-						<input class="form-check-input" name="with_nbverif" type="checkbox" id="with_nbverif" {{$with_nbverif_checked}} />
-						<label class="form-check-label text-monospace text-muted small" for="with_nbverif">{{__('ne pas afficher le nombre de vérifications')}}</label>
-					</div>		
 					<div class="form-check">
 						<input class="form-check-input" name="with_console" type="checkbox" id="with_console" {{$with_console_checked}} />
 						<label class="form-check-label text-monospace text-muted small" for="with_console">{{__('ne pas afficher la console')}}</label>

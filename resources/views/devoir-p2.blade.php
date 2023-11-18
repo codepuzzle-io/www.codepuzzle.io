@@ -81,7 +81,6 @@ if ($devoir_eleve->code_eleve == "") {
 		<table align="center" cellpadding="2" style="text-align:center;margin-bottom:20px;color:#bdc3c7;border-spacing:5px;border-collapse:separate;">
 			<tr>
 				<td class="dashboard" @if ($devoir->with_chrono == 0) style="display:none" @endif><i class="fas fa-clock"></i>&nbsp;&nbsp;<span id="chrono">00:00</span></td>
-				<td class="dashboard" @if ($devoir->with_nbverif == 0) style="display:none" @endif><i class="fas fa-check"></i>&nbsp;&nbsp;<span id="nbverif">{{ $devoir_eleve->nbverif }}</span></td>
 				<td class="m-0 p-0">
 					<a tabindex='0' class='btn btn-success text-monospace' role='button'  style="cursor:pointer;outline:none;" data-toggle="popover" data-trigger="focus" data-placement="left" data-html="true" data-sanitize="false" data-content="<a href='#' id='rendre' class='btn btn-danger btn-sm text-light' role='button'>{{__('confirmer')}}</a><a class='btn btn-light btn-sm ml-2' href='#' role='button'>{{__('annuler')}}</a>">rendre</a>
 				</td>

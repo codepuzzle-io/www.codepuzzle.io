@@ -5,34 +5,92 @@ if (!$devoir){
     exit();
 }
 $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)->orderBy('pseudo')->get();
+$is_locked = App\Models\Devoir_eleve::where('locked', 1)->exists();
 ?>
 <!doctype html>
 <html lang="fr">
 <head>
     @include('inc-meta')
 
+    <!-- EnlighterJS !-->
+    <link rel="stylesheet" href="{{ asset('lib/highlight/atom-one-dark.min.css') }}" />
+
     <title>ENTRAÎNEMENT - SUPERVISION</title>
+    <style>
+        .hljs {
+            padding:0px;
+            font-size:10px;
+        }
+        .card {
+            border-radius: 0px;
+            border: 0px solid #eef0f2 !important;
+            padding: 0px;
+            background-color: transparent !important;
+        }
+        .col-xl, .col-xl-auto, .col-xl-12, .col-xl-11, .col-xl-10, .col-xl-9, .col-xl-8, .col-xl-7, .col-xl-6, .col-xl-5, .col-xl-4, .col-xl-3, .col-xl-2, .col-xl-1, .col-lg, .col-lg-auto, .col-lg-12, .col-lg-11, .col-lg-10, .col-lg-9, .col-lg-8, .col-lg-7, .col-lg-6, .col-lg-5, .col-lg-4, .col-lg-3, .col-lg-2, .col-lg-1, .col-md, .col-md-auto, .col-md-12, .col-md-11, .col-md-10, .col-md-9, .col-md-8, .col-md-7, .col-md-6, .col-md-5, .col-md-4, .col-md-3, .col-md-2, .col-md-1, .col-sm, .col-sm-auto, .col-sm-12, .col-sm-11, .col-sm-10, .col-sm-9, .col-sm-8, .col-sm-7, .col-sm-6, .col-sm-5, .col-sm-4, .col-sm-3, .col-sm-2, .col-sm-1, .col, .col-auto, .col-12, .col-11, .col-10, .col-9, .col-8, .col-7, .col-6, .col-5, .col-4, .col-3, .col-2, .col-1 {
+            position: relative;
+            width: 100%;
+            padding-right: 5px;
+            padding-left: 5px;
+        }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-right: -5px;
+            margin-left: -5px;
+        }
+        </style>
 </head>
 <body>
 
 	<div class="container-fluid mb-5">
+        <div class="text-monospace small text-muted text-center pt-1">page rafraîchie toutes les 10 secondes</div>
+        <div class="row pt-3">
+            <div class="col-md-2 text-left">
+				<a class="btn btn-light btn-sm" href="/devoir-console/{{$jeton_secret}}" role="button"><i class="fas fa-arrow-left"></i></a>
+			</div>
+            <div class="col-md-8">
+                @if ($is_locked)
+                    <div class="bg-danger h-100 text-white p-2 text-center text-monospace small" style="border-radius:3px;">
+                        au moins un devoir de verrouillé | un mot secret pour déverrouiller: <b>{{$devoir->mot_secret}}</b>
+                    </div>
+                @else
+                    <div class="bg-success h-100 text-white p-2 text-center text-monospace" style="border-radius:3px;">
+                        toutes les devoirs sont actifs
+                    </div>
+                @endif
+            </div>
+        </div>
 
-		<div class="row pt-3">
+		<div class="row pt-2">
 
 			<div class="col-md-12">
 
                 <div id="ecran" class="row mt-3 mb-5">
                     <div class="col-md-12">
+
+                        <div class="row row-cols-1 row-cols-md-6">
                         @foreach($devoir_eleves as $devoir_eleve)
 
-                            <!-- CODE ELEVE --> 
-                            <div style="float:left;width:20%;padding:0px 2px 0px 2px">
-                            <div class="text-monospace small">{{$devoir_eleve->pseudo}}</div>
-                            <div id="editor_code_eleve_devoir-{{$loop->iteration}}" style="border-radius:5px;">{{$devoir_eleve->code_eleve}}</div>
+                        <div class="col mb-4">
+                            <div class="card p-0 h-100">
+                                <div class="card-body p-0">
+                                    @if($devoir_eleve->locked == 0)
+                                        <!-- CODE ELEVE --> 
+                                        <div class="text-monospace small">{{$devoir_eleve->pseudo}}</div>
+                                        <pre id="code_eleve-{{$loop->iteration}}" style="min-height:120px;height:100%;"><code style="height:100%;border-radius:3px;" class="language-python">{{$devoir_eleve->code_eleve}}</code></pre>
+                                        <!-- /CODE ELEVE --> 
+                                    @else
+                                        <div class="text-monospace small">{{$devoir_eleve->pseudo}}</div>
+                                        <div class="h-100 bg-danger text-white text-center" style="min-height:120px;border-radius:3px;display:flex;justify-content:center;align-items:center;"><i class="fa-solid fa-lock" style="opacity:0.5"></i></div>
+                                    @endif
+                                </div>
                             </div>
-                            <!-- /CODE ELEVE --> 
+                        </div>
 
                         @endforeach
+                        </div>
+
                     </div>
                 </div>
 
@@ -42,34 +100,16 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 
     @include('inc-bottom-js')
 
-    <script src="{{ asset('js/ace/ace.js') }}" type="text/javascript" charset="utf-8"></script>
-	<script>
-        var editor_code_eleve_devoir = []
-        for (var i = 1; i <= {{$devoir_eleves->count() }}; i++) {
+    <script>
+        setTimeout(function(){
+        window.location.reload(1);
+        }, 10000);
+    </script>    
 
-            editor_code_eleve_devoir[i] = ace.edit('editor_code_eleve_devoir-' + i, {
-                theme: "ace/theme/puzzle_code",
-                mode: "ace/mode/python",
-                minLines: 8,
-                maxLines: 8,
-                fontSize: 11,
-                wrap: true,
-                useWorker: false,
-                highlightActiveLine: false,
-                highlightGutterLine: false,
-                showPrintMargin: false,
-                displayIndentGuides: true,
-                showLineNumbers: true,
-                showGutter: true,
-                showFoldWidgets: false,
-                useSoftTabs: true,
-                navigateWithinSoftTabs: false,
-                tabSize: 4,
-                readOnly: true
-            });
-            editor_code_eleve_devoir[i].container.style.lineHeight = 1.4;
-        }        
-	</script>
+    <script type="text/javascript" src="{{ asset('lib/highlight/highlight.min.js') }}"></script>
+    <script>
+        hljs.highlightAll();
+    </script>
 
     <script>
 		var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
