@@ -69,7 +69,7 @@ $is_locked = App\Models\Devoir_eleve::where('locked', 1)->exists();
                 <div id="ecran" class="row mt-3 mb-5">
                     <div class="col-md-12">
 
-                        <div class="row row-cols-1 row-cols-md-6">
+                        <div class="row row-cols-1 row-cols-md-5">
                         @foreach($devoir_eleves as $devoir_eleve)
 
                         <div class="col mb-4">
@@ -78,11 +78,11 @@ $is_locked = App\Models\Devoir_eleve::where('locked', 1)->exists();
                                     @if($devoir_eleve->locked == 0)
                                         <!-- CODE ELEVE --> 
                                         <div class="text-monospace small">{{$devoir_eleve->pseudo}}</div>
-                                        <pre id="code_eleve-{{$loop->iteration}}" style="min-height:120px;height:100%;"><code style="height:100%;border-radius:3px;" class="language-python">{{$devoir_eleve->code_eleve}}</code></pre>
+                                        <pre id="code_eleve-{{$loop->iteration}}" style="min-height:80px;height:100%;"><code style="height:100%;border-radius:3px;" class="language-python">{{$devoir_eleve->code_eleve}}</code></pre>
                                         <!-- /CODE ELEVE --> 
                                     @else
                                         <div class="text-monospace small">{{$devoir_eleve->pseudo}}</div>
-                                        <div class="h-100 bg-danger text-white text-center" style="min-height:120px;border-radius:3px;display:flex;justify-content:center;align-items:center;"><i class="fa-solid fa-lock" style="opacity:0.5"></i></div>
+                                        <div class="h-100 bg-danger text-white text-center" style="min-height:80px;border-radius:3px;display:flex;justify-content:center;align-items:center;"><i class="fa-solid fa-lock" style="opacity:0.5"></i></div>
                                     @endif
                                 </div>
                             </div>
