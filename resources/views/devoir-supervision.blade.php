@@ -69,7 +69,7 @@ $is_locked = App\Models\Devoir_eleve::where('locked', 1)->exists();
                 <div id="ecran" class="row mt-3 mb-5">
                     <div class="col-md-12">
 
-                        <div class="row row-cols-1 row-cols-md-4">
+                        <div class="row row-cols-1 row-cols-md-5">
                         @foreach($devoir_eleves as $devoir_eleve)
 
                         <div class="col mb-4">
@@ -101,9 +101,9 @@ $is_locked = App\Models\Devoir_eleve::where('locked', 1)->exists();
     @include('inc-bottom-js')
 
     <script>
-        //setTimeout(function(){
-       // window.location.reload(1);
-        //}, 10000);
+        setTimeout(function(){
+            window.location.reload(1);
+        }, 10000);
     </script>    
 
     <script type="text/javascript" src="{{ asset('lib/highlight/highlight.min.js') }}"></script>
