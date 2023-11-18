@@ -56,7 +56,7 @@ $is_locked = App\Models\Devoir_eleve::where('locked', 1)->exists();
                     </div>
                 @else
                     <div class="bg-success h-100 text-white p-2 text-center text-monospace" style="border-radius:3px;">
-                        toutes les devoirs sont actifs
+                        tous les devoirs sont actifs
                     </div>
                 @endif
             </div>
