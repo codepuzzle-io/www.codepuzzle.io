@@ -75,7 +75,7 @@ $is_locked = App\Models\Devoir_eleve::where('locked', 1)->exists();
                         <div class="col mb-4">
                             <div class="card p-0 h-100">
                                 <div class="card-body p-0">
-                                    <div class="text-monospace small">{{substr(Crypt::encrypt($devoir_eleve->pseudo), 0, 10)}}</div>
+                                    <div class="text-monospace small">{{substr(Crypt::encrypt($devoir_eleve->pseudo), 10, 18)}}</div>
                                     @if($devoir_eleve->locked == 0)
                                         <!-- CODE ELEVE --> 
                                         <pre id="code_eleve-{{$loop->iteration}}" style="min-height:80px;height:100%;"><code style="height:100%;border-radius:3px;" class="language-python">{{$devoir_eleve->code_eleve}}</code></pre>
