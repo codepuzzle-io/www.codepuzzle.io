@@ -101,9 +101,9 @@ $is_locked = App\Models\Devoir_eleve::where('locked', 1)->exists();
     @include('inc-bottom-js')
 
     <script>
-        setTimeout(function(){
-        window.location.reload(1);
-        }, 10000);
+        //setTimeout(function(){
+       // window.location.reload(1);
+        //}, 10000);
     </script>    
 
     <script type="text/javascript" src="{{ asset('lib/highlight/highlight.min.js') }}"></script>
