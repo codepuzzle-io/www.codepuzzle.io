@@ -66,11 +66,6 @@
         tabSize: 4
     });
     editor_code.container.style.lineHeight = 1.5;
-    var textarea_code = $('#code');
-    editor_code.getSession().on('change', function () {
-        textarea_code.val(editor_code.getSession().getValue());
-    });
-    textarea_code.val(editor_code.getSession().getValue());
 </script> 
 
 <script>
@@ -80,7 +75,7 @@
     // autosave
     function autosave(){
         var formData = new URLSearchParams();
-        formData.append('code', encodeURIComponent(document.getElementById('code').value));
+        formData.append('code', encodeURIComponent(editor_code.getSession().getValue()));
         @if ($devoir->with_chrono == 1)
             formData.append('chrono', count);
         @else
@@ -159,7 +154,7 @@
 @if ($devoir->with_console == 1)
 <script>
     // PYTHON
-    var code = document.getElementById("code");
+    
 
     function addToOutput(output_content) {
         //document.getElementById("output1").innerText = ""
@@ -181,10 +176,11 @@
 
     async function evaluatePython() {
         console.log('EVALUATE PYTHON')
+        var code = editor_code.getSession().getValue();
+        console.log("code:\n" + code)
         nbverif++;
-        document.getElementById('nbverif').innerText = nbverif;
         let pyodide = await pyodideReadyPromise;
-        await pyodide.loadPackagesFromImports(code.value);
+        await pyodide.loadPackagesFromImports(code);
         
         try {
             // pas d'erreur python
@@ -193,7 +189,7 @@
                 document.getElementById("output1").innerText += str+"\n";
                 console.log(str);
             }})
-            let output = pyodide.runPython(code.value);
+            let output = pyodide.runPython(code);
             addToOutput(output); 
         } catch (err) {
             // erreur python
@@ -212,7 +208,7 @@
     });
     function rendre() {
         var formData = new URLSearchParams();
-        formData.append('code', encodeURIComponent(document.getElementById('code').value));
+        formData.append('code', encodeURIComponent(editor_code.getSession().getValue()));
         @if ($devoir->with_chrono == 1)
             formData.append('chrono', count);
         @else
@@ -245,6 +241,18 @@
         });
     }
 </script>			
+
+<script>		
+    editor_code.on("paste", function(texteColle) {
+        console.log("Text collé: " + texteColle.text);
+        if (!editor_code.getSession().getValue().includes(texteColle.text)) {
+            texteColle.text = "";
+            console.log("Le collage de ce texte N'est PAS autorisé.");
+        } else {
+            console.log("Le collage de ce texte est autorisé.");
+        }
+    });
+</script>
 
 <script>
     function commencer() {

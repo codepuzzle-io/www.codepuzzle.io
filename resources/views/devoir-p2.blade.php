@@ -42,7 +42,7 @@ if ($devoir_eleve->code_eleve == "") {
 
 	@include('inc-matomo')
 
-	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Cache-Control" content="no-cache, max-age=0, no-store, must-revalidate" />
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta http-equiv="Expires" content="0" />
 
@@ -114,7 +114,6 @@ if ($devoir_eleve->code_eleve == "") {
 
         <div class="row">
             <div class="col-md-8 offset-md-2 text-center">
-                <textarea name="code" style="display:none;" id="code"></textarea>
 		        <div style="width:100%;margin:0px auto 0px auto;"><div id="editor_code" style="border-radius:5px;">{{$code_eleve}}</div></div>
                 <!-- bouton verifier -->
 				@if ($devoir->with_console == 1)
