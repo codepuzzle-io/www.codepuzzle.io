@@ -232,6 +232,11 @@ h3 {
     opacity: 0;
 }
 
+a.text-light:hover, a.text-light:focus {
+    /*color: #cbd3da !important;*/
+    color: white !important;
+}
+
 .btn-primary:focus {
     color: #fff;
     background-color: #2a80b9;

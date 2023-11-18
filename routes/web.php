@@ -156,6 +156,7 @@ Route::post('/devoir-fin', [App\Http\Controllers\SiteController::class, 'devoir_
 Route::any('/devoir-console/{jeton_secret}', [App\Http\Controllers\SiteController::class, 'devoir_console'])->name('devoir-console');
 Route::any('/devoir-supervision/{jeton_secret}', [App\Http\Controllers\SiteController::class, 'devoir_supervision'])->name('devoir-supervision');
 Route::any('/devoir-imprimer/{jeton_secret}', [App\Http\Controllers\SiteController::class, 'devoir_imprimer'])->name('devoir-imprimer');
+Route::any('/devoir-eleve-supprimer/{devoir_eleve_id}', [App\Http\Controllers\SiteController::class, 'devoir_eleve_supprimer'])->name('devoir-eleve-supprimer');
 
 // ============================================================================
 // == RETRO COMPATIBILITE

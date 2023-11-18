@@ -46,10 +46,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                 </div>
 
                 <div class="text-danger border border-danger rounded text-monospace p-2" style="font-size:70%;">
-                    Statut: bêta<br/>
-                    <br/>
-                    A faire:<br/>
-                    * pouvoir supprimer une copie d'élève<br />
+                    Statut: bêta
                 </div>
 
             </div>
@@ -155,16 +152,20 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                             <div id="frame" class="frame mt-1 mb-1">
 
                                 <div class="text-monospace">
-                                    <div style="float:right;right:10px">
+
+                                    <div style="float:right;right:0px">
+
                                         @if($devoir_eleve->submitted == 1)
-                                            <span class="text-white mr-3" style="font-size:70%;background-color:#94C58C;padding:2px 8px;border-radius:3px;">rendu</span>
+                                            <span class="text-white mr-1" style="font-size:70%;background-color:#94C58C;padding:2px 8px;border-radius:3px;vertical-align:2px;">rendu</span>
                                         @endif
                                         @if($devoir_eleve->revised == 1)
-                                            <i class="fas fa-check-circle" style="color:#94C58C;"></i>
+                                            <i class="fas fa-check-circle mr-3" style="color:#94C58C;"></i>
                                         @else
-                                            <i class="fas fa-check-circle" style="color:#ecf0f1;"></i>
+                                            <i class="fas fa-check-circle mr-3" style="color:#ecf0f1;"></i>
                                         @endif
+                                        <a tabindex='0' role='button'  style="cursor:pointer;outline:none;color:#e2e6ea;font-size:95%" data-toggle="popover" data-trigger="focus" data-placement="left" data-html="true" data-content="<div class='text-center text-monospace mb-1'>suppression</div><a href='/devoir-eleve-supprimer/{{ Crypt::encryptString($devoir_eleve->id) }}' class='btn btn-danger btn-sm text-light' role='button'>{{__('confirmer')}}</a><a class='btn btn-light btn-sm ml-2' href='#' role='button'>{{__('annuler')}}</a>"><i class='fas fa-trash fa-sm'></i></a>
                                     </div>
+
                                     <a data-toggle="collapse" class="text-dark" href="#collapseEntrainement-{{$loop->iteration}}" role="button" aria-expanded="false" aria-controls="collapseEntrainement-{{$loop->iteration}}"><i class="fas fa-plus-square"></i></a>
 
                                     <span class="">{{$devoir_eleve->pseudo}}</span>
