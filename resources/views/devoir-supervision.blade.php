@@ -69,7 +69,7 @@ $is_locked = App\Models\Devoir_eleve::where('locked', 1)->exists();
                 <div id="ecran" class="row mt-3 mb-5">
                     <div class="col-md-12">
 
-                        <div class="row row-cols-1 row-cols-md-5">
+                        <div class="row row-cols-1 row-cols-md-4">
                         @foreach($devoir_eleves as $devoir_eleve)
 
                         <div class="col mb-4">
