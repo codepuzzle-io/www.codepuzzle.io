@@ -74,6 +74,7 @@
 </script> 
 
 <script>
+    var nbverif = {{ $devoir_eleve->nbverif }};
     var count = {{ $devoir_eleve->chrono }};
 
     // autosave
@@ -84,6 +85,11 @@
             formData.append('chrono', count);
         @else
             formData.append('chrono', 0);
+        @endif
+        @if ($devoir->with_nbverif == 1)
+            formData.append('nbverif', nbverif);
+        @else
+            formData.append('nbverif', 0);
         @endif
         formData.append('jeton_copie', '{{ Session::get('jeton_copie') }}');
 
@@ -175,6 +181,8 @@
 
     async function evaluatePython() {
         console.log('EVALUATE PYTHON')
+        nbverif++;
+        document.getElementById('nbverif').innerText = nbverif;
         let pyodide = await pyodideReadyPromise;
         await pyodide.loadPackagesFromImports(code.value);
         
@@ -209,6 +217,11 @@
             formData.append('chrono', count);
         @else
             formData.append('chrono', 0);
+        @endif
+        @if ($devoir->with_nbverif == 1)
+            formData.append('nbverif', nbverif);
+        @else
+            formData.append('nbverif', 0);
         @endif
         formData.append('jeton_copie', '{{ Session::get('jeton_copie') }}');
 
