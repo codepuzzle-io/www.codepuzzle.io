@@ -52,7 +52,7 @@ $is_locked = App\Models\Devoir_eleve::where('locked', 1)->exists();
             <div class="col-md-8">
                 @if ($is_locked)
                     <div class="bg-danger h-100 text-white p-2 text-center text-monospace small" style="border-radius:3px;">
-                        au moins un devoir de verrouillé | un mot secret pour déverrouiller: <b>{{$devoir->mot_secret}}</b>
+                        au moins un devoir verrouillé | un mot secret pour déverrouiller: <b>{{$devoir->mot_secret}}</b>
                     </div>
                 @else
                     <div class="bg-success h-100 text-white p-2 text-center text-monospace" style="border-radius:3px;">
