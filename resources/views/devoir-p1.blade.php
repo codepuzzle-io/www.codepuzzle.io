@@ -39,7 +39,7 @@ header("Expires: 0"); // Proxies.
 					</div>
 
 					<div class="bg-danger text-white p-3 text-monospace text-justify rounded" role="alert"><b style="font-weight:600">IMPORTANT</b><br />
-						La session commence dès que vous cliquez sur "commencer". Pendant la session, vous ne pouvez pas quitter la page. Si vous cliquez en dehors de la page, si vous rechargez la page ou si vous tentez de changer de page, la session se verrouillera et seul votre enseignant pourra la déverrouiller.
+						La session commence dès que vous cliquez sur le bouton ci-dessous. Pendant la session, vous ne pouvez pas quitter la page. Si vous cliquez en dehors de la page, si vous rechargez la page ou si vous tentez de changer de page, la session se verrouillera et seul votre enseignant pourra la déverrouiller.
 					</div>
 
 					<div class="form-check mt-3">
