@@ -106,8 +106,20 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                                 <div class="card card-body">
                                     <div class="text-monospace consignes">
                                         <?php
+                                        // Fonction pour encoder en base 64
+                                        $encodeBase64 = function ($matches) {
+                                            return '$$'.base64_encode($matches[1]).'$$';
+                                        };
+                                        // Fonction pour décoder de base 64
+                                        $decodeBase64 = function ($matches) {
+                                            return '$$'.base64_decode($matches[1]).'$$';
+                                        };
+                                        $consignes = preg_replace_callback('/\$\$(.*?)\$\$/s', $encodeBase64, $devoir->consignes_eleve);
                                         $Parsedown = new Parsedown();
-                                        echo $Parsedown->text($devoir->consignes_eleve);
+                                        $Parsedown->setSafeMode(true);
+                                        $consignes = $Parsedown->text($consignes);
+                                        $consignes = preg_replace_callback('/\$\$(.*?)\$\$/s', $decodeBase64, $consignes);
+                                        echo $consignes;
                                         ?>
                                     </div>
                                 </div>
@@ -242,22 +254,22 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 
     @include('inc-bottom-js')
 
-    <script>
-        MathJax = {
-			tex: {
-				inlineMath: [['$', '$'], ['\\(', '\\)']]
-			},
-			options: {
-				ignoreHtmlClass: "no-mathjax",
-				processHtmlClass: "mathjax"
-			},
-			svg: {
-				fontCache: 'global'
-			}
-        };
-    </script>    
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it@13.0.2/dist/markdown-it.min.js"></script>
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true
+        },
+        "HTML-CSS": { availableFonts: ["TeX"] }
+    });
+    </script>  
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script> 	
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
     <script src="{{ asset('js/ace/ace.js') }}" type="text/javascript" charset="utf-8"></script>
 
