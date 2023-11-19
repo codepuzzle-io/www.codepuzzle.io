@@ -96,10 +96,22 @@ if ($devoir_eleve->code_eleve == "") {
                     @endif
                     @if ($devoir->consignes_eleve !== NULL)
                         <div class="text-monospace text-muted consignes mathjax" style="text-align:justify;">
-                            <?php
-                            $Parsedown = new Parsedown();
-                            echo $Parsedown->text($devoir->consignes_eleve);
-                            ?>
+							<?php
+							// Fonction pour encoder en base 64
+							$encodeBase64 = function ($matches) {
+								return '$$'.base64_encode($matches[1]).'$$';
+							};
+							// Fonction pour décoder de base 64
+							$decodeBase64 = function ($matches) {
+								return '$$'.base64_decode($matches[1]).'$$';
+							};
+							$consignes = preg_replace_callback('/\$\$(.*?)\$\$/s', $encodeBase64, $devoir->consignes_eleve);
+							$Parsedown = new Parsedown();
+							$Parsedown->setSafeMode(true);
+							$consignes = $Parsedown->text($consignes);
+							$consignes = preg_replace_callback('/\$\$(.*?)\$\$/s', $decodeBase64, $consignes);
+							echo $consignes;
+							?>
                         </div>
 					@endif
 
