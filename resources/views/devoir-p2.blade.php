@@ -48,7 +48,7 @@ if ($devoir_eleve->code_eleve == "") {
 
     <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
 
-    <title>ENTRAÎNEMENT</title>
+    <title>ENTRAÎNEMENT / DEVOIR</title>
 
 </head>
 

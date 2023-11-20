@@ -13,7 +13,7 @@ if (isset($jeton_secret)) {
 <html lang="fr">
 <head>
 	@include('inc-meta')
-    <title>ENTRAÎNEMENT</title>
+    <title>ENTRAÎNEMENT / DEVOIR | CRÉER / MODIFIER</title>
 </head>
 <body>
 

@@ -15,7 +15,7 @@ header("Expires: 0"); // Proxies.
 	<meta http-equiv="Cache-Control" content="no-cache, max-age=0, no-store, must-revalidate" />
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta http-equiv="Expires" content="0" />
-    <title>ENTRAÎNEMENT</title>
+    <title>ENTRAÎNEMENT / DEVOIR</title>
 </head>
 
 <body>

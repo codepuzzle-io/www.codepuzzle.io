@@ -42,7 +42,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
             }
         }
     </style>  
-    <title>COMMENTAIRES / CORRECTION / CONSEILS</title>
+    <title>ENTRAÎNEMENT / DEVOIR | {{$devoir->jeton}} | IMPRIMER</title>
 </head>
 <body class="no-mathjax">
 

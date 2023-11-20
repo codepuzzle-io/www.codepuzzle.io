@@ -15,7 +15,7 @@ $is_locked = App\Models\Devoir_eleve::where([['jeton_devoir', $devoir->jeton], [
     <!-- EnlighterJS !-->
     <link rel="stylesheet" href="{{ asset('lib/highlight/atom-one-dark.min.css') }}" />
 
-    <title>ENTRAÎNEMENT - SUPERVISION</title>
+    <title>ENTRAÎNEMENT / DEVOIR | {{$devoir->jeton}} | SUPERVISION</title>
     <style>
         .hljs {
             padding:0px;
@@ -44,7 +44,7 @@ $is_locked = App\Models\Devoir_eleve::where([['jeton_devoir', $devoir->jeton], [
 <body>
 
 	<div class="container-fluid mb-5">
-        <div class="text-monospace small text-muted text-center pt-1">page rafraîchie toutes les 10 secondes</div>
+        <div class="text-monospace small text-muted text-center pt-1">page rafraîchie toutes les 5 secondes</div>
         <div class="row pt-3">
             <div class="col-md-2 text-left">
 				<a class="btn btn-light btn-sm" href="/devoir-console/{{$jeton_secret}}" role="button"><i class="fas fa-arrow-left"></i></a>
@@ -102,7 +102,7 @@ $is_locked = App\Models\Devoir_eleve::where([['jeton_devoir', $devoir->jeton], [
     <script>
         setTimeout(function(){
             window.location.reload(1);
-        }, 10000);
+        }, 5000);
     </script>    
 
     <script type="text/javascript" src="{{ asset('lib/highlight/highlight.min.js') }}"></script>

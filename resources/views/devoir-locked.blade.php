@@ -7,7 +7,7 @@
         $description_og = '| Devoir';
     @endphp
 	@include('inc-meta')
-    <title>ENTRAÎNEMENT</title>
+    <title>ENTRAÎNEMENT / DEVOIR | VERROUILLÉ</title>
 </head>
 
 <body class="bg-danger">
