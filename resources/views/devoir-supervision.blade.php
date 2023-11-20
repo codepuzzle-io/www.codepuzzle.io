@@ -5,7 +5,7 @@ if (!$devoir){
     exit();
 }
 $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)->orderBy('pseudo')->get();
-$is_locked = App\Models\Devoir_eleve::where('locked', 1)->exists();
+$is_locked = App\Models\Devoir_eleve::where([['jeton_devoir', $devoir->jeton], ['locked', 1]])->exists();
 ?>
 <!doctype html>
 <html lang="fr">
