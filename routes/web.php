@@ -148,7 +148,9 @@ Route::any('/devoir-info', [App\Http\Controllers\SiteController::class, 'redirec
 Route::any('/devoir-info/{jeton_secret}', [App\Http\Controllers\SiteController::class, 'devoir_info'])->name('devoir-info');
 Route::post('/devoir', [App\Http\Controllers\SiteController::class, 'devoir_post'])->name('devoir_post');
 Route::get('/devoir', [App\Http\Controllers\SiteController::class, 'devoir_get'])->name('devoir_get');
-Route::post('/devoir-unlock', [App\Http\Controllers\SiteController::class, 'devoir_unlock'])->name('devoir_unlock');
+Route::post('/devoir-unlock', [App\Http\Controllers\SiteController::class, 'devoir_unlock'])->name('devoir-unlock');
+Route::post('/devoir-check-lock-status', [App\Http\Controllers\SiteController::class, 'devoir_check_lock_status'])->name('devoir-check-lock-status');
+Route::post('/devoir-unlock-from-supervision', [App\Http\Controllers\SiteController::class, 'devoir_unlock_from_supervision'])->name('devoir-unlock-from-supervision');
 Route::post('/devoir-autosave', [App\Http\Controllers\SiteController::class, 'devoir_autosave']);
 Route::post('/devoir-save-commentaires', [App\Http\Controllers\SiteController::class, 'devoir_save_commentaires']);
 Route::post('/devoir-rendre', [App\Http\Controllers\SiteController::class, 'devoir_rendre']);

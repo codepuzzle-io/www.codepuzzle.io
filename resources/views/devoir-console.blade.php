@@ -161,11 +161,22 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                     <div class="col-md-12">
                         @foreach($devoir_eleves as $devoir_eleve)
 
+                            <?php
+                            $secondes = floor($devoir_eleve->chrono/1000);
+                            $heures = gmdate("H", $secondes);
+                            $minutes = gmdate("i", $secondes);
+                            $secondes = gmdate("s", $secondes);
+                            $chrono = "{$heures}h {$minutes}m {$secondes}s";
+                            ?>
+
                             <div id="frame" class="frame mt-1 mb-1">
 
                                 <div class="text-monospace">
 
                                     <div style="float:right;right:0px">
+
+                                        <span class="small text-muted" data-toggle="tooltip" data-placement="top" title="temps" style="cursor:help"><i class="fa-solid fa-stopwatch"></i> {{$chrono}}</span>
+                                        <span class="small text-muted mr-3" data-toggle="tooltip" data-placement="top" title="nombre d'exécutions du code" style="cursor:help"><i class="fa-solid fa-square-check"></i> {{$devoir_eleve->nbverif}}</span>
 
                                         @if($devoir_eleve->submitted == 1)
                                             <span class="text-white mr-1" style="font-size:70%;background-color:#94C58C;padding:2px 8px;border-radius:3px;vertical-align:2px;">rendu</span>

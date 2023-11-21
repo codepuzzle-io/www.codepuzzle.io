@@ -46,5 +46,29 @@
 
 	</div><!-- /container -->
 
+	<script>
+        setInterval(function() {
+			fetch('/devoir-check-lock-status', {
+				method: 'POST',
+				headers: {"Content-Type": "application/x-www-form-urlencoded", "X-CSRF-Token": "{{ csrf_token() }}"},
+			})
+			.then(function(response) {
+				return response.text();
+			})
+			.then(function(data) {
+				// Affiche la réponse du serveur dans la console
+				// Cette fonction de rappel sera exécutée uniquement si la réponse est 200
+				console.log('Lock status: ' + data); 
+				if (data == 0){
+					window.location.replace("/devoir");
+				}
+			})			
+			.catch(function(error) {
+				// Gère les erreurs liées à la requête Fetch
+				console.error('Erreur:', error); 
+			});            
+        }, 5000);
+	</script>
+
 </body>
 </html>

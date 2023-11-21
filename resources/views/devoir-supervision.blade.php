@@ -77,7 +77,9 @@ $is_locked = App\Models\Devoir_eleve::where([['jeton_devoir', $devoir->jeton], [
                                         <pre id="code_eleve-{{$loop->iteration}}" style="min-height:80px;height:100%;"><code style="height:100%;border-radius:3px;" class="language-python">{{$devoir_eleve->code_eleve}}</code></pre>
                                         <!-- /CODE ELEVE --> 
                                     @else
-                                        <div class="h-100 bg-danger text-white text-center" style="min-height:80px;border-radius:3px;display:flex;justify-content:center;align-items:center;"><i class="fa-solid fa-lock" style="opacity:0.5"></i></div>
+                                        <div class="h-100 text-white text-center" style="background-color:#e3413d;min-height:80px;border-radius:3px;display:flex;justify-content:center;align-items:center;">                                  
+                                            <button type="button" onclick="deverrouiller('{{$devoir_eleve->jeton_copie}}')" class="btn btn-danger btn-sm pl-4 pr-4 text-monospace small">déverrouiller</button>
+                                        </div>
                                     @endif
                                 </div>
                             </div>
@@ -99,7 +101,32 @@ $is_locked = App\Models\Devoir_eleve::where([['jeton_devoir', $devoir->jeton], [
         setTimeout(function(){
             window.location.reload(1);
         }, 5000);
-    </script>    
+    </script>
+    
+    <script>
+        function deverrouiller(jeton_copie) {
+            console.log(jeton_copie);
+            var formData = new URLSearchParams();
+            formData.append('jeton_copie', jeton_copie);
+            fetch('/devoir-unlock-from-supervision', {
+                method: 'POST',
+                headers: {"Content-Type": "application/x-www-form-urlencoded", "X-CSRF-Token": "{{ csrf_token() }}"},
+                body: formData
+            })
+            .then(function(response) {
+                return response.text();
+            })
+            .then(function(data) {
+                // Cette fonction de rappel sera exécutée uniquement si la réponse est 200
+                console.log(data); 
+            })			
+            .catch(function(error) {
+                // Gère les erreurs liées à la requête Fetch
+                console.error('Erreur:', error); 
+            });
+            window.location.reload(1);
+        }
+    </script>
 
     <script type="text/javascript" src="{{ asset('lib/highlight/highlight.min.js') }}"></script>
     <script>
