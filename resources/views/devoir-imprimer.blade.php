@@ -69,8 +69,20 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
         <div class="text-monospace mt-3">{{strtoupper(__('consignes'))}}</div>
         <div class="mathjax" style="padding:10px 15px 0px 15px;border-radius:4px;border:solid 1px gray;background-color:white;">
             <?php
+            // Fonction pour encoder en base 64
+            $encodeBase64 = function ($matches) {
+                return '$$'.base64_encode($matches[1]).'$$';
+            };
+            // Fonction pour décoder de base 64
+            $decodeBase64 = function ($matches) {
+                return '$$'.base64_decode($matches[1]).'$$';
+            };
+            $consignes = preg_replace_callback('/\$\$(.*?)\$\$/s', $encodeBase64, $devoir->consignes_eleve);
             $Parsedown = new Parsedown();
-            echo $Parsedown->text($devoir->consignes_eleve);
+            $Parsedown->setSafeMode(true);
+            $consignes = $Parsedown->text($consignes);
+            $consignes = preg_replace_callback('/\$\$(.*?)\$\$/s', $decodeBase64, $consignes);
+            echo $consignes;
             ?>
         </div>
         <!-- CONSIGNES -->                    
