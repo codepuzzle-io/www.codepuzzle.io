@@ -5,7 +5,7 @@ if (!$devoir){
     exit();
 }
 $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)->orderBy('pseudo')->get();
-$is_locked = App\Models\Devoir_eleve::where([['jeton_devoir', $devoir->jeton], ['locked', 1]])->exists();
+$any_locked = App\Models\Devoir_eleve::where([['jeton_devoir', $devoir->jeton], ['locked', 1]])->exists();
 ?>
 <!doctype html>
 <html lang="fr">
@@ -44,13 +44,13 @@ $is_locked = App\Models\Devoir_eleve::where([['jeton_devoir', $devoir->jeton], [
 <body>
 
 	<div class="container-fluid mb-5">
-        <div class="text-monospace small text-muted text-center pt-1">page rafraîchie toutes les 5 secondes</div>
+        <div class="text-monospace small text-muted text-center pt-1">page rafraîchie toutes les 20 secondes ou dès qu'un devoir est verrouillé</div>
         <div class="row pt-3">
             <div class="col-md-2 text-left">
 				<a class="btn btn-light btn-sm" href="/devoir-console/{{$jeton_secret}}" role="button"><i class="fas fa-arrow-left"></i></a>
 			</div>
             <div class="col-md-8">
-                @if ($is_locked)
+                @if ($any_locked)
                     <div class="bg-danger h-100 text-white p-1 text-center text-monospace small" style="border-radius:3px;">
                         au moins un devoir verrouillé | un mot secret pour déverrouiller: <b>{{$devoir->mot_secret}}</b>
                     </div>
@@ -100,7 +100,7 @@ $is_locked = App\Models\Devoir_eleve::where([['jeton_devoir', $devoir->jeton], [
     <script>
         setTimeout(function(){
             window.location.reload(1);
-        }, 5000);
+        }, 20000);
     </script>
     
     <script>
@@ -124,9 +124,38 @@ $is_locked = App\Models\Devoir_eleve::where([['jeton_devoir', $devoir->jeton], [
                 // Gère les erreurs liées à la requête Fetch
                 console.error('Erreur:', error); 
             });
-            window.location.reload(1);
+            window.location.href = window.location.href.split('?')[0];
         }
     </script>
+
+    <script>
+        // verification toutes les 4s pour voir si au moins un devoir est verrouille
+        setInterval(function() {
+            var formData = new URLSearchParams();
+            formData.append('jeton_devoir', '{{$devoir->jeton}}');
+            fetch('/devoir-any-check-lock-status', {
+                method: 'POST',
+                headers: {"Content-Type": "application/x-www-form-urlencoded", "X-CSRF-Token": "{{ csrf_token() }}"},
+                body: formData
+            })
+            .then(function(response) {
+                return response.text();
+            })
+            .then(function(data) {
+                // Cette fonction de rappel sera exécutée uniquement si la réponse est 200
+                console.log('check status')
+                if (data) {
+                    if (!window.location.search) {
+                        window.location.href = window.location.search + '?m=1'; 
+                    }
+                }
+            })			
+            .catch(function(error) {
+                // Gère les erreurs liées à la requête Fetch
+                console.error('Erreur:', error); 
+            });
+        }, 4000);
+    </script>    
 
     <script type="text/javascript" src="{{ asset('lib/highlight/highlight.min.js') }}"></script>
     <script>

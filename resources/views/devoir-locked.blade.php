@@ -48,7 +48,7 @@
 
 	<script>
         setInterval(function() {
-			fetch('/devoir-check-lock-status', {
+			fetch('/devoir-eleve-check-lock-status', {
 				method: 'POST',
 				headers: {"Content-Type": "application/x-www-form-urlencoded", "X-CSRF-Token": "{{ csrf_token() }}"},
 			})
