@@ -87,7 +87,6 @@
             formData.append('nbverif', 0);
         @endif
         formData.append('jeton_copie', '{{ Session::get('jeton_copie') }}');
-
         fetch('/devoir-autosave', {
             method: 'POST',
             headers: {"Content-Type": "application/x-www-form-urlencoded", "X-CSRF-Token": "{{ csrf_token() }}"},
@@ -154,8 +153,6 @@
 @if ($devoir->with_console == 1)
 <script>
     // PYTHON
-    
-
     function addToOutput(output_content) {
         //document.getElementById("output1").innerText = ""
         if (typeof(output_content) !== 'undefined'){
@@ -179,6 +176,7 @@
         var code = editor_code.getSession().getValue();
         console.log("code:\n" + code)
         nbverif++;
+        console.log("Nb exécutions:\n" + nbverif)
         let pyodide = await pyodideReadyPromise;
         await pyodide.loadPackagesFromImports(code);
         
