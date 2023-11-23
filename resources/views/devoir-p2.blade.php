@@ -29,7 +29,7 @@ if ($devoir_eleve->code_eleve == "") {
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 
 	<!-- Font Awesome -->
-	<script src="https://kit.fontawesome.com/fd76a35a36.js" crossorigin="anonymous"></script>
+	<link href="{{ asset('lib/fontawesome/css/all.min.css') }}" rel="stylesheet">
 
 	<!-- Fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -70,7 +70,7 @@ if ($devoir_eleve->code_eleve == "") {
 			<button onclick="commencer()" type="button" class="btn btn-primary btn-lg text-monospace" style="width:80px;font-size:100%;"><i class="fas fa-check"></i></button>
 		</div>
 		@if ($devoir->with_console == 1)
-		<button id="attendre" type="button" class="btn btn-primary btn-lg text-monospace" style="width:180px;" disabled><img src="{{ asset('img/chargement.gif') }}" width="30" /></button>
+		<span id="attendre" class="text-muted"><i class="fa-solid fa-circle-notch fa-spin fa-6x mb-2"></i></span>
 		@endif
     </div>
 
@@ -78,17 +78,24 @@ if ($devoir_eleve->code_eleve == "") {
 
     <div class="container mt-5">
 
-		<table align="center" cellpadding="2" style="text-align:center;margin-bottom:20px;color:#bdc3c7;border-spacing:5px;border-collapse:separate;">
+		<table align="center" cellpadding="2" style="text-align:center;color:#bdc3c7;border-spacing:5px;border-collapse:separate;">
 			<tr>
 				<td class="dashboard" @if ($devoir->with_chrono == 0) style="display:none" @endif><i class="fas fa-clock"></i>&nbsp;&nbsp;<span id="chrono">00:00</span></td>
 				<td class="m-0 p-0">
-					<a tabindex='0' class='btn btn-success text-monospace' role='button'  style="cursor:pointer;outline:none;" data-toggle="popover" data-trigger="focus" data-placement="left" data-html="true" data-sanitize="false" data-content="<a href='#' id='rendre' class='btn btn-danger btn-sm text-light' role='button'>{{__('confirmer')}}</a><a class='btn btn-light btn-sm ml-2' href='#' role='button'>{{__('annuler')}}</a>">rendre</a>
+  					<button class="btn btn-success text-monospace" type="button" data-toggle="collapse" data-target="#collapseRendre" aria-expanded="false" aria-controls="collapseRendre">rendre</button>
 				</td>
 			</tr>
 		</table>
 
+		<div class="collapse text-center" id="collapseRendre">
+			<div class="mt-3">
+				<button type="button" id='rendre' class='btn btn-danger btn-sm text-white mr-1' role='button'>{{__('confirmer')}}</button>
+				<button type="button" class="btn btn-light btn-sm ml-1" data-toggle="collapse" data-target="#collapseRendre">annuler</button>
+			</div>
+		</div>
+
         @if ($devoir->titre_eleve !== NULL OR $devoir->consignes_eleve !== NULL)
-        <div class="row">
+        <div class="row mt-5">
             <div class="col-md-8 offset-md-2">
                 <div class="frame">
                     @if ($devoir->titre_eleve !== NULL)
@@ -97,20 +104,14 @@ if ($devoir_eleve->code_eleve == "") {
                     @if ($devoir->consignes_eleve !== NULL)
                         <div class="text-monospace text-muted consignes mathjax" style="text-align:justify;">
 							<?php
-							// Fonction pour encoder en base 64
-							$encodeBase64 = function ($matches) {
-								return '$$'.base64_encode($matches[1]).'$$';
-							};
-							// Fonction pour décoder de base 64
-							$decodeBase64 = function ($matches) {
-								return '$$'.base64_decode($matches[1]).'$$';
-							};
-							$consignes = preg_replace_callback('/\$\$(.*?)\$\$/s', $encodeBase64, $devoir->consignes_eleve);
-							$Parsedown = new Parsedown();
-							$Parsedown->setSafeMode(true);
-							$consignes = $Parsedown->text($consignes);
-							$consignes = preg_replace_callback('/\$\$(.*?)\$\$/s', $decodeBase64, $consignes);
-							echo $consignes;
+							include('lib/parsedownmath/ParsedownMath.php');
+							$Parsedown = new ParsedownMath([
+								'math' => [
+									'enabled' => true, // Write true to enable the module
+									'matchSingleDollar' => true // default false
+								]
+							]);
+							echo $Parsedown->text($devoir->consignes_eleve);
 							?>
                         </div>
 					@endif

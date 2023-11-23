@@ -19,10 +19,10 @@
 				@if(isset($_GET['s0']))
 					<div><img src="{{ asset('img/rendu.png') }}" height="200" alt="BRAVO!" /></div>
 					<h1 class="text-center mt-4">TRAVAIL RENDU!</h1>
-					<button type="button" class="btn btn-light mt-4 text-monospace" onclick="window.close()">quitter</button>
+					<div class="text-muted mt-5 text-monospace">vous pouvez quitter cette page</div>
 				@else
 					<h1 class="text-center mt-4">DÉJÀ RENDU!</h1>
-					<button type="button" class="btn btn-light mt-4 text-monospace" onclick="window.close()">quitter</button>
+					<div class="text-muted mt-5 text-monospace">vous pouvez quitter cette page</div>
 				@endif
 			</div>
 		</div>

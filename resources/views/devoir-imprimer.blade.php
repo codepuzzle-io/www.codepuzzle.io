@@ -69,20 +69,14 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
         <div class="text-monospace mt-3">{{strtoupper(__('consignes'))}}</div>
         <div class="mathjax" style="padding:10px 15px 0px 15px;border-radius:4px;border:solid 1px gray;background-color:white;">
             <?php
-            // Fonction pour encoder en base 64
-            $encodeBase64 = function ($matches) {
-                return '$$'.base64_encode($matches[1]).'$$';
-            };
-            // Fonction pour décoder de base 64
-            $decodeBase64 = function ($matches) {
-                return '$$'.base64_decode($matches[1]).'$$';
-            };
-            $consignes = preg_replace_callback('/\$\$(.*?)\$\$/s', $encodeBase64, $devoir->consignes_eleve);
-            $Parsedown = new Parsedown();
-            $Parsedown->setSafeMode(true);
-            $consignes = $Parsedown->text($consignes);
-            $consignes = preg_replace_callback('/\$\$(.*?)\$\$/s', $decodeBase64, $consignes);
-            echo $consignes;
+            include('lib/parsedownmath/ParsedownMath.php');
+            $Parsedown = new ParsedownMath([
+                'math' => [
+                    'enabled' => true, // Write true to enable the module
+                    'matchSingleDollar' => true // default false
+                ]
+            ]);
+            echo $Parsedown->text($devoir->consignes_eleve);
             ?>
         </div>
         <!-- CONSIGNES -->                    
@@ -121,20 +115,13 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                 <div class="text-monospace mt-3">{{strtoupper(__('consignes'))}}</div>
                 <div class="mathjax" style="padding:12px 15px 0px 15px;border-radius:4px;border:solid 1px gray;background-color:white;">
                     <?php
-                    // Fonction pour encoder en base 64
-                    $encodeBase64 = function ($matches) {
-                        return '$$'.base64_encode($matches[1]).'$$';
-                    };
-                    // Fonction pour décoder de base 64
-                    $decodeBase64 = function ($matches) {
-                        return '$$'.base64_decode($matches[1]).'$$';
-                    };
-                    $consignes = preg_replace_callback('/\$\$(.*?)\$\$/s', $encodeBase64, $devoir->consignes_eleve);
-                    $Parsedown = new Parsedown();
-                    $Parsedown->setSafeMode(true);
-                    $consignes = $Parsedown->text($consignes);
-                    $consignes = preg_replace_callback('/\$\$(.*?)\$\$/s', $decodeBase64, $consignes);
-                    echo $consignes;
+                    $Parsedown = new ParsedownMath([
+                        'math' => [
+                            'enabled' => true, // Write true to enable the module
+                            'matchSingleDollar' => true // default false
+                        ]
+                    ]);
+                    echo $Parsedown->text($devoir->consignes_eleve);
                     ?>
                 </div>
                 <!-- CONSIGNES -->                  
@@ -169,14 +156,16 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
     <script>
         MathJax = {
             tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']]
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+                processEscapes: true
             },
             options: {
                 ignoreHtmlClass: "no-mathjax",
                 processHtmlClass: "mathjax"
             }
-        };
-    </script>    
+        };        
+    </script>     
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script> 	
 

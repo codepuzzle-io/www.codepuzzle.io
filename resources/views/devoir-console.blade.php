@@ -14,11 +14,11 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
     <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
     <title>ENTRAÎNEMENT / DEVOIR | {{$devoir->jeton}} | CONSOLE</title>
 </head>
-<body>
+<body class="no-mathjax">
 
     <!-- Écran de démarrage -->
     <div id="demarrer" class="demarrer" style="opacity:0.9">
-        <img src="{{ asset('img/chargement.gif') }}" width="30" />
+        <span id="attendre" class="text-muted"><i class="fa-solid fa-circle-notch fa-spin fa-6x mb-2"></i></span>
     </div>
 
 	<div class="container mb-5">
@@ -45,7 +45,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                 	<span><i class="fa fa-envelope"></i> contact@codepuzzle.io</span>
                 </div>
 
-                <div class="text-danger border border-danger rounded text-monospace p-2" style="font-size:70%;">
+                <div class="text-info border border-info rounded text-monospace p-2" style="font-size:70%;">
                     Statut: bêta
                 </div>
 
@@ -69,9 +69,9 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                                     <td class="text-center font-weight-bold p-0" style="width:33%">lien élèves</td>
                                 </tr>
                                 <tr>
-                                    <td class="text-center text-white p-2 text-break align-middle" style="background-color:#d14d41;border-radius:3px;"><a href="/devoir-console/{{strtoupper($devoir->jeton_secret)}}" target="_blank" class="text-white">www.codepuzzle.io/devoir-console/{{strtoupper($devoir->jeton_secret)}}</a></td>
-                                    <td class="text-center text-white p-2 text-break align-middle" style="background-color:#d0a215;border-radius:3px;">{{$devoir->mot_secret}}</td>
-                                    <td class="text-center text-white p-2 text-break align-middle" style="background-color:#879a39;border-radius:3px;"><a href="/E{{strtoupper($devoir->jeton)}}" target="_blank" class="text-white">www.codepuzzle.io/E{{strtoupper($devoir->jeton)}}</a></td>
+                                    <td class="text-center p-2 text-break align-middle border border-danger rounded"><a href="/devoir-console/{{strtoupper($devoir->jeton_secret)}}" target="_blank" class="text-danger">www.codepuzzle.io/devoir-console/{{strtoupper($devoir->jeton_secret)}}</a></td>
+                                    <td class="text-center p-2 text-break align-middle border border-danger rounded text-danger">{{$devoir->mot_secret}}</td>
+                                    <td class="text-center text-white p-2 text-break align-middle rounded bg-secondary"><a href="/E{{strtoupper($devoir->jeton)}}" target="_blank" class="text-white">www.codepuzzle.io/E{{strtoupper($devoir->jeton)}}</a></td>
                                 </tr>
                                 <tr>
                                     <td class="small text-muted p-0"><span class="text-danger"><i class="fas fa-exclamation-circle"></i> Ne pas partager ce lien</span><br />Il permet d'accéder à la console de l'entraînement (sujet, lien pour les élèves, correction...).</td>
@@ -104,22 +104,16 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                                 <!-- CONSIGNES -->
                                 <div class="text-monospace mt-3">{{strtoupper(__('consignes'))}}</div>
                                 <div class="card card-body">
-                                    <div class="text-monospace consignes">
+                                    <div class="text-monospace consignes mathjax">
                                         <?php
-                                        // Fonction pour encoder en base 64
-                                        $encodeBase64 = function ($matches) {
-                                            return '$$'.base64_encode($matches[1]).'$$';
-                                        };
-                                        // Fonction pour décoder de base 64
-                                        $decodeBase64 = function ($matches) {
-                                            return '$$'.base64_decode($matches[1]).'$$';
-                                        };
-                                        $consignes = preg_replace_callback('/\$\$(.*?)\$\$/s', $encodeBase64, $devoir->consignes_eleve);
-                                        $Parsedown = new Parsedown();
-                                        $Parsedown->setSafeMode(true);
-                                        $consignes = $Parsedown->text($consignes);
-                                        $consignes = preg_replace_callback('/\$\$(.*?)\$\$/s', $decodeBase64, $consignes);
-                                        echo $consignes;
+                                        include('lib/parsedownmath/ParsedownMath.php');
+                                        $Parsedown = new ParsedownMath([
+                                            'math' => [
+                                                'enabled' => true, // Write true to enable the module
+                                                'matchSingleDollar' => true // default false
+                                            ]
+                                        ]);
+                                        echo $Parsedown->text($devoir->consignes_eleve);
                                         ?>
                                     </div>
                                 </div>
@@ -186,12 +180,20 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                                         @else
                                             <i class="fas fa-check-circle mr-3" style="color:#ecf0f1;"></i>
                                         @endif
-                                        <a tabindex='0' role='button'  style="cursor:pointer;outline:none;color:#e2e6ea;font-size:95%" data-toggle="popover" data-trigger="focus" data-placement="left" data-html="true" data-content="<div class='text-center text-monospace mb-1'>suppression</div><a href='/devoir-eleve-supprimer/{{ Crypt::encryptString($devoir_eleve->id) }}' class='btn btn-danger btn-sm text-light' role='button'>{{__('confirmer')}}</a><a class='btn btn-light btn-sm ml-2' href='#' role='button'>{{__('annuler')}}</a>"><i class='fas fa-trash fa-sm'></i></a>
+                                        <a tabindex='0' role="button" style="cursor:pointer;outline:none;color:#e2e6ea;font-size:95%" data-toggle="collapse" data-target="#collapseSupprimer-{{$loop->iteration}}" aria-expanded="false" aria-controls="collapseSupprimer-{{$loop->iteration}}"><i class='fas fa-trash fa-sm'></i></a>
+
                                     </div>
 
                                     <a data-toggle="collapse" class="text-dark" href="#collapseEntrainement-{{$loop->iteration}}" role="button" aria-expanded="false" aria-controls="collapseEntrainement-{{$loop->iteration}}"><i class="fas fa-plus-square"></i></a>
 
                                     <span class="">{{$devoir_eleve->pseudo}}</span>
+                                </div>
+
+                                <div class="collapse text-right" id="collapseSupprimer-{{$loop->iteration}}">
+                                    <div class="mt-3">
+                                        <a href='/devoir-eleve-supprimer/{{ Crypt::encryptString($devoir_eleve->id) }}' class='btn btn-danger btn-sm text-white' role='button'>{{__('supprimer')}}</a>                                            
+                                        <button type="button" class="btn btn-light btn-sm ml-1" data-toggle="collapse" data-target="#collapseSupprimer-{{$loop->iteration}}">annuler</button>
+                                    </div>
                                 </div>
 
                                 <div class="collapse" id="collapseEntrainement-{{$loop->iteration}}">
@@ -267,17 +269,18 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 
     <script src="https://cdn.jsdelivr.net/npm/markdown-it@13.0.2/dist/markdown-it.min.js"></script>
 
-    <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        extensions: ["tex2jax.js"],
-        jax: ["input/TeX", "output/HTML-CSS"],
-        tex2jax: {
-            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-            processEscapes: true
-        },
-        "HTML-CSS": { availableFonts: ["TeX"] }
-    });
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+                processEscapes: true
+            },
+            options: {
+                ignoreHtmlClass: "no-mathjax",
+                processHtmlClass: "mathjax"
+            }
+        };        
     </script>  
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
