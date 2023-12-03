@@ -45,10 +45,6 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                 	<span><i class="fa fa-envelope"></i> contact@codepuzzle.io</span>
                 </div>
 
-                <div class="text-info border border-info rounded text-monospace p-2" style="font-size:70%;">
-                    Statut: bêta
-                </div>
-
             </div>
 
 			<div class="col-md-10 pl-4 pr-4">
