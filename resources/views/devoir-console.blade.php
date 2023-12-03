@@ -215,7 +215,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                                     <div id="editor_code_enseignant_devoir-{{$loop->iteration}}" style="border-radius:5px;">{{$code_enseignant}}</div>
                                     <!-- /CODE ENSEIGNANT --> 
 
-                                    <div class="p-1 pl-2 pr-2 rounded mt-1 mb-3 text-monospace small" style="background-color:#ffe791;color:#cfb140;"><i class="far fa-lightbulb"></i> Recharger cette page entre deux élèves afin de supprimer les variables et fonctions en mémoire.</div>
+                                    <div class="p-1 pl-2 pr-2 rounded mt-1 mb-3 text-monospace small" style="background-color:#ffe791;color:#cfb140;"><i class="far fa-lightbulb"></i> Si vous constatez un comportement étrange lors de l'exécution qui pourrait être dû à des variables ou à des fonctions présentes en mémoire, rechargez la page.</div>
 
                                     <table class="mt-2 mb-2" style="width:100%">
                                         <tr>
@@ -422,20 +422,30 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
     <script>
 		//document.getElementById("output").innerText = "Initialisation...\n";
 		console.log("Initialisation...");
+        var globals_keys = []
 
 		// init Pyodide
 		async function main() {
 			let pyodide = await loadPyodide();
 			//document.getElementById("output").innerText = "Prêt!\n";
             document.getElementById('demarrer').remove();
-            console.log("Prêt!");
+
+            //console.log("Prêt!");
+
+            // Liste des clés de globals présentes lors de la première excécution
+            for (const key of pyodide.globals.keys()) {
+                globals_keys.push(key);
+            }
+
+            //console.log('PG1: ' + pyodide.globals)
+            //console.log('PG2: '+ globals_keys)
 			return pyodide;
 		}
 
 		let pyodideReadyPromise = main();
 
 		async function evaluate_python(i) {
-			console.log('EVALUATE PYTHON')
+			//console.log('EVALUATE PYTHON')
             var code = "";
             if (document.getElementById("code_option_1_devoir-" + i).checked) {
                 code = editor_code_eleve_devoir[i].getValue();
@@ -444,11 +454,29 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
             } else if (document.getElementById("code_option_3_devoir-" + i).checked) {
                 code = editor_code_enseignant_devoir[i].getValue();
             }
-            console.log("Code:\n" + code + "\n----------\n");
-            
+            //console.log("Code:\n" + code + "\n----------\n");
+
 			let pyodide = await pyodideReadyPromise;
 			await pyodide.loadPackagesFromImports(code);
-			
+
+            //console.log('Globals keys: '+ globals_keys)
+            //console.log('Globals: ' + pyodide.globals)
+
+            // REINITIALISATION DE GLOBALS (on supprime les cles qui
+            // n'étaient pas présentes lors de la première exécution)
+            const clesASupprimer = [];
+            for (const key of pyodide.globals.keys()) {
+                if (!globals_keys.includes(key)) {
+                    clesASupprimer.push(key);
+                }
+            }
+            for (const key of clesASupprimer) {
+                pyodide.globals.delete(key);
+            }
+
+            //console.log('PG1: ' + pyodide.globals)
+            //console.log('PG2: '+ globals_keys)
+
 			try {
 				// pas d'erreur python
 				document.getElementById("terminal-" + i).innerText = "";
@@ -473,6 +501,8 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                     }
                 });
                 document.getElementById("terminal-" + i).innerText = error_message.trim();
+                //document.getElementById("terminal-" + i).innerText = err;
+
 			}		
 		}
 	</script>
