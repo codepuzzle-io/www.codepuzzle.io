@@ -128,6 +128,18 @@ $asserts = '[' . trim($asserts, ',') . ']';
 
     @include('inc-bottom-js')
 
+	<script>		
+		editor_code.on("paste", function(texteColle) {
+			console.log("Text collé: " + texteColle.text);
+			if (!editor_code.getSession().getValue().includes(texteColle.text)) {
+				texteColle.text = "";
+				console.log("Le collage de ce texte N'est PAS autorisé.");
+			} else {
+				console.log("Le collage de ce texte est autorisé.");
+			}
+		});
+	</script>	
+
 	<script src="{{ asset('js/html2canvas.min.js') }}" type="text/javascript" charset="utf-8"></script>
 	<script>
 		html2canvas(document.getElementById('consignes_hidden'), {
