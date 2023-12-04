@@ -55,10 +55,10 @@ $asserts = '[' . trim($asserts, ',') . ']';
             <div class="col-md-10 offset-md-1">
                 <div class="frame">
                     @if ($defi->titre_eleve !== NULL)
-                        <div class="font-monospace small mb-1">{{ $defi->titre_eleve }}</div>
+                        <div class="font-monospace mb-1">{{ $defi->titre_eleve }}</div>
                     @endif
                     @if ($defi->consignes_eleve !== NULL)
-                        <div class="text-monospace text-muted small consignes mathjax" style="text-align:justify;">
+                        <div class="text-monospace text-muted consignes mathjax" style="text-align:justify;">
                             <?php
                             $Parsedown = new Parsedown();
                             echo $Parsedown->text($defi->consignes_eleve);
