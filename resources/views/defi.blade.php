@@ -19,6 +19,16 @@ $asserts = '[' . trim($asserts, ',') . ']';
 	@include('inc-meta-jeton')
 	<script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
     <title>{{ config('app.name') }} | Défi - D{{ $jeton }}</title>
+	<style>
+		pre {
+			padding:10px;
+			border: solid 1px #fafcfe;
+			background-color:#fafcfe;
+			border-radius:4px;
+			color:#6c757d;
+			font-size:80%;
+		}
+	</style>
 </head>
 
 <body class="no-mathjax" oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
@@ -57,20 +67,29 @@ $asserts = '[' . trim($asserts, ',') . ']';
                     @if ($defi->titre_eleve !== NULL)
                         <div class="font-monospace mb-1">{{ $defi->titre_eleve }}</div>
                     @endif
+
+					<?php
+					include('lib/parsedownmath/ParsedownMath.php');
+					$Parsedown = new ParsedownMath([
+						'math' => [
+							'enabled' => true, // Write true to enable the module
+							'matchSingleDollar' => true // default false
+						]
+					]);
+					?>
+
                     @if ($defi->consignes_eleve !== NULL)
-                        <div class="text-monospace text-muted consignes mathjax" style="text-align:justify;">
-                            <?php
-                            $Parsedown = new Parsedown();
-                            echo $Parsedown->text($defi->consignes_eleve);
-                            ?>
+                        <div class="consignes mathjax" style="text-align:justify;">
+							<?php
+							echo $Parsedown->text($defi->consignes_eleve);
+							?>
                         </div>
 					@endif
 
 					<div id="consignes_hidden" class="mathjax" style="padding:30px 20px 0px 20px;width:1200px;height:630px;background-color:white;display:none;">
 						<img src="{{ asset('img/codepuzzle.png') }}" height="30" />
-						<div class="font-monospace text-muted consignes text-monospace" style="text-align:justify;padding:20px 40px 20px 40px;margin-top:25px;border-radius:10px;font-size:28px;background-color:#F8FAFC;">
+						<div class="consignes" style="text-align:justify;padding:20px 40px 20px 40px;margin-top:25px;border-radius:10px;font-size:28px;background-color:#F8FAFC;">
 							<?php
-							$Parsedown = new Parsedown();
 							echo $Parsedown->text($defi->consignes_eleve);
 							?>
 						</div>
@@ -168,23 +187,21 @@ $asserts = '[' . trim($asserts, ',') . ']';
 	<script src="{{ asset('js/ace/ace.js') }}" type="text/javascript" charset="utf-8"></script>
 	<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>	
 
-    <script>
-        MathJax = {
-        tex: {
-            inlineMath: [['$', '$'], ['\\(', '\\)']]
-        },
-		options: {
-			ignoreHtmlClass: "no-mathjax",
-			processHtmlClass: "mathjax"
-		},
-        svg: {
-            fontCache: 'global'
-        }
-        };
-    </script>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
-    </script> 	
+	<script>
+		MathJax = {
+			tex: {
+				inlineMath: [['$', '$'], ['\\(', '\\)']],
+				displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+				processEscapes: true
+			},
+			options: {
+				ignoreHtmlClass: "no-mathjax",
+				processHtmlClass: "mathjax"
+			}
+		};        
+	</script>  
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script> 
 
 	<script>
 		var editor_code = ace.edit("editor_code", {
