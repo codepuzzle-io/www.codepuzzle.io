@@ -17,7 +17,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
         $description_og = 'Défi - D' . strtoupper($jeton);
     @endphp
 	@include('inc-meta-jeton')
-    <script src="https://cdn.jsdelivr.net/pyodide/v0.21.3/full/pyodide.js"></script>
+	<script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
     <title>{{ config('app.name') }} | Défi - D{{ $jeton }}</title>
 </head>
 
@@ -118,9 +118,10 @@ $asserts = '[' . trim($asserts, ',') . ']';
         </div>
 
         <div class="row mt-3 pb-5" @if(!$defi->with_console) style="display:none" @endif  >
-            <div class="col-md-4 offset-md-4">
+            <div class="col-md-10 offset-md-1">
                 <div>Console</div>
                 <pre id="output" class="text-monospace p-2 small text-muted" style="border-radius:4px;border:1px solid silver"></pre>
+                <pre id="output2" class="text-monospace p-2 small text-muted" style="border-radius:4px;border:1px solid silver;min-height:100px;"></pre>
             </div>
         </div>    
 		  
@@ -299,6 +300,8 @@ $asserts = '[' . trim($asserts, ',') . ']';
 			}
 		}
 
+		var globals_keys = []
+
 		output.innerText = "Initialisation...\n";
 		// init Pyodide
 		async function main() {
@@ -311,18 +314,45 @@ $asserts = '[' . trim($asserts, ',') . ']';
 
 		async function evaluatePython() {
 			let pyodide = await pyodideReadyPromise;
+			await pyodide.loadPackagesFromImports(code.value);
 			var asserts_tab = {!!$asserts!!};			
 			var error_message = ""
 			@if ($defi->with_nbverif == 1)
 			document.getElementById('nb_tentatives').innerText = nb_tentatives++;
 			@endif
+
+			// REINITIALISATION DE GLOBALS (on supprime les cles qui
+			// n'étaient pas présentes lors de la première exécution)
+			const clesASupprimer = [];
+			for (const key of pyodide.globals.keys()) {
+				if (!globals_keys.includes(key)) {
+					clesASupprimer.push(key);
+				}
+			}
+			for (const key of clesASupprimer) {
+				pyodide.globals.delete(key);
+			}
+
 			try {
+
+				document.getElementById("output2").innerText = "";
+				pyodide.setStdout({batched: (str) => {
+					document.getElementById("output2").innerText += str+"\n";
+					console.log(str);
+				}})
+
+
+
 				let output = pyodide.runPython(code.value);
+
+				if (typeof(output) !== 'undefined'){
+					document.getElementById("output2").innerText += output
+				}
+
+
 				var n = 0;
 				var ok = true;
-				//console.log(asserts_tab);
 				for (assert of asserts_tab){
-					//console.log(assert[0]);
 					try {
 						// pas d'erreur python
 						// assert valide
@@ -337,8 +367,6 @@ $asserts = '[' . trim($asserts, ',') . ']';
 						@if($defi->with_message)
 						var test_message = (assert[1]) ? assert[1] : "&nbsp;";
 						@endif						
-						//console.log(code.value + "\n" + assert[0]);
-						//console.log(err.message);
 						document.getElementById('test_'+n).innerHTML = '<i class="fas fa-times-circle"></i>';
 						document.getElementById('test_message_'+n).innerHTML = test_message;
 						document.getElementById('test_'+n).className = "test_failed";
@@ -356,8 +384,15 @@ $asserts = '[' . trim($asserts, ',') . ']';
 				} 	
 			} catch (err) {
 				// erreur python
-				let message = err.message.split("File \"<exec>\", ");
-				error_message = "Error " + message[1];
+				console.log('ERROR')
+				let errors = err.message.split("File \"<exec>\", ");
+				errors.forEach((error) => {
+					error = "Error " + error;
+					error = error.replace(", in <module>", "")
+					if (typeof(error) !== 'undefined' && !error.includes('Traceback')) {
+						error_message += error.trim() + "\n\n";
+					}
+				});
 			}	
 			addToOutput(error_message.trim());			
 		}
