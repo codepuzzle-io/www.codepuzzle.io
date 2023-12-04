@@ -26,7 +26,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 			background-color:#fafcfe;
 			border-radius:4px;
 			color:#6c757d;
-			font-size:80%;
+			font-size:90%;
 		}
 	</style>
 </head>
