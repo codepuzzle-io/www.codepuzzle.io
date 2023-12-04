@@ -363,6 +363,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 		}
 	</script>
 
+	@if(!Auth::check())
 	<script>		
 		editor_code.on("paste", function(texteColle) {
 			console.log("Text collé: " + texteColle.text);
@@ -374,6 +375,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 			}
 		});
 	</script>	
+	@endif
 
     <script>
 		var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
