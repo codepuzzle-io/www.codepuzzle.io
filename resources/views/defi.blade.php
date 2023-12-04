@@ -83,7 +83,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 
     </div>
 
-    <div class="container-fluid mb-5">
+    <div class="container-fluid pb-5">
         <div class="row">
             <div class="col-md-10 offset-md-1 text-center" style="position:relative;height:30px;">
 				<!-- bouton reinitialiser -->
@@ -117,7 +117,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
             </div>
         </div>
 
-        <div class="row mt-3 mb-5" @if(!$defi->with_console) style="display:none" @endif  >
+        <div class="row mt-3 pb-5" @if(!$defi->with_console) style="display:none" @endif  >
             <div class="col-md-4 offset-md-4">
                 <div>Console</div>
                 <pre id="output" class="text-monospace p-2 small text-muted" style="border-radius:4px;border:1px solid silver"></pre>
