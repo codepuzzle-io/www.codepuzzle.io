@@ -122,7 +122,7 @@
 					<!-- TITRE ELEVE -->
 					<div class="mt-4 text-monospace">{{strtoupper(__('titre élève'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
 					<div class="text-monospace text-muted small text-justify mb-1">{{__('Visible par l élève')}}</div>
-					<input id="titre_eleve" type="text" class="form-control @error('titre_eleve') is-invalid @enderror" name="titre_eleve" value="{{ old('titre_eleve, $defi->titre_eleve') }}" autofocus>
+					<input id="titre_eleve" type="text" class="form-control @error('titre_eleve') is-invalid @enderror" name="titre_eleve" value="{{ old('titre_eleve', $defi->titre_eleve) }}" autofocus>
 					<!-- /TITRE ELEVE -->
 
 					<!-- CONSIGNES -->

@@ -96,7 +96,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
                 <textarea name="code" style="display:none;" id="code"></textarea>
 		        <div style="width:100%;margin:0px auto 0px auto;"><div id="editor_code" style="border-radius:5px;">{{$defi->code}}</div></div>
                 <!-- bouton verifier -->
-                <button onclick="evaluatePython()" type="button" class="btn btn-primary btn-sm mt-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" title="{{__('vérifier')}}" style="display:inline"><i class="fas fa-check"></i></button>
+                <button onclick="evaluatePython()" type="button" class="btn btn-primary btn-sm mt-2 pl-3 pr-3" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" title="{{__('vérifier')}}" style="display:inline"><i class="fas fa-check"></i></button>
             </div>
         </div>
         
