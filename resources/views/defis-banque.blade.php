@@ -14,6 +14,8 @@
 
     <?php
     $jetons = [
+        'DEB7Q', // AOC2023 Day1Part1
+        'DMN79', // AOC2023 Day1Part2
         'DCDG3', // [EP23] - 1.1
         'D83WJ', // [EP23] - 2.1
         'DXC9G', // [EP23] - 3.1
