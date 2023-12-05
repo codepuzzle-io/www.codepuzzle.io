@@ -26,7 +26,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 			background-color:#fafcfe;
 			border-radius:4px;
 			color:#6c757d;
-			font-size:90%;
+			font-size:95%;
 		}
 	</style>
 </head>
@@ -63,9 +63,9 @@ $asserts = '[' . trim($asserts, ',') . ']';
         @if ($defi->titre_eleve !== NULL OR $defi->consignes_eleve !== NULL)
         <div class="row" style="padding-top:10px;">
             <div class="col-md-10 offset-md-1">
-                <div class="frame">
+                <div class="frame text-monospace">
                     @if ($defi->titre_eleve !== NULL)
-                        <div class="font-monospace mb-1">{{ $defi->titre_eleve }}</div>
+                        <div class="mb-1">{{ $defi->titre_eleve }}</div>
                     @endif
 
 					<?php
@@ -140,7 +140,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
             <div class="col-md-10 offset-md-1">
                 <div>Console</div>
                 <pre id="output" class="text-monospace p-2 small text-muted" style="border-radius:4px;border:1px solid silver"></pre>
-                <pre id="output2" class="text-monospace p-2 small text-muted" style="border-radius:4px;border:1px solid silver;min-height:100px;"></pre>
+                <pre id="output2" class="text-monospace p-3 text-white bg-dark" style="border-radius:4px;border:1px solid silver;min-height:100px;"></pre>
             </div>
         </div>    
 		  
