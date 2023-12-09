@@ -125,8 +125,8 @@ $asserts = '[' . trim($asserts, ',') . ']';
                 @foreach($tests AS $test)
 				<tr>
 				<td class="text-center" style="vertical-align:top"><div id="test_{{$loop->index}}" class="test"><i class="fas fa-question-circle"></i></div></td>
-				<td style="width:100%">
-					<div id="test_message_{{$loop->index}}" class="test">
+				<td style="width:100%;">
+					<div id="test_message_{{$loop->index}}" class="text-muted pl-2" style="height:100%;">
 						<div>Test {{$loop->index + 1}}</div>
 					</div>
 				</td>
@@ -320,10 +320,17 @@ $asserts = '[' . trim($asserts, ',') . ']';
 		var globals_keys = []
 
 		output.innerText = "Initialisation...\n";
+
 		// init Pyodide
 		async function main() {
 			let pyodide = await loadPyodide();
 			output.innerText = "Prêt!\n";
+
+			// Liste des clés de globals présentes lors de la première excécution
+			for (const key of pyodide.globals.keys()) {
+				globals_keys.push(key);
+			}
+
 			return pyodide;
 		}
 		
@@ -352,44 +359,69 @@ $asserts = '[' . trim($asserts, ',') . ']';
 
 			try {
 
+				// redirection output vers div
 				document.getElementById("output2").innerText = "";
 				pyodide.setStdout({batched: (str) => {
 					document.getElementById("output2").innerText += str+"\n";
 					console.log(str);
 				}})
 
-
-
 				let output = pyodide.runPython(code.value);
 
 				if (typeof(output) !== 'undefined'){
-					document.getElementById("output2").innerText += output
+					//document.getElementById("output2").innerText += output
 				}
-
 
 				var n = 0;
 				var ok = true;
+
 				for (assert of asserts_tab){
+					console.log("ASSERT: "+assert)
 					try {
 						// pas d'erreur python
 						// assert valide
-						let output = pyodide.runPython(code.value + "\n" + assert[0] + ', "' + assert[1] + '"');	
+
+						// redirection output vers console pour ne pas afficher des print dans le div output quand on teste un assert
+						pyodide.setStdout({batched: (str) => {
+							console.log(str);
+						}})
+
+						// REINITIALISATION DE GLOBALS (on supprime les cles qui
+						// n'étaient pas présentes lors de la première exécution)
+						const clesASupprimer = [];
+						for (const key of pyodide.globals.keys()) {
+							if (!globals_keys.includes(key)) {
+								clesASupprimer.push(key);
+							}
+						}
+						for (const key of clesASupprimer) {
+							pyodide.globals.delete(key);
+						}
+
+						pyodide.runPython(code.value + "\n" + assert[0] + ', "' + assert[1] + '"');	
 						document.getElementById('test_'+n).innerHTML = '<i class="fas fa-check-circle"></i>';
 						document.getElementById('test_message_'+n).innerHTML = 'Test validé!';
 						document.getElementById('test_'+n).className = "test_success";
+						console.log("pas d'erreur python et assert validé")
+
 					} catch (err) {
 						// pas d'erreur python
 						// assert non valide
+						console.log("pas d'erreur python - assert non validé")
+
 						var test_message = "Test non validé :-/";
 						@if($defi->with_message)
-						var test_message = (assert[1]) ? assert[1] : "&nbsp;";
+						if (assert[1]) {
+							var test_message = assert[1];
+						}
 						@endif						
 						document.getElementById('test_'+n).innerHTML = '<i class="fas fa-times-circle"></i>';
 						document.getElementById('test_message_'+n).innerHTML = test_message;
 						document.getElementById('test_'+n).className = "test_failed";
-						let message = err.message.split("<module>\n");
+						//let message = err.message.split("<module>\n");
 						test_nb = n+1;
-						error_message += "Test "+ test_nb + "\n" + message[1] + "\n";
+						//error_message += "Test "+ test_nb + "\n" + message[1] + "\n";
+						error_message += "Test "+ test_nb + ": échec\n";
 						ok = false;
 					}
 					n++;			
