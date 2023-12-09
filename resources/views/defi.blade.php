@@ -368,15 +368,12 @@ $asserts = '[' . trim($asserts, ',') . ']';
 
 				let output = pyodide.runPython(code.value);
 
-				if (typeof(output) !== 'undefined'){
-					//document.getElementById("output2").innerText += output
-				}
-
 				var n = 0;
 				var ok = true;
 
 				for (assert of asserts_tab){
 					console.log("ASSERT: "+assert)
+
 					try {
 						// pas d'erreur python
 						// assert valide
@@ -407,21 +404,52 @@ $asserts = '[' . trim($asserts, ',') . ']';
 					} catch (err) {
 						// pas d'erreur python
 						// assert non valide
-						console.log("pas d'erreur python - assert non validé")
+						console.log("Pas d'erreur Python mais assert non validé")
+						console.log("Errors: " + err)
 
 						var test_message = "Test non validé :-/";
 						@if($defi->with_message)
 						if (assert[1]) {
 							var test_message = assert[1];
 						}
-						@endif						
+						@endif	
+
 						document.getElementById('test_'+n).innerHTML = '<i class="fas fa-times-circle"></i>';
 						document.getElementById('test_message_'+n).innerHTML = test_message;
 						document.getElementById('test_'+n).className = "test_failed";
-						//let message = err.message.split("<module>\n");
-						test_nb = n+1;
-						//error_message += "Test "+ test_nb + "\n" + message[1] + "\n";
-						error_message += "Test "+ test_nb + ": échec\n";
+
+						error_message += "Test "+ (n+1) + ": échec\n\n";
+
+						let errors = err.message.split("File \"<exec>\", ");
+						errors.forEach((error) => {
+							if (typeof(error) !== 'undefined' && !error.includes('Traceback')) {
+
+								// on recupere la ligne de l'erreur
+								regex = /line (\d+)/;
+    							let error_line = regex.exec(error)[1];
+
+								// on retire la premiere ligne pour ne garder que le message
+								let error_string = error.replace(/^.*\n/, '');
+
+								console.log("error_line: " + error_line)
+								console.log("error_string: " + error_string)
+
+								if (code.value.split('\n').length) {
+									nb_code_lines = code.value.split('\n').length;
+								} else {
+									nb_code_lines = 0;
+								}
+								console.log("nb_code_lines: " + nb_code_lines)
+								console.log("code: " + code.value)
+								var error_info = ""
+								if (error_line <= nb_code_lines) error_info += "Erreur ligne " + error_line + "\n";
+								if (error_string) error_info += error_string;
+								if (error_info.trim()) {
+									error_message += error_info.trim() + "\n\n";
+								}
+							}
+						});						
+						
 						ok = false;
 					}
 					n++;			
@@ -434,12 +462,23 @@ $asserts = '[' . trim($asserts, ',') . ']';
 			} catch (err) {
 				// erreur python
 				console.log('ERROR')
+				console.log("Errors: " + err)
+
 				let errors = err.message.split("File \"<exec>\", ");
 				errors.forEach((error) => {
-					error = "Error " + error;
-					error = error.replace(", in <module>", "")
 					if (typeof(error) !== 'undefined' && !error.includes('Traceback')) {
-						error_message += error.trim() + "\n\n";
+
+						// on recupere la ligne de l'erreur
+						regex = /line (\d+)/;
+						let error_line = regex.exec(error)[1];
+
+						// on retire la premiere ligne pour ne garder que le message
+						let error_string = error.replace(/^.*\n/, '');
+
+						var error_info = "";
+						error_info += "Erreur ligne " + error_line + "\n";
+						if (error_string) error_info += error_string;
+						error_message += error_info.trim() + "\n\n";
 					}
 				});
 			}	
