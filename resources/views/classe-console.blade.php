@@ -74,23 +74,27 @@ $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->orderby('el
                 </div>                
 
                 <div class="mt-5 mb-3 text-monospace font-weight-bold">{{strtoupper($classe->nom_classe)}}</div>
-                <div class="text-monospace">{{strtoupper(__('ÉLÈVES'))}}</div>
-                <div id="frame" class="frame">
-                    <table>
-                        <tr>
-                            <td class="text-monospace small font-weight-bold pb-2" style="width:100%">identifiant</td>
-                            <td class="text-monospace small font-weight-bold pb-2 pl-3 pr-3">code&nbsp;individuel</td>
-                        </tr>                        
-                        @foreach($eleves AS $eleve)
-                            <tr>                                
-                                <td>{{$eleve->eleve}}</td>
-                                <td class="text-monospace text-center">{{strtoupper($eleve->jeton_eleve)}}</td>
-                            </tr>
-                        @endforeach
-                    </table>
+
+                <div class="text-monospace">{{strtoupper(__('ÉLÈVES'))}} <a class="text-muted" data-toggle="collapse" href="#collapseEleves" role="button" aria-expanded="false" aria-controls="collapseEleves"><i class="far fa-plus-square"></i></a></div>
+
+                <div id="collapseEleves" class="collapse">
+                    <div class="frame" >
+                        <table>
+                            <tr>
+                                <td class="text-monospace small font-weight-bold pb-2" style="width:100%">identifiant</td>
+                                <td class="text-monospace small font-weight-bold pb-2 pl-3 pr-3">code&nbsp;individuel</td>
+                            </tr>                        
+                            @foreach($eleves AS $eleve)
+                                <tr>                                
+                                    <td>{{$eleve->eleve}}</td>
+                                    <td class="text-monospace text-center">{{strtoupper($eleve->jeton_eleve)}}</td>
+                                </tr>
+                            @endforeach
+                        </table>
+                    </div>
                 </div>
 
-                <div class="mt-5 text-monospace">{{strtoupper(__('ACTIVITÉS'))}}</div>
+                <div class="text-monospace pt-4">{{strtoupper(__('ACTIVITÉS'))}}</div>
                 <div id="frame" class="frame">
                 <?php
                 $liste_activites = [];
