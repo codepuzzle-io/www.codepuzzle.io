@@ -313,7 +313,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 		chrono.start();	
 	</script>
 
-	@if($jeton_eleve)
+	@if(isset($jeton_eleve))
 		<script>
 			function classe_activite_enregistrer() {
 				var formData = new URLSearchParams();
