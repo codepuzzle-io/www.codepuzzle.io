@@ -161,6 +161,18 @@ Route::any('/devoir-supervision/{jeton_secret}', [App\Http\Controllers\SiteContr
 Route::any('/devoir-imprimer/{jeton_secret}', [App\Http\Controllers\SiteController::class, 'devoir_imprimer'])->name('devoir-imprimer');
 Route::any('/devoir-eleve-supprimer/{devoir_eleve_id}', [App\Http\Controllers\SiteController::class, 'devoir_eleve_supprimer'])->name('devoir-eleve-supprimer');
 
+
+// classes
+Route::get('/classe-creer', [App\Http\Controllers\SiteController::class, 'classe_creer_get'])->name('classe-creer-get');
+Route::post('/classe-creer', [App\Http\Controllers\SiteController::class, 'classe_creer_post'])->name('classe-creer-post');
+Route::get('/classe-modifier/{jeton_secret}', [App\Http\Controllers\SiteController::class, 'classe_modifier_get'])->name('classe-modifier-get');
+Route::post('/classe-modifier', [App\Http\Controllers\SiteController::class, 'classe_modifier_post'])->name('classe-modifier-post');
+Route::any('/classe-console/{jeton_secret}', [App\Http\Controllers\SiteController::class, 'classe_console'])->name('classe-console');
+Route::any('/classe-eleve-supprimer/{eleve_id}', [App\Http\Controllers\SiteController::class, 'classe_eleve_supprimer'])->name('classe-eleve-supprimer');
+Route::post('/classe-activite-enregistrer', [App\Http\Controllers\SiteController::class, 'classe_activite_enregistrer'])->name('classe-activite-enregistrer');
+
+
+
 // ============================================================================
 // == RETRO COMPATIBILITE
 // ============================================================================
@@ -183,7 +195,7 @@ Route::view('/devoir-fin', 'devoir-fin');
 // == HUB
 // ============================================================================
 
-Route::any('/{hub_jeton}', [App\Http\Controllers\SiteController::class, 'hub'])->name('hub');
+Route::any('/{hub_jeton}/{jeton_eleve?}', [App\Http\Controllers\SiteController::class, 'hub'])->name('hub');
 
 
 // ============================================================================

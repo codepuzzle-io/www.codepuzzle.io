@@ -10,7 +10,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 ?>
 @include('inc-top')
 <!doctype html>
-<html lang="fr">
+<html lang="{{ app()->getLocale() }}">
 <head>
 	@php
         $description = __('Générateur et gestionnaire de puzzles de Parsons') . ' | Défi - D' . strtoupper($jeton);
@@ -32,50 +32,6 @@ $asserts = '[' . trim($asserts, ',') . ']';
 </head>
 
 <body class="no-mathjax" oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
-
-	<?php
-	// defi avec jeton eleve
-	if($jeton_eleve) {
-		$eleve = App\Models\Classes_eleve::where('jeton_eleve', $jeton_eleve)->first();
-		if (!$eleve) {
-			$segments = explode('/', $_SERVER['REQUEST_URI']);
-			?>
-			<div class="container text-monospace">
-				<div class="row">
-					<div class="col-md-6 offset-md-3 text-center mt-5 mb-4">
-						IDENTIFIANT
-						<p class="small text-muted">Votre identifiant vous a été fourni par votre enseignant. Si vous n'avez pas d'identifiant, cliquez sur le bouton "continuer sans identifiant".</p>
-					</div>
-				</div>
-				<div class="row">
-            		<div class="col-md-5 text-right">
-						<a class="btn btn-primary btn-sm pl-3 pr-3" href="/{{$segments[1]}}/" role="button">continuer sans identifiant</a>
-					</div>
-					<div class="col-md-2 text-center text-muted">
-						<i class="fas fa-ellipsis-v"></i>
-					</div>
-					<div class="col-md-5">
-						<form class="form-inline">
-							<div class="form-group">
-								<input id="identifiant" type="text" class="form-control form-control-sm" placeholder="identifiant" />
-							</div>
-							<a class="btn btn-primary btn-sm ml-2" href="#" role="button" onclick="
-								if (document.getElementById('identifiant').value){
-									identifiant = document.getElementById('identifiant').value;
-								} else {
-									identifiant = '@';
-								}
-								window.location.href = '/{{$segments[1]}}/'+identifiant;
-							"><i class="fas fa-check"></i></a>
-						</form>
-					</div>
-				</div>
-			</div>
-			<?php
-			exit();
-		}
-	}
-	?>
 
 	<div class="container-fluid">
 
@@ -158,11 +114,8 @@ $asserts = '[' . trim($asserts, ',') . ']';
             <div class="col-md-10 offset-md-1 text-center">
                 <textarea name="code" style="display:none;" id="code"></textarea>
 		        <div style="width:100%;margin:0px auto 0px auto;"><div id="editor_code" style="border-radius:5px;">{{$defi->code}}</div></div>
-                <!-- annonce enregistrement reponse -->
-				<div id="enregistrement_reponse" class="text-monospace small mt-2"></div>
-
                 <!-- bouton verifier -->
-                <button onclick="evaluatePython()" type="button" class="btn btn-primary mt-2 pl-4 pr-4" style="display:inline"><i class="fas fa-check"></i></button>
+                <button onclick="evaluatePython()" type="button" class="btn btn-primary mt-2 pl-4 pr-4" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" title="{{__('vérifier')}}" style="display:inline"><i class="fas fa-check"></i></button>
             </div>
         </div>
         
@@ -312,40 +265,6 @@ $asserts = '[' . trim($asserts, ',') . ']';
 		}
 		chrono.start();	
 	</script>
-
-	@if($jeton_eleve)
-		<script>
-			function classe_activite_enregistrer() {
-				var formData = new URLSearchParams();
-				formData.append('jeton_activite', '{{ Crypt::encryptString('D'.$jeton) }}');
-				formData.append('jeton_eleve', '{{ Crypt::encryptString($jeton_eleve) }}');				
-				fetch('/classe-activite-enregistrer', {
-					method: 'POST',
-					mode: "cors",
-					headers: {"Content-Type": "application/x-www-form-urlencoded", "X-CSRF-Token": "{{ csrf_token() }}"},
-					body: formData
-				})
-				.then(response => {
-					if (response.ok) {
-						// le serveur a repondu avec succes
-						document.getElementById('enregistrement_reponse').innerHTML = "<span class='text-success'>réponse enregistrée<span>";
-					} else {
-						document.getElementById('enregistrement_reponse').innerHTML = "<span class='text-danger'>erreur lors de l'enregistrement - renvoyer la réponse</span>";
-					}
-				})
-				.then(data => {
-					console.log(data);
-				})
-				.catch(error => {
-					// erreur lors de la requete
-					document.getElementById('enregistrement_reponse').innerHTML = "<span class='text-danger'>erreur lors de l'enregistrement - renvoyer la réponse</span>";
-					console.error(error);
-				});
-				
-			};
-		</script>	
-	@endif
-
 
 	<script>
 		function bravo() {
@@ -538,9 +457,6 @@ $asserts = '[' . trim($asserts, ',') . ']';
 				
 				if (ok) {
 					error_message = "Code correct et tests validés. Bravo!";
-					@if($jeton_eleve)
-						classe_activite_enregistrer();
-					@endif
 					bravo();
 				} 	
 			} catch (err) {
