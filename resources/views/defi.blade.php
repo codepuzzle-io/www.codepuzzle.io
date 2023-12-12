@@ -162,7 +162,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 				<div id="enregistrement_reponse" class="text-monospace small mt-2"></div>
 
                 <!-- bouton verifier -->
-                <button onclick="evaluatePython()" type="button" class="btn btn-primary mt-2 pl-4 pr-4" style="display:inline"><i class="fas fa-check"></i></button>
+                <button id="verifier" onclick="evaluatePython()" type="button" class="btn btn-primary mt-2 pl-4 pr-4" style="display:inline"><i class="fas fa-check"></i></button>
             </div>
         </div>
         
@@ -538,6 +538,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 				
 				if (ok) {
 					error_message = "Code correct et tests validés. Bravo!";
+					document.getElementById('verifier').style.display = 'none';
 					@if($jeton_eleve)
 						classe_activite_enregistrer();
 					@endif
