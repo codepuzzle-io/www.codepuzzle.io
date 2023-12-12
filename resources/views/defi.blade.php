@@ -539,7 +539,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 				if (ok) {
 					error_message = "Code correct et tests validés. Bravo!";
 					document.getElementById('verifier').style.display = 'none';
-					@if($jeton_eleve)
+					@if(isset($jeton_eleve))
 						classe_activite_enregistrer();
 					@endif
 					bravo();
