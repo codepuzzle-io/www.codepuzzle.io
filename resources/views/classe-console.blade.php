@@ -10,11 +10,9 @@ $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->orderby('el
 <html lang="fr">
 <head>
     @include('inc-meta')
-
-    <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
     <title>CLASSE | {{$classe->jeton}} | CONSOLE</title>
 </head>
-<body class="no-mathjax">
+<body>
 
 	<div class="container mb-5">
 
@@ -95,12 +93,15 @@ $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->orderby('el
                 <div class="mt-5 text-monospace">{{strtoupper(__('ACTIVITÉS'))}}</div>
                 <div id="frame" class="frame">
                 <?php
+                $liste_activites = [];
                 foreach($eleves AS $eleve) {
                     $activites = App\Models\Classes_activite::where('jeton_eleve', $eleve->jeton_eleve)->get();
                     foreach($activites AS $activite) {
-                        echo $activite->jeton_activite;
-
+                        $liste_activites[] = $activite->jeton_activite;
                     }
+                }
+                foreach($liste_activites AS $activite) {
+                    print($activite);
                 }
                 ?>
                 
