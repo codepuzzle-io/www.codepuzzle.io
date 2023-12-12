@@ -43,13 +43,13 @@ $asserts = '[' . trim($asserts, ',') . ']';
 			<div class="container text-monospace">
 				<div class="row">
 					<div class="col-md-6 offset-md-3 text-center mt-5 mb-4">
-						IDENTIFIANT
-						<p class="small text-muted">Votre identifiant vous a été fourni par votre enseignant. Si vous n'avez pas d'identifiant, cliquez sur le bouton "continuer sans identifiant".</p>
+						CODE INDIVIDUEL
+						<p class="small text-muted">Votre code individuel vous a été fourni par votre enseignant. Si vous n'avez pas de code individuel, cliquez sur le bouton "continuer sans code".</p>
 					</div>
 				</div>
 				<div class="row">
             		<div class="col-md-5 text-right">
-						<a class="btn btn-primary btn-sm pl-3 pr-3" href="/{{$segments[1]}}/" role="button">continuer sans identifiant</a>
+						<a class="btn btn-primary btn-sm pl-3 pr-3" href="/{{$segments[1]}}/" role="button">continuer sans code</a>
 					</div>
 					<div class="col-md-2 text-center text-muted">
 						<i class="fas fa-ellipsis-v"></i>
@@ -57,15 +57,15 @@ $asserts = '[' . trim($asserts, ',') . ']';
 					<div class="col-md-5">
 						<form class="form-inline">
 							<div class="form-group">
-								<input id="identifiant" type="text" class="form-control form-control-sm" placeholder="identifiant" />
+								<input id="code" type="text" class="form-control form-control-sm" placeholder="code" />
 							</div>
 							<a class="btn btn-primary btn-sm ml-2" href="#" role="button" onclick="
-								if (document.getElementById('identifiant').value){
-									identifiant = document.getElementById('identifiant').value;
+								if (document.getElementById('code').value){
+									code = document.getElementById('code').value;
 								} else {
-									identifiant = '@';
+									code = '@';
 								}
-								window.location.href = '/{{$segments[1]}}/'+identifiant;
+								window.location.href = '/{{$segments[1]}}/'+code;
 							"><i class="fas fa-check"></i></a>
 						</form>
 					</div>

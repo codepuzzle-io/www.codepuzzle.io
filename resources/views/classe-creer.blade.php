@@ -59,7 +59,7 @@
 
 					<input id="lang" type="hidden" name="lang" value="{{app()->getLocale()}}" />
 					<div>
-						<button type="submit" class="btn btn-primary mt-4 mb-5 pl-4 pr-4"><i class="fas fa-check"></i></button>
+						<button type="submit" class="btn btn-success mt-4 mb-5 pl-4 pr-4"><i class="fas fa-check"></i></button>
 					</div>
 				</form>
 

@@ -4,7 +4,7 @@ if (!$classe){
     echo "<pre>Cet classe n'existe pas</pre>";
     exit();
 }
-$eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->get();
+$eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->orderby('eleve')->get();
 ?>
 <!doctype html>
 <html lang="fr">
@@ -53,7 +53,7 @@ $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->get();
 							@foreach($eleves AS $eleve)
 								<tr>
 									<td style="width:100%">{{$eleve->eleve}}</td>
-									<td class="text-monospace pl-3 pr-3">{{$eleve->jeton_eleve}}</td>
+									<td class="text-monospace pl-3 pr-3">{{strtoupper($eleve->jeton_eleve)}}</td>
 									<td><a href="/classe-eleve-supprimer/{{ Crypt::encryptString($eleve->id) }}"><i class="ml-2 fas fa-trash text-danger" aria-hidden="true"></i></a></td>
 								</tr>
 							@endforeach
@@ -76,8 +76,9 @@ $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->get();
 					<!-- /AJOUTER ELEVES -->
 
 					<input type="hidden" name="jeton_secret" value="{{$jeton_secret}}" />
+					<input type="hidden" name="id_classe" value="{{$classe->id}}" />
 					<div>
-						<button type="submit" class="btn btn-primary mt-4 mb-5 pl-4 pr-4"><i class="fas fa-check"></i></button>
+						<button type="submit" class="btn btn-success mt-4 mb-5 pl-4 pr-4"><i class="fas fa-check"></i></button>
 					</div>
 				</form>
 
