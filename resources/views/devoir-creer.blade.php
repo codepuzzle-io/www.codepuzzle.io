@@ -140,7 +140,7 @@ if (isset($jeton_secret)) {
 
 					<!-- CODE ENSEIGNANT --> 
 					<div class="mt-4 text-monospace">{{strtoupper(__("code enseignant"))}} <span class="font-italic small" style="color:silver;">{{__("optionnel")}}</span></div>
-					<div class="text-monospace text-muted small text-justify mb-1">{{__("Pour les enseignants seulement. Vous pouvez y placer un jeu de tests par exemple. Ce code pourra être executé en même que celui de l'élève ou seul pendant l'évaluation de l'entraînement quand l'entraînement apparaitra dans la console de l'enseignant.")}}</div>
+					<div class="text-monospace text-muted small text-justify mb-1">{{__("Pour les enseignants seulement. Vous pouvez y placer un jeu de tests par exemple. Ce code pourra être exécuté en même temps que celui de l'élève ou seul pendant l'évaluation de l'entraînement quand l'entraînement apparaîtra dans la console de l'enseignant.")}}</div>
 					<textarea name="code_enseignant" style="display:none;" id="code_enseignant"></textarea>
 					<div id="editor_code_enseignant" style="border-radius:5px;">{{ old('code_enseignant') ?? $code_enseignant ?? '' }}</div>
 					<!-- /CODE ENSEIGNANT -->
