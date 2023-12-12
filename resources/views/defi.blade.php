@@ -35,7 +35,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 
 	<?php
 	// defi avec jeton eleve
-	if($jeton_eleve) {
+	if(isset($jeton_eleve)) {
 		$eleve = App\Models\Classes_eleve::where('jeton_eleve', $jeton_eleve)->first();
 		if (!$eleve) {
 			$segments = explode('/', $_SERVER['REQUEST_URI']);
