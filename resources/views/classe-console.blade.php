@@ -95,22 +95,45 @@ $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->orderby('el
                 </div>
 
                 <div class="text-monospace pt-4">{{strtoupper(__('ACTIVITÉS'))}}</div>
-                <div id="frame" class="frame">
-                <?php
-                $liste_activites = [];
-                foreach($eleves AS $eleve) {
-                    $activites = App\Models\Classes_activite::where('jeton_eleve', $eleve->jeton_eleve)->get();
-                    foreach($activites AS $activite) {
-                        $liste_activites[] = $activite->jeton_activite;
-                    }
-                }
-                foreach($liste_activites AS $activite) {
-                    print($activite);
-                }
-                ?>
-                
+                <div id="frame" class="frame p-3">
+					<?php
+					$liste_activites = [];
+					$liste_activites_eleves = [];
+					foreach($eleves AS $eleve) {
+						$activites_eleve = [];
+						$activites = App\Models\Classes_activite::where('jeton_eleve', $eleve->jeton_eleve)->get();
+						foreach($activites AS $activite) {
+							$activites_eleve[] = $activite->jeton_activite;
+							$liste_activites[] = $activite->jeton_activite;
+						}
+						$activites_eleve = array_unique($activites_eleve);
+						$liste_activites_eleves[] = [$eleve->eleve, $activites_eleve];
+					}
+					$liste_activites = array_unique($liste_activites);
+					/*
+					echo "<pre>";
+					print_r($liste_activites_eleves);
+					echo "</pre>";
+					*/
+					?>
+					<table class="table table-striped table-bordered table-hover table-sm text-monospace small">
+						<tr>
+							<td></td>
+							@foreach($liste_activites AS $activite)
+								<td>{{$activite}}</td>
+							@endforeach
+						</tr>
+						
+						@foreach($liste_activites_eleves AS $liste_activites_eleve)
+							<tr>
+								<td>{{$liste_activites_eleve[0]}}</td>
+								@foreach($liste_activites_eleve[1] AS $activite_eleve)
+								<td>{{$activite_eleve}}</td>
+								@endforeach
+							<tr>
+						@endforeach
+					</table>
                 </div>
-
             </div>
         </div>
 	</div><!-- /container -->
