@@ -171,6 +171,10 @@ Route::any('/classe-console/{jeton_secret}', [App\Http\Controllers\SiteControlle
 Route::any('/classe-eleve-supprimer/{eleve_id}', [App\Http\Controllers\SiteController::class, 'classe_eleve_supprimer'])->name('classe-eleve-supprimer');
 Route::post('/classe-activite-enregistrer', [App\Http\Controllers\SiteController::class, 'classe_activite_enregistrer'])->name('classe-activite-enregistrer');
 
+// eleves
+Route::get('/eleve-console/{jeton_eleve?}', function (Request $request, string $jeton_eleve) {
+    return view('eleve-console');
+});
 
 
 // ============================================================================
