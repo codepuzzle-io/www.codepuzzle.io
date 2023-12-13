@@ -94,22 +94,28 @@ $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->orderby('el
                     </div>
                 </div>
 
-                <div class="text-monospace pt-4">{{strtoupper(__('ACTIVITÉS'))}}</div>
-                <div id="frame" class="frame p-3">
+                <div class="text-monospace pt-4">{{strtoupper(__('SUIVI DES ACTIVITÉS'))}}</div>
+                <div class="pt-2">
 					<?php
 					$liste_activites = [];
-					$liste_activites_eleves = [];
+                    
 					foreach($eleves AS $eleve) {
-						$activites_eleve = [];
+                        $activites_eleve = [];
 						$activites = App\Models\Classes_activite::where('jeton_eleve', $eleve->jeton_eleve)->get();
 						foreach($activites AS $activite) {
-							$activites_eleve[] = $activite->jeton_activite;
-							$liste_activites[] = $activite->jeton_activite;
+							$activites_eleve = array_merge($activites_eleve, [$activite->jeton_activite]);
 						}
-						$activites_eleve = array_unique($activites_eleve);
-						$liste_activites_eleves[] = [$eleve->eleve, $activites_eleve];
+						$liste_activites = array_merge($liste_activites, $activites_eleve);
 					}
-					$liste_activites = array_unique($liste_activites);
+
+
+                    $liste_activites = array_unique($liste_activites);
+
+					
+
+
+
+
 					/*
 					echo "<pre>";
 					print_r($liste_activites_eleves);
@@ -119,19 +125,38 @@ $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->orderby('el
 					<table class="table table-striped table-bordered table-hover table-sm text-monospace small">
 						<tr>
 							<td></td>
-							@foreach($liste_activites AS $activite)
-								<td>{{$activite}}</td>
-							@endforeach
+                            <?php
+							foreach($liste_activites AS $activite) {
+                                if (substr($activite, 0, 1) == 'D') {
+                                    $activite_info = App\Models\Defi::where('jeton', substr($activite, 1))->first();
+                                    $activite_nom = $activite_info->titre_enseignant;
+                                    $activite_lien = "/".$activite;
+
+                                }
+								echo '<td style="vertical-align:middle;writing-mode:vertical-rl;transform:rotate(-180deg);"><a href="'.$activite_lien.'" target="_blank">' . $activite_nom . '</a></td>';
+                            }
+                            ?>
 						</tr>
-						
-						@foreach($liste_activites_eleves AS $liste_activites_eleve)
-							<tr>
-								<td>{{$liste_activites_eleve[0]}}</td>
-								@foreach($liste_activites_eleve[1] AS $activite_eleve)
-								<td>{{$activite_eleve}}</td>
-								@endforeach
-							<tr>
-						@endforeach
+
+                        <?php
+                        foreach($eleves AS $eleve) {
+
+                            echo '<tr>';
+                            echo '<td nowrap style="vertical-align:middle;">' . $eleve->eleve . '</td>';
+                          
+                                foreach($liste_activites AS $activite) {
+                                    echo '<td>';
+                                        if (App\Models\Classes_activite::where([['jeton_eleve', $eleve->jeton_eleve], ['jeton_activite', $activite]])->latest()->first()) {
+                                            echo '<div class="bg-success text-white rounded text-center">&nbsp;</div>';
+                                        } else {
+                                            echo '&nbsp;';
+                                        }
+                                        echo '</td>';
+                                }
+             
+                            echo '<tr>';
+                        }
+                        ?>
 					</table>
                 </div>
             </div>
