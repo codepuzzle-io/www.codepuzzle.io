@@ -73,8 +73,8 @@ $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->orderby('el
                 <div class="text-monospace text-muted small" style="border:silver solid 1px;border-radius:4px;padding:10px;text-align:justify;">
                     Deux façon de proposer des activités aux élèves:
                     <ul class="mb-0">
-                        <li>ajouter des activités dans la classe (cliquer sur "modifier" pour ajouter des activités).</li>
-                        <li>ajouter '<b>/@</b>' à la fin de l'adresse d'un défi ou d'un puzzle et fournir cette adresse aux élèves. Avec une telle adresse, les élèves seront invités à saisir le code individuel que vous leur aurez fourni (voir tableau des élèves ci-dessous). Par exemple, si l'adresse d'un défi est '<b>https://www.codepuzzle/DGD8F41W</b>', l'adresse à donner aux élèves est '<b>https://www.codepuzzle/DGD8F41W/@</b>'. De même avec l'adresse d'un puzzle.</li>
+                        <li>Ajouter des activités dans la classe (cliquer sur "modifier" pour ajouter des activités). Ces activités apparaîtront ci-dessous et dans la console des élèves de la classe.</li>
+                        <li>Ajouter '<b>/@</b>' à la fin de l'adresse d'un défi ou d'un puzzle et fournir cette adresse aux élèves. Avec une telle adresse, les élèves seront invités à saisir le code individuel que vous leur aurez fourni (voir tableau des élèves ci-dessous). Par exemple, si l'adresse d'un défi est '<b>https://www.codepuzzle/DGD8F41W</b>', l'adresse à donner aux élèves est '<b>https://www.codepuzzle/DGD8F41W/@</b>'. De même avec l'adresse d'un puzzle.</li>
                     </ul>
                 </div>
                 <div class="pt-2 text-monospace">
@@ -87,8 +87,6 @@ $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->orderby('el
                                 $activite_info = App\Models\Defi::where('jeton', substr($code, 1))->first();
                             }
                             echo '<tr><td style="width:100%">' . $activite_info->titre_enseignant . '</td><td><a href="/' . $code . '" target="_blank">www.codepuzzle.io/' . $code . '</a></td></tr>';
-
-
                         }
                         echo '</table>';
                         echo '</div>';
