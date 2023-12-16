@@ -35,7 +35,7 @@ $activites_codes = unserialize($classe->activites);
                                     <tr>
                                         <td style="width:100%">{{ $activite_info->titre_enseignant }}</td>
                                         <td><a href="/{{ $code }}" target="_blank">www.codepuzzle.io/{{ $code }}</a></td>
-                                        <td class="text-monospace small">
+                                        <td class="text-monospace small pl-4">
                                             @if (in_array($code, $activites_eleve))
                                                 <div class="bg-success text-white rounded text-center pl-3 pr-3">fait</div>
                                             @else
