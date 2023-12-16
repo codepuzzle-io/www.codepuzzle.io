@@ -75,7 +75,7 @@ $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->orderby('el
 
                 <div class="mt-5 text-monospace font-weight-bold">{{strtoupper($classe->nom_classe)}}</div>
 
-                <div class="text-monospace pt-4">{{strtoupper(__('ACTIVITÉS'))}}</div>
+                <div class="text-monospace pt-3">{{strtoupper(__('ACTIVITÉS'))}}</div>
                 <div class="pt-2 text-monospace">
                     <?php                    
                     if (!empty(array_filter(unserialize($classe->activites)))) {
@@ -98,7 +98,7 @@ $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->orderby('el
                 </div>
 
 
-                <div class="text-monospace pt-4">{{strtoupper(__('SUIVI DES ACTIVITÉS'))}}</div>
+                <div class="text-monospace pt-3">{{strtoupper(__('SUIVI DES ACTIVITÉS'))}}</div>
                 <div class="pt-2">
 					<?php
 					$liste_activites = [];
@@ -123,39 +123,40 @@ $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->orderby('el
 					echo "</pre>";
                     */                  
                     if ($liste_activites) {
-					?>
-					<table class="table table-striped table-bordered table-hover table-sm text-monospace small">
+                        ?>
+                        <div class="text-monospace text-muted small">Codes: {{ implode(', ', array_keys($liste_activites)) }}</div>
+                        <table class="mt-1 table table-striped table-bordered table-hover table-sm text-monospace small">
 
-						<tr>
-							<td class="p-1"></td>
+                            <tr>
+                                <td class="p-1"></td>
+                                <?php
+                                foreach($liste_activites AS $activite_jeton => $activite_nom) {
+                                    echo '<td class="p-1" style="vertical-align:middle;writing-mode:vertical-rl;transform:rotate(-180deg);"><a href="/'. $activite_jeton . '" target="_blank">' . $activite_nom . '</a></td>';
+                                }
+                                ?>
+                            </tr>
+
                             <?php
-							foreach($liste_activites AS $activite_jeton => $activite_nom) {
-								echo '<td class="p-1" style="vertical-align:middle;writing-mode:vertical-rl;transform:rotate(-180deg);"><a href="/'. $activite_jeton . '" target="_blank">' . $activite_nom . '</a></td>';
+                            foreach($eleves AS $eleve) {
+
+                                echo '<tr>';
+                                echo '<td class="p-1" nowrap style="vertical-align:middle;">' . $eleve->eleve . '</td>';
+                            
+                                    foreach($liste_activites AS $activite_jeton => $activite_nom) {
+                                        echo '<td class="p-1">';
+                                            if (App\Models\Classes_activite::where([['jeton_eleve', $eleve->jeton_eleve], ['jeton_activite', $activite_jeton]])->latest()->first()) {
+                                                echo '<div class="bg-success text-white rounded text-center">&nbsp;</div>';
+                                            } else {
+                                                echo '&nbsp;';
+                                            }
+                                            echo '</td>';
+                                    }
+                                echo '</tr>';
                             }
                             ?>
-						</tr>
 
+                        </table>
                         <?php
-                        foreach($eleves AS $eleve) {
-
-                            echo '<tr>';
-                            echo '<td class="p-1" nowrap style="vertical-align:middle;">' . $eleve->eleve . '</td>';
-                          
-                                foreach($liste_activites AS $activite_jeton => $activite_nom) {
-                                    echo '<td class="p-1">';
-                                        if (App\Models\Classes_activite::where([['jeton_eleve', $eleve->jeton_eleve], ['jeton_activite', $activite_jeton]])->latest()->first()) {
-                                            echo '<div class="bg-success text-white rounded text-center">&nbsp;</div>';
-                                        } else {
-                                            echo '&nbsp;';
-                                        }
-                                        echo '</td>';
-                                }
-                            echo '</tr>';
-                        }
-                        ?>
-
-					</table>
-                    <?php
                     } else {
                         echo "<div class='text-muted small text-monospace'>Aucune activité n'a été enregistrée pour le moment.</div>";
                     }
