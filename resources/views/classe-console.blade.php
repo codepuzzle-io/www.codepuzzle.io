@@ -73,26 +73,30 @@ $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->orderby('el
                     </div>
                 </div>                
 
-                <div class="mt-5 mb-3 text-monospace font-weight-bold">{{strtoupper($classe->nom_classe)}}</div>
+                <div class="mt-5 text-monospace font-weight-bold">{{strtoupper($classe->nom_classe)}}</div>
 
-                <div class="text-monospace">{{strtoupper(__('ÉLÈVES'))}} <a class="text-muted" data-toggle="collapse" href="#collapseEleves" role="button" aria-expanded="false" aria-controls="collapseEleves"><i class="far fa-plus-square"></i></a></div>
+                <div class="text-monospace pt-4">{{strtoupper(__('ACTIVITÉS'))}}</div>
+                <div class="pt-2 text-monospace">
+                    <?php                    
+                    if (!empty(array_filter(unserialize($classe->activites)))) {
+                        echo '<div class="frame">';
+                        echo '<table class="table table-hover table-borderless table-sm text-monospace small m-0">';
+                        foreach(unserialize($classe->activites) AS $code) {
+                            if (substr($code, 0, 1) == 'D') {
+                                $activite_info = App\Models\Defi::where('jeton', substr($code, 1))->first();
+                            }
+                            echo '<tr><td style="width:100%">' . $activite_info->titre_enseignant . '</td><td><a href="/' . $code . '" target="_blank">www.codepuzzle.io/' . $code . '</a></td></tr>';
 
-                <div id="collapseEleves" class="collapse">
-                    <div class="frame" >
-                        <table>
-                            <tr>
-                                <td class="text-monospace small font-weight-bold pb-2" style="width:100%">identifiant</td>
-                                <td class="text-monospace small font-weight-bold pb-2 pl-3 pr-3">code&nbsp;individuel</td>
-                            </tr>                        
-                            @foreach($eleves AS $eleve)
-                                <tr>                                
-                                    <td>{{$eleve->eleve}}</td>
-                                    <td class="text-monospace text-center">{{strtoupper($eleve->jeton_eleve)}}</td>
-                                </tr>
-                            @endforeach
-                        </table>
-                    </div>
+
+                        }
+                        echo '</table>';
+                        echo '</div>';
+                    } else {
+                        echo "<div class='text-muted small'>Pas d'activités proposées. Cliquer sur \"modifier\" pour ajouter des activités à proposer aux élèves.</div>";
+                    }
+                    ?>
                 </div>
+
 
                 <div class="text-monospace pt-4">{{strtoupper(__('SUIVI DES ACTIVITÉS'))}}</div>
                 <div class="pt-2">
@@ -103,37 +107,30 @@ $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->orderby('el
                         $activites_eleve = [];
 						$activites = App\Models\Classes_activite::where('jeton_eleve', $eleve->jeton_eleve)->get();
 						foreach($activites AS $activite) {
-							$activites_eleve = array_merge($activites_eleve, [$activite->jeton_activite]);
+                            if (substr($activite->jeton_activite, 0, 1) == 'D') {
+                                $activite_info = App\Models\Defi::where('jeton', substr($activite->jeton_activite, 1))->first();
+                            }
+                            $activites_eleve = array_merge($activites_eleve, [$activite->jeton_activite => $activite_info->titre_enseignant]);
 						}
 						$liste_activites = array_merge($liste_activites, $activites_eleve);
 					}
 
+                    asort($liste_activites);
 
-                    $liste_activites = array_unique($liste_activites);
-
-					
-
-
-
-
-					/*
+                    /*
 					echo "<pre>";
-					print_r($liste_activites_eleves);
+					print_r($liste_activites);
 					echo "</pre>";
-					*/
+                    */                  
+                    if ($liste_activites) {
 					?>
 					<table class="table table-striped table-bordered table-hover table-sm text-monospace small">
-						<tr>
-							<td></td>
-                            <?php
-							foreach($liste_activites AS $activite) {
-                                if (substr($activite, 0, 1) == 'D') {
-                                    $activite_info = App\Models\Defi::where('jeton', substr($activite, 1))->first();
-                                    $activite_nom = $activite_info->titre_enseignant;
-                                    $activite_lien = "/".$activite;
 
-                                }
-								echo '<td style="vertical-align:middle;writing-mode:vertical-rl;transform:rotate(-180deg);"><a href="'.$activite_lien.'" target="_blank">' . $activite_nom . '</a></td>';
+						<tr>
+							<td class="p-1"></td>
+                            <?php
+							foreach($liste_activites AS $activite_jeton => $activite_nom) {
+								echo '<td class="p-1" style="vertical-align:middle;writing-mode:vertical-rl;transform:rotate(-180deg);"><a href="/'. $activite_jeton . '" target="_blank">' . $activite_nom . '</a></td>';
                             }
                             ?>
 						</tr>
@@ -142,23 +139,62 @@ $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->orderby('el
                         foreach($eleves AS $eleve) {
 
                             echo '<tr>';
-                            echo '<td nowrap style="vertical-align:middle;">' . $eleve->eleve . '</td>';
+                            echo '<td class="p-1" nowrap style="vertical-align:middle;">' . $eleve->eleve . '</td>';
                           
-                                foreach($liste_activites AS $activite) {
-                                    echo '<td>';
-                                        if (App\Models\Classes_activite::where([['jeton_eleve', $eleve->jeton_eleve], ['jeton_activite', $activite]])->latest()->first()) {
+                                foreach($liste_activites AS $activite_jeton => $activite_nom) {
+                                    echo '<td class="p-1">';
+                                        if (App\Models\Classes_activite::where([['jeton_eleve', $eleve->jeton_eleve], ['jeton_activite', $activite_jeton]])->latest()->first()) {
                                             echo '<div class="bg-success text-white rounded text-center">&nbsp;</div>';
                                         } else {
                                             echo '&nbsp;';
                                         }
                                         echo '</td>';
                                 }
-             
-                            echo '<tr>';
+                            echo '</tr>';
                         }
                         ?>
+
 					</table>
+                    <?php
+                    } else {
+                        echo "<div class='text-muted small text-monospace'>Aucune activité n'a été enregistrée pour le moment.</div>";
+                    }
+                    ?>
                 </div>
+
+                <div class="text-monospace pt-4">{{strtoupper(__('ÉLÈVES'))}}</div>
+                @if (sizeof($eleves) != 0)
+                    <div class="pt-2">
+                        <div class="frame pt-2">
+                            <table class="table-hover table-borderless table-sm text-monospace small m-0">
+                                <thead>
+                                    <tr>
+                                        <th class="font-weight-bold pb-2" style="width:100%">identifiant</th>
+                                        <th class="font-weight-bold pb-2">console</th>
+                                        <th class="font-weight-bold pb-2">code&nbsp;individuel</th>
+                                    </tr>  
+                                </thead>    
+                                <tbody>                  
+                                    @foreach($eleves AS $eleve)
+                                        <tr>                                
+                                            <td>{{$eleve->eleve}}</td>
+                                            <td nowrap><a href="/@/{{strtoupper($eleve->jeton_eleve)}}" target="_blank">www.codepuzzle.io/@/{{strtoupper($eleve->jeton_eleve)}}</a></td>
+                                            <td class="text-monospace text-center">{{strtoupper($eleve->jeton_eleve)}}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                @else
+                    <div class='text-monospace text-muted small'>Auncun élève dans cette classe. Cliquer sur "modifier" pour ajouter des élèves.</div>
+                @endif
+
+                <br />
+                <br />
+                <br />
+                <br />
+
             </div>
         </div>
 	</div><!-- /container -->
