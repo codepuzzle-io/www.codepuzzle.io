@@ -119,7 +119,7 @@ $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->orderby('el
 					<!-- AJOUTER ACTIVITES -->
 					<a id="activites_anchor"></a>
 					<div class="mt-4 text-monospace">{{strtoupper(__('AJOUTER DES ACTIVITÉS'))}}</div>
-					<div class="text-monospace small text-muted pb-1">Les activités indiquées ci-dessous apparaîtront dans la console des élèves. Une activité peut être un puzzle ou un défi. Saisir les codes des activités séparés par des virgules. Exemple: DQMSK,DXSR8,DWMX2,DEHSD,DL92R</div>
+					<div class="text-monospace small text-muted pb-1">Les activités indiquées ci-dessous apparaîtront dans la console de la classe et dans la console des élèves. Une activité peut être un puzzle ou un défi. Saisir les codes des activités séparés par des virgules.<br />Exemple: DQMSK,DXSR8,DWMX2,DEHSD,DL92R</div>
 					<textarea id="ajout_activites" name="ajout_activites" class="form-control @error('ajout_activites') is-invalid @enderror" rows="2">{{ old('ajout_activites') }}</textarea>
 					@error('ajout_activites')
 						<span class="invalid-feedback" role="alert">

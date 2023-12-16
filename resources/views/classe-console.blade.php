@@ -65,17 +65,18 @@ $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->orderby('el
                         <a class="btn btn-dark btn-sm" href="/classe-modifier/{{$jeton_secret}}" role="button"><i class="fa-solid fa-pen mr-2"></i> modifier</a>
                     </div>
                 </div>
-
-                <div class="row mt-4 mb-3">
-                    <div class="col-md-10 offset-1 text-monospace text-muted small" style="border:silver solid 1px;border-radius:4px;padding:10px;text-align:justify;">
-                    Il suffit d'ajouter '<b>/@</b>' a la fin de l'adresse d'un défi ou d'un puzzle pour activer l'enregistrement de l'activité des élèves. Avec une telle adresse, les élèves seront invités à saisir le code individuel que vous leur aurez fourni (voir tableau ci-dessous).<br />
-                    Par exemple, si l'adresse d'un défi est '<b>https://www.codepuzzle/DGD8F41W</b>', l'adresse à donner aux élèves est '<b>https://www.codepuzzle/DGD8F41W/@</b>'. De même avec l'adresse d'un puzzle.
-                    </div>
-                </div>                
+           
 
                 <div class="mt-5 text-monospace font-weight-bold">{{strtoupper($classe->nom_classe)}}</div>
 
                 <div class="text-monospace pt-3">{{strtoupper(__('ACTIVITÉS'))}}</div>
+                <div class="text-monospace text-muted small" style="border:silver solid 1px;border-radius:4px;padding:10px;text-align:justify;">
+                    Deux façon de proposer des activités aux élèves:
+                    <ul class="mb-0">
+                        <li>ajouter des activités dans la classe (cliquer sur "modifier" pour ajouter des activités).</li>
+                        <li>ajouter '<b>/@</b>' à la fin de l'adresse d'un défi ou d'un puzzle et fournir cette adresse aux élèves. Avec une telle adresse, les élèves seront invités à saisir le code individuel que vous leur aurez fourni (voir tableau des élèves ci-dessous). Par exemple, si l'adresse d'un défi est '<b>https://www.codepuzzle/DGD8F41W</b>', l'adresse à donner aux élèves est '<b>https://www.codepuzzle/DGD8F41W/@</b>'. De même avec l'adresse d'un puzzle.</li>
+                    </ul>
+                </div>
                 <div class="pt-2 text-monospace">
                     <?php                    
                     if (!empty(array_filter(unserialize($classe->activites)))) {
