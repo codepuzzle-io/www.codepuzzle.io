@@ -22,32 +22,32 @@ $activites_codes = unserialize($classe->activites);
 			<div class="col-md-10 offset-md-1 pl-4 pr-4">
 
                 <div class="mt-5 text-monospace font-weight-bold">{{strtoupper($classe->nom_classe)}}</div>
-                    @if(sizeof($activites_codes) != 0)
-                        <div class="text-monospace pt-4">{{strtoupper(__('ACTIVITÉS DE LA CLASSE'))}}</div>
-                        <div id="frame" class="frame">
-                            <table class="table table-hover table-borderless table-sm text-monospace small m-0">
-                                @foreach($activites_codes as $code)
-                                    @php
-                                    if (substr($code, 0, 1) == 'D') {
-                                        $activite_info = App\Models\Defi::where('jeton', substr($code, 1))->first();
-                                    }
-                                    @endphp
-                                    <tr>
-                                        <td style="width:100%">{{ $activite_info->titre_enseignant }}</td>
-                                        <td><a href="/{{ $code }}" target="_blank">www.codepuzzle.io/{{ $code }}</a></td>
-                                        <td class="text-monospace small pl-4">
-                                            @if (in_array($code, $activites_eleve))
-                                                <div class="bg-success text-white rounded text-center pl-3 pr-3">fait</div>
-                                            @else
-                                                <div class="bg-light text-secondary rounded text-center pl-3 pr-3">non&nbsp;fait</div>
-                                            @endif
-                                        </td>    
-                                    </tr>
-                                @endforeach
-                            </table>
-                        </div>
-                    @endif
-                
+                @if(sizeof($activites_codes) != 0)
+                    <div class="text-monospace pt-4">{{strtoupper(__('ACTIVITÉS DE LA CLASSE'))}}</div>
+                    <div id="frame" class="frame">
+                        <table class="table table-hover table-borderless table-sm text-monospace small m-0">
+                            @foreach($activites_codes as $code)
+                                @php
+                                if (substr($code, 0, 1) == 'D') {
+                                    $activite_info = App\Models\Defi::where('jeton', substr($code, 1))->first();
+                                }
+                                @endphp
+                                <tr>
+                                    <td style="width:100%">{{ $activite_info->titre_enseignant }}</td>
+                                    <td><a href="/{{ $code }}" target="_blank">www.codepuzzle.io/{{ $code }}</a></td>
+                                    <td class="text-monospace small pl-4">
+                                        @if (in_array($code, $activites_eleve))
+                                            <div class="bg-success text-white rounded text-center pl-3 pr-3">fait</div>
+                                        @else
+                                            <div class="bg-light text-secondary rounded text-center pl-3 pr-3">non&nbsp;fait</div>
+                                        @endif
+                                    </td>    
+                                </tr>
+                            @endforeach
+                        </table>
+                    </div>
+                @endif
+
             </div>
         </div>
 	</div><!-- /container -->
