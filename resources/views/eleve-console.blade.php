@@ -38,7 +38,7 @@ $activites_codes = unserialize($classe->activites);
                                 }
                                 @endphp
                                 <tr>
-                                    <td style="width:100%">{{ $activite_info->titre_eleve }}</td>
+                                    <td style="width:100%">{{ $activite_info->titre_eleve ?? 'Activité '.$code }}</td>
                                     <td><a href="/{{ $code }}/{{ $jeton_eleve }}" target="_blank">www.codepuzzle.io/{{ $code }}/{{ $jeton_eleve }}</a></td>
                                     <td class="text-monospace small pl-4">
                                         @if (in_array($code, $activites_eleve))
