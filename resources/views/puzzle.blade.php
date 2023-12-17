@@ -82,7 +82,6 @@ app()->setLocale($puzzle->lang)
 	}
 	?>
 
-
     <div class="container-fluid">
 
         @if(!$iframe)
@@ -111,7 +110,7 @@ app()->setLocale($puzzle->lang)
 		@endif
 
         <!-- annonce enregistrement reponse -->
-		<div id="enregistrement_reponse" class="text-monospace small mt-3 mb-3 text-center"></div>
+		<div id="enregistrement_reponse" class="font-monospace small mt-3 mb-3 text-center"></div>
 
         @if ($puzzle->titre_eleve !== NULL OR $puzzle->consignes_eleve !== NULL)
         <div class="row" style="padding-top:10px;">
