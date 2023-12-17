@@ -34,8 +34,7 @@ app()->setLocale($puzzle->lang)
     <title>{{ config('app.name') }} | Puzzle - {{ $jeton }}</title>
 </head>
 
-<!--<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">-->
-<body>
+<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 
 <?php
 	// puzzle avec jeton eleve
