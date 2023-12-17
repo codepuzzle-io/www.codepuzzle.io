@@ -328,9 +328,9 @@ $asserts = '[' . trim($asserts, ',') . ']';
 				.then(response => {
 					if (response.ok) {
 						// le serveur a repondu avec succes
-						document.getElementById('enregistrement_reponse').innerHTML = "<span class='text-success'>réponse enregistrée<span>";
+						document.getElementById('enregistrement_reponse').innerHTML = "<span class='text-success'>Réponse enregistrée. Retour à la <a href='/@/{{ $jeton_eleve }}'>console</a>.<span>";
 					} else {
-						document.getElementById('enregistrement_reponse').innerHTML = "<span class='text-danger'>erreur lors de l'enregistrement - renvoyer la réponse</span>";
+						document.getElementById('enregistrement_reponse').innerHTML = "<span class='text-danger'>Erreur lors de l'enregistrement - renvoyer la réponse</span>";
 					}
 				})
 				.then(data => {
@@ -338,7 +338,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 				})
 				.catch(error => {
 					// erreur lors de la requete
-					document.getElementById('enregistrement_reponse').innerHTML = "<span class='text-danger'>erreur lors de l'enregistrement - renvoyer la réponse</span>";
+					document.getElementById('enregistrement_reponse').innerHTML = "<span class='text-danger'>Erreur lors de l'enregistrement - renvoyer la réponse</span>";
 					console.error(error);
 				});
 				

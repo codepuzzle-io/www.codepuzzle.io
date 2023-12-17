@@ -34,13 +34,16 @@ $activites_codes = unserialize($classe->activites);
                             @foreach($activites_codes as $code)
                                 @php
                                 if (substr($code, 0, 1) == 'D') {
+                                    $label = "défi";
                                     $activite_info = App\Models\Defi::where('jeton', substr($code, 1))->first();
                                 }
                                 if (substr($code, 0, 1) == 'P') {
+                                    $label = "puzzle";
                                     $activite_info = App\Models\Puzzle::where('jeton', substr($code, 1))->first();
                                 }
                                 @endphp
                                 <tr>
+                                    <td><div class='text-center pl-2 pr-2 bg-primary rounded text-white'>{{ $label }}</div></td>
                                     <td style="width:100%">{{ $activite_info->titre_eleve ?? 'Activité '.$code }}</td>
                                     <td><a href="/{{ $code }}/{{ $jeton_eleve }}" target="_blank">www.codepuzzle.io/{{ $code }}/{{ $jeton_eleve }}</a></td>
                                     <td class="text-monospace small pl-4">

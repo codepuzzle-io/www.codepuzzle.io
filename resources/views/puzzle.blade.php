@@ -36,6 +36,51 @@ app()->setLocale($puzzle->lang)
 
 <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 
+<?php
+	// puzzle avec jeton eleve
+	if(isset($jeton_eleve)) {
+		$eleve = App\Models\Classes_eleve::where('jeton_eleve', $jeton_eleve)->first();
+		if (!$eleve) {
+			$segments = explode('/', $_SERVER['REQUEST_URI']);
+			?>
+			<div class="container text-monospace">
+				<div class="row">
+					<div class="col-md-6 offset-md-3 text-center mt-5 mb-4">
+						CODE INDIVIDUEL
+						<p class="small text-muted">Votre code individuel vous a été fourni par votre enseignant. Si vous n'avez pas de code individuel, cliquez sur le bouton "continuer sans code".</p>
+					</div>
+				</div>
+				<div class="row">
+            		<div class="col-md-5 text-right">
+						<a class="btn btn-primary btn-sm pl-3 pr-3" href="/{{$segments[1]}}/" role="button">continuer sans code</a>
+					</div>
+					<div class="col-md-2 text-center text-muted">
+						<i class="fas fa-ellipsis-v"></i>
+					</div>
+					<div class="col-md-5">
+						<form class="form-inline">
+							<div class="form-group">
+								<input id="code" type="text" class="form-control form-control-sm" placeholder="code" />
+							</div>
+							<a class="btn btn-primary btn-sm ml-2" href="#" role="button" onclick="
+								if (document.getElementById('code').value){
+									code = document.getElementById('code').value;
+								} else {
+									code = '@';
+								}
+								window.location.href = '/{{$segments[1]}}/'+code;
+							"><i class="fas fa-check"></i></a>
+						</form>
+					</div>
+				</div>
+			</div>
+			<?php
+			exit();
+		}
+	}
+	?>
+
+
     <div class="container-fluid">
 
         @if(!$iframe)
@@ -62,6 +107,9 @@ app()->setLocale($puzzle->lang)
             </tr>
         </table>
 		@endif
+
+        <!-- annonce enregistrement reponse -->
+		<div id="enregistrement_reponse" class="text-monospace small mt-3 mb-3 text-center"></div>
 
         @if ($puzzle->titre_eleve !== NULL OR $puzzle->consignes_eleve !== NULL)
         <div class="row" style="padding-top:10px;">
@@ -129,6 +177,40 @@ app()->setLocale($puzzle->lang)
     </div><!-- container -->
 
     @include('inc-obfuscate')
+
+	@if(isset($jeton_eleve))
+
+		<script>
+			function classe_activite_enregistrer() {
+				var formData = new URLSearchParams();
+				formData.append('jeton_activite', '{{ Crypt::encryptString('P'.$jeton) }}');
+				formData.append('jeton_eleve', '{{ Crypt::encryptString($jeton_eleve) }}');				
+				fetch('/classe-activite-enregistrer', {
+					method: 'POST',
+					mode: "cors",
+					headers: {"Content-Type": "application/x-www-form-urlencoded", "X-CSRF-Token": "{{ csrf_token() }}"},
+					body: formData
+				})
+				.then(response => {
+					if (response.ok) {
+						// le serveur a repondu avec succes
+						document.getElementById('enregistrement_reponse').innerHTML = "<span class='text-success'>Réponse enregistrée. Retour à la <a href='/@/{{ $jeton_eleve }}'>console</a>.<span>";
+					} else {
+						document.getElementById('enregistrement_reponse').innerHTML = "<span class='text-danger'>Erreur lors de l'enregistrement - renvoyer la réponse</span>";
+					}
+				})
+				.then(data => {
+					console.log(data);
+				})
+				.catch(error => {
+					// erreur lors de la requete
+					document.getElementById('enregistrement_reponse').innerHTML = "<span class='text-danger'>Erreur lors de l'enregistrement - renvoyer la réponse</span>";
+					console.error(error);
+				});
+				
+			};
+		</script>	
+	@endif
 
     <script src="{{ asset('js/ace/ace.js') }}" type="text/javascript" charset="utf-8"></script>
 
