@@ -21,8 +21,8 @@ $activites_codes = unserialize($classe->activites);
 		<div class="row pt-3">
 			<div class="col-md-10 offset-md-1 pl-4 pr-4">
                 <div class="text-monospace text-center">
-                    <span class="text-muted small">Code individuel</span><br />
-                    <kbd class="pl-4 pr-4" style="font-size:200%">{{ $jeton_eleve }}</kbd><br />
+                    <span class="text-muted small">Code individuel à conserver</span><br />
+                    <kbd class="pl-4 pr-4" style="font-size:220%">{{ $jeton_eleve }}</kbd><br />
                     <span class="text-danger small"><i class="fas fa-exclamation-circle"></i> Ne pas partager ce code</span>
                 </div>
 
@@ -38,7 +38,7 @@ $activites_codes = unserialize($classe->activites);
                                 }
                                 @endphp
                                 <tr>
-                                    <td style="width:100%">{{ $activite_info->titre_enseignant }}</td>
+                                    <td style="width:100%">{{ $activite_info->titre_eleve }}</td>
                                     <td><a href="/{{ $code }}/{{ $jeton_eleve }}" target="_blank">www.codepuzzle.io/{{ $code }}/{{ $jeton_eleve }}</a></td>
                                     <td class="text-monospace small pl-4">
                                         @if (in_array($code, $activites_eleve))
