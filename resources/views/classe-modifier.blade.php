@@ -78,9 +78,14 @@ $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->orderby('el
 						if (!empty(array_filter(unserialize($classe->activites)))) {
 							echo '<table class="text-muted">';
 							foreach(unserialize($classe->activites) AS $code) {
+								// defi
 								if (substr($code, 0, 1) == 'D') {
 									$activite_info = App\Models\Defi::where('jeton', substr($code, 1))->first();
 								}
+								// puzzle
+								if (substr($code, 0, 1) == 'P') {
+									$activite_info = App\Models\Puzzle::where('jeton', substr($code, 1))->first();
+								}								
 								?>
 								<tr>
 								<td style="width:100%"><div id="activite_titre_{{ $code }}">{{ $activite_info->titre_enseignant }}</div></td>

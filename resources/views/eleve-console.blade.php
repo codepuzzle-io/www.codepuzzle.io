@@ -36,6 +36,9 @@ $activites_codes = unserialize($classe->activites);
                                 if (substr($code, 0, 1) == 'D') {
                                     $activite_info = App\Models\Defi::where('jeton', substr($code, 1))->first();
                                 }
+                                if (substr($code, 0, 1) == 'P') {
+                                    $activite_info = App\Models\Puzzle::where('jeton', substr($code, 1))->first();
+                                }
                                 @endphp
                                 <tr>
                                     <td style="width:100%">{{ $activite_info->titre_eleve ?? 'Activité '.$code }}</td>
@@ -56,6 +59,11 @@ $activites_codes = unserialize($classe->activites);
             </div>
         </div>
 	</div><!-- /container -->
+
+    <br />
+    <br />
+    <br />
+    <br />
 
     @include('inc-bottom-js')
 

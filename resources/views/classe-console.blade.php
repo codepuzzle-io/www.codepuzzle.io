@@ -86,6 +86,9 @@ $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->orderby('el
                             if (substr($code, 0, 1) == 'D') {
                                 $activite_info = App\Models\Defi::where('jeton', substr($code, 1))->first();
                             }
+                            if (substr($code, 0, 1) == 'P') {
+                                $activite_info = App\Models\Puzzle::where('jeton', substr($code, 1))->first();
+                            }
                             echo '<tr><td style="width:100%">' . $activite_info->titre_enseignant . '</td><td><a href="/' . $code . '" target="_blank">www.codepuzzle.io/' . $code . '</a></td></tr>';
                         }
                         echo '</table>';
@@ -108,6 +111,9 @@ $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->orderby('el
 						foreach($activites AS $activite) {
                             if (substr($activite->jeton_activite, 0, 1) == 'D') {
                                 $activite_info = App\Models\Defi::where('jeton', substr($activite->jeton_activite, 1))->first();
+                            }
+                            if (substr($activite->jeton_activite, 0, 1) == 'P') {
+                                $activite_info = App\Models\Puzzle::where('jeton', substr($activite->jeton_activite, 1))->first();
                             }
                             $activites_eleve = array_merge($activites_eleve, [$activite->jeton_activite => $activite_info->titre_enseignant]);
 						}
