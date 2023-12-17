@@ -34,7 +34,8 @@ app()->setLocale($puzzle->lang)
     <title>{{ config('app.name') }} | Puzzle - {{ $jeton }}</title>
 </head>
 
-<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
+<!--<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">-->
+<body>
 
 <?php
 	// puzzle avec jeton eleve
@@ -43,7 +44,7 @@ app()->setLocale($puzzle->lang)
 		if (!$eleve) {
 			$segments = explode('/', $_SERVER['REQUEST_URI']);
 			?>
-			<div class="container text-monospace">
+			<div class="container font-monospace">
 				<div class="row">
 					<div class="col-md-6 offset-md-3 text-center mt-5 mb-4">
 						CODE INDIVIDUEL
@@ -51,18 +52,19 @@ app()->setLocale($puzzle->lang)
 					</div>
 				</div>
 				<div class="row">
-            		<div class="col-md-5 text-right">
-						<a class="btn btn-primary btn-sm pl-3 pr-3" href="/{{$segments[1]}}/" role="button">continuer sans code</a>
+            		<div class="col-md-5 text-end">
+						<a class="btn btn-primary btn-sm ps-3 pe-3" href="/{{$segments[1]}}/" role="button">continuer sans code</a>
 					</div>
 					<div class="col-md-2 text-center text-muted">
 						<i class="fas fa-ellipsis-v"></i>
 					</div>
 					<div class="col-md-5">
-						<form class="form-inline">
-							<div class="form-group">
+						<form class="row g-2">
+							<div class="col-auto">
 								<input id="code" type="text" class="form-control form-control-sm" placeholder="code" />
 							</div>
-							<a class="btn btn-primary btn-sm ml-2" href="#" role="button" onclick="
+                            <div class="col-auto">
+							<a class="btn btn-primary btn-sm" href="#" role="button" onclick="
 								if (document.getElementById('code').value){
 									code = document.getElementById('code').value;
 								} else {
@@ -70,6 +72,7 @@ app()->setLocale($puzzle->lang)
 								}
 								window.location.href = '/{{$segments[1]}}/'+code;
 							"><i class="fas fa-check"></i></a>
+                            </div>
 						</form>
 					</div>
 				</div>
