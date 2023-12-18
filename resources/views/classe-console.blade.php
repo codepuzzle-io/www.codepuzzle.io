@@ -15,15 +15,13 @@ $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->orderby('el
 </head>
 <body>
 
-	<div class="container mb-5">
+    @include('inc-nav')
+
+	<div class="container">
 
 		<div class="row pt-3">
 
 			<div class="col-md-2">
-
-                <div class="text-right mb-3">
-                    <a class="btn btn-light btn-sm" href="/" role="button"><i class="fas fa-arrow-left"></i></a>
-                </div>
 
                 <a class="btn btn-success btn-sm pl-3 pr-3 text-monospace" style="width:100%" href="{{route('classe-creer-get')}}" role="button">{{__('nouvelle classe')}}</a>
 
@@ -41,12 +39,12 @@ $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->orderby('el
 
             </div>
 
-			<div class="col-md-10 pl-4 pr-4">
+			<div class="col-md-8 pl-4 pr-4">
 
                 <div id="frame" class="frame">
 
                     <div class="row">
-                        <div class="col-md-6 offset-md-3 text-monospace">
+                        <div class="col-md-6 offset-md-3 text-monospace pt-3 pb-3">
 
                             @if(isset($_GET['i']))
                                 <div class="text-danger text-center font-weight-bold m-2">SAUVEGARDEZ LES INFORMATIONS CI-DESSOUS AVANT DE QUITTER CETTE PAGE</div>
@@ -60,20 +58,24 @@ $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->orderby('el
                     </div>
 
                 </div>
-
-                <div class="row mt-3 mb-3">
-                    <div class="col-md-4 offset-4 text-center">
-                        <a class="btn btn-dark btn-sm" href="/classe-modifier/{{$jeton_secret}}" role="button"><i class="fa-solid fa-pen mr-2"></i> modifier</a>
-                    </div>
-                </div>
            
-
                 <div class="mt-5 text-monospace font-weight-bold">{{strtoupper($classe->nom_classe)}}</div>
+            </div>
 
+            <div class="col-md-2">
+                <a class="btn btn-dark btn-sm" href="/classe-modifier/{{$jeton_secret}}" role="button"><i class="fa-solid fa-pen mr-2"></i> modifier</a>
+            </div>
+
+        </div><!-- /row -->
+    </div><!-- /container -->
+
+    <div class="container-fluid mt-3">
+        <div class="row">
+            <div class="col-md-12">
 
                 <!-- SUIVI DES ACTIVITÉS -->
-                <div class="text-monospace pt-3">{{strtoupper(__('SUIVI DES ACTIVITÉS'))}}</div>
-                <div class="pt-2">
+                <div class="text-monospace">{{strtoupper(__('SUIVI DES ACTIVITÉS'))}}</div>
+                <div>
 					<?php
 					$liste_activites = [];
                     
@@ -140,7 +142,14 @@ $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->orderby('el
                     ?>
                 </div>
                 <!-- /SUIVI DES ACTIVITÉS -->
-
+            
+            </div>
+        </div><!-- /row -->
+    </div><!-- /container -->
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
 
                 <!-- /ACTIVITES -->
                 <div class="text-monospace pt-3">{{strtoupper(__('ACTIVITÉS'))}}</div>
@@ -217,7 +226,7 @@ $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->orderby('el
                 <br />
 
             </div>
-        </div>
+        </div><!-- row -->
 	</div><!-- /container -->
 
     @include('inc-bottom-js')
