@@ -65,7 +65,7 @@ $Parsedown = new ParsedownMath([
                                 </td>    
                             </tr>
                             <tr>
-                                <td colspan="5"><div class="collapse" id="collapse_1_{{$loop->iteration}}"><div class="rounded bg-white pl-3 pr-3 pt-3 pb-1 mb-3">{!! trim($Parsedown->text($activite_info->consignes_eleve)) !!}</div></div></td>
+                                <td colspan="5"><div class="collapse" id="collapse_1_{{$loop->iteration}}"><div class="consignes mathjax rounded bg-white pl-3 pr-3 pt-3 pb-1 mb-3">{!! trim($Parsedown->text($activite_info->consignes_eleve)) !!}</div></div></td>
                             </tr>                            
                         @endforeach
                     </table>
@@ -97,7 +97,7 @@ $Parsedown = new ParsedownMath([
                                     <td class="text-monospace pl-4"><div class="bg-success text-white rounded text-center" style="width:60px;">fait</div></td>    
                                 </tr>
                                 <tr>
-                                    <td colspan="5"><div class="collapse" id="collapse_2_{{$loop->iteration}}"><div class="rounded bg-white pl-3 pr-3 pt-3 pb-1 mb-3">{!! trim($Parsedown->text($activite_info->consignes_eleve)) !!}</div></div></td>
+                                    <td colspan="5"><div class="collapse" id="collapse_2_{{$loop->iteration}}"><div class="consignes mathjax rounded bg-white pl-3 pr-3 pt-3 pb-1 mb-3">{!! trim($Parsedown->text($activite_info->consignes_eleve)) !!}</div></div></td>
                                 </tr>
                             @endif
                         @endforeach
@@ -117,6 +117,22 @@ $Parsedown = new ParsedownMath([
     <br />
 
     @include('inc-bottom-js')
+
+	<script>
+		MathJax = {
+			tex: {
+				inlineMath: [['$', '$'], ['\\(', '\\)']],
+				displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+				processEscapes: true
+			},
+			options: {
+				ignoreHtmlClass: "no-mathjax",
+				processHtmlClass: "mathjax"
+			}
+		};        
+	</script>  
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>     
 
     <script>
 		var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
