@@ -4,11 +4,14 @@ if (!$classe_eleve){
     echo "<pre>Ce code n'existe pas</pre>";
     exit();
 }
+
 $activites_eleve = App\Models\Classes_activite::where('jeton_eleve', $jeton_eleve)->pluck('jeton_activite')->all();
+
 $classe = App\Models\Classe::find($classe_eleve->id_classe);
 
 $activites_classe = unserialize($classe->activites);
 
+$activites_autres = array_diff($activites_eleve, $activites_classe);
 
 include('lib/parsedownmath/ParsedownMath.php');
 $Parsedown = new ParsedownMath([
@@ -74,32 +77,30 @@ $Parsedown = new ParsedownMath([
                 @endif
 
 
-                @if(sizeof($activites_eleve) > 0)
+                @if(sizeof($activites_autres) > 0)
                     <div class="text-monospace pt-4 pb-2">{{strtoupper(__('AUTRES ACTIVITÉS'))}}</div>
                     <table class="table table-borderless table-sm text-monospace small m-0">
-                        @foreach($activites_eleve as $code)
-                            @if (!in_array($code, $activites_classe))
-                                @php
-                                if (substr($code, 0, 1) == 'D') {
-                                    $label = "défi";
-                                    $activite_info = App\Models\Defi::where('jeton', substr($code, 1))->first();
-                                }
-                                if (substr($code, 0, 1) == 'P') {
-                                    $label = "puzzle";
-                                    $activite_info = App\Models\Puzzle::where('jeton', substr($code, 1))->first();
-                                }
-                                @endphp
-                                <tr>
-                                    <td><a class="pl-2 pr-2" data-toggle="collapse" href="#collapse_2_{{$loop->iteration}}" aria-expanded="false" aria-controls="collapse_2_{{$loop->iteration}}"><i class="fas fa-bars"></i></a></td>
-                                    <td><div class="text-center bg-primary rounded text-white" style="width:60px;">{{ $label ?? "" }}</div></td>
-                                    <td style="width:100%">{{ $activite_info->titre_eleve ?? 'Activité '.$code }}</td>
-                                    <td><a href="/{{ $code }}/{{ $jeton_eleve }}" target="_blank">www.codepuzzle.io/{{ $code }}/{{ $jeton_eleve }}</a></td>
-                                    <td class="text-monospace pl-4"><div class="bg-success text-white rounded text-center" style="width:60px;">fait</div></td>    
-                                </tr>
-                                <tr>
-                                    <td colspan="5"><div class="collapse" id="collapse_2_{{$loop->iteration}}"><div class="consignes mathjax rounded bg-white pl-3 pr-3 pt-3 pb-1 mb-3">{!! trim($Parsedown->text($activite_info->consignes_eleve)) !!}</div></div></td>
-                                </tr>
-                            @endif
+                        @foreach($activites_autres as $code)
+                            @php
+                            if (substr($code, 0, 1) == 'D') {
+                                $label = "défi";
+                                $activite_info = App\Models\Defi::where('jeton', substr($code, 1))->first();
+                            }
+                            if (substr($code, 0, 1) == 'P') {
+                                $label = "puzzle";
+                                $activite_info = App\Models\Puzzle::where('jeton', substr($code, 1))->first();
+                            }
+                            @endphp
+                            <tr>
+                                <td><a class="pl-2 pr-2" data-toggle="collapse" href="#collapse_2_{{$loop->iteration}}" aria-expanded="false" aria-controls="collapse_2_{{$loop->iteration}}"><i class="fas fa-bars"></i></a></td>
+                                <td><div class="text-center bg-primary rounded text-white" style="width:60px;">{{ $label ?? "" }}</div></td>
+                                <td style="width:100%">{{ $activite_info->titre_eleve ?? 'Activité '.$code }}</td>
+                                <td><a href="/{{ $code }}/{{ $jeton_eleve }}" target="_blank">www.codepuzzle.io/{{ $code }}/{{ $jeton_eleve }}</a></td>
+                                <td class="text-monospace pl-4"><div class="bg-success text-white rounded text-center" style="width:60px;">fait</div></td>    
+                            </tr>
+                            <tr>
+                                <td colspan="5"><div class="collapse" id="collapse_2_{{$loop->iteration}}"><div class="consignes mathjax rounded bg-white pl-3 pr-3 pt-3 pb-1 mb-3">{!! trim($Parsedown->text($activite_info->consignes_eleve)) !!}</div></div></td>
+                            </tr>
                         @endforeach
                     </table>
                 @else
