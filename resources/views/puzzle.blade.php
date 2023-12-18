@@ -110,7 +110,7 @@ app()->setLocale($puzzle->lang)
 		@endif
 
         <!-- annonce enregistrement reponse -->
-		<div id="enregistrement_reponse" class="font-monospace small mt-4 mb-4 text-center"></div>
+		<div id="enregistrement_reponse" class="font-monospace small pt-4 pb-4 text-center"></div>
 
         @if ($puzzle->titre_eleve !== NULL OR $puzzle->consignes_eleve !== NULL)
         <div class="row" style="padding-top:10px;">

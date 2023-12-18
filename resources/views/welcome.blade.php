@@ -201,7 +201,7 @@
 			(function(index) {
 				document.getElementById('exemple' + index + '_iframe').addEventListener('load', function() {
 					var iframeHeight = document.getElementById('exemple' + index + '_iframe').contentWindow.document.body.scrollHeight;
-					document.getElementById('exemple' + index + '_div').style.height = iframeHeight+100 + 'px';
+					document.getElementById('exemple' + index + '_div').style.height = iframeHeight+20 + 'px';
 				});
 			})(i);
 		}
