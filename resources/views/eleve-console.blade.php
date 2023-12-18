@@ -44,7 +44,7 @@ $activites_codes = unserialize($classe->activites);
                                 }
                                 @endphp
                                 <tr>
-                                    <td><div class='text-center pl-2 pr-2 bg-primary rounded text-white'>{{ $label }}</div></td>
+                                    <td><div class='text-center pl-2 pr-2 bg-primary rounded text-white'>{{ $label ?? "" }}</div></td>
                                     <td style="width:100%">{{ $activite_info->titre_eleve ?? 'Activité '.$code }}</td>
                                     <td><a href="/{{ $code }}/{{ $jeton_eleve }}" target="_blank">www.codepuzzle.io/{{ $code }}/{{ $jeton_eleve }}</a></td>
                                     <td class="text-monospace small pl-4">
