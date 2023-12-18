@@ -42,28 +42,25 @@ $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->orderby('el
 			<div class="col-md-8 pl-4 pr-4">
 
                 <div id="frame" class="frame">
-
                     <div class="row">
                         <div class="col-md-6 offset-md-3 text-monospace pt-3 pb-3">
-
                             @if(isset($_GET['i']))
                                 <div class="text-danger text-center font-weight-bold m-2">SAUVEGARDEZ LES INFORMATIONS CI-DESSOUS AVANT DE QUITTER CETTE PAGE</div>
                             @endif
-
                             <div class="text-center font-weight-bold">lien secret</div>
                             <div class="text-center p-2 text-break align-middle border border-danger rounded"><a href="/classe-console/{{strtoupper($classe->jeton_secret)}}" target="_blank" class="text-danger">www.codepuzzle.io/classe-console/{{strtoupper($classe->jeton_secret)}}</a></div>
                             <div class="small text-muted p-1"><span class="text-danger"><i class="fas fa-exclamation-circle"></i> Ne pas partager ce lien</span><br />Il permet d'accéder à la console de la classe.</div>
 
                         </div>
                     </div>
-
                 </div>
            
-                <div class="mt-5 text-monospace font-weight-bold">{{strtoupper($classe->nom_classe)}}</div>
             </div>
 
             <div class="col-md-2">
-                <a class="btn btn-dark btn-sm" href="/classe-modifier/{{$jeton_secret}}" role="button"><i class="fa-solid fa-pen mr-2"></i> modifier</a>
+                <div class="text-monospace" style="color:silver;font-size:70%;margin-bottom:-5px;">classe</div>
+                <div class="text-monospace font-weight-bold" style="font-size:120%;">{{strtoupper($classe->nom_classe)}}</div>
+                <div class="mt-3"><a class="btn btn-dark btn-sm" href="/classe-modifier/{{$jeton_secret}}" role="button"><i class="fa-solid fa-pen mr-2"></i> modifier</a></div>
             </div>
 
         </div><!-- /row -->
