@@ -58,6 +58,8 @@ $activites_codes = unserialize($classe->activites);
                             @endforeach
                         </table>
                     </div>
+                @else
+                    <div class='text-muted small text-monospace'>Pas activité porposée pour le moment.</div>
                 @endif
 
             </div>
