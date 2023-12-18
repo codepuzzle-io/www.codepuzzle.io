@@ -40,8 +40,9 @@ $Parsedown = new ParsedownMath([
                 </div>
 
                 <div class="mt-5 text-monospace font-weight-bold">{{strtoupper($classe->nom_classe)}}</div>
+                <div class="text-monospace pt-4 pb-2">{{strtoupper(__('ACTIVITÉS DE LA CLASSE'))}}</div>
+
                 @if(sizeof($activites_classe) > 1)
-                    <div class="text-monospace pt-4 pb-2">{{strtoupper(__('ACTIVITÉS DE LA CLASSE'))}}</div>
                     <table class="table table-borderless table-sm text-monospace small m-0">
                         @foreach($activites_classe as $code)
                             @php
@@ -76,9 +77,10 @@ $Parsedown = new ParsedownMath([
                     <div class='text-muted small text-monospace'>Pas d'activités proposées pour le moment.</div>
                 @endif
 
-
+                <div class="text-monospace pt-4 pb-2">{{strtoupper(__('AUTRES ACTIVITÉS'))}}</div>
+                
                 @if(sizeof($activites_autres) > 0)
-                    <div class="text-monospace pt-4 pb-2">{{strtoupper(__('AUTRES ACTIVITÉS'))}}</div>
+                    
                     <table class="table table-borderless table-sm text-monospace small m-0">
                         @foreach($activites_autres as $code)
                             @php
