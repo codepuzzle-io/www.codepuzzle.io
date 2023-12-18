@@ -28,7 +28,7 @@ $activites_codes = unserialize($classe->activites);
                 </div>
 
                 <div class="mt-5 text-monospace font-weight-bold">{{strtoupper($classe->nom_classe)}}</div>
-                @if(sizeof($activites_codes) != 1)
+                @if(sizeof($activites_codes) > 0)
                     <div class="text-monospace pt-4">{{strtoupper(__('ACTIVITÉS DE LA CLASSE'))}}</div>
                     <div id="frame" class="frame">
                         <table class="table table-hover table-borderless table-sm text-monospace small m-0">
