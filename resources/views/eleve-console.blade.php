@@ -59,7 +59,7 @@ $activites_codes = unserialize($classe->activites);
                         </table>
                     </div>
                 @else
-                    <div class='text-muted small text-monospace'>Pas d'activité proposée pour le moment.</div>
+                    <div class='text-muted small text-monospace'>Pas d'activités proposées pour le moment.</div>
                 @endif
 
             </div>
