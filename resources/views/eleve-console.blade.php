@@ -78,7 +78,7 @@ $Parsedown = new ParsedownMath([
                 @endif
 
                 <div class="text-monospace pt-4 pb-2">{{strtoupper(__('AUTRES ACTIVITÉS'))}}</div>
-                
+
                 @if(sizeof($activites_autres) > 0)
                     
                     <table class="table table-borderless table-sm text-monospace small m-0">
@@ -106,7 +106,7 @@ $Parsedown = new ParsedownMath([
                         @endforeach
                     </table>
                 @else
-                    <div class='text-muted small text-monospace'>Pas d'activités validées pour le moment.</div>
+                    <div class='text-muted small text-monospace'>Pas d'autres activités validées pour le moment.</div>
                 @endif
 
 
