@@ -13,6 +13,7 @@ $activites_codes = unserialize($classe->activites);
 <html lang="fr">
 <head>
     @include('inc-meta')
+    <meta name="robots" content="noindex">
     <title>CONSOLE ÉLÈVE</title>
 </head>
 <body>

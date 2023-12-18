@@ -10,6 +10,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 <html lang="fr">
 <head>
     @include('inc-meta')
+    <meta name="robots" content="noindex">
 
     <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
     <title>ENTRAÎNEMENT / DEVOIR | {{$devoir->jeton}} | CONSOLE</title>

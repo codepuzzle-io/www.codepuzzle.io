@@ -10,7 +10,8 @@ $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->orderby('el
 <html lang="fr">
 <head>
     @include('inc-meta')
-    <title>CLASSE | {{$classe->jeton}} | CONSOLE</title>
+    <meta name="robots" content="noindex">
+    <title>CLASSE | CONSOLE</title>
 </head>
 <body>
 
@@ -69,37 +70,8 @@ $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->orderby('el
 
                 <div class="mt-5 text-monospace font-weight-bold">{{strtoupper($classe->nom_classe)}}</div>
 
-                <div class="text-monospace pt-3">{{strtoupper(__('ACTIVITÉS'))}}</div>
-                <div class="text-monospace text-muted small" style="border:silver solid 1px;border-radius:4px;padding:10px;text-align:justify;">
-                    Deux façon de proposer des activités aux élèves:
-                    <ul class="mb-0">
-                        <li>Ajouter des activités dans la classe (cliquer sur "modifier" pour ajouter des activités). Ces activités apparaîtront ci-dessous et dans la console des élèves de la classe.</li>
-                        <li>Ajouter '<b>/@</b>' à la fin de l'adresse d'un défi ou d'un puzzle et fournir cette adresse aux élèves. Avec une telle adresse, les élèves seront invités à saisir le code individuel que vous leur aurez fourni (voir tableau des élèves ci-dessous). Par exemple, si l'adresse d'un défi est '<b>https://www.codepuzzle/DGD8F41W</b>', l'adresse à donner aux élèves est '<b>https://www.codepuzzle/DGD8F41W/@</b>'. De même avec l'adresse d'un puzzle.</li>
-                    </ul>
-                </div>
-                <div class="pt-2 text-monospace">
-                    <?php                    
-                    if (!empty(array_filter(unserialize($classe->activites)))) {
-                        echo '<div class="frame">';
-                        echo '<table class="table table-hover table-borderless table-sm text-monospace small m-0">';
-                        foreach(unserialize($classe->activites) AS $code) {
-                            if (substr($code, 0, 1) == 'D') {
-                                $activite_info = App\Models\Defi::where('jeton', substr($code, 1))->first();
-                            }
-                            if (substr($code, 0, 1) == 'P') {
-                                $activite_info = App\Models\Puzzle::where('jeton', substr($code, 1))->first();
-                            }
-                            echo '<tr><td style="width:100%">' . $activite_info->titre_enseignant . '</td><td><a href="/' . $code . '" target="_blank">www.codepuzzle.io/' . $code . '</a></td></tr>';
-                        }
-                        echo '</table>';
-                        echo '</div>';
-                    } else {
-                        echo "<div class='text-muted small'>Pas d'activités proposées. Cliquer sur \"modifier\" pour ajouter des activités à proposer aux élèves.</div>";
-                    }
-                    ?>
-                </div>
 
-
+                <!-- SUIVI DES ACTIVITÉS -->
                 <div class="text-monospace pt-3">{{strtoupper(__('SUIVI DES ACTIVITÉS'))}}</div>
                 <div class="pt-2">
 					<?php
@@ -145,7 +117,7 @@ $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->orderby('el
                             foreach($eleves AS $eleve) {
 
                                 echo '<tr>';
-                                echo '<td class="p-1" nowrap style="vertical-align:middle;">' . $eleve->eleve . '</td>';
+                                echo '<td class="p-1" nowrap style="vertical-align:middle;"><a href="/@/'.strtoupper($eleve->jeton_eleve).'" target="_blank">' . $eleve->eleve . '</a></td>';
                             
                                     foreach($liste_activites AS $activite_jeton => $activite_nom) {
                                         echo '<td class="p-1">';
@@ -167,7 +139,48 @@ $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->orderby('el
                     }
                     ?>
                 </div>
+                <!-- /SUIVI DES ACTIVITÉS -->
 
+
+                <!-- /ACTIVITES -->
+                <div class="text-monospace pt-3">{{strtoupper(__('ACTIVITÉS'))}}</div>
+                <div class="text-monospace text-muted small" style="border:silver solid 1px;border-radius:4px;padding:10px;text-align:justify;">
+                    Deux façon de proposer des activités aux élèves:
+                    <ul class="mb-0">
+                        <li>Ajouter des activités dans la classe (cliquer sur "modifier" pour ajouter des activités). Ces activités apparaîtront ci-dessous et dans la console des élèves de la classe.</li>
+                        <li>Ajouter '<b>/@</b>' à la fin de l'adresse d'un défi ou d'un puzzle et fournir cette adresse aux élèves. Avec une telle adresse, les élèves seront invités à saisir le code individuel que vous leur aurez fourni (voir tableau des élèves ci-dessous). Par exemple, si l'adresse d'un défi est '<b>https://www.codepuzzle/DGD8F41W</b>', l'adresse à donner aux élèves est '<b>https://www.codepuzzle/DGD8F41W/@</b>'. De même avec l'adresse d'un puzzle.</li>
+                    </ul>
+                </div>
+                <div class="pt-2 text-monospace">
+                    <?php                    
+                    if (!empty(array_filter(unserialize($classe->activites)))) {
+                        echo '<div class="frame">';
+                        echo '<table class="table table-hover table-borderless table-sm text-monospace small m-0">';
+                        foreach(unserialize($classe->activites) AS $code) {
+                            if (substr($code, 0, 1) == 'D') {
+                                $activite_info = App\Models\Defi::where('jeton', substr($code, 1))->first();
+                                $label = "défi";
+                            }
+                            if (substr($code, 0, 1) == 'P') {
+                                $activite_info = App\Models\Puzzle::where('jeton', substr($code, 1))->first();
+                                $label = "puzzle";
+                            }
+                            echo '<tr>';
+                            echo '<td><div class="text-center pl-2 pr-2 bg-primary rounded text-white">'.$label.'</div></td>';
+                            echo '<td style="width:100%">' . $activite_info->titre_enseignant . '</td><td><a href="/' . $code . '" target="_blank">www.codepuzzle.io/' . $code . '</a></td>';
+                            echo '</tr>';
+                        }
+                        echo '</table>';
+                        echo '</div>';
+                    } else {
+                        echo "<div class='text-muted small'>Pas d'activités proposées. Cliquer sur \"modifier\" pour ajouter des activités à proposer aux élèves.</div>";
+                    }
+                    ?>
+                </div>
+                <!-- /ACTIVITES -->
+
+
+                <!-- ELEVES -->
                 <div class="text-monospace pt-4">{{strtoupper(__('ÉLÈVES'))}}</div>
                 @if (sizeof($eleves) != 0)
                     <div class="pt-2">
@@ -195,6 +208,8 @@ $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->orderby('el
                 @else
                     <div class='text-monospace text-muted small'>Auncun élève dans cette classe. Cliquer sur "modifier" pour ajouter des élèves.</div>
                 @endif
+                <!-- /ELEVES -->
+
 
                 <br />
                 <br />
