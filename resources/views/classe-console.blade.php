@@ -114,7 +114,6 @@ $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->orderby('el
 
                             <?php
                             foreach($eleves AS $eleve) {
-
                                 echo '<tr>';
                                 echo '<td class="p-1" nowrap style="vertical-align:middle;"><a href="/@/'.strtoupper($eleve->jeton_eleve).'" target="_blank">' . $eleve->eleve . '</a></td>';
                             
