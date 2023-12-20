@@ -12,6 +12,7 @@ $classe = App\Models\Classe::find($classe_eleve->id_classe);
 $activites_classe = unserialize($classe->activites);
 
 $activites_autres = array_diff($activites_eleve, $activites_classe);
+$activites_autres = array_unique($activites_autres);
 
 include('lib/parsedownmath/ParsedownMath.php');
 $Parsedown = new ParsedownMath([
