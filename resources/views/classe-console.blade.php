@@ -144,7 +144,7 @@ asort($liste_activites);
                 <!-- /ACTIVITES -->
                 <div class="text-monospace pt-4">{{strtoupper(__('ACTIVITÉS'))}}</div>
                 <div class="text-monospace text-muted small" style="border:silver solid 1px;border-radius:4px;padding:10px;text-align:justify;">
-                    Deux façon de proposer des activités aux élèves:
+                    Deux façons de proposer des activités aux élèves:
                     <ul class="mb-0">
                         <li>Ajouter des activités dans la classe (cliquer sur "modifier" pour ajouter des activités). Ces activités apparaîtront ci-dessous et dans la console des élèves de la classe.</li>
                         <li>Ajouter '<b>/@</b>' à la fin de l'adresse d'un défi ou d'un puzzle et fournir cette adresse aux élèves. Avec une telle adresse, les élèves seront invités à saisir le code individuel que vous leur aurez fourni (voir tableau des élèves ci-dessous). Par exemple, si l'adresse d'un défi est '<b>https://www.codepuzzle/DGD8F41W</b>', l'adresse à donner aux élèves est '<b>https://www.codepuzzle/DGD8F41W/@</b>'. De même avec l'adresse d'un puzzle.</li>
