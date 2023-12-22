@@ -4,9 +4,13 @@ if (!$classe){
     echo "<pre>Cet classe n'existe pas</pre>";
     exit();
 }
+
+// tous les eleves de la classe
 $eleves = App\Models\Classes_eleve::where('id_classe', $classe->id)->orderby('eleve')->get();
 
-$liste_activites = [];
+
+// activites des eleves
+$liste_activites_eleves = [];
 foreach($eleves AS $eleve) {
     $activites_eleve = [];
     $activites = App\Models\Classes_activite::where('jeton_eleve', $eleve->jeton_eleve)->get();
@@ -19,9 +23,29 @@ foreach($eleves AS $eleve) {
         }
         $activites_eleve = array_merge($activites_eleve, [$activite->jeton_activite => $activite_info->titre_enseignant]);
     }
-    $liste_activites = array_merge($liste_activites, $activites_eleve);
+    $liste_activites_eleves = array_merge($liste_activites_eleves, $activites_eleve);
 }
-asort($liste_activites);
+asort($liste_activites_eleves);
+$liste_activites_eleves = array_unique($liste_activites_eleves);
+
+
+// activites de la classe
+$liste_activites_classe = [];
+foreach(unserialize($classe->activites) AS $jeton_activite) {
+    if (substr($jeton_activite, 0, 1) == 'D') {
+        $activite_info = App\Models\Defi::where('jeton', substr($jeton_activite, 1))->first();
+    }
+    if (substr($jeton_activite, 0, 1) == 'P') {
+        $activite_info = App\Models\Puzzle::where('jeton', substr($jeton_activite, 1))->first();
+    }
+    $liste_activites_classe = array_merge($liste_activites_classe, [$jeton_activite => $activite_info->titre_enseignant]);
+}
+asort($liste_activites_classe);
+
+
+// autres activites
+$liste_activites_autres = array_diff($liste_activites_eleves, $liste_activites_classe);
+
 ?>
 <!doctype html>
 <html lang="fr">
@@ -73,8 +97,8 @@ asort($liste_activites);
                 </div>
 
                 <div class="text-monospace pt-3">{{strtoupper(__('SUIVI DES ACTIVITÉS'))}}</div>
-                @if ($liste_activites)
-                    <div class="text-monospace text-muted small">Codes: {{ implode(', ', array_keys($liste_activites)) }}</div>
+                @if (!empty($liste_activites_classe) OR !empty($liste_activites_autres))
+                    <div class="text-monospace text-muted small">Codes: {{ implode(', ', array_keys($liste_activites_classe)) }} {{ implode(', ', array_keys($liste_activites_autres)) }}</div>
                 @endif
            
             </div>
@@ -94,14 +118,17 @@ asort($liste_activites);
 
                 <!-- SUIVI DES ACTIVITÉS -->
                 <div>
-                @if ($liste_activites)
+                @if (!empty($liste_activites_classe) OR !empty($liste_activites_autres))
                     <table class="mt-1 table table-striped table-bordered table-hover table-sm text-monospace small">
 
                         <tr>
                             <td class="p-1"></td>
                             <?php
-                            foreach($liste_activites AS $activite_jeton => $activite_nom) {
-                                echo '<td class="p-1" style="vertical-align:middle;writing-mode:vertical-rl;transform:rotate(-180deg);"><a href="/'. $activite_jeton . '" target="_blank">' . $activite_nom . '</a></td>';
+                            foreach($liste_activites_classe AS $activite_jeton => $activite_nom) {
+                                echo '<td class="p-1 pt-2 pb-3" style="vertical-align:middle;writing-mode:vertical-rl;transform:rotate(-180deg);"><a href="/'. $activite_jeton . '" target="_blank">' . $activite_nom . '&nbsp;<sup>*</sup></a></td>';
+                            }
+                            foreach($liste_activites_autres AS $activite_jeton => $activite_nom) {
+                                echo '<td class="p-1 pt-2 pb-3" style="vertical-align:middle;writing-mode:vertical-rl;transform:rotate(-180deg);"><a href="/'. $activite_jeton . '" target="_blank">' . $activite_nom . '</a></td>';
                             }
                             ?>
                         </tr>
@@ -111,7 +138,7 @@ asort($liste_activites);
                             echo '<tr>';
                             echo '<td class="p-1" nowrap style="vertical-align:middle;"><a href="/@/'.strtoupper($eleve->jeton_eleve).'" target="_blank">' . $eleve->eleve . '</a></td>';
                         
-                                foreach($liste_activites AS $activite_jeton => $activite_nom) {
+                                foreach($liste_activites_classe AS $activite_jeton => $activite_nom) {
                                     echo '<td class="p-1">';
                                         if (App\Models\Classes_activite::where([['jeton_eleve', $eleve->jeton_eleve], ['jeton_activite', $activite_jeton]])->latest()->first()) {
                                             echo '<div class="bg-success text-white rounded text-center">&nbsp;</div>';
@@ -120,6 +147,17 @@ asort($liste_activites);
                                         }
                                         echo '</td>';
                                 }
+ 
+                                foreach($liste_activites_autres AS $activite_jeton => $activite_nom) {
+                                    echo '<td class="p-1">';
+                                        if (App\Models\Classes_activite::where([['jeton_eleve', $eleve->jeton_eleve], ['jeton_activite', $activite_jeton]])->latest()->first()) {
+                                            echo '<div class="bg-success text-white rounded text-center">&nbsp;</div>';
+                                        } else {
+                                            echo '&nbsp;';
+                                        }
+                                        echo '</td>';
+                                }                                
+
                             echo '</tr>';
                         }
                         ?>
@@ -137,12 +175,12 @@ asort($liste_activites);
         <div class="row">
             <div class="col-md-8 offset-md-2">
 
-                @if (!$liste_activites)
+                @if (empty($liste_activites_classe) AND empty($liste_activites_autres))
                     <div class='text-muted small text-monospace'>Aucune activité n'a été enregistrée pour le moment.</div>
                 @endif
 
                 <!-- /ACTIVITES -->
-                <div class="text-monospace pt-4">{{strtoupper(__('ACTIVITÉS'))}}</div>
+                <div class="text-monospace pt-4">{{strtoupper(__('ACTIVITÉS DE LA CLASSE'))}}</div>
                 <div class="text-monospace text-muted small" style="border:silver solid 1px;border-radius:4px;padding:10px;text-align:justify;">
                     Deux façons de proposer des activités aux élèves:
                     <ul class="mb-0">
@@ -152,21 +190,21 @@ asort($liste_activites);
                 </div>
                 <div class="pt-2 text-monospace">
                     <?php                    
-                    if (!empty(array_filter(unserialize($classe->activites)))) {
+                    if (!empty($liste_activites_classe)) {
                         echo '<div class="frame">';
                         echo '<table class="table table-hover table-borderless table-sm text-monospace small m-0">';
-                        foreach(unserialize($classe->activites) AS $code) {
-                            if (substr($code, 0, 1) == 'D') {
-                                $activite_info = App\Models\Defi::where('jeton', substr($code, 1))->first();
+                        foreach($liste_activites_classe AS $activite_jeton => $activite_nom) {
+                            if (substr($activite_jeton, 0, 1) == 'D') {
+                                $activite_info = App\Models\Defi::where('jeton', substr($activite_jeton, 1))->first();
                                 $label = "défi";
                             }
-                            if (substr($code, 0, 1) == 'P') {
-                                $activite_info = App\Models\Puzzle::where('jeton', substr($code, 1))->first();
+                            if (substr($activite_jeton, 0, 1) == 'P') {
+                                $activite_info = App\Models\Puzzle::where('jeton', substr($activite_jeton, 1))->first();
                                 $label = "puzzle";
                             }
                             echo '<tr>';
                             echo '<td><div class="text-center pl-2 pr-2 bg-primary rounded text-white">'.$label.'</div></td>';
-                            echo '<td style="width:100%">' . $activite_info->titre_enseignant . '</td><td><a href="/' . $code . '" target="_blank">www.codepuzzle.io/' . $code . '</a></td>';
+                            echo '<td style="width:100%">' . $activite_info->titre_enseignant . '</td><td><a href="/' . $activite_jeton . '" target="_blank">www.codepuzzle.io/' . $activite_jeton . '</a></td>';
                             echo '</tr>';
                         }
                         echo '</table>';
@@ -177,7 +215,6 @@ asort($liste_activites);
                     ?>
                 </div>
                 <!-- /ACTIVITES -->
-
 
                 <!-- ELEVES -->
                 <div class="text-monospace pt-4">{{strtoupper(__('ÉLÈVES'))}}</div>
@@ -208,7 +245,6 @@ asort($liste_activites);
                     <div class='text-monospace text-muted small'>Auncun élève dans cette classe. Cliquer sur "modifier" pour ajouter des élèves.</div>
                 @endif
                 <!-- /ELEVES -->
-
 
                 <br />
                 <br />
