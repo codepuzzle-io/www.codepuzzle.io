@@ -31,14 +31,17 @@ $liste_activites_eleves = array_unique($liste_activites_eleves);
 
 // activites de la classe
 $liste_activites_classe = [];
-foreach(unserialize($classe->activites) AS $jeton_activite) {
-    if (substr($jeton_activite, 0, 1) == 'D') {
-        $activite_info = App\Models\Defi::where('jeton', substr($jeton_activite, 1))->first();
+print_r(unserialize($classe->activites));
+if (!empty(array_filter(unserialize($classe->activites)))) {
+    foreach(unserialize($classe->activites) AS $jeton_activite) {
+        if (substr($jeton_activite, 0, 1) == 'D') {
+            $activite_info = App\Models\Defi::where('jeton', substr($jeton_activite, 1))->first();
+        }
+        if (substr($jeton_activite, 0, 1) == 'P') {
+            $activite_info = App\Models\Puzzle::where('jeton', substr($jeton_activite, 1))->first();
+        }
+        $liste_activites_classe = array_merge($liste_activites_classe, [$jeton_activite => $activite_info->titre_enseignant]);
     }
-    if (substr($jeton_activite, 0, 1) == 'P') {
-        $activite_info = App\Models\Puzzle::where('jeton', substr($jeton_activite, 1))->first();
-    }
-    $liste_activites_classe = array_merge($liste_activites_classe, [$jeton_activite => $activite_info->titre_enseignant]);
 }
 asort($liste_activites_classe);
 
