@@ -31,7 +31,6 @@ $liste_activites_eleves = array_unique($liste_activites_eleves);
 
 // activites de la classe
 $liste_activites_classe = [];
-print_r(unserialize($classe->activites));
 if (!empty(array_filter(unserialize($classe->activites)))) {
     foreach(unserialize($classe->activites) AS $jeton_activite) {
         if (substr($jeton_activite, 0, 1) == 'D') {
@@ -101,7 +100,12 @@ $liste_activites_autres = array_diff($liste_activites_eleves, $liste_activites_c
 
                 <div class="text-monospace pt-3">{{strtoupper(__('SUIVI DES ACTIVITÉS'))}}</div>
                 @if (!empty($liste_activites_classe) OR !empty($liste_activites_autres))
-                    <div class="text-monospace text-muted small">Codes: {{ implode(', ', array_keys($liste_activites_classe)) }} {{ implode(', ', array_keys($liste_activites_autres)) }}</div>
+                    @if (!empty($liste_activites_classe))
+                        <div class="text-monospace text-muted small">Activités de la classe: {{ implode(', ', array_keys($liste_activites_classe)) }}</div>
+                    @endif
+                    @if (!empty($liste_activites_autres))
+                        <div class="text-monospace text-muted small">Autres activités: {{ implode(', ', array_keys($liste_activites_autres)) }}</div>
+                    @endif
                 @endif
            
             </div>
