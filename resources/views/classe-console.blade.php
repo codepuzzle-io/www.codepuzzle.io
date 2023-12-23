@@ -147,8 +147,9 @@ $liste_activites_autres = array_diff($liste_activites_eleves, $liste_activites_c
                         
                                 foreach($liste_activites_classe AS $activite_jeton => $activite_nom) {
                                     echo '<td class="p-1">';
-                                        if (App\Models\Classes_activite::where([['jeton_eleve', $eleve->jeton_eleve], ['jeton_activite', $activite_jeton]])->latest()->first()) {
-                                            echo '<div class="bg-success text-white rounded text-center">&nbsp;</div>';
+                                        $fait = App\Models\Classes_activite::where([['jeton_eleve', $eleve->jeton_eleve], ['jeton_activite', $activite_jeton]])->get();
+                                        if (sizeof($fait) != 0) {
+                                            echo '<div class="bg-success text-white rounded text-center">'.sizeof($fait).'</div>';
                                         } else {
                                             echo '&nbsp;';
                                         }
@@ -157,8 +158,9 @@ $liste_activites_autres = array_diff($liste_activites_eleves, $liste_activites_c
  
                                 foreach($liste_activites_autres AS $activite_jeton => $activite_nom) {
                                     echo '<td class="p-1">';
-                                        if (App\Models\Classes_activite::where([['jeton_eleve', $eleve->jeton_eleve], ['jeton_activite', $activite_jeton]])->latest()->first()) {
-                                            echo '<div class="bg-success text-white rounded text-center">&nbsp;</div>';
+                                        $fait = App\Models\Classes_activite::where([['jeton_eleve', $eleve->jeton_eleve], ['jeton_activite', $activite_jeton]])->get();
+                                        if (sizeof($fait) != 0) {
+                                            echo '<div class="bg-success text-white rounded text-center">'.sizeof($fait).'</div>';
                                         } else {
                                             echo '&nbsp;';
                                         }
