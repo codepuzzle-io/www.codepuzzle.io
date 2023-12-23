@@ -147,24 +147,38 @@ $liste_activites_autres = array_diff($liste_activites_eleves, $liste_activites_c
                         
                                 foreach($liste_activites_classe AS $activite_jeton => $activite_nom) {
                                     echo '<td class="p-1">';
-                                        $fait = App\Models\Classes_activite::where([['jeton_eleve', $eleve->jeton_eleve], ['jeton_activite', $activite_jeton]])->get();
-                                        if (sizeof($fait) != 0) {
-                                            echo '<div class="bg-success text-white rounded text-center">'.sizeof($fait).'</div>';
-                                        } else {
-                                            echo '&nbsp;';
-                                        }
-                                        echo '</td>';
+                                    $validations = App\Models\Classes_activite::where([['jeton_eleve', $eleve->jeton_eleve], ['jeton_activite', $activite_jeton]])->get();
+                                    $popover = "";
+                                    foreach ($validations as $validation){
+                                        $popover .= "<div class='bg-light p-1 pl-2 pr-2 rounded m-1 text-monospace'>";
+                                        $popover .= substr($validation->created_at, 0, 10);
+                                        $popover .= "<a href='/classe-eleve-activite-supprimer/".Crypt::encryptString($validation->id)."' class='ml-3 text-muted' style='font-size:90%;'><i class='fas fa-trash'></i></a>";
+                                        $popover .= "</div>";
+                                    }
+                                    if (sizeof($validations) != 0) {
+                                        echo '<div class="validation_info bg-success text-white rounded text-center small" style="padding:2px;cursor:pointer;" data-container="body" data-toggle="popover" data-placement="top" data-content="'.$popover.'">'.sizeof($validations).'</div>';
+                                    } else {
+                                        echo '&nbsp;';
+                                    }
+                                    echo '</td>';
                                 }
  
                                 foreach($liste_activites_autres AS $activite_jeton => $activite_nom) {
                                     echo '<td class="p-1">';
-                                        $fait = App\Models\Classes_activite::where([['jeton_eleve', $eleve->jeton_eleve], ['jeton_activite', $activite_jeton]])->get();
-                                        if (sizeof($fait) != 0) {
-                                            echo '<div class="bg-success text-white rounded text-center">'.sizeof($fait).'</div>';
-                                        } else {
-                                            echo '&nbsp;';
-                                        }
-                                        echo '</td>';
+                                    $validations = App\Models\Classes_activite::where([['jeton_eleve', $eleve->jeton_eleve], ['jeton_activite', $activite_jeton]])->get();
+                                    $popover = "";
+                                    foreach ($validations as $validation){
+                                        $popover .= "<div class='bg-light p-1 pl-2 pr-2 rounded m-1 text-monospace'>";
+                                        $popover .= substr($validation->created_at, 0, 10);
+                                        $popover .= "<a href='/classe-eleve-activite-supprimer/".Crypt::encryptString($validation->id)."' class='ml-3 text-muted' style='font-size:90%;'><i class='fas fa-trash'></i></a>";
+                                        $popover .= "</div>";
+                                    }
+                                    if (sizeof($validations) != 0) {
+                                        echo '<div class="validation_info bg-success text-white rounded text-center small" style="padding:2px;cursor:pointer;" data-container="body" data-toggle="popover" data-placement="top" data-content="'.$popover.'">'.sizeof($validations).'</div>';
+                                    } else {
+                                        echo '&nbsp;';
+                                    }
+                                    echo '</td>';
                                 }                                
 
                             echo '</tr>';
@@ -265,6 +279,28 @@ $liste_activites_autres = array_diff($liste_activites_eleves, $liste_activites_c
 	</div><!-- /container -->
 
     @include('inc-bottom-js')
+
+    <script>
+        $(".validation_info").popover({
+            html: true,
+            sanitize: false
+        });
+
+        jQuery(function ($) {
+            $("[data-toggle='popover']").popover({trigger: "hover"}).click(function (event) {
+                event.stopPropagation();
+
+            }).on('inserted.bs.popover', function () {
+                $(".popover").click(function (event) {
+                event.stopPropagation();
+                })
+            })
+
+            $(document).click(function () {
+                $("[data-toggle='popover']").popover('hide')
+            })
+        })
+    </script>
 
     <script>
 		var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))

@@ -170,6 +170,7 @@ Route::post('/classe-modifier', [App\Http\Controllers\SiteController::class, 'cl
 Route::any('/classe-console/{jeton_secret}', [App\Http\Controllers\SiteController::class, 'classe_console'])->name('classe-console');
 Route::any('/classe-eleve-supprimer/{eleve_id}', [App\Http\Controllers\SiteController::class, 'classe_eleve_supprimer'])->name('classe-eleve-supprimer');
 Route::post('/classe-activite-enregistrer', [App\Http\Controllers\SiteController::class, 'classe_activite_enregistrer'])->name('classe-activite-enregistrer');
+Route::any('/classe-eleve-activite-supprimer/{classes_activites_id}', [App\Http\Controllers\SiteController::class, 'classe_eleve_activite_supprimer'])->name('classe-eleve-activite-supprimer');
 
 // eleves
 /*
