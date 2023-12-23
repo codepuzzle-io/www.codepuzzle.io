@@ -63,9 +63,9 @@ $Parsedown = new ParsedownMath([
                                 <td><a href="/{{ $code }}/{{ $jeton_eleve }}" target="_blank">www.codepuzzle.io/{{ $code }}/{{ $jeton_eleve }}</a></td>
                                 <td class="text-monospace pl-4">
                                     @if (in_array($code, $activites_eleve))
-                                        <div class="bg-success text-white rounded text-center" style="width:60px;">fait</div>
+                                        <div class="bg-success text-white rounded text-center small" style="padding:2px;width:60px;">{{ array_count_values($activites_eleve)[$code] }}</div>
                                     @else
-                                        <div class="bg-light text-secondary rounded text-center" style='width:60px;'>à&nbsp;faire</div>
+                                        <div class="bg-light text-secondary rounded text-center small" style='padding:2px;width:60px;'>à&nbsp;faire</div>
                                     @endif
                                 </td>    
                             </tr>
@@ -99,7 +99,7 @@ $Parsedown = new ParsedownMath([
                                 <td><div class="text-center bg-primary rounded text-white" style="width:60px;">{{ $label ?? "" }}</div></td>
                                 <td style="width:100%">{{ $activite_info->titre_eleve ?? 'Activité '.$code }}</td>
                                 <td><a href="/{{ $code }}/{{ $jeton_eleve }}" target="_blank">www.codepuzzle.io/{{ $code }}/{{ $jeton_eleve }}</a></td>
-                                <td class="text-monospace pl-4"><div class="bg-success text-white rounded text-center" style="width:60px;">fait</div></td>    
+                                <td class="text-monospace pl-4"><div class="bg-success text-white rounded text-center small" style="padding:2px;width:60px;">{{ array_count_values($activites_eleve)[$code] }}</div></td>    
                             </tr>
                             <tr>
                                 <td colspan="5" class="m-0 p-0"><div class="collapse" id="collapse_2_{{$loop->iteration}}"><div class="consignes mathjax rounded bg-white mt-1 pl-3 pr-3 pt-3 pb-1 mb-3">{!! trim($Parsedown->text($activite_info->consignes_eleve)) !!}</div></div></td>
