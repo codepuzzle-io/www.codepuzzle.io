@@ -47,6 +47,22 @@
         'DALHQ', // [EP23] - 34.1
         'DSU4B', // [EP23] - 36.1
         'DYTAM', // [EP23] - 37.1
+        'DBW2D', // [EP23] - 38.1
+        'D4VAY', // [EP23] - 39.1
+        'D8PNJ', // [EP23] - 40.1
+        'DQKV9', // [EP23] - 41.1
+        'DVGJ5', // [EP23] - 42.1
+        'DGEXL', // [EP23] - 43.1
+        'DMZQY', // [EP23] - 44.1
+        'DZLGR', // [EP23] - 45.1
+        'DBZF2', // [EP23] - 01.2
+        'DHBUS', // [EP23] - 02.2
+        'D2LKW', // [EP23] - 05.2
+        'DT3GD', // [EP23] - 06.2
+        'D5QNZ', // [EP23] - 07.2
+        'DPVN9', // [EP23] - 08.2
+        'DMTC9', // [EP23] - 09.2
+        'DAWZM', // [EP23] - 10.2
     ];
     $lang ='/';
     ?>
@@ -113,26 +129,29 @@
                                             {{$defi->titre_enseignant}}
                                         </div>
 
-                                        <div class="text-monospace text-muted small consignes mathjax text-justify">
-                                            <?php
-                                            $Parsedown = new Parsedown();
-                                            echo $Parsedown->text($defi->consignes_eleve);
-                                            ?>
-                                        </div>
-
-                                        <div class="text-monospace  text-muted pt-3 pb-2">
+                                        <div class="text-monospace text-muted">
                                             <i class="fas fa-share-alt ml-1 mr-1 align-middle"></i> <a href="/{{ strtoupper($jeton) }}" target="_blank">www.codepuzzle.io/{{ strtoupper($jeton) }}</a>
                                         </div>
+
+                                            <div class="text-monospace text-muted consignes mathjax text-justify mt-2 small" style="height:90px;overflow-y: auto;border:solid 1px silver;border-radius:4px;padding:10px;">
+                                                <?php
+                                                $Parsedown = new Parsedown();
+                                                echo $Parsedown->text($defi->consignes_eleve);
+                                                ?>
+                                            </div>
 
                                     </div>
 
                                     <div class="card-footer">
 
-                                        <div class="text-center mt-2 mb-2">
-                                            <a class='text-muted' data-toggle="collapse" href="#collapse-{{$loop->iteration}}" role='button' aria-expanded="false" aria-controls="collapse-{{$loop->iteration}}" ><i class="fas fa-bars" style="margin-top:0px;" data-toggle="tooltip" data-placement="top" title="{{__('déplier plier')}}"></i></a>
+                                        <div class="mt-1 mb-2 text-center">
+                                            <a class='text-muted' data-toggle="collapse" href="#collapse-{{$loop->iteration}}" role='button' aria-expanded="false" aria-controls="collapse-{{$loop->iteration}}" ><i class="fas fa-bars ml-1 mr-1 align-middle" data-toggle="tooltip" data-placement="top" title="{{__('déplier plier')}}"></i>                                      
+                                        
+                                            </a>
                                         </div>
 
                                         <div class="collapse" id="collapse-{{$loop->iteration}}">
+
                                             <div class="text-monospace text-muted mb-3 small">
                                                 <i class="fas fa-share-alt ml-1 mr-1"></i> {{__('Code à insérer dans un site web')}}
                                                 <div class="mt-1" style="margin-left:22px;">
