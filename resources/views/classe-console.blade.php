@@ -97,8 +97,19 @@ $liste_activites_autres = array_diff($liste_activites_eleves, $liste_activites_c
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="text-monospace pt-3">{{strtoupper(__('SUIVI DES ACTIVITÉS'))}}</div>
+            <div class="col-md-2">
+                <div class="text-monospace" style="color:silver;font-size:70%;margin-bottom:-5px;">classe</div>
+                <div class="text-monospace font-weight-bold" style="font-size:120%;">{{strtoupper($classe->nom_classe)}}</div>
+                <div class="mt-3 mb-4"><a class="btn btn-dark btn-sm" href="/classe-modifier/{{$jeton_secret}}" role="button"><i class="fa-solid fa-pen mr-2"></i> modifier</a></div>
+            </div>
+
+        </div><!-- /row -->
+
+        <div class="row pt-2">
+            <div class="col-md-8 offset-md-2">
+                <div class="text-monospace">{{strtoupper(__('SUIVI DES ACTIVITÉS'))}}</div>
                 @if (!empty($liste_activites_classe) OR !empty($liste_activites_autres))
                     @if (!empty($liste_activites_classe))
                         <div class="text-monospace text-muted small">Activités de la classe: {{ implode(', ', array_keys($liste_activites_classe)) }}</div>
@@ -107,16 +118,9 @@ $liste_activites_autres = array_diff($liste_activites_eleves, $liste_activites_c
                         <div class="text-monospace text-muted small">Autres activités: {{ implode(', ', array_keys($liste_activites_autres)) }}</div>
                     @endif
                 @endif
-           
             </div>
-
-            <div class="col-md-2">
-                <div class="text-monospace" style="color:silver;font-size:70%;margin-bottom:-5px;">classe</div>
-                <div class="text-monospace font-weight-bold" style="font-size:120%;">{{strtoupper($classe->nom_classe)}}</div>
-                <div class="mt-3"><a class="btn btn-dark btn-sm" href="/classe-modifier/{{$jeton_secret}}" role="button"><i class="fa-solid fa-pen mr-2"></i> modifier</a></div>
-            </div>
-
         </div><!-- /row -->
+        
     </div><!-- /container -->
 
     <div class="container-fluid">
