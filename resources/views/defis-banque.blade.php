@@ -133,12 +133,12 @@
                                             <i class="fas fa-share-alt ml-1 mr-1 align-middle"></i> <a href="/{{ strtoupper($jeton) }}" target="_blank">www.codepuzzle.io/{{ strtoupper($jeton) }}</a>
                                         </div>
 
-                                            <div class="text-monospace text-muted consignes mathjax text-justify mt-2 small" style="height:136px;overflow-y: auto;border:solid 1px silver;border-radius:4px;padding:10px;">
-                                                <?php
-                                                $Parsedown = new Parsedown();
-                                                echo $Parsedown->text($defi->consignes_eleve);
-                                                ?>
-                                            </div>
+                                        <div class="text-monospace text-muted consignes mathjax text-justify mt-2 small" style="height:136px;overflow-y: auto;border:solid 1px silver;border-radius:4px;padding:10px;">
+                                            <?php
+                                            $Parsedown = new Parsedown();
+                                            echo $Parsedown->text($defi->consignes_eleve);
+                                            ?>
+                                        </div>
 
                                     </div>
 
