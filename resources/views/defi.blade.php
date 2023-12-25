@@ -1,4 +1,7 @@
 <?php
+header("Cross-Origin-Embedder-Policy: require-corp");
+header("Cross-Origin-Opener-Policy: same-origin");
+
 // recuperation du défi en fonction du jeton
 $defi = App\Models\Defi::where('jeton', $jeton)->first();
 $tests = unserialize($defi->tests);
