@@ -161,19 +161,21 @@ $asserts = '[' . trim($asserts, ',') . ']';
                 <!-- annonce enregistrement reponse -->
 				<div id="enregistrement_reponse" class="text-monospace small mt-2"></div>
             </div>
-			<div class="col-md-2 small">
-				<table style="width:100%">
-                @foreach($tests AS $test)
-				<tr>
-				<td class="text-center" style="vertical-align:top"><div id="test_{{$loop->index}}" class="test"><i class="fas fa-question-circle"></i></div></td>
-				<td style="width:100%;">
-					<div id="test_message_{{$loop->index}}" class="text-muted pl-2" style="height:100%;">
-						<div>Test {{$loop->index + 1}}</div>
-					</div>
-				</td>
-				</tr>
-                @endforeach
-				</table>
+			<div class="col-md-2">
+				<div class="small mb-3">
+					<table style="width:100%">
+					@foreach($tests AS $test)
+					<tr>
+					<td class="text-center" style="vertical-align:top"><div id="test_{{$loop->index}}" class="test"><i class="fas fa-question-circle"></i></div></td>
+					<td style="width:100%;">
+						<div id="test_message_{{$loop->index}}" class="text-muted pl-2" style="height:100%;">
+							<div>Test {{$loop->index + 1}}</div>
+						</div>
+					</td>
+					</tr>
+					@endforeach
+					</table>
+				</div>
 			</div>
         </div>
 
