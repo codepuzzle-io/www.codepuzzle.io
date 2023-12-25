@@ -160,14 +160,18 @@ $asserts = '[' . trim($asserts, ',') . ']';
 		        <div style="width:100%;margin:0px auto 0px auto;"><div id="editor_code" style="border-radius:5px;">{{$defi->code}}</div></div>
                 <!-- annonce enregistrement reponse -->
 				<div id="enregistrement_reponse" class="text-monospace small mt-2"></div>
-
-                <!-- boutons run / stop -->
-				<div class="text-left">
-                	<button id="run" type="button" class="btn btn-primary pl-4 pr-4" disabled><i class="fas fa-play"></i></button>
-                	<button id="stop" type="button" class="btn btn-dark pl-4 pr-4" style="display:none" data-bs-toggle="tooltip" data-bs-placement="right"  data-bs-trigger="hover" title="{{__('l\'arrêt peut prendre quelques secondes')}}"><i class="fas fa-stop"></i></button>
-				</div>
             </div>
         </div>
+
+		<!-- boutons run / stop -->
+		<div class="row">
+			<div class="col-md-5 offset-md-1">
+				<button id="run" type="button" class="btn btn-primary btn-sm pl-4 pr-4" style="padding-top:6px;" disabled><i class="fas fa-play"></i></button>
+                <button id="stop" type="button" class="btn btn-dark btn-sm pl-3 pr-3" style="padding-top:6px;display:none;" data-bs-toggle="tooltip" data-bs-placement="right"  data-bs-trigger="hover" title="{{__('l\'arrêt peut prendre quelques secondes')}}"><i class="fas fa-stop"></i></button>
+			</div>
+			<div class="col-md-5">
+			</div>
+		</div>
         
         <div class="row mt-3">
             <div class="col-md-4 offset-md-4 text-monospace small">
