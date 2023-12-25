@@ -164,7 +164,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
                 <!-- boutons run / stop -->
 				<div class="text-left">
                 	<button id="run" type="button" class="btn btn-primary pl-4 pr-4" disabled><i class="fas fa-play"></i></button>
-                	<button id="stop" type="button" class="btn btn-dark pl-4 pr-4" style="display:none" data-bs-toggle="tooltip" data-bs-placement="right"  data-bs-trigger="hover" title="{{__('l'arrêt peut prendre quelques secondes')}}"><i class="fas fa-stop"></i></button>
+                	<button id="stop" type="button" class="btn btn-dark pl-4 pr-4" style="display:none" data-bs-toggle="tooltip" data-bs-placement="right"  data-bs-trigger="hover" title="{{__('l\'arrêt peut prendre quelques secondes')}}"><i class="fas fa-stop"></i></button>
 				</div>
             </div>
         </div>
