@@ -169,7 +169,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
             </div>
         </div>
         
-        <div class="row mt-5">
+        <div class="row mt-3">
             <div class="col-md-4 offset-md-4 text-monospace small">
 				<table style="width:100%">
                 @foreach($tests AS $test)
@@ -226,7 +226,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 
 		// envoi des donnees au webworker pour execution
 		run.onclick = function() {
-			interruptBuffer[0] = 0;
+			//interruptBuffer[0] = 0;
 			const code = document.getElementById("code").value;
 			const asserts = {!!$asserts!!};
 			output2.innerHTML = "";
