@@ -229,6 +229,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 			//interruptBuffer[0] = 0;
 			const code = document.getElementById("code").value;
 			const asserts = {!!$asserts!!};
+			output1.innerHTML = "";
 			output2.innerHTML = "";
 			pyodideWorker.postMessage({ code: code, asserts: asserts });		
 		}
