@@ -209,12 +209,22 @@ $asserts = '[' . trim($asserts, ',') . ']';
 		const output2 = document.getElementById("output2");
 		const status = document.getElementById("status");
 		
+		// webworker
 		let pyodideWorker = new Worker("{{ asset('pyodideworker/pyodideWorker.js') }}");
+
+		// interruption python
+		let interruptBuffer = new Uint8Array(new SharedArrayBuffer(1));
+		pyodideWorker.postMessage({ cmd: "setInterruptBuffer", interruptBuffer });
+		stop.onclick = function() {
+			// 2 stands for SIGINT.
+  			interruptBuffer[0] = 2;
+		}
 
 		output1.innerText = "Initialisation...\n";
 
 		// envoi des donnees au webworker pour execution
 		run.onclick = function() {
+			interruptBuffer[0] = 0;
 			const code = document.getElementById("code").value;
 			const asserts = {!!$asserts!!};
 			output2.innerHTML = "";
