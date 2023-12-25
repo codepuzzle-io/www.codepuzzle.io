@@ -167,9 +167,11 @@ IFrame('https://www.codepuzzle.io/I{{ strtoupper($jeton) }}', width='100%', heig
                                                 </div>
                                                 <p class="text-monospace mt-1" style="margin-left:22px;font-size:90%";color:silver>{{__('Remarque : ajuster la valeur de "height" en fonction de la taille du défi')}}</p>
                                             </div>
+                                            <!--
                                             <div class="text-monospace text-muted small pb-3">
                                                 <i class="fas fa-share-alt ml-1 mr-1"></i> QR code : <img src="https://api.qrserver.com/v1/create-qr-code/?data={{urlencode('https://www.codepuzzle.io/' . strtoupper($jeton))}}&amp;size=100x100" style="width:100px" alt="wwww.codepuzzle.io/{{strtoupper($jeton)}}" data-toggle="tooltip" data-placement="right" title="{{__('clic droit + Enregistrer l image sous... pour sauvegarder l image')}}" />
-                                            </div>                                            
+                                            </div>    
+                                            -->                                        
                                         </div> 
                                     
 

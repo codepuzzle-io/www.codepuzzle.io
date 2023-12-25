@@ -97,9 +97,11 @@ IFrame('https://www.codepuzzle.io/IP{{ strtoupper($puzzle->jeton) }}', width='10
                                         </div>
                                         <p class="text-monospace mt-1" style="margin-left:22px;font-size:90%";color:silver>{{__('Remarque : ajuster la valeur de "height" en fonction de la taille du puzzle')}}</p>
                                     </div>
+                                    <!--
                                     <div class="text-monospace text-muted mb-4 small">
                                         <i class="fas fa-share-alt ml-1 mr-1"></i> QR code : <img src="https://api.qrserver.com/v1/create-qr-code/?data={{urlencode('https://www.codepuzzle.io/P' . strtoupper($puzzle->jeton))}}&amp;size=100x100" style="width:100px" alt="wwww.codepuzzle.io/P{{strtoupper($puzzle->jeton)}}" data-toggle="tooltip" data-placement="right" title="{{__('clic droit + Enregistrer l image sous... pour sauvegarder l image')}}" />
                                     </div>
+                                    -->
                                     @if ($puzzle->titre_eleve !== NULL OR $puzzle->consignes_eleve !== NULL)
                                         <div class="card card-body">
                                             @if ($puzzle->titre_eleve !== NULL)

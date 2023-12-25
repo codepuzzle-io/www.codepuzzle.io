@@ -22,9 +22,11 @@
         <div class="text-monospace font-weight-bolder text-center" style="font-size:1.5em;color:silver">
             <a href="/D{{ strtoupper($defi->jeton) }}" target="_blank">www.codepuzzle.io/D{{ strtoupper($defi->jeton) }}</a>
         </div>
+        <!--
         <div class="text-center mt-2 mb-4">
             <img src="https://api.qrserver.com/v1/create-qr-code/?data={{urlencode('https://www.codepuzzle.io/D' . strtoupper($defi->jeton))}}&amp;size=100x100" style="width:100px" alt="www.codepuzzle.io/D{{strtoupper($defi->jeton)}}" data-toggle="tooltip" data-placement="right" title="{{__('clic droit + Enregistrer l image sous... pour sauvegarder l image')}}" />
         </div>
+        -->
 
 		<div class="row pt-3">
 
