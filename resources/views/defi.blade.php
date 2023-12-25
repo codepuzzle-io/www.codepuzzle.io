@@ -490,8 +490,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 
 
 	@if(!Auth::check())
-	<script>
-	/*		
+	<script>	
 		editor_code.on("paste", function(texteColle) {
 			console.log("Text collé: " + texteColle.text);
 			if (!editor_code.getSession().getValue().includes(texteColle.text)) {
@@ -501,7 +500,6 @@ $asserts = '[' . trim($asserts, ',') . ']';
 				console.log("Le collage de ce texte est autorisé.");
 			}
 		});
-		*/
 	</script>	
 	@endif
 
