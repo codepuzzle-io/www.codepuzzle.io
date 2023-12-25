@@ -268,10 +268,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 				}
 
 				if (event.data.status == 'success'){
-					run.disabled = true;
-					run.classList.remove('btn-primary');
-					run.classList.add('btn-light');
-					run.innerHTML = '<i class="fas fa-check"></i>';
+					run.style.display = "none";
 					@if(isset($jeton_eleve))
 						classe_activite_enregistrer();
 					@endif
