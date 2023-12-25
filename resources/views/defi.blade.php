@@ -212,6 +212,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 		// webworker
 		let pyodideWorker = new Worker("{{ asset('pyodideworker/pyodideWorker.js') }}");
 
+		/*
 		// interruption python
 		let interruptBuffer = new Uint8Array(new SharedArrayBuffer(1));
 		pyodideWorker.postMessage({ cmd: "setInterruptBuffer", interruptBuffer });
@@ -219,6 +220,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 			// 2 stands for SIGINT.
   			interruptBuffer[0] = 2;
 		}
+		*/
 
 		output1.innerText = "Initialisation...\n";
 

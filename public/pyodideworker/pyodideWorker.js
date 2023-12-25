@@ -26,11 +26,12 @@ self.onmessage = async (event) => {
 
     await pyodideReadyPromise;
 
-
+    /*
     if (event.data.cmd === "setInterruptBuffer") {
         pyodide.setInterruptBuffer(event.data.interruptBuffer);
         return;
     }
+    */
 
     // ========================================================================
     // REINITIALISATION DE GLOBALS (on supprime les cles qui n'etaient pas 
