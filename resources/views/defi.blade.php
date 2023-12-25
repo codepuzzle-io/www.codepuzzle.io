@@ -108,7 +108,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
             <div class="col-md-10 offset-md-1">
                 <div class="frame text-monospace">
                     @if ($defi->titre_eleve !== NULL)
-                        <div class="mb-1">{{ $defi->titre_eleve }}</div>
+                        <div class="mb-1 font-weight-bold">{{ $defi->titre_eleve }}</div>
                     @endif
 
 					<?php
