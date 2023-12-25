@@ -62,11 +62,9 @@ self.onmessage = async (event) => {
             self.postMessage({ output2: output2 + "\n" });
         }
         
-
         var n = 0;
         var ok = true;
         
-
         for (assert of asserts){
 
             try {
@@ -108,28 +106,22 @@ self.onmessage = async (event) => {
                 
                 errors.forEach((error) => {
                     if (typeof(error) !== 'undefined' && !error.includes('Traceback')) {
-                        //output_message += error;
-                        
                         // on recupere la ligne de l'erreur
                         regex = /line (\d+)/;
                         let error_line = regex.exec(error)[1];
-
                         // on retire la premiere ligne pour ne garder que le message
                         let error_string = error.replace(/^.*\n/, '');
-
                         if (code.split('\n').length) {
                             nb_code_lines = code.split('\n').length;
                         } else {
                             nb_code_lines = 0;
                         }
-
                         var error_info = ""
                         if (error_line <= nb_code_lines) error_info += "Erreur ligne " + error_line + "\n";
                         if (error_string) error_info += error_string;
                         if (error_info.trim()) {
                             output_message += error_info.trim() + "\n\n";
-                        }
-                        
+                        }  
                     }
                 });	
                 
@@ -150,18 +142,14 @@ self.onmessage = async (event) => {
     // ERREUR EXECUTION PYTHON
     } catch (err) {
 
-        // erreur python
         let errors = err.message.split("File \"<exec>\", ");
         errors.forEach((error) => {
             if (typeof(error) !== 'undefined' && !error.includes('Traceback')) {
-
                 // on recupere la ligne de l'erreur
                 regex = /line (\d+)/;
                 let error_line = regex.exec(error)[1];
-
                 // on retire la premiere ligne pour ne garder que le message
                 let error_string = error.replace(/^.*\n/, '');
-
                 var error_info = "";
                 error_info += "Erreur ligne " + error_line + "\n";
                 if (error_string) error_info += error_string;

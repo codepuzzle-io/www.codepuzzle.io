@@ -155,12 +155,26 @@ $asserts = '[' . trim($asserts, ',') . ']';
         </div>
 
         <div class="row mt-3">
-            <div class="col-md-10 offset-md-1 text-center">
+            <div class="col-md-8 offset-md-1 text-center">
                 <textarea name="code" style="display:none;" id="code"></textarea>
 		        <div style="width:100%;margin:0px auto 0px auto;"><div id="editor_code" style="border-radius:5px;">{{$defi->code}}</div></div>
                 <!-- annonce enregistrement reponse -->
 				<div id="enregistrement_reponse" class="text-monospace small mt-2"></div>
             </div>
+			<div class="col-md-2 small">
+				<table style="width:100%">
+                @foreach($tests AS $test)
+				<tr>
+				<td class="text-center" style="vertical-align:top"><div id="test_{{$loop->index}}" class="test"><i class="fas fa-question-circle"></i></div></td>
+				<td style="width:100%;">
+					<div id="test_message_{{$loop->index}}" class="text-muted pl-2" style="height:100%;">
+						<div>Test {{$loop->index + 1}}</div>
+					</div>
+				</td>
+				</tr>
+                @endforeach
+				</table>
+			</div>
         </div>
 
 		<!-- boutons run / stop -->
@@ -175,18 +189,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
         
         <div class="row mt-3">
             <div class="col-md-4 offset-md-4 text-monospace small">
-				<table style="width:100%">
-                @foreach($tests AS $test)
-				<tr>
-				<td class="text-center" style="vertical-align:top"><div id="test_{{$loop->index}}" class="test"><i class="fas fa-question-circle"></i></div></td>
-				<td style="width:100%;">
-					<div id="test_message_{{$loop->index}}" class="text-muted pl-2" style="height:100%;">
-						<div>Test {{$loop->index + 1}}</div>
-					</div>
-				</td>
-				</tr>
-                @endforeach
-				</table>
+
             </div>
         </div>
 
@@ -359,7 +362,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 			theme: "ace/theme/puzzle_code",
 			mode: "ace/mode/python",
 			maxLines: 500,
-			minLines: 4,
+			minLines: 8,
 			fontSize: 14,
 			wrap: true,
 			useWorker: false,
