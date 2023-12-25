@@ -212,7 +212,6 @@ $asserts = '[' . trim($asserts, ',') . ']';
 		// webworker
 		let pyodideWorker = new Worker("{{ asset('pyodideworker/pyodideWorker.js') }}");
 
-		/*
 		// interruption python
 		let interruptBuffer = new Uint8Array(new SharedArrayBuffer(1));
 		pyodideWorker.postMessage({ cmd: "setInterruptBuffer", interruptBuffer });
@@ -220,13 +219,12 @@ $asserts = '[' . trim($asserts, ',') . ']';
 			// 2 stands for SIGINT.
   			interruptBuffer[0] = 2;
 		}
-		*/
 
 		output1.innerText = "Initialisation...\n";
 
 		// envoi des donnees au webworker pour execution
 		run.onclick = function() {
-			//interruptBuffer[0] = 0;
+			interruptBuffer[0] = 0;
 			const code = document.getElementById("code").value;
 			const asserts = {!!$asserts!!};
 			output1.innerHTML = "";
@@ -295,199 +293,6 @@ $asserts = '[' . trim($asserts, ',') . ']';
 			}
 
 		};
-
-
-
-
-
-
-
-		/*
-
-		const output = document.getElementById("output");
-		const code = document.getElementById("code");
-		var nb_tentatives = 1;
-
-		function addToOutput(s) {
-			//output.innerText += ">>>" + code.value + "\n" + s + "\n";
-			output.innerText = ""
-			if (typeof(s) !== 'undefined'){
-				output.innerText = s
-			}
-		}
-
-		var globals_keys = []
-
-		output.innerText = "Initialisation...\n";
-
-		// init Pyodide
-		async function main() {
-			let pyodide = await loadPyodide();
-			output.innerText = "Prêt!\n";
-
-			// Liste des clés de globals présentes lors de la première excécution
-			for (const key of pyodide.globals.keys()) {
-				globals_keys.push(key);
-			}
-
-			return pyodide;
-		}
-		
-		let pyodideReadyPromise = main();
-
-		async function evaluatePython() {
-			let pyodide = await pyodideReadyPromise;
-			await pyodide.loadPackagesFromImports(code.value);
-			var asserts_tab = {!!$asserts!!};			
-			var error_message = ""
-			@if ($defi->with_nbverif == 1)
-			document.getElementById('nb_tentatives').innerText = nb_tentatives++;
-			@endif
-
-			// REINITIALISATION DE GLOBALS (on supprime les cles qui
-			// n'étaient pas présentes lors de la première exécution)
-			const clesASupprimer = [];
-			for (const key of pyodide.globals.keys()) {
-				if (!globals_keys.includes(key)) {
-					clesASupprimer.push(key);
-				}
-			}
-			for (const key of clesASupprimer) {
-				pyodide.globals.delete(key);
-			}
-
-			try {
-
-				// redirection output vers div
-				document.getElementById("output2").innerText = "";
-				pyodide.setStdout({batched: (str) => {
-					document.getElementById("output2").innerText += str+"\n";
-					console.log(str);
-				}})
-
-				let output = pyodide.runPython(code.value);
-
-				var n = 0;
-				var ok = true;
-
-				for (assert of asserts_tab){
-					console.log("ASSERT: "+assert)
-
-					try {
-						// pas d'erreur python
-						// assert valide
-
-						// redirection output vers console pour ne pas afficher des print dans le div output quand on teste un assert
-						pyodide.setStdout({batched: (str) => {
-							console.log(str);
-						}})
-
-						// REINITIALISATION DE GLOBALS (on supprime les cles qui
-						// n'étaient pas présentes lors de la première exécution)
-						const clesASupprimer = [];
-						for (const key of pyodide.globals.keys()) {
-							if (!globals_keys.includes(key)) {
-								clesASupprimer.push(key);
-							}
-						}
-						for (const key of clesASupprimer) {
-							pyodide.globals.delete(key);
-						}
-
-						pyodide.runPython(code.value + "\n" + assert[0] + ', "' + assert[1] + '"');	
-						document.getElementById('test_'+n).innerHTML = '<i class="fas fa-check-circle"></i>';
-						document.getElementById('test_message_'+n).innerHTML = 'Test validé!';
-						document.getElementById('test_'+n).className = "test_success";
-						console.log("pas d'erreur python et assert validé")
-
-					} catch (err) {
-						// pas d'erreur python
-						// assert non valide
-						console.log("Pas d'erreur Python mais assert non validé")
-						console.log("Errors: " + err)
-
-						var test_message = "Test non validé :-/";
-						@if($defi->with_message)
-						if (assert[1]) {
-							var test_message = assert[1];
-						}
-						@endif	
-
-						document.getElementById('test_'+n).innerHTML = '<i class="fas fa-times-circle"></i>';
-						document.getElementById('test_message_'+n).innerHTML = test_message;
-						document.getElementById('test_'+n).className = "test_failed";
-
-						error_message += "Test "+ (n+1) + ": échec\n\n";
-
-						let errors = err.message.split("File \"<exec>\", ");
-						errors.forEach((error) => {
-							if (typeof(error) !== 'undefined' && !error.includes('Traceback')) {
-
-								// on recupere la ligne de l'erreur
-								regex = /line (\d+)/;
-    							let error_line = regex.exec(error)[1];
-
-								// on retire la premiere ligne pour ne garder que le message
-								let error_string = error.replace(/^.*\n/, '');
-
-								console.log("error_line: " + error_line)
-								console.log("error_string: " + error_string)
-
-								if (code.value.split('\n').length) {
-									nb_code_lines = code.value.split('\n').length;
-								} else {
-									nb_code_lines = 0;
-								}
-								console.log("nb_code_lines: " + nb_code_lines)
-								console.log("code: " + code.value)
-								var error_info = ""
-								if (error_line <= nb_code_lines) error_info += "Erreur ligne " + error_line + "\n";
-								if (error_string) error_info += error_string;
-								if (error_info.trim()) {
-									error_message += error_info.trim() + "\n\n";
-								}
-							}
-						});						
-						
-						ok = false;
-					}
-					n++;			
-				}
-				
-				if (ok) {
-					error_message = "Code correct et tests validés. Bravo!";
-					document.getElementById('verifier').style.display = 'none';
-					@if(isset($jeton_eleve))
-						classe_activite_enregistrer();
-					@endif
-					bravo();
-				} 	
-			} catch (err) {
-				// erreur python
-				console.log('ERROR')
-				console.log("Errors: " + err)
-
-				let errors = err.message.split("File \"<exec>\", ");
-				errors.forEach((error) => {
-					if (typeof(error) !== 'undefined' && !error.includes('Traceback')) {
-
-						// on recupere la ligne de l'erreur
-						regex = /line (\d+)/;
-						let error_line = regex.exec(error)[1];
-
-						// on retire la premiere ligne pour ne garder que le message
-						let error_string = error.replace(/^.*\n/, '');
-
-						var error_info = "";
-						error_info += "Erreur ligne " + error_line + "\n";
-						if (error_string) error_info += error_string;
-						error_message += error_info.trim() + "\n\n";
-					}
-				});
-			}	
-			addToOutput(error_message.trim());			
-		}
-		*/
 	</script>	
 
 	<script src="{{ asset('js/html2canvas.min.js') }}" type="text/javascript" charset="utf-8"></script>
@@ -540,8 +345,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 				processHtmlClass: "mathjax"
 			}
 		};        
-	</script>  
-	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	</script>
 	<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script> 
 
 

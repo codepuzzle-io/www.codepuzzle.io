@@ -264,8 +264,6 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 
     @include('inc-bottom-js')
 
-    <script src="https://cdn.jsdelivr.net/npm/markdown-it@13.0.2/dist/markdown-it.min.js"></script>
-
     <script>
         MathJax = {
             tex: {
@@ -279,7 +277,6 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
             }
         };        
     </script>  
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
     <script src="{{ asset('js/ace/ace.js') }}" type="text/javascript" charset="utf-8"></script>
