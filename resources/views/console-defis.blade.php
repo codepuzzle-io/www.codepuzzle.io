@@ -10,6 +10,16 @@
 	@endphp
     @include('inc-nav-console')
 
+    <?php
+    include('lib/parsedownmath/ParsedownMath.php');
+    $Parsedown = new ParsedownMath([
+        'math' => [
+            'enabled' => true, // Write true to enable the module
+            'matchSingleDollar' => true // default false
+        ]
+    ]);
+    ?>
+
 	<div class="container mt-4 mb-5">
 
 		<div class="row pt-3">
@@ -102,22 +112,19 @@ IFrame('https://www.codepuzzle.io/ID{{ strtoupper($defi->jeton) }}', width='100%
                                         <i class="fas fa-share-alt ml-1 mr-1"></i> QR code : <img src="https://api.qrserver.com/v1/create-qr-code/?data={{urlencode('https://www.codepuzzle.io/D' . strtoupper($defi->jeton))}}&amp;size=100x100" style="width:100px" alt="wwww.codepuzzle.io/D{{strtoupper($defi->jeton)}}" data-toggle="tooltip" data-placement="right" title="{{__('clic droit + Enregistrer l image sous... pour sauvegarder l image')}}" />
                                     </div>
                                     @if ($defi->titre_eleve !== NULL OR $defi->consignes_eleve !== NULL)
-                                        <div class="card card-body">
+                                        <div class="card card-body pt-3 pl-3 pr-3 pb-1">
                                             @if ($defi->titre_eleve !== NULL)
-                                                <div class="text-monospace small mb-1">{{ $defi->titre_eleve }}</div>
+                                                <div class="text-monospace mb-1 font-weight-bold">{{ $defi->titre_eleve }}</div>
                                             @endif
                                             @if ($defi->consignes_eleve !== NULL)
-                                                <div class="text-monospace text-muted small mathjax consignes">
-                                                    <?php
-                                                    $Parsedown = new Parsedown();
-                                                    echo $Parsedown->text($defi->consignes_eleve);
-                                                    ?>
+                                                <div class="text-monospace text-muted mathjax consignes">
+                                                    {!! $Parsedown->text($defi->consignes_eleve) !!}
                                                 </div>
                                             @endif
                                         </div>
                                     @endif
                                     <div class="mt-3 text-monospace text-muted small">{{__('réponse possible')}}</div>
-                                    <div style="width:100%;margin:0px auto 0px auto;"><div id="editor_code-{{$loop->iteration}}" style="border-radius:5px;">{{$defi->code}}</div></div>
+                                    <div style="width:100%;margin:0px auto 0px auto;"><div id="editor_code-{{$loop->iteration}}" style="border-radius:5px;">{{$defi->solution}}</div></div>
                                 </div>
                             </div>
                         </div>
@@ -159,22 +166,20 @@ IFrame('https://www.codepuzzle.io/ID{{ strtoupper($defi->jeton) }}', width='100%
 	</script>
 
     <script>
-        MathJax = {
-        tex: {
-            inlineMath: [['$', '$'], ['\\(', '\\)']]
-        },
-		options: {
-			ignoreHtmlClass: "no-mathjax",
-			processHtmlClass: "mathjax"
-		},
-        svg: {
-            fontCache: 'global'
-        }
-        };
-    </script>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
-    </script> 
+		MathJax = {
+			tex: {
+				inlineMath: [['$', '$'], ['\\(', '\\)']],
+				displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+				processEscapes: true
+			},
+			options: {
+				ignoreHtmlClass: "no-mathjax",
+				processHtmlClass: "mathjax"
+			}
+		};        
+	</script>  
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script> 
 
 	@include('inc-bottom-js')
 
