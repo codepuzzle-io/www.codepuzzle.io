@@ -1,9 +1,4 @@
 <?php
-header("Cross-Origin-Embedder-Policy: require-corp");
-header("Cross-Origin-Opener-Policy: same-origin");
-?>
-
-<?php
 // recuperation du défi en fonction du jeton
 $defi = App\Models\Defi::where('jeton', $jeton)->first();
 $tests = unserialize($defi->tests);
@@ -169,7 +164,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
                 <!-- boutons run / stop -->
 				<div class="text-left">
                 	<button id="run" type="button" class="btn btn-primary pl-4 pr-4" disabled><i class="fas fa-play"></i></button>
-                	<button id="stop" type="button" class="btn btn-dark pl-4 pr-4" style="display:none"><i class="fas fa-stop"></i></button>
+                	<button id="stop" type="button" class="btn btn-dark pl-4 pr-4" style="display:none" data-bs-toggle="tooltip" data-bs-placement="right"  data-bs-trigger="hover" title="{{__('l'arrêt peut prendre quelques secondes')}}"><i class="fas fa-stop"></i></button>
 				</div>
             </div>
         </div>
@@ -217,6 +212,8 @@ $asserts = '[' . trim($asserts, ',') . ']';
 		// webworker
 		let pyodideWorker = new Worker("{{ asset('pyodideworker/pyodideWorker.js') }}");
 
+		output1.innerText = "Initialisation...\n";
+
 		// interruption python
 		let interruptBuffer = new Uint8Array(new SharedArrayBuffer(1));
 		pyodideWorker.postMessage({ cmd: "setInterruptBuffer", interruptBuffer });
@@ -224,8 +221,6 @@ $asserts = '[' . trim($asserts, ',') . ']';
 			// 2 stands for SIGINT.
   			interruptBuffer[0] = 2;
 		}
-
-		output1.innerText = "Initialisation...\n";
 
 		// envoi des donnees au webworker pour execution
 		run.onclick = function() {

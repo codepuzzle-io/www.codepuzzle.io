@@ -289,33 +289,6 @@ if (isset($jeton_secret)) {
 		})();	
 	</script>
 
-	<script>
-
-		const table = document.getElementById('tests_table');
-		function addTest() {
-			removeButton = document.createElement('a');
-			removeButton.href = "#tests_anchor";
-			removeButton.innerHTML = '<i class="ml-2 fas fa-trash"></i>';	
-			newRow = table.insertRow();
-			newCell1 = newRow.insertCell();
-			newCell2 = newRow.insertCell();
-			newCell3 = newRow.insertCell();
-			newCell1.classList.add("align-top");
-			newCell1.classList.add("pr-2");
-			newCell2.classList.add("align-top");
-			newCell1.innerHTML = '<input type="text" class="form-control" name="condition[]" />';
-			newCell2.innerHTML = '<input type="text" class="form-control" name="description[]" />';
-			newCell3.appendChild(removeButton);		
-			removeButton.addEventListener('click', function() {
-				this.parentNode.parentNode.remove();
-			});
-		}
-		function removeTest(tag) {
-			tag.parentNode.parentNode.remove();
-		}
-		document.getElementById('add_button').addEventListener('click', addTest);
-	</script>
-
 	<?php
 	/*
 	   IMPORTANT
