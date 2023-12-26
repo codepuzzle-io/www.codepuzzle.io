@@ -51,8 +51,8 @@ self.onmessage = async (event) => {
         self.pyodide.setStdout({batched: (str) => {
             self.postMessage({ output2: str + "\n" });
         }})
-        //self.postMessage({ code: code });
-        //self.postMessage({ asserts: asserts });
+        self.postMessage({ code: code });
+        self.postMessage({ asserts: asserts });
 
         await self.pyodide.loadPackagesFromImports(code);
 

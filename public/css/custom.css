@@ -596,14 +596,11 @@ svg {
 .btn-warning {
     color: white;
     background-color: #ffbf00;
-    border: solid #f8fafc 4px;
-    border-radius:8px;
 }
 
 .btn-warning:hover {
     color: white;
     background-color: #ffbf00;
-    border: solid #e0edf9 4px;
 }
 
 .btn-warning:not(:disabled):not(.disabled):active, .btn-warning:not(:disabled):not(.disabled).active, .show > .btn-warning.dropdown-toggle {

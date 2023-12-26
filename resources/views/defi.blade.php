@@ -147,19 +147,27 @@ $asserts = '[' . trim($asserts, ',') . ']';
     </div>
 
     <div class="container-fluid pb-5">
-        <div class="row">
-            <div class="col-md-10 offset-md-1 text-center" style="position:relative;height:30px;">
-				<!-- bouton reinitialiser -->
-				<a id="reinitialiser" href="{{ request()->fullUrl() }}" style="position:absolute;left:25px;top:10px;" class="text-muted" data-bs-toggle="tooltip" data-bs-placement="right"  data-bs-trigger="hover" title="{{__('réinitialiser')}}"><i class="fas fa-sync-alt"></i></a>
-            </div>
-        </div>
 
-        <div class="row mt-3">
+        <div class="row">
             <div class="col-md-8 offset-md-1 text-center">
                 <textarea name="code" style="display:none;" id="code"></textarea>
 		        <div style="width:100%;margin:0px auto 0px auto;"><div id="editor_code" style="border-radius:5px;">{{$defi->code}}</div></div>
-                <!-- annonce enregistrement reponse -->
+                
+				<!-- annonce enregistrement reponse -->
 				<div id="enregistrement_reponse" class="text-monospace small mt-2"></div>
+
+
+				<!-- boutons run / stop / restart -->
+				<div class="row">
+					<div class="col-md-6 text-left">
+						<button id="run" type="button" class="btn btn-primary btn-sm pl-4 pr-4" style="padding-top:6px;" disabled><i class="fas fa-play"></i></button>
+						<button id="stop" type="button" class="btn btn-dark btn-sm pl-3 pr-3" style="padding-top:6px;display:none;" data-bs-toggle="tooltip" data-bs-placement="right"  data-bs-trigger="hover" title="{{__('Interruption de l\'exécution du code (en cas de boucle infinie ou de traitement trop long). L\'arrêt peut prendre quelques secondes.')}}"><i class="fas fa-stop"></i></button>
+					</div>
+					<div class="col-md-6 text-right">
+						<button id="restart" type="button" class="btn btn-warning btn-sm pl-3 pr-3" style="padding-top:6px;display:none;" data-bs-toggle="tooltip" data-bs-placement="right"  data-bs-trigger="hover" title="{{__('Si le bouton d\'arrêt ne permet pas d\'interrompre  l\'exécution du code, cliquer ici. Python redémarrera complètement mais votre code sera conservé dans l\'éditeur. Le redémarrage peut prendre quelques secondes.')}}"><i class="fas fa-skull"></i></button>
+					</div>
+				</div>
+
             </div>
 			<div class="col-md-2">
 				<div class="small mb-3">
@@ -179,21 +187,6 @@ $asserts = '[' . trim($asserts, ',') . ']';
 			</div>
         </div>
 
-		<!-- boutons run / stop -->
-		<div class="row">
-			<div class="col-md-5 offset-md-1">
-				<button id="run" type="button" class="btn btn-primary btn-sm pl-4 pr-4" style="padding-top:6px;" disabled><i class="fas fa-play"></i></button>
-                <button id="stop" type="button" class="btn btn-dark btn-sm pl-3 pr-3" style="padding-top:6px;display:none;" data-bs-toggle="tooltip" data-bs-placement="right"  data-bs-trigger="hover" title="{{__('l\'arrêt peut prendre quelques secondes')}}"><i class="fas fa-stop"></i></button>
-			</div>
-			<div class="col-md-5">
-			</div>
-		</div>
-        
-        <div class="row mt-3">
-            <div class="col-md-4 offset-md-4 text-monospace small">
-
-            </div>
-        </div>
 
         <div class="row mt-3 pb-5" @if(!$defi->with_console) style="display:none" @endif  >
             <div class="col-md-5 offset-md-1">
@@ -210,97 +203,133 @@ $asserts = '[' . trim($asserts, ',') . ']';
 
     @include('inc-bottom-js')
 
-	<script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
     <script>
 		// PYODIDE
 
 		const run = document.getElementById("run");
 		const stop = document.getElementById("stop");
+		const restart = document.getElementById("restart");
 		const output1 = document.getElementById("output1");
 		const output2 = document.getElementById("output2");
 		const status = document.getElementById("status");
-		
+
 		// webworker
-		let pyodideWorker = new Worker("{{ asset('pyodideworker/pyodideWorker.js') }}");
+		let pyodideWorker = createWorker();
 
-		output1.innerText = "Initialisation...\n";
+        function createWorker() {
+			output1.innerText = "Initialisation...\n";
+			run.disabled = true;
+			run.innerHTML = '<i class="fas fa-play"></i>';
+			stop.style.display = 'none';
+			restart.style.display = 'none';
 
-		// interruption python
-		let interruptBuffer = new Uint8Array(new SharedArrayBuffer(1));
-		pyodideWorker.postMessage({ cmd: "setInterruptBuffer", interruptBuffer });
+            let pyodideWorker = new Worker("{{ asset('pyodideworker/pyodideWorker.js') }}");
+
+			pyodideWorker.onmessage = function(event) {
+				
+				// reponses du WebWorker
+				console.log("EVENT: ", event.data);
+
+				if (typeof event.data.init !== 'undefined') {
+					output1.innerText = "Prêt!\n";
+					run.disabled = false;
+				}
+
+				if (typeof event.data.status !== 'undefined') {
+
+					if (event.data.status == 'running'){
+						run.disabled = true;
+						run.innerHTML = '<i class="fas fa-cog fa-spin"></i>';
+						stop.style.display = 'inline';
+					}
+
+					if (event.data.status == 'completed'){
+						run.disabled = false;
+						run.innerHTML = '<i class="fas fa-play"></i>';
+						stop.style.display = 'none';
+						restart.style.display = 'none';
+					}
+
+					if (event.data.status == 'success'){
+						run.style.display = "none";
+						@if(isset($jeton_eleve))
+							classe_activite_enregistrer();
+						@endif
+						bravo();
+					}
+				}
+
+				if (typeof event.data.output1 !== 'undefined') {
+					output1.innerHTML = event.data.output1;
+				}	
+
+				if (typeof event.data.output2 !== 'undefined') {
+					output2.innerHTML += event.data.output2;
+				}	
+
+				if (typeof event.data.assert_erreur !== 'undefined') {
+					var test_message = "Test non validé :-/";
+					//if (assert[1]) {
+					//	var test_message = assert[1];
+					//}
+					document.getElementById('test_' + event.data.assert_erreur).className = "test_failed";
+					document.getElementById('test_' + event.data.assert_erreur).innerHTML = '<i class="fas fa-times-circle"></i>';
+					document.getElementById('test_message_' + event.data.assert_erreur).innerHTML = test_message;
+				}
+
+				if (typeof event.data.assert_valide !== 'undefined') {
+					document.getElementById('test_' + event.data.assert_valide).className = "test_success";
+					document.getElementById('test_' + event.data.assert_valide).innerHTML = '<i class="fas fa-check-circle"></i>';
+					document.getElementById('test_message_' + event.data.assert_valide).innerHTML = 'Test validé!';
+				}
+
+			};
+
+			return pyodideWorker
+
+        }
+
+        function restartWorker() {
+            if (pyodideWorker) {
+                pyodideWorker.terminate();
+				console.log("Web Worker supprimé.");
+            }
+            pyodideWorker = createWorker();
+            console.log("Web Worker redémarré.");
+        }
+
+
+		@if(App::isProduction())
+			// ne fonctionne pas en local a cause de COEP et COOP
+			// interruption python
+			let interruptBuffer = new Uint8Array(new SharedArrayBuffer(1));
+			pyodideWorker.postMessage({ cmd: "setInterruptBuffer", interruptBuffer });
+		@endif
+
 		stop.onclick = function() {
+			restart.style.display = 'inline';
 			// 2 stands for SIGINT.
-  			interruptBuffer[0] = 2;
+			interruptBuffer[0] = 2;
+		}
+		
+		// arrete et redemarre le webworker
+		restart.onclick = function() {
+			restartWorker();
 		}
 
 		// envoi des donnees au webworker pour execution
 		run.onclick = function() {
-			interruptBuffer[0] = 0;
+			console.log("RUN")
+			@if(App::isProduction())
+				// ne fonctionne pas en local a cause de COEP et COOP
+				interruptBuffer[0] = 0;
+			@endif
 			const code = document.getElementById("code").value;
 			const asserts = {!!$asserts!!};
 			output1.innerHTML = "";
 			output2.innerHTML = "";
 			pyodideWorker.postMessage({ code: code, asserts: asserts });		
 		}
-
-		pyodideWorker.onmessage = function(event) {
-			
-			// reponses du WebWorker
-			console.log("EVENT: ", event.data);
-
-			if (typeof event.data.init !== 'undefined') {
-				output1.innerText = "Prêt!\n";
-				run.disabled = false;
-			}
-
-			if (typeof event.data.status !== 'undefined') {
-
-				if (event.data.status == 'running'){
-					run.disabled = true;
-					run.innerHTML = '<i class="fas fa-cog fa-spin"></i>';
-					stop.style.display = 'inline';
-				}
-
-				if (event.data.status == 'completed'){
-					run.disabled = false;
-					run.innerHTML = '<i class="fas fa-play"></i>';
-					stop.style.display = 'none';
-				}
-
-				if (event.data.status == 'success'){
-					run.style.display = "none";
-					@if(isset($jeton_eleve))
-						classe_activite_enregistrer();
-					@endif
-					bravo();
-				}
-			}
-
-			if (typeof event.data.output1 !== 'undefined') {
-				output1.innerHTML = event.data.output1;
-			}	
-
-			if (typeof event.data.output2 !== 'undefined') {
-				output2.innerHTML += event.data.output2;
-			}	
-
-			if (typeof event.data.assert_erreur !== 'undefined') {
-				var test_message = "Test non validé :-/";
-				//if (assert[1]) {
-				//	var test_message = assert[1];
-				//}
-				document.getElementById('test_' + event.data.assert_erreur).className = "test_failed";
-				document.getElementById('test_' + event.data.assert_erreur).innerHTML = '<i class="fas fa-times-circle"></i>';
-                document.getElementById('test_message_' + event.data.assert_erreur).innerHTML = test_message;
-			}
-
-			if (typeof event.data.assert_valide !== 'undefined') {
-				document.getElementById('test_' + event.data.assert_valide).className = "test_success";
-				document.getElementById('test_' + event.data.assert_valide).innerHTML = '<i class="fas fa-check-circle"></i>';
-                document.getElementById('test_message_' + event.data.assert_valide).innerHTML = 'Test validé!';
-			}
-
-		};
 	</script>	
 
 	<script src="{{ asset('js/html2canvas.min.js') }}" type="text/javascript" charset="utf-8"></script>
