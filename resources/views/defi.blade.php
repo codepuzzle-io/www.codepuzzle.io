@@ -18,16 +18,6 @@ $asserts = '[' . trim($asserts, ',') . ']';
     @endphp
 	@include('inc-meta-jeton')
     <title>{{ config('app.name') }} | Défi - D{{ $jeton }}</title>
-	<style>
-		pre {
-			padding:10px;
-			border: solid 1px #fafcfe;
-			background-color:#fafcfe;
-			border-radius:4px;
-			color:#6c757d;
-			font-size:95%;
-		}
-	</style>
 </head>
 
 <body class="no-mathjax" oncontextmenu="return false" onselectstart="return false" ondragstart="return false">

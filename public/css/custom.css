@@ -217,6 +217,15 @@ h3 {
     margin: 0px 0px 10px 0px;
 }
 
+.consignes pre {
+    padding:10px;
+    border:solid 1px #ced4da;
+    background-color:#fafcfe;
+    border-radius:4px;
+    color:#6c757d;
+    font-size:95%;
+}
+
 
 .ace_gutter {
     padding-top: 15px;

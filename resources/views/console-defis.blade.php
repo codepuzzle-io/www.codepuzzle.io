@@ -114,7 +114,7 @@ IFrame('https://www.codepuzzle.io/ID{{ strtoupper($defi->jeton) }}', width='100%
                                     </div>
                                     -->
                                     @if ($defi->titre_eleve !== NULL OR $defi->consignes_eleve !== NULL)
-                                        <div class="card card-body pt-3 pl-3 pr-3 pb-1">
+                                        <div class="pt-3 pl-3 pr-3 pb-1" style="background-color:#f3f5f7;border-radius:5px;">
                                             @if ($defi->titre_eleve !== NULL)
                                                 <div class="text-monospace mb-1 font-weight-bold">{{ $defi->titre_eleve }}</div>
                                             @endif
