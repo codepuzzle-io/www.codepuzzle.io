@@ -292,6 +292,30 @@ $asserts = '[' . trim($asserts, ',') . ']';
 				pyodideWorker.postMessage({ cmd: "setInterruptBuffer", interruptBuffer });
 			@endif
 
+			stop.onclick = function() {
+				// 2 stands for SIGINT.
+				interruptBuffer[0] = 2;
+				restart.style.display = 'inline';
+			}
+			
+			// arrete et redemarre le webworker
+			restart.onclick = function() {
+				restartWorker();
+			}
+
+			// envoi des donnees au webworker pour execution
+			run.onclick = function() {
+				@if(App::isProduction())
+					// ne fonctionne pas en local a cause de COEP et COOP
+					interruptBuffer[0] = 0;
+				@endif
+				const code = document.getElementById("code").value;
+				const asserts = {!!$asserts!!};
+				output1.innerHTML = "";
+				output2.innerHTML = "";
+				pyodideWorker.postMessage({ code: code, asserts: asserts });		
+			}
+
 			return pyodideWorker
 
         }
@@ -305,32 +329,6 @@ $asserts = '[' . trim($asserts, ',') . ']';
             console.log("Web Worker redémarré.");
         }
 
-
-
-
-		stop.onclick = function() {
-			// 2 stands for SIGINT.
-			interruptBuffer[0] = 2;
-			restart.style.display = 'inline';
-		}
-		
-		// arrete et redemarre le webworker
-		restart.onclick = function() {
-			restartWorker();
-		}
-
-		// envoi des donnees au webworker pour execution
-		run.onclick = function() {
-			@if(App::isProduction())
-				// ne fonctionne pas en local a cause de COEP et COOP
-				interruptBuffer[0] = 0;
-			@endif
-			const code = document.getElementById("code").value;
-			const asserts = {!!$asserts!!};
-			output1.innerHTML = "";
-			output2.innerHTML = "";
-			pyodideWorker.postMessage({ code: code, asserts: asserts });		
-		}
 	</script>	
 
 	<script src="{{ asset('js/html2canvas.min.js') }}" type="text/javascript" charset="utf-8"></script>
