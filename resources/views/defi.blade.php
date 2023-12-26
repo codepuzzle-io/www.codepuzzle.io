@@ -269,9 +269,9 @@ $asserts = '[' . trim($asserts, ',') . ']';
 
 				if (typeof event.data.assert_erreur !== 'undefined') {
 					var test_message = "Test non validé :-/";
-					if (assert[1]) {
-						var test_message = assert[1];
-					}
+					//if (assert[1]) {
+					//	var test_message = assert[1];
+					//}
 					document.getElementById('test_' + event.data.assert_erreur).className = "test_failed";
 					document.getElementById('test_' + event.data.assert_erreur).innerHTML = '<i class="fas fa-times-circle"></i>';
 					document.getElementById('test_message_' + event.data.assert_erreur).innerHTML = test_message;
