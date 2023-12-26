@@ -392,7 +392,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 			theme: "ace/theme/puzzle_code",
 			mode: "ace/mode/python",
 			maxLines: 500,
-			minLines: 8,
+			minLines: 10,
 			fontSize: 14,
 			wrap: true,
 			useWorker: false,
