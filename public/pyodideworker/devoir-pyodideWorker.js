@@ -49,7 +49,7 @@ self.onmessage = async (event) => {
     try {
         self.postMessage({ status: 'running' });
         self.pyodide.setStdout({batched: (str) => {
-            output_message += str + "\n";
+            self.postMessage({ output: str + "\n" });
         }})
 
         await self.pyodide.loadPackagesFromImports(code);
@@ -57,9 +57,10 @@ self.onmessage = async (event) => {
         let output = self.pyodide.runPython(code);
 
         if (typeof(output) !== 'undefined'){
-            output_message += output + "\n";
+            self.postMessage({ output: output + "\n" });
         }
         
+        //self.postMessage({ output: output_message.trim() });
         self.postMessage({ status: 'completed' });
 
     // ERREUR EXECUTION PYTHON
@@ -80,10 +81,9 @@ self.onmessage = async (event) => {
             }
         });
 
+        self.postMessage({ output: output_message.trim() });
         self.postMessage({ status: 'completed' });
         
     }
-
-    self.postMessage({ output: output_message.trim() });
 
 };

@@ -201,7 +201,7 @@
             }
 
             if (typeof event.data.output !== 'undefined') {
-                output.innerHTML = event.data.output;
+                output.innerHTML += event.data.output;
             }	
 
         };
@@ -214,8 +214,11 @@
         @endif
 
         stop.onclick = function() {
-            // 2 stands for SIGINT.
-            interruptBuffer[0] = 2;
+            @if(App::isProduction())
+                // ne fonctionne pas en local a cause de COEP et COOP
+                // 2 stands for SIGINT.
+                interruptBuffer[0] = 2;
+            @endif
             // bouton 'restart'
             restart.style.display = 'inline';
         }
