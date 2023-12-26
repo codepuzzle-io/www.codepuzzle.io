@@ -209,7 +209,6 @@ $asserts = '[' . trim($asserts, ',') . ']';
         function createWorker() {
 			output1.innerText = "Initialisation...\n";
 			run.disabled = true;
-			//run.innerHTML = '<i class="fas fa-play"></i>';
 			stop.style.display = 'none';
 			restart.style.display = 'none';
 

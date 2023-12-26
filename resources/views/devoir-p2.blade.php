@@ -15,7 +15,7 @@ if ($devoir_eleve->code_eleve == "") {
 	<script>
 		// Événement lorsque l'utilisateur quitte la page
 		window.addEventListener('blur', function() {
-			window.location.replace("/devoir");
+			//window.location.replace("/devoir");
 		});
 	</script>
 
@@ -55,6 +55,7 @@ if ($devoir_eleve->code_eleve == "") {
 <body class="no-mathjax" oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 
     <!-- Écran de démarrage -->
+	<!--
     <div id="demarrer" class="demarrer">
 		<div id="commencer" @if ($devoir->with_console == 1) style="display:none" @endif>
 			<i class="fas fa-exclamation-triangle text-danger"></i>
@@ -73,6 +74,7 @@ if ($devoir_eleve->code_eleve == "") {
 		<span id="attendre" class="text-muted"><i class="fa-solid fa-circle-notch fa-spin fa-6x mb-2"></i></span>
 		@endif
     </div>
+	-->
 
 	<div class="bg-danger text-white p-2 text-monospace text-center mb-4">ne pas quitter cette page - ne pas recharger cette page - ne pas cliquer en-dehors de cette page - ne pas quitter le mode plein écran</div>
 
@@ -96,7 +98,7 @@ if ($devoir_eleve->code_eleve == "") {
 
         @if ($devoir->titre_eleve !== NULL OR $devoir->consignes_eleve !== NULL)
         <div class="row mt-5">
-            <div class="col-md-8 offset-md-2">
+            <div class="col-md-10 offset-md-1">
                 <div class="frame">
                     @if ($devoir->titre_eleve !== NULL)
                         <div class="font-monospace small mb-1">{{ $devoir->titre_eleve }}</div>
@@ -126,23 +128,35 @@ if ($devoir_eleve->code_eleve == "") {
     <div class="container">
 
         <div class="row">
-            <div class="col-md-8 offset-md-2 text-center">
-		        <div style="width:100%;margin:0px auto 0px auto;"><div id="editor_code" style="border-radius:5px;">{{$code_eleve}}</div></div>
-                <!-- bouton verifier -->
+            <div class="col-md-10 offset-md-1 text-center">
+		        <div style="width:100%;margin:0px auto 8px auto;"><div id="editor_code" style="border-radius:5px;">{{$code_eleve}}</div></div>
+
+				<!-- boutons run / stop / restart -->
 				@if ($devoir->with_console == 1)
-                <button onclick="evaluatePython()" type="button" class="btn btn-primary btn-sm mt-2 text-monospace" style="display:inline">exécuter le code</button>
+
+					<div class="row" style="min-height:40px;">
+						<div class="col-md-6 text-left">
+							<button id="run" type="button" class="btn btn-primary btn-sm pl-4 pr-4"><i class="fas fa-circle-notch fa-spin"></i></button>
+							<button id="stop" type="button" class="btn btn-dark btn-sm pl-3 pr-3" style="padding-top:6px;display:none;" data-bs-toggle="tooltip" data-bs-placement="right"  data-bs-trigger="hover" title="{{__('Interruption de l\'exécution du code (en cas de boucle infinie ou de traitement trop long). L\'arrêt peut prendre quelques secondes.')}}"><i class="fas fa-stop"></i></button>
+						</div>
+						<div class="col-md-6 text-right">
+							<button id="restart" type="button" class="btn btn-warning btn-sm pl-3 pr-3" style="padding-top:6px;display:none;" data-bs-toggle="tooltip" data-bs-placement="right"  data-bs-trigger="hover" title="{{__('Si le bouton d\'arrêt ne permet pas d\'interrompre  l\'exécution du code, cliquer ici. Python redémarrera complètement mais votre code sera conservé dans l\'éditeur. Le redémarrage peut prendre quelques secondes.')}}"><i class="fas fa-skull"></i></button>
+						</div>
+					</div>
 				@endif
             </div>
         </div>
         
-		@if ($devoir->with_console == 1)
-        <div class="row mt-3">
-            <div class="col-md-6 offset-md-3">
+        <div class="row mt-3 pb-5" @if($devoir->with_console == 0) style="display:none" @endif  >
+            <div class="col-md-4 offset-md-1">
                 <div>Console</div>
-                <pre id="output1" class="bg-dark text-monospace p-3 small text-white" style="border-radius:4px;border:1px solid silver;min-height:100px;"></pre>
+                <pre id="output1" class="text-monospace p-2 small text-muted" style="border-radius:4px;border:1px solid silver;min-height:150px;"></pre>
+			</div>
+			<div class="col-md-6">
+				<div>Sortie</div>
+                <pre id="output2" class="text-monospace p-3 text-white bg-dark" style="border-radius:4px;border:1px solid silver;min-height:150px;"></pre>
             </div>
-        </div>    
-		@endif
+        </div>  
 		  
     </div><!-- container -->
 

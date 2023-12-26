@@ -150,6 +150,112 @@
 
 @if ($devoir->with_console == 1)
 <script>
+    // PYODIDE
+
+    const run = document.getElementById("run");
+    const stop = document.getElementById("stop");
+    const restart = document.getElementById("restart");
+    const output1 = document.getElementById("output1");
+    const output2 = document.getElementById("output2");
+    const status = document.getElementById("status");
+
+    // webworker
+    let pyodideWorker = createWorker();
+
+    function createWorker() {
+        output1.innerText = "Initialisation...\n";
+        run.disabled = true;
+        stop.style.display = 'none';
+        restart.style.display = 'none';
+
+        let pyodideWorker = new Worker("{{ asset('pyodideworker/devoir-pyodideWorker.js') }}");
+
+        pyodideWorker.onmessage = function(event) {
+            
+            // reponses du WebWorker
+            console.log("EVENT: ", event.data);
+
+            if (typeof event.data.init !== 'undefined') {
+                output1.innerText = "Prêt!\n";
+                run.innerHTML = '<i class="fas fa-play"></i>';
+                run.disabled = false;
+            }
+
+            if (typeof event.data.status !== 'undefined') {
+
+                if (event.data.status == 'running'){
+                    run.disabled = true;
+                    run.innerHTML = '<i class="fas fa-cog fa-spin"></i>';
+                    stop.style.display = 'inline';
+                }
+
+                if (event.data.status == 'completed'){
+                    run.disabled = false;
+                    run.innerHTML = '<i class="fas fa-play"></i>';
+                    stop.style.display = 'none';
+                    restart.style.display = 'none';
+                }
+
+                if (event.data.status == 'success'){
+                    run.style.display = "none";
+                }
+            }
+
+            if (typeof event.data.output1 !== 'undefined') {
+                output1.innerHTML = event.data.output1;
+            }	
+
+            if (typeof event.data.output2 !== 'undefined') {
+                output2.innerHTML += event.data.output2;
+            }	
+
+        };
+
+        @if(App::isProduction())
+            // ne fonctionne pas en local a cause de COEP et COOP
+            // interruption python
+            let interruptBuffer = new Uint8Array(new SharedArrayBuffer(1));
+            pyodideWorker.postMessage({ cmd: "setInterruptBuffer", interruptBuffer });
+        @endif
+
+        stop.onclick = function() {
+            // 2 stands for SIGINT.
+            interruptBuffer[0] = 2;
+            // bouton 'restart'
+            restart.style.display = 'inline';
+        }
+        
+        // arrete et redemarre le webworker
+        restart.onclick = function() {
+            restartWorker();
+        }
+
+        // envoi des donnees au webworker pour execution
+        run.onclick = function() {
+            @if(App::isProduction())
+                // ne fonctionne pas en local a cause de COEP et COOP
+                interruptBuffer[0] = 0;
+            @endif
+            const code = editor_code.getSession().getValue();;
+            output1.innerHTML = "";
+            output2.innerHTML = "";
+            pyodideWorker.postMessage({ code: code });		
+        }
+
+        return pyodideWorker
+
+    }
+
+    function restartWorker() {
+        if (pyodideWorker) {
+            pyodideWorker.terminate();
+            console.log("Web Worker supprimé.");
+        }
+        pyodideWorker = createWorker();
+        console.log("Web Worker redémarré.");
+    }
+
+    /*
     // PYTHON
     function addToOutput(output_content) {
         //document.getElementById("output1").innerText = ""
@@ -221,6 +327,7 @@
             addToOutput(error_message);
         }				
     }
+    */
 </script>
 @endif
 
@@ -303,7 +410,7 @@
             document.mozFullScreenElement === null || // Anciens navigateurs Firefox
             document.msFullscreenElement === null) { // Anciens navigateurs Internet Explorer/Edge
             console.log('La sortie du mode plein écran a été détectée.');
-            window.location.replace("/devoir");
+            //window.location.replace("/devoir");
         }
     }
 </script>
