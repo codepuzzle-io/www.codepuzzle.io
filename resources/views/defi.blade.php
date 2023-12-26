@@ -295,11 +295,8 @@ $asserts = '[' . trim($asserts, ',') . ']';
 			stop.onclick = function() {
 				// 2 stands for SIGINT.
 				interruptBuffer[0] = 2;
-
-				// affichage du bouton "restart" apres 2s
-				setTimeout(function() {
-					if (stop.style.display == 'inline') restart.style.display = 'inline';
-				}, 2000);
+				// bouton 'restart'
+				restart.style.display = 'inline';
 			}
 			
 			// arrete et redemarre le webworker
