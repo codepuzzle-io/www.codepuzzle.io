@@ -160,7 +160,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 				<!-- boutons run / stop / restart -->
 				<div class="row" style="min-height:40px;">
 					<div class="col-md-6 text-left">
-						<button id="run" type="button" class="btn btn-primary btn-sm pl-4 pr-4" style="padding-top:6px;" disabled><i class="fas fa-play"></i></button>
+						<button id="run" type="button" class="btn btn-primary btn-sm pl-4 pr-4"><i class="fas fa-circle-notch fa-spin"></i></button>
 						<button id="stop" type="button" class="btn btn-dark btn-sm pl-3 pr-3" style="padding-top:6px;display:none;" data-bs-toggle="tooltip" data-bs-placement="right"  data-bs-trigger="hover" title="{{__('Interruption de l\'exécution du code (en cas de boucle infinie ou de traitement trop long). L\'arrêt peut prendre quelques secondes.')}}"><i class="fas fa-stop"></i></button>
 					</div>
 					<div class="col-md-6 text-right">
@@ -219,7 +219,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
         function createWorker() {
 			output1.innerText = "Initialisation...\n";
 			run.disabled = true;
-			run.innerHTML = '<i class="fas fa-play"></i>';
+			//run.innerHTML = '<i class="fas fa-play"></i>';
 			stop.style.display = 'none';
 			restart.style.display = 'none';
 
@@ -232,6 +232,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 
 				if (typeof event.data.init !== 'undefined') {
 					output1.innerText = "Prêt!\n";
+					run.innerHTML = '<i class="fas fa-play"></i>';
 					run.disabled = false;
 				}
 
