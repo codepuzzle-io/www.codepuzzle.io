@@ -298,7 +298,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 
 				// affichage du bouton "restart" apres 2s
 				setTimeout(function() {
-					restart.style.display = 'inline';
+					if (stop.style.display == 'inline') restart.style.display = 'inline';
 				}, 2000);
 			}
 			
