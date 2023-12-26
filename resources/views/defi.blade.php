@@ -307,9 +307,9 @@ $asserts = '[' . trim($asserts, ',') . ']';
 		@endif
 
 		stop.onclick = function() {
-			restart.style.display = 'inline';
 			// 2 stands for SIGINT.
 			interruptBuffer[0] = 2;
+			restart.style.display = 'inline';
 		}
 		
 		// arrete et redemarre le webworker
@@ -319,7 +319,6 @@ $asserts = '[' . trim($asserts, ',') . ']';
 
 		// envoi des donnees au webworker pour execution
 		run.onclick = function() {
-			console.log("RUN")
 			@if(App::isProduction())
 				// ne fonctionne pas en local a cause de COEP et COOP
 				interruptBuffer[0] = 0;
