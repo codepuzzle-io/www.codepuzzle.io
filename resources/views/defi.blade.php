@@ -69,7 +69,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 	<div class="container-fluid">
 
 		@if(!$iframe)
-		<h1 class="mt-2 mb-5 text-center"><a class="navbar-brand m-1" href="{{ url('/') }}"><img src="{{ asset('img/codepuzzle.png') }}" height="25" alt="CODE PUZZLE" /></a></h1>
+		<h1 class="mt-2 mb-4 text-center"><a class="navbar-brand m-1" href="{{ url('/') }}"><img src="{{ asset('img/codepuzzle.png') }}" height="25" alt="CODE PUZZLE" /></a></h1>
 		@endif
 
 		@if ($defi->with_chrono == 1 OR $defi->with_nbverif == 1)
@@ -93,13 +93,13 @@ $asserts = '[' . trim($asserts, ',') . ']';
 		</table>
 		@endif
 
-        @if ($defi->titre_eleve !== NULL OR $defi->consignes_eleve !== NULL)
-        <div class="row" style="padding-top:10px;">
-            <div class="col-md-10 offset-md-1">
-                <div class="frame text-monospace">
-                    @if ($defi->titre_eleve !== NULL)
-                        <div class="mb-1 font-weight-bold">{{ $defi->titre_eleve }}</div>
-                    @endif
+		@if ($defi->titre_eleve !== NULL OR $defi->consignes_eleve !== NULL)
+		<div class="row">
+			<div class="col-md-10 offset-md-1">
+				<div class="frame text-monospace">
+					@if ($defi->titre_eleve !== NULL)
+						<div class="mb-1 font-weight-bold">{{ $defi->titre_eleve }}</div>
+					@endif
 
 					<?php
 					include('lib/parsedownmath/ParsedownMath.php');
@@ -112,12 +112,12 @@ $asserts = '[' . trim($asserts, ',') . ']';
 					$consignes_parsed = $Parsedown->text($defi->consignes_eleve)
 					?>
 
-                    @if ($defi->consignes_eleve !== NULL)
-                        <div class="consignes mathjax" style="text-align:justify;">
+					@if ($defi->consignes_eleve !== NULL)
+						<div class="consignes mathjax" style="text-align:justify;">
 							<?php
 							echo $consignes_parsed;
 							?>
-                        </div>
+						</div>
 					@endif
 
 					<div id="consignes_hidden" class="mathjax" style="padding:30px 20px 0px 20px;width:1200px;height:630px;background-color:white;display:none;">
@@ -129,38 +129,24 @@ $asserts = '[' . trim($asserts, ',') . ']';
 						</div>
 					</div>
 
-                </div>
-            </div>
-        </div><!-- row -->
-        @endif
-
-    </div>
-
-    <div class="container-fluid pb-5">
-
-        <div class="row">
-            <div class="col-md-8 offset-md-1 text-center">
-                <textarea name="code" style="display:none;" id="code"></textarea>
-		        <div style="width:100%;margin:0px auto 0px auto;"><div id="editor_code" style="border-radius:5px;">{{$defi->code}}</div></div>
-                
-				<!-- annonce enregistrement reponse -->
-				<div id="enregistrement_reponse" class="text-monospace small mt-2"></div>
-
-
-				<!-- boutons run / stop / restart -->
-				<div class="row" style="min-height:40px;">
-					<div class="col-md-6 text-left">
-						<button id="run" type="button" class="btn btn-primary btn-sm pl-4 pr-4"><i class="fas fa-circle-notch fa-spin"></i></button>
-						<button id="stop" type="button" class="btn btn-dark btn-sm pl-3 pr-3" style="padding-top:6px;display:none;" data-bs-toggle="tooltip" data-bs-placement="right"  data-bs-trigger="hover" title="{{__('Interruption de l\'exécution du code (en cas de boucle infinie ou de traitement trop long). L\'arrêt peut prendre quelques secondes.')}}"><i class="fas fa-stop"></i></button>
-					</div>
-					<div class="col-md-6 text-right">
-						<button id="restart" type="button" class="btn btn-warning btn-sm pl-3 pr-3" style="padding-top:6px;display:none;" data-bs-toggle="tooltip" data-bs-placement="right"  data-bs-trigger="hover" title="{{__('Si le bouton d\'arrêt ne permet pas d\'interrompre  l\'exécution du code, cliquer ici. Python redémarrera complètement mais votre code sera conservé dans l\'éditeur. Le redémarrage peut prendre quelques secondes.')}}"><i class="fas fa-skull"></i></button>
-					</div>
 				</div>
+			</div>
+		</div><!-- row -->
+		@endif
 
-            </div>
+	</div><!-- container -->
+
+	<div class="container-fluid pb-5">
+
+		<div class="row">
+
+			<div class="col-md-8 offset-md-1 text-center">
+				<textarea name="code" style="display:none;" id="code"></textarea>
+				<div style="width:100%;margin:0px auto 0px auto;"><div id="editor_code" style="border-radius:5px;">{{$defi->code}}</div></div>
+			</div>
+
 			<div class="col-md-2">
-				<div class="small mb-3">
+				<div class="small mb-3 p-2" style="height:100%;background-color:#f5f7f9;border-radius:5px;border:solid 1px #ebedef;">
 					<table style="width:100%">
 					@foreach($tests AS $test)
 					<tr>
@@ -175,21 +161,41 @@ $asserts = '[' . trim($asserts, ',') . ']';
 					</table>
 				</div>
 			</div>
-        </div>
 
+		</div><!-- row -->
 
-        <div class="row mt-3 pb-5" @if(!$defi->with_console) style="display:none" @endif  >
-            <div class="col-md-4 offset-md-1">
-                <div>Console</div>
-                <pre id="output1" class="text-monospace p-2 small text-muted" style="border-radius:4px;border:1px solid silver;min-height:150px;"></pre>
+		<div class="row">
+			<div class="col-md-8 offset-md-1 text-center">
+
+				<!-- annonce enregistrement reponse -->
+				<div id="enregistrement_reponse" class="text-monospace small mt-2"></div>
+
+				<!-- boutons run / stop / restart -->
+				<div class="row" style="min-height:40px;">
+					<div class="col-md-6 text-left">
+						<button id="run" type="button" class="btn btn-primary btn-sm pl-4 pr-4"><i class="fas fa-circle-notch fa-spin"></i></button>
+						<button id="stop" type="button" class="btn btn-dark btn-sm pl-3 pr-3" style="padding-top:6px;display:none;" data-bs-toggle="tooltip" data-bs-placement="right"  data-bs-trigger="hover" title="{{__('Interruption de l\'exécution du code (en cas de boucle infinie ou de traitement trop long). L\'arrêt peut prendre quelques secondes.')}}"><i class="fas fa-stop"></i></button>
+					</div>
+					<div class="col-md-6 text-right">
+						<button id="restart" type="button" class="btn btn-warning btn-sm pl-3 pr-3" style="padding-top:6px;display:none;" data-bs-toggle="tooltip" data-bs-placement="right"  data-bs-trigger="hover" title="{{__('Si le bouton d\'arrêt ne permet pas d\'interrompre  l\'exécution du code, cliquer ici. Python redémarrera complètement mais votre code sera conservé dans l\'éditeur. Le redémarrage peut prendre quelques secondes.')}}"><i class="fas fa-skull"></i></button>
+					</div>
+				</div>
+
+			</div>
+		</div><!-- row -->
+
+		<div class="row mt-3 pb-5" @if(!$defi->with_console) style="display:none" @endif>
+			<div class="col-md-4 offset-md-1">
+				<div>Console</div>
+				<pre id="output1" class="text-monospace p-2 small text-muted" style="border-radius:4px;border:1px solid silver;min-height:150px;"></pre>
 			</div>
 			<div class="col-md-6">
 				<div>Sortie</div>
-                <pre id="output2" class="text-monospace p-3 text-white bg-dark" style="border-radius:4px;border:1px solid silver;min-height:150px;"></pre>
-            </div>
-        </div>    
-		  
-    </div><!-- container -->
+				<pre id="output2" class="text-monospace p-3 text-white bg-dark" style="border-radius:4px;border:1px solid silver;min-height:150px;"></pre>
+			</div>
+		</div><!-- row -->    
+
+	</div><!-- container -->
 
     @include('inc-bottom-js')
 

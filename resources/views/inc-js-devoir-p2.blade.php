@@ -255,79 +255,6 @@
         console.log("Web Worker redémarré.");
     }
 
-    /*
-    // PYTHON
-    function addToOutput(output_content) {
-        //document.getElementById("output1").innerText = ""
-        if (typeof(output_content) !== 'undefined'){
-            document.getElementById("output1").innerText += output_content
-        }
-    }
-
-    var globals_keys = []
-
-    // init Pyodide
-    async function main() {
-        let pyodide = await loadPyodide();
-        document.getElementById('attendre').style.display = 'none';
-        document.getElementById('commencer').style.display = 'block';
-        console.log("Prêt!");
-
-        // Liste des clés de globals présentes lors de la première excécution
-        for (const key of pyodide.globals.keys()) {
-            globals_keys.push(key);
-        }
-        
-        return pyodide;
-    }
-
-    let pyodideReadyPromise = main();
-
-    async function evaluatePython() {
-        //console.log('EVALUATE PYTHON')
-        var code = editor_code.getSession().getValue();
-        //console.log("code:\n" + code)
-        nbverif++;
-        //console.log("Nb exécutions:\n" + nbverif)
-        let pyodide = await pyodideReadyPromise;
-        await pyodide.loadPackagesFromImports(code);
-
-        // REINITIALISATION DE GLOBALS (on supprime les cles qui
-        // n'étaient pas présentes lors de la première exécution)
-        const clesASupprimer = [];
-        for (const key of pyodide.globals.keys()) {
-            if (!globals_keys.includes(key)) {
-                clesASupprimer.push(key);
-            }
-        }
-        for (const key of clesASupprimer) {
-            pyodide.globals.delete(key);
-        }
-
-        try {
-            // pas d'erreur python
-            document.getElementById("output1").innerText = "";
-            pyodide.setStdout({batched: (str) => {
-                document.getElementById("output1").innerText += str+"\n";
-                console.log(str);
-            }})
-            let output = pyodide.runPython(code);       
-            addToOutput(output); 
-        } catch (err) {
-            // erreur python
-            let error_message = "";
-            let errors = err.message.split("File \"<exec>\", ");
-            errors.forEach((error) => {
-                error = "Error " + error;
-                error = error.replace(", in <module>", "")
-                if (typeof(error) !== 'undefined' && !error.includes('Traceback')) {
-                    error_message += error.trim() + "\n\n";
-                }
-            });
-            addToOutput(error_message);
-        }				
-    }
-    */
 </script>
 @endif
 
@@ -410,7 +337,7 @@
             document.mozFullScreenElement === null || // Anciens navigateurs Firefox
             document.msFullscreenElement === null) { // Anciens navigateurs Internet Explorer/Edge
             console.log('La sortie du mode plein écran a été détectée.');
-            //window.location.replace("/devoir");
+            window.location.replace("/devoir");
         }
     }
 </script>
