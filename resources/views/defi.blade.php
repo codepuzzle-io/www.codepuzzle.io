@@ -223,7 +223,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 			stop.style.display = 'none';
 			restart.style.display = 'none';
 
-            let pyodideWorker = new Worker("{{ asset('pyodideworker/pyodideWorker.js') }}");
+            let pyodideWorker = new Worker("{{ asset('pyodideworker/defi-pyodideWorker.js') }}");
 
 			pyodideWorker.onmessage = function(event) {
 				
