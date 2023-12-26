@@ -285,6 +285,13 @@ $asserts = '[' . trim($asserts, ',') . ']';
 
 			};
 
+			@if(App::isProduction())
+				// ne fonctionne pas en local a cause de COEP et COOP
+				// interruption python
+				let interruptBuffer = new Uint8Array(new SharedArrayBuffer(1));
+				pyodideWorker.postMessage({ cmd: "setInterruptBuffer", interruptBuffer });
+			@endif
+
 			return pyodideWorker
 
         }
@@ -299,12 +306,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
         }
 
 
-		@if(App::isProduction())
-			// ne fonctionne pas en local a cause de COEP et COOP
-			// interruption python
-			let interruptBuffer = new Uint8Array(new SharedArrayBuffer(1));
-			pyodideWorker.postMessage({ cmd: "setInterruptBuffer", interruptBuffer });
-		@endif
+
 
 		stop.onclick = function() {
 			// 2 stands for SIGINT.
