@@ -126,13 +126,10 @@ if ($devoir_eleve->code_eleve == "") {
         </div>
         
         <div class="row mt-3 pb-5" @if($devoir->with_console == 0) style="display:none" @endif  >
-            <div class="col-md-4 offset-md-1">
-                <div>Console</div>
-                <pre id="output1" class="text-monospace p-2 small text-muted" style="border-radius:4px;border:1px solid silver;min-height:150px;"></pre>
-			</div>
-			<div class="col-md-6">
-				<div>Sortie</div>
-                <pre id="output2" class="text-monospace p-3 text-white bg-dark" style="border-radius:4px;border:1px solid silver;min-height:150px;"></pre>
+
+			<div class="col-md-10 offset-md-1">
+				<div>Console</div>
+                <pre id="output" class="text-monospace p-3 text-white bg-dark" style="border-radius:4px;border:1px solid silver;min-height:150px;"></pre>
             </div>
         </div>  
 		  
