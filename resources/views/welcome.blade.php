@@ -61,7 +61,7 @@
 						</div>	
 					</div>
 					<div class="text-center pt-2">
-						<a class="btn btn-light btn-sm pl-3 pr-3" href="#entrainement" role="button" data-toggle="tooltip" data-placement="top" title="plus d'infos"><i class="fa-solid fa-circle-info"></i></a>
+						<a class="btn btn-light btn-sm pl-3 pr-3" href="#devoir" role="button" data-toggle="tooltip" data-placement="top" title="plus d'infos"><i class="fa-solid fa-circle-info"></i></a>
 					</div>
 				</div>
 
@@ -130,10 +130,10 @@
 			</div>
 		</div>	
 		
-		<a name="entrainement"></a>
+		<a name="devoir"></a>
 		<div class="row mt-5 text-monospace">
 			<div class="col-md-2">
-				<div class="font-weight-bold text-success">ENTRAÎNEMENTS / DEVOIRS</div>
+				<div class="font-weight-bold text-success">DEVOIRS</div>
 				<div class="font-weight-bold">Diaporama</div>
 			</div>
 			<div class="col-md-10 exemple">
