@@ -101,6 +101,10 @@ h2 {
     color: #71bb22 !important;
 }
 
+.border-success {
+    border-color: #71bb22 !important;
+}
+
 .card {
     border-radius:4px;
     border:1px solid #eef0f2 !important;
@@ -225,6 +229,8 @@ h3 {
     color:#6c757d;
     font-size:95%;
 }
+
+
 
 
 .ace_gutter {
