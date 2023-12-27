@@ -1,7 +1,7 @@
 <?php
 $devoir = App\Models\Devoir::where('jeton_secret', $jeton_secret)->first();
-if (!$devoir){
-    echo "<pre>Cet entraînement n'existe pas</pre>";
+if (!$devoir) {
+    echo "<pre>Ce devoir n'existe pas</pre>";
     exit();
 }
 $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)->orderBy('pseudo')->get();
@@ -13,7 +13,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
     <meta name="robots" content="noindex">
 
     <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
-    <title>ENTRAÎNEMENT / DEVOIR | {{$devoir->jeton}} | CONSOLE</title>
+    <title>DEVOIR | {{$devoir->jeton}} | CONSOLE</title>
 </head>
 <body class="no-mathjax">
 
@@ -24,10 +24,14 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 			<div class="col-md-2">
 
                 <div class="text-right mb-3">
+                    @if(Auth::check())
+                    <a class="btn btn-light btn-sm" href="/console/devoirs" role="button"><i class="fas fa-arrow-left"></i></a>
+                    @else
                     <a class="btn btn-light btn-sm" href="/" role="button"><i class="fas fa-arrow-left"></i></a>
+                    @endif
                 </div>
 
-                <a class="btn btn-success btn-sm pl-3 pr-3 text-monospace" style="width:100%" href="{{route('devoir-creer-get')}}" role="button">{{__('nouvel entraînement')}}</a>
+                <a class="btn btn-success btn-sm pl-3 pr-3 text-monospace" style="width:100%" href="{{route('devoir-creer-get')}}" role="button">{{__('nouveau devoir')}}</a>
 
                 <a href="https://github.com/codepuzzle-io/www.codepuzzle.io/discussions" target="_blank" role="button" class="mt-2 btn btn-light btn-sm text-left text-muted" style="width:100%;opacity:0.8;">
                 	<span style="font-size:80%"><i class="fas fa-comment-alt" style="float:left;margin:4px 8px 5px 0px;"></i> {{__('discussions')}} <span style="opacity:0.6;font-size:90%;">&</span> {{__('annonces')}}</span>
@@ -56,17 +60,17 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 
                             <table class="table table-borderless text-monospace m-0" style="border-spacing:5px;border-collapse:separate;">
                                 <tr>
-                                    <td class="text-center font-weight-bold p-0" style="width:33%">lien secret</td>
+                                    @if (!Auth::check()) <td class="text-center font-weight-bold p-0" style="width:33%">lien secret</td> @endif
                                     <td class="text-center font-weight-bold p-0" style="width:33%">code secret</td>
                                     <td class="text-center font-weight-bold p-0" style="width:33%">lien élèves</td>
                                 </tr>
                                 <tr>
-                                    <td class="text-center p-2 text-break align-middle border border-danger rounded"><a href="/devoir-console/{{strtoupper($devoir->jeton_secret)}}" target="_blank" class="text-danger">www.codepuzzle.io/devoir-console/{{strtoupper($devoir->jeton_secret)}}</a></td>
+                                    @if (!Auth::check()) <td class="text-center p-2 text-break align-middle border border-danger rounded"><a href="/devoir-console/{{strtoupper($devoir->jeton_secret)}}" target="_blank" class="text-danger">www.codepuzzle.io/devoir-console/{{strtoupper($devoir->jeton_secret)}}</a></td> @endif
                                     <td class="text-center p-2 text-break align-middle border border-danger rounded text-danger">{{$devoir->mot_secret}}</td>
                                     <td class="text-center text-white p-2 text-break align-middle rounded bg-secondary"><a href="/E{{strtoupper($devoir->jeton)}}" target="_blank" class="text-white">www.codepuzzle.io/E{{strtoupper($devoir->jeton)}}</a></td>
                                 </tr>
                                 <tr>
-                                    <td class="small text-muted p-0"><span class="text-danger"><i class="fas fa-exclamation-circle"></i> Ne pas partager ce lien</span><br />Il permet d'accéder à la console de l'entraînement (sujet, lien pour les élèves, correction...).</td>
+                                    @if (!Auth::check()) <td class="small text-muted p-0"><span class="text-danger"><i class="fas fa-exclamation-circle"></i> Ne pas partager ce lien</span><br />Il permet d'accéder à la console du devoir (sujet, lien pour les élèves, correction...).</td> @endif
                                     <td class="small text-muted p-0"><span class="text-danger"><i class="fas fa-exclamation-circle"></i> Ne pas partager ce code</span><br />Il permet de déverrouiller la copie d'un élève.</td>
                                     <td class="small text-muted p-0">Lien à fournir aux élèves.<!--<br />QR code: <img src="https://api.qrserver.com/v1/create-qr-code/?data={{urlencode('https://www.codepuzzle.io/E' . strtoupper($devoir->jeton))}}&amp;size=200x200" style="width:50px" alt="www.codepuzzle.io/E{{strtoupper($devoir->jeton)}}" data-toggle="tooltip" data-placement="bottom" title="{{__('clic droit + Enregistrer l image sous... pour sauvegarder l image')}}" />--></td>
                                 </tr>

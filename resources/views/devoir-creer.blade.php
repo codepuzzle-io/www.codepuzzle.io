@@ -1,19 +1,32 @@
 <?php
 if (isset($jeton_secret)) {
 	$devoir = App\Models\Devoir::where('jeton_secret', $jeton_secret)->first();
-	$consignes = $devoir->consignes_eleve;
-	$code_eleve = $devoir->code_eleve;
-	$code_enseignant = $devoir->code_enseignant;
-	$solution = $devoir->solution;
-	$with_chrono = $devoir->with_chrono;
-	$with_console = $devoir->with_console;
+	if (!$devoir) {
+		echo "<pre>Ce devoir n'existe pas.</pre>";
+		exit();
+	} else {
+		$titre_enseignant = $devoir->titre_enseignant;
+		$sous_titre_enseignant = $devoir->sous_titre_enseignant;
+		$titre_eleve = $devoir->titre_eleve;
+		$consignes = $devoir->consignes_eleve;
+		$code_eleve = $devoir->code_eleve;
+		$code_enseignant = $devoir->code_enseignant;
+		$solution = $devoir->solution;
+		$with_chrono = $devoir->with_chrono;
+		$with_console = $devoir->with_console;
+
+		if ($devoir->user_id !== 0 && (!Auth::check() || (Auth::check() && Auth::id() !== $devoir->user_id))) {
+			echo "<pre>Vous ne pouvez pas accéder à ce devoir.</pre>";
+			exit();
+		}
+	}
 }
 ?>
 <!doctype html>
 <html lang="fr">
 <head>
 	@include('inc-meta')
-    <title>ENTRAÎNEMENT / DEVOIR | CRÉER / MODIFIER</title>
+    <title>DEVOIR | CRÉER / MODIFIER</title>
 </head>
 <body>
 
@@ -108,16 +121,49 @@ if (isset($jeton_secret)) {
 		<div class="row">
 
 			<div class="col-md-2 text-right">
+				@if(Auth::check())
+				<a class="btn btn-light btn-sm" href="/console/devoirs" role="button"><i class="fas fa-arrow-left"></i></a>
+				@else
 				<a class="btn btn-light btn-sm" href="/" role="button"><i class="fas fa-arrow-left"></i></a>
+				@endif
 			</div>
 
 			<div class="col-md-10 pl-4 pr-4">
 
-				<h1>{{__('nouvel entraînement')}}</h1>
+				<h1>{{__('devoir')}}</h1>
 
 				<form method="POST" action="{{route('devoir-creer-post')}}">
 
 					@csrf
+
+					<!-- TITRE -->
+					@if(Auth::check())
+					<div class="text-monospace">{{strtoupper(__('titre'))}}<sup class="text-danger small">*</sup></div>
+					<div class="text-monospace text-muted small text-justify mb-1">{{__('Visible par vous seulement')}}</div>
+					<input id="titre_enseignant" type="text" class="form-control @error('titre_enseignant') is-invalid @enderror" name="titre_enseignant" value="{{ old('titre_enseignant') ?? $titre_enseignant ?? '' }}" autofocus>
+					@error('titre_enseignant')
+						<span class="invalid-feedback" role="alert">
+							<strong>{{ $message }}</strong>
+						</span>
+					@enderror
+					@endif
+					<!-- /TITRE -->
+
+					<!-- SOUS TITRE -->
+					@if(Auth::check())
+					<div class="mt-4 text-monospace">{{strtoupper(__('sous-titre'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
+					<div class="text-monospace text-muted small text-justify mb-1">{{__('Visible par vous seulement')}}</div>
+					<input id="sous_titre_enseignant" type="text" class="form-control @error('sous_titre_enseignant') is-invalid @enderror" name="sous_titre_enseignant" value="{{ old('sous_titre_enseignant') ?? $sous_titre_enseignant ?? '' }}" autofocus>
+					@endif
+					<!-- /SOUS TITRE -->
+
+					<!-- TITRE ELEVE -->
+					@if(Auth::check())
+					<div class="mt-4 text-monospace">{{strtoupper(__('titre élève'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
+					<div class="text-monospace text-muted small text-justify mb-1">{{__('Visible par l élève')}}</div>
+					<input id="titre_eleve" type="text" class="form-control @error('titre_eleve') is-invalid @enderror" name="titre_eleve" value="{{ old('titre_eleve') ?? $titre_eleve ?? '' }}" autofocus>
+					@endif
+					<!-- /TITRE ELEVE -->					
 				
 					<!-- CONSIGNES -->
 					<div class="mt-4 text-monospace">

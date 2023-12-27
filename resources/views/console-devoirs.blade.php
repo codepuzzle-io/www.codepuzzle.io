@@ -57,11 +57,22 @@
                 $devoirs = App\Models\Devoir::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get();
                 ?>
 
-                <a class="btn btn-success btn-sm mb-4 pl-3 pr-3 text-monospace" href="{{route('devoir-creer-get')}}" role="button">{{__('nouveau devoir')}}</a>
-
+                <form method="POST" action="{{route('devoir-ajouter-console')}}" class="form-inline text-monospace mb-5">
+                    @csrf
+                    <div class="form-group">
+                        <a class="btn btn-success btn-sm pl-3 pr-3 text-monospace" href="{{route('devoir-creer-get')}}" role="button">{{__('nouveau devoir')}}</a>
+                    </div>
+                    <div class="form-group text-muted small">
+                        <i class="fas fa-ellipsis-v ml-3 mr-3"></i> enregistrer un devoir existant <sup><i class="fas fa-info-circle ml-1 mr-1"></i></sup>: <input name="jeton_secret" type="text" class="ml-1 mr-1 form-control form-control-sm" placeholder="code" />
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-sm mr-3"><i class="fas fa-check"></i></button>
+                    @if ($errors->has('wrong_code'))
+                        <span class="text-danger small">{{ $errors->first('wrong_code') }}</span>
+                    @endif
+                </form>
 
                 @foreach($devoirs as $devoir)
-                    <div id="frame_{{$loop->iteration}}" class="frame">
+                    <div id="frame_{{$loop->iteration}}" class="frame pb-3">
 
                         <div class="row">
 
@@ -69,50 +80,38 @@
                                 <!-- options -->
     							<div style="float:right;">
 
-                                    <a class='btn btn-light btn-sm' data-toggle="collapse" href="#collapse-{{$loop->iteration}}" role='button' aria-expanded="false" aria-controls="collapse-{{$loop->iteration}}" ><i class="fas fa-bars" style="margin-top:0px;" data-toggle="tooltip" data-placement="top" title="{{__('déplier plier')}}"></i></a>
+                                    <a class='btn btn-dark btn-sm' href='/devoir-console/{{ $devoir->jeton_secret }}' role='button' data-toggle="tooltip" data-placement="top" title="{{__('devoirs')}}"><i class="fas fa-check"></i></a>
+               
+                                    <a class='btn btn-light btn-sm' data-toggle="collapse" href="#collapse-{{$loop->iteration}}" role='button' aria-expanded="false" aria-controls="collapse-{{$loop->iteration}}"><i class="fas fa-bars" style="margin-top:0px;" data-toggle="tooltip" data-offset="0, 9" data-placement="top" title="{{__('déplier plier')}}"></i></a>
 
-    								<a class='btn btn-light btn-sm' href='/console/devoir-modifier/{{ Crypt::encryptString($devoir->id) }}' role='button'><i class="fas fa-pen" data-toggle="tooltip" data-placement="top" title="{{__('modifier')}}"></i></a>
+    								<a class='btn btn-light btn-sm' href='/devoir-creer/{{ $devoir->jeton_secret }}' role='button' data-toggle="tooltip" data-placement="top" title="{{__('modifier')}}"><i class="fas fa-pen"></i></a>
 
-                                    <a tabindex='0' id='/console/defi-supprimer/{{ Crypt::encryptString($devoir->id) }}' class='btn btn-danger btn-sm text-light' role='button'  style="cursor:pointer;outline:none;" data-toggle="popover" data-trigger="focus" data-placement="left" data-html="true" data-content="<a href='/console/defi-supprimer/{{ Crypt::encryptString($devoir->id) }}' class='btn btn-danger btn-sm text-light' role='button'>{{__('confirmer')}}</a><a class='btn btn-light btn-sm ml-2' href='#' role='button'>{{__('annuler')}}</a>"><i class='fas fa-trash fa-sm' data-toggle="tooltip" data-placement="top" title="{{__('supprimer')}}"></i></a>
+                                    <a tabindex='0' id='/console/defi-supprimer/{{ Crypt::encryptString($devoir->id) }}' class='btn btn-danger btn-sm text-light' role='button'  style="cursor:pointer;outline:none;" data-toggle="popover" data-trigger="focus" data-placement="left" data-html="true" data-content="<a href='/console/defi-supprimer/{{ Crypt::encryptString($devoir->id) }}' class='btn btn-danger btn-sm text-light' role='button'>{{__('confirmer')}}</a><a class='btn btn-light btn-sm ml-2' href='#' role='button'>{{__('annuler')}}</a>"><i class='fas fa-trash fa-sm' data-toggle="tooltip" data-placement="top" data-offset="0, 15" title="{{__('supprimer')}}"></i></a>
 
     							</div>
     							<!-- /options -->
 
-                                <h2 class="p-0 m-0">{{ $devoir->titre_enseignant }}</h2>
+                                <h2 class="p-0 m-0">
+                                    @if ($devoir->titre_enseignant == NULL)
+                                        Devoir {{$devoir->jeton_secret}}
+                                    @else
+                                    {{$devoir->titre_enseignant}}
+                                    @endif
+                                </h2>
                                 <div class="text-monospace small" style="color:silver;">{{ $devoir->sous_titre_enseignant }}</div>
 
                             </div>
                         </div>
 
-                        <div class="row mt-1">
+                        <div class="row">
                             <div class="col-md-12 text-monospace small text-muted">
-                                <i class="fas fa-share-alt ml-1 mr-1" style="cursor:help" data-toggle="tooltip" data-placement="top" title="{{__('lien à partager avec les élèves')}}"></i> <a href="/{{ strtoupper('D'.$devoir->jeton) }}" target="_blank" data-toggle="tooltip" data-placement="top" title="{{__('ouvrir ce défi dans un nouvel onglet pour le tester')}}">www.codepuzzle.io/D{{ strtoupper($devoir->jeton) }}</a>
+                                <i class="fas fa-share-alt ml-1 mr-2"></i>lien élèves: <a href="/{{ strtoupper('E'.$devoir->jeton) }}" target="_blank">www.codepuzzle.io/E{{ strtoupper($devoir->jeton) }}</a>
                             </div>
                         </div>
 
                         <div class="collapse" id="collapse-{{$loop->iteration}}">
                             <div class="row mt-3">
                                 <div class="col-md-12">
-                                    <div class="text-monospace text-muted mb-3 small">
-                                        <i class="fas fa-share-alt ml-1 mr-1"></i> {{__('Code à insérer dans un site web')}}
-                                        <div class="mt-1" style="margin-left:22px;">
-                                            <input class="form-control form-control-sm" type="text" value='<iframe src="https://www.codepuzzle.io/ID{{ strtoupper($devoir->jeton) }}" width="100%" height="600" frameborder="0"></iframe>' disabled readonly />
-                                        </div>
-                                        <p class="text-monospace mt-1" style="margin-left:22px;font-size:90%";color:silver>{{__('Remarque : ajuster la valeur de "height" en fonction de la taille du défi')}}</p>
-                                    </div>
-                                    <div class="text-monospace text-muted mb-4 small">
-                                        <i class="fas fa-share-alt ml-1 mr-1"></i> {{__('Code à insérer dans une cellule code d un notebook Jupyter')}}
-                                        <div class="mt-1" style="margin-left:22px;">
-                                            <textarea class="form-control form-control-sm" rows="2" disabled readonly>from IPython.display import IFrame
-IFrame('https://www.codepuzzle.io/ID{{ strtoupper($devoir->jeton) }}', width='100%', height=600)</textarea>
-                                        </div>
-                                        <p class="text-monospace mt-1" style="margin-left:22px;font-size:90%";color:silver>{{__('Remarque : ajuster la valeur de "height" en fonction de la taille du défi')}}</p>
-                                    </div>
-                                    <!--
-                                    <div class="text-monospace text-muted mb-4 small">
-                                        <i class="fas fa-share-alt ml-1 mr-1"></i> QR code : <img src="https://api.qrserver.com/v1/create-qr-code/?data={{urlencode('https://www.codepuzzle.io/D' . strtoupper($devoir->jeton))}}&amp;size=100x100" style="width:100px" alt="wwww.codepuzzle.io/D{{strtoupper($devoir->jeton)}}" data-toggle="tooltip" data-placement="right" title="{{__('clic droit + Enregistrer l image sous... pour sauvegarder l image')}}" />
-                                    </div>
-                                    -->
                                     @if ($devoir->titre_eleve !== NULL OR $devoir->consignes_eleve !== NULL)
                                         <div class="pt-3 pl-3 pr-3 pb-1" style="background-color:#f3f5f7;border-radius:5px;">
                                             @if ($devoir->titre_eleve !== NULL)
@@ -125,8 +124,6 @@ IFrame('https://www.codepuzzle.io/ID{{ strtoupper($devoir->jeton) }}', width='10
                                             @endif
                                         </div>
                                     @endif
-                                    <div class="mt-3 text-monospace text-muted small">{{__('réponse possible')}}</div>
-                                    <div style="width:100%;margin:0px auto 0px auto;"><div id="editor_code-{{$loop->iteration}}" style="border-radius:5px;">{{$devoir->solution}}</div></div>
                                 </div>
                             </div>
                         </div>

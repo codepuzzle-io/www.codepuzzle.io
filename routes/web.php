@@ -122,6 +122,9 @@ Route::any('/console/puzzle-supprimer/{puzzle_id}', [App\Http\Controllers\Consol
 Route::any('/console/defi-supprimer', [App\Http\Controllers\ConsoleController::class, 'redirect']);
 Route::any('/console/defi-supprimer/{defi_id}', [App\Http\Controllers\ConsoleController::class, 'defi_supprimer'])->name('defi-supprimer');
 
+// devoir ajouter console
+Route::post('/console/devoir-ajouter-console', [App\Http\Controllers\ConsoleController::class, 'devoir_ajouter_console'])->name('devoir-ajouter-console');
+
 
 // ============================================================================
 // == SITE CONTROLLER

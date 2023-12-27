@@ -73,7 +73,7 @@
                             </div>
                         </div>
 
-                        <div class="row mt-1">
+                        <div class="row">
                             <div class="col-md-12 text-monospace small text-muted">
                                 <i class="fas fa-share-alt ml-1 mr-1" style="cursor:help" data-toggle="tooltip" data-placement="top" title="{{__('lien à partager avec les élèves')}}"></i> <a href="/P{{ strtoupper($puzzle->jeton) }}" target="_blank" data-toggle="tooltip" data-placement="top" title="{{__('ouvrir ce puzzle dans un nouvel onglet pour le tester')}}">www.codepuzzle.io/P{{ strtoupper($puzzle->jeton) }}</a>
                             </div>
