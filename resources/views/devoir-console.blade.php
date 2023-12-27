@@ -207,8 +207,6 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                                     <div id="editor_code_enseignant_devoir-{{$loop->iteration}}" style="border-radius:5px;">{{$code_enseignant}}</div>
                                     <!-- /CODE ENSEIGNANT --> 
 
-                                    <div class="p-1 pl-2 pr-2 rounded mt-1 mb-3 text-monospace small" style="background-color:#ffe791;color:#cfb140;"><i class="far fa-lightbulb"></i> Si vous constatez un comportement étrange lors de l'exécution qui pourrait être dû à des variables ou à des fonctions présentes en mémoire, rechargez la page.</div>
-
                                     <table class="mt-2 mb-2" style="width:100%">
                                         <tr>
                                             <td style="width:50%">
@@ -423,11 +421,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
         // webworker
         let pyodideWorker = createWorker();
 
-        let runButton, stopButton, restartButton, outputButton;
-
-        @if(App::isProduction())
-            var interruptBuffer = new Uint8Array(new SharedArrayBuffer(1));
-        @endif
+        var runButton, stopButton, restartButton, output, interruptBuffer;
 
         function createWorker() {          
 
@@ -473,6 +467,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
             @if(App::isProduction())
                 // ne fonctionne pas en local a cause de COEP et COOP
                 // interruption python
+                interruptBuffer = new Uint8Array(new SharedArrayBuffer(1));
                 pyodideWorker.postMessage({ cmd: "setInterruptBuffer", interruptBuffer });
             @endif
          
