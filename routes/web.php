@@ -102,6 +102,7 @@ Route::post('/save-opengraph-image', [App\Http\Controllers\SiteController::class
 Route::any('/console', [App\Http\Controllers\ConsoleController::class, 'console'])->name('console');
 Route::any('/console/puzzles', [App\Http\Controllers\ConsoleController::class, 'console_puzzles'])->name('console-puzzles');
 Route::any('/console/defis', [App\Http\Controllers\ConsoleController::class, 'console_defis'])->name('console-defis');
+Route::any('/console/devoirs', [App\Http\Controllers\ConsoleController::class, 'console_devoirs'])->name('console-devoirs');
 
 // puzzle modifier
 Route::get('/console/puzzle-modifier/', [App\Http\Controllers\ConsoleController::class, 'redirect']);

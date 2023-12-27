@@ -17,11 +17,6 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 </head>
 <body class="no-mathjax">
 
-    <!-- Écran de démarrage -->
-    <div id="demarrer" class="demarrer" style="opacity:0.9">
-        <span id="attendre" class="text-muted"><i class="fa-solid fa-circle-notch fa-spin fa-6x mb-2"></i></span>
-    </div>
-
 	<div class="container mb-5">
 
 		<div class="row pt-3">
@@ -233,16 +228,24 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                                                 </div>
                                             </td>
                                             <td style="width:50%;vertical-align:top">
-                                                <div class="text-left pl-2">
-                                                    <button onclick="evaluate_python({{$loop->iteration}})" type="button" class="btn btn-primary btn-sm text-monospace pt-2 pb-2 pl-3 pr-3" style="display:inline"><i class="fas fa-play"></i></button>
+
+                                                <div class="row pl-2">
+                                                    <div class="col-md-6 text-left">
+                                                        <button id="run-{{$loop->iteration}}" data-pyodide="run" onclick="run({{$loop->iteration}})" type="button" class="btn btn-primary btn-sm" style="width:60px;"><i class="fas fa-circle-notch fa-spin"></i></button>
+                                                        <button id="stop-{{$loop->iteration}}" data-pyodide="stop" onclick="stop({{$loop->iteration}})" type="button" class="btn btn-dark btn-sm pl-3 pr-3" style="padding-top:6px;display:none;" data-bs-toggle="tooltip" data-bs-placement="right"  data-bs-trigger="hover" title="{{__('Interruption de l\'exécution du code (en cas de boucle infinie ou de traitement trop long). L\'arrêt peut prendre quelques secondes.')}}"><i class="fas fa-stop"></i></button>
+                                                    </div>
+                                                    <div class="col-md-6 text-right">
+                                                        <button id="restart-{{$loop->iteration}}" data-pyodide="restart" onclick="restart()" type="button" class="btn btn-warning btn-sm pl-3 pr-3" style="padding-top:6px;display:none;" data-bs-toggle="tooltip" data-bs-placement="right"  data-bs-trigger="hover" title="{{__('Si le bouton d\'arrêt ne permet pas d\'interrompre  l\'exécution du code, cliquer ici. Python redémarrera complètement mais votre code sera conservé dans l\'éditeur. Le redémarrage peut prendre quelques secondes.')}}"><i class="fas fa-skull"></i></button>
+                                                    </div>
                                                 </div>
+
                                             </td>
                                         </tr>
                                     </table>
 
                                     <div>
                                         <div class="text-monospace">Console</div>
-                                        <pre id="terminal-{{$loop->iteration}}" class="bg-dark text-monospace p-3 small text-white" style="border-radius:4px;border:1px solid silver;min-height:80px;"></pre>
+                                        <pre id="output-{{$loop->iteration}}" class="bg-dark text-monospace p-3 small text-white" style="border-radius:4px;border:1px solid silver;min-height:80px;"></pre>
                                     </div>
 
                                     <div class="text-monospace text-success font-weight-bold mt-2">Commentaires</div>
@@ -414,91 +417,118 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 	</script>
 
     <script>
-		//document.getElementById("output").innerText = "Initialisation...\n";
-		console.log("Initialisation...");
-        var globals_keys = []
 
-		// init Pyodide
-		async function main() {
-			let pyodide = await loadPyodide();
-			//document.getElementById("output").innerText = "Prêt!\n";
-            document.getElementById('demarrer').remove();
+        // PYODIDE
 
-            //console.log("Prêt!");
+        // webworker
+        let pyodideWorker = createWorker();
 
-            // Liste des clés de globals présentes lors de la première excécution
-            for (const key of pyodide.globals.keys()) {
-                globals_keys.push(key);
-            }
+        let runButton, stopButton, restartButton, outputButton;
 
-            //console.log('PG1: ' + pyodide.globals)
-            //console.log('PG2: '+ globals_keys)
-			return pyodide;
-		}
+        function createWorker() {          
 
-		let pyodideReadyPromise = main();
+            let pyodideWorker = new Worker("{{ asset('pyodideworker/devoir-pyodideWorker.js') }}");
 
-		async function evaluate_python(i) {
-			//console.log('EVALUATE PYTHON')
-            var code = "";
-            if (document.getElementById("code_option_1_devoir-" + i).checked) {
-                code = editor_code_eleve_devoir[i].getValue();
-            } else if (document.getElementById("code_option_2_devoir-" + i).checked) {
-                code = editor_code_eleve_devoir[i].getValue() + "\n" + editor_code_enseignant_devoir[i].getValue();
-            } else if (document.getElementById("code_option_3_devoir-" + i).checked) {
-                code = editor_code_enseignant_devoir[i].getValue();
-            }
-            //console.log("Code:\n" + code + "\n----------\n");
+            pyodideWorker.onmessage = function(event) {
+                
+                // reponses du WebWorker
+                console.log("EVENT: ", event.data);
 
-			let pyodide = await pyodideReadyPromise;
-			await pyodide.loadPackagesFromImports(code);
-
-            //console.log('Globals keys: '+ globals_keys)
-            //console.log('Globals: ' + pyodide.globals)
-
-            // REINITIALISATION DE GLOBALS (on supprime les cles qui
-            // n'étaient pas présentes lors de la première exécution)
-            const clesASupprimer = [];
-            for (const key of pyodide.globals.keys()) {
-                if (!globals_keys.includes(key)) {
-                    clesASupprimer.push(key);
+                if (typeof event.data.init !== 'undefined') {
+                    console.log("Prêt!");
+                    var runButtons = document.querySelectorAll('button[data-pyodide="run"]');
+                    runButtons.forEach(function(runButton) {
+                        runButton.innerHTML = '<i class="fas fa-play"></i>';
+                        runButton.disabled = false;
+                    });
                 }
-            }
-            for (const key of clesASupprimer) {
-                pyodide.globals.delete(key);
-            }
 
-            //console.log('PG1: ' + pyodide.globals)
-            //console.log('PG2: '+ globals_keys)
+                if (typeof event.data.status !== 'undefined') {
 
-			try {
-				// pas d'erreur python
-				document.getElementById("terminal-" + i).innerText = "";
-				pyodide.setStdout({batched: (str) => {
-					document.getElementById("terminal-" + i).innerText += str+"\n";
-					console.log(str);
-				}})
-				let output_content = pyodide.runPython(code);
-                if (typeof(output_content) !== 'undefined'){
-                    document.getElementById("terminal-" + i).innerText += output_content
-                }
-			} catch (err) {
-				// erreur python
-                console.log(err);
-                let error_message = "";
-				let errors = err.message.split("File \"<exec>\", ");
-                errors.forEach((error) => {
-                    error = "Error " + error;
-                    error = error.replace(", in <module>", "")
-                    if (typeof(error) !== 'undefined' && !error.includes('Traceback')) {
-                        error_message += error.trim() + "\n\n";
+                    if (event.data.status == 'running'){
+                        runButton.disabled = true;
+                        runButton.innerHTML = '<i class="fas fa-cog fa-spin"></i>';
+                        stopButton.style.display = 'inline';
                     }
-                });
-                document.getElementById("terminal-" + i).innerText = error_message.trim();
-                //document.getElementById("terminal-" + i).innerText = err;
 
-			}		
-		}
+                    if (event.data.status == 'completed'){
+                        runButton.disabled = false;
+                        runButton.innerHTML = '<i class="fas fa-play"></i>';
+                        stopButton.style.display = 'none';
+                        restartButton.style.display = 'none';
+                    }
+                    
+                }
+
+                if (typeof event.data.output !== 'undefined') {
+                    output.innerHTML += event.data.output;
+                }	
+
+            };
+
+            @if(App::isProduction())
+                // ne fonctionne pas en local a cause de COEP et COOP
+                // interruption python
+                let interruptBuffer = new Uint8Array(new SharedArrayBuffer(1));
+                pyodideWorker.postMessage({ cmd: "setInterruptBuffer", interruptBuffer });
+            @endif
+         
+            return pyodideWorker
+
+        }
+
+        // envoi des donnees au webworker pour execution
+        function run(id){
+
+            runButton = document.getElementById("run-"+id);
+            stopButton = document.getElementById("stop-"+id);
+            restartButton = document.getElementById("restart-"+id);
+            output = document.getElementById("output-"+id);
+
+            @if(App::isProduction())
+                // ne fonctionne pas en local a cause de COEP et COOP
+                interruptBuffer[0] = 0;
+            @endif
+
+            let code = "";
+            if (document.getElementById("code_option_1_devoir-" + id).checked) {
+                code = editor_code_eleve_devoir[id].getValue();
+            } else if (document.getElementById("code_option_2_devoir-" + id).checked) {
+                code = editor_code_eleve_devoir[id].getValue() + "\n" + editor_code_enseignant_devoir[id].getValue();
+            } else if (document.getElementById("code_option_3_devoir-" + id).checked) {
+                code = editor_code_enseignant_devoir[id].getValue();
+            }
+
+            output.innerHTML = "";
+            pyodideWorker.postMessage({ code: code });	
+
+        } 
+
+        // interruption de python
+        function stop(id) {
+            @if(App::isProduction())
+                // ne fonctionne pas en local a cause de COEP et COOP
+                // 2 stands for SIGINT.
+                interruptBuffer[0] = 2;
+            @endif
+            // bouton 'restart'
+            restartButton.style.display = 'inline';
+        }
+			   
+
+        // arrete et redemarre le webworker   
+        function restart() {
+            if (pyodideWorker) {
+                pyodideWorker.terminate();
+                console.log("Web Worker supprimé.");
+            }
+            pyodideWorker = createWorker();
+            console.log("Web Worker redémarré.");
+            runButton.disabled = true;
+            stopButton.style.display = 'none';
+            restartButton.style.display = 'none';
+        }
+
 	</script>
 
 

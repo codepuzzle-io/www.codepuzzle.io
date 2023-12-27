@@ -207,7 +207,6 @@ $asserts = '[' . trim($asserts, ',') . ']';
 		const restart = document.getElementById("restart");
 		const output1 = document.getElementById("output1");
 		const output2 = document.getElementById("output2");
-		const status = document.getElementById("status");
 
 		// webworker
 		let pyodideWorker = createWorker();
@@ -289,8 +288,11 @@ $asserts = '[' . trim($asserts, ',') . ']';
 			@endif
 
 			stop.onclick = function() {
-				// 2 stands for SIGINT.
-				interruptBuffer[0] = 2;
+				@if(App::isProduction())
+					// ne fonctionne pas en local a cause de COEP et COOP
+					// 2 stands for SIGINT.
+					interruptBuffer[0] = 2;
+				@endif
 				// bouton 'restart'
 				restart.style.display = 'inline';
 			}

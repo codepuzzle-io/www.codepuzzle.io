@@ -156,7 +156,6 @@
     const stop = document.getElementById("stop");
     const restart = document.getElementById("restart");
     const output = document.getElementById("output");
-    const status = document.getElementById("status");
 
     // webworker
     let pyodideWorker = createWorker();
@@ -234,7 +233,7 @@
                 // ne fonctionne pas en local a cause de COEP et COOP
                 interruptBuffer[0] = 0;
             @endif
-            const code = editor_code.getSession().getValue();;
+            const code = editor_code.getSession().getValue();
             output.innerHTML = "";
             pyodideWorker.postMessage({ code: code });		
         }
