@@ -30,7 +30,7 @@
 						</div>	
 					</div>
 					<div class="text-center pt-2">
-						<a class="btn btn-light btn-sm pl-3 pr-3" href="#puzzle" role="button" data-toggle="tooltip" data-placement="top" title="plus d'infos"><i class="fa-solid fa-circle-info pt-1"></i></a>
+						<a class="btn btn-light btn-sm pl-3 pr-3" href="#puzzle" role="button" data-toggle="tooltip" data-placement="top" title="plus d'infos"><i class="fa-solid fa-circle-info"></i></a>
 					</div>
 				</div>
 
@@ -45,23 +45,23 @@
 						</div>	
 					</div>
 					<div class="text-center pt-2">
-						<a class="btn btn-light btn-sm pl-3 pr-3" href="#defi" role="button" data-toggle="tooltip" data-placement="top" title="plus d'infos"><i class="fa-solid fa-circle-info pt-1"></i></a>
-						<a class="btn btn-light btn-sm pl-3 pr-3" href="/defis-banque" role="button" data-toggle="tooltip" data-placement="top" title="banque de défis"><i class="fa-solid fa-box-archive pt-1"></i></a>
+						<a class="btn btn-light btn-sm pl-3 pr-3" href="#defi" role="button" data-toggle="tooltip" data-placement="top" title="plus d'infos"><i class="fa-solid fa-circle-info"></i></a>
+						<a class="btn btn-light btn-sm pl-3 pr-3" href="/defis-banque" role="button" data-toggle="tooltip" data-placement="top" title="banque de défis"><i class="fa-solid fa-box-archive"></i></a>
 					</div>
 				</div>
 
 				<div class="card">
 					<div class="card-body p-0">
-						<h2>{!!__('Créer et partager des entraînements / devoirs')!!} <sup class="text-lowercase text-danger">bêta</sup></h2>				
+						<h2>{!!__('Créer et partager des devoirs')!!}</h2>				
 						<div class="mx-auto mt-3 text-center" style="width:60%">
-							<a class="btn btn-success btn-sm btn-block p-2" href="{{ route('devoir-creer-get')}}" role="button"><i class="fa-solid fa-circle-plus pt-1 pb-1"></i><br />{!!__('entraînement / devoir')!!}</a>
+							<a class="btn btn-success btn-sm btn-block p-2" href="{{ route('devoir-creer-get')}}" role="button"><i class="fa-solid fa-circle-plus pt-1 pb-1"></i><br />{!!__('devoir')!!}</a>
 						</div>
 						<div class="mt-3 small text-muted text-justify">
 							Activités en classe de type examen dans un environnement anti-triche.<br />Récupération automatique des travaux avec exécution du code et correction en ligne.
 						</div>	
 					</div>
 					<div class="text-center pt-2">
-						<a class="btn btn-light btn-sm pl-3 pr-3" href="#entrainement" role="button" data-toggle="tooltip" data-placement="top" title="plus d'infos"><i class="fa-solid fa-circle-info pt-1"></i></a>
+						<a class="btn btn-light btn-sm pl-3 pr-3" href="#entrainement" role="button" data-toggle="tooltip" data-placement="top" title="plus d'infos"><i class="fa-solid fa-circle-info"></i></a>
 					</div>
 				</div>
 

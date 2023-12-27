@@ -58,11 +58,11 @@
                                 <!-- options -->
     							<div style="float:right;">
 
-                                    <a class='btn btn-light btn-sm' data-toggle="collapse" href="#collapse-{{$loop->iteration}}" role='button' aria-expanded="false" aria-controls="collapse-{{$loop->iteration}}" ><i class="fas fa-bars" style="margin-top:0px;" data-toggle="tooltip" data-placement="top" title="{{__('déplier plier')}}"></i></a>
+                                    <a class='btn btn-light btn-sm' data-toggle="collapse" href="#collapse-{{$loop->iteration}}" role='button' aria-expanded="false" aria-controls="collapse-{{$loop->iteration}}" ><i class="fas fa-bars" style="margin-top:0px;" data-toggle="tooltip" data-placement="top"  data-offset="0, 9" title="{{__('déplier plier')}}"></i></a>
 
-    								<a class='btn btn-light btn-sm' href='/console/puzzle-modifier/{{ Crypt::encryptString($puzzle->id) }}' role='button'><i class="fas fa-pen" data-toggle="tooltip" data-placement="top" title="{{__('modifier')}}"></i></a>
+    								<a class='btn btn-light btn-sm' href='/console/puzzle-modifier/{{ Crypt::encryptString($puzzle->id) }}' role='button' data-toggle="tooltip" data-placement="top" title="{{__('modifier')}}"><i class="fas fa-pen"></i></a>
 
-                                    <a tabindex='0' id='/console/puzzle-supprimer/{{ Crypt::encryptString($puzzle->id) }}' class='btn btn-danger btn-sm text-light' role='button'  style="cursor:pointer;outline:none;" data-toggle="popover" data-trigger="focus" data-placement="left" data-html="true" data-content="<a href='/console/puzzle-supprimer/{{ Crypt::encryptString($puzzle->id) }}' class='btn btn-danger btn-sm text-light' role='button'>{{__('confirmer')}}</a><a class='btn btn-light btn-sm ml-2' href='#' role='button'>{{__('annuler')}}</a>"><i class='fas fa-trash fa-sm' data-toggle="tooltip" data-placement="top" title="{{__('supprimer')}}"></i></a>
+                                    <a tabindex='0' id='/console/puzzle-supprimer/{{ Crypt::encryptString($puzzle->id) }}' class='btn btn-danger btn-sm text-light' role='button'  style="cursor:pointer;outline:none;" data-toggle="popover" data-trigger="focus" data-placement="left" data-html="true" data-content="<a href='/console/puzzle-supprimer/{{ Crypt::encryptString($puzzle->id) }}' class='btn btn-danger btn-sm text-light' role='button'>{{__('confirmer')}}</a><a class='btn btn-light btn-sm ml-2' href='#' role='button'>{{__('annuler')}}</a>"><i class='fas fa-trash fa-sm' data-toggle="tooltip" data-placement="top" data-offset="0, 15" title="{{__('supprimer')}}"></i></a>
 
     							</div>
     							<!-- /options -->
