@@ -425,6 +425,10 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 
         let runButton, stopButton, restartButton, outputButton;
 
+        @if(App::isProduction())
+            var interruptBuffer = new Uint8Array(new SharedArrayBuffer(1));
+        @endif
+
         function createWorker() {          
 
             let pyodideWorker = new Worker("{{ asset('pyodideworker/devoir-pyodideWorker.js') }}");
@@ -469,7 +473,6 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
             @if(App::isProduction())
                 // ne fonctionne pas en local a cause de COEP et COOP
                 // interruption python
-                let interruptBuffer = new Uint8Array(new SharedArrayBuffer(1));
                 pyodideWorker.postMessage({ cmd: "setInterruptBuffer", interruptBuffer });
             @endif
          
