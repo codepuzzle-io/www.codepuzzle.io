@@ -41,7 +41,7 @@
 							<a class="btn btn-success btn-sm btn-block p-2" href="{{ route('defi-creer-get')}}" role="button"><i class="fa-solid fa-circle-plus pt-1 pb-1 mr-2"></i>{!!__('défi')!!}</a>
 						</div>
 						<div class="mt-3 small text-muted text-justify">
-							Défis Python avec jeux de tests à valider.<br />Écrire une fonction en suivant les consignes fournies et tester le code.
+							Défis Python avec jeux de tests à valider. Écrire ou compléter un programme Python en suivant les consignes fournies et tester le code en ligne.
 						</div>	
 					</div>
 					<div class="text-center pt-2">
