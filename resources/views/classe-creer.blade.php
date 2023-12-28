@@ -18,7 +18,7 @@
 
 			<div class="col-md-2 text-right">
 				@if(Auth::check())
-				<a class="btn btn-light btn-sm" href="/" role="button"><i class="fas fa-arrow-left"></i></a>
+				<a class="btn btn-light btn-sm" href="/console/classes" role="button"><i class="fas fa-arrow-left"></i></a>
 				@else
 				<a class="btn btn-light btn-sm" href="/" role="button"><i class="fas fa-arrow-left"></i></a>
 				@endif

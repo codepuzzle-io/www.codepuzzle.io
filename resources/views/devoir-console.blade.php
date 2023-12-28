@@ -17,7 +17,9 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 </head>
 <body class="no-mathjax">
 
-	<div class="container mb-5">
+    @include('inc-nav')
+
+	<div class="container">
 
 		<div class="row pt-3">
 
@@ -83,7 +85,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                 <div class="row mt-3 mb-3">
                     <div class="col-md-4 offset-4 text-center">
                         <a class="btn btn-dark btn-sm" href="/devoir-creer/{{$jeton_secret}}" role="button"><i class="fa-solid fa-pen mr-2"></i> modifier</a>
-                        <a class="btn btn-dark btn-sm ml-3" href="/devoir-supervision/{{$jeton_secret}}" role="button"><i class="fa-solid fa-eye mr-2"></i></i> supervision</a>
+                        <a class="btn btn-dark btn-sm ml-3" href="/devoir-supervision/{{$jeton_secret}}" role="button"><i class="fa-solid fa-eye mr-2"></i></i> superviser</a>
                     </div>
                 </div>
 

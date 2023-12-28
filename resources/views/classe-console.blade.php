@@ -64,26 +64,34 @@ $liste_activites_autres = array_diff($liste_activites_eleves, $liste_activites_c
 
 		<div class="row pt-3">
 
-			<div class="col-md-2">
+            <div class="col-md-2">
+
+                <div class="text-right mb-3">
+                    @if(Auth::check())
+                    <a class="btn btn-light btn-sm" href="/console/classes" role="button"><i class="fas fa-arrow-left"></i></a>
+                    @else
+                    <a class="btn btn-light btn-sm" href="/" role="button"><i class="fas fa-arrow-left"></i></a>
+                    @endif
+                </div>
 
                 <a class="btn btn-success btn-sm pl-3 pr-3 text-monospace" style="width:100%" href="{{route('classe-creer-get')}}" role="button">{{__('nouvelle classe')}}</a>
 
                 <a href="https://github.com/codepuzzle-io/www.codepuzzle.io/discussions" target="_blank" role="button" class="mt-2 btn btn-light btn-sm text-left text-muted" style="width:100%;opacity:0.8;">
-                	<span style="font-size:80%"><i class="fas fa-comment-alt" style="float:left;margin:4px 8px 5px 0px;"></i> {{__('discussions')}} <span style="opacity:0.6;font-size:90%;">&</span> {{__('annonces')}}</span>
+                    <span style="font-size:80%"><i class="fas fa-comment-alt" style="float:left;margin:4px 8px 5px 0px;"></i> {{__('discussions')}} <span style="opacity:0.6;font-size:90%;">&</span> {{__('annonces')}}</span>
                 </a>
 
                 <a href="https://github.com/codepuzzle-io/www.codepuzzle.io/issues/new/choose" target="_blank" role="button"  class="mt-1 btn btn-light text-left btn-sm text-muted" style="width:100%;opacity:0.8;">
-                	<span style="font-size:80%"><i class="fas fa-bug" style="float:left;margin:4px 8px 5px 0px;"></i> {{__('signalement de bogue')}} <span style="opacity:0.6;font-size:90%;">&</span> {{__('questions techniques')}}</span>
+                    <span style="font-size:80%"><i class="fas fa-bug" style="float:left;margin:4px 8px 5px 0px;"></i> {{__('signalement de bogue')}} <span style="opacity:0.6;font-size:90%;">&</span> {{__('questions techniques')}}</span>
                 </a>
 
                 <div class="mt-3 text-muted text-monospace pl-1 mb-3" style="font-size:70%;opacity:0.8;">
-                	<span><i class="fa fa-envelope"></i> contact@codepuzzle.io</span>
+                    <span><i class="fa fa-envelope"></i> contact@codepuzzle.io</span>
                 </div>
 
             </div>
 
-			<div class="col-md-8">
-
+            @if(!Auth::check())
+            <div class="col-md-8">
                 <div id="frame" class="frame">
                     <div class="row">
                         <div class="col-md-6 offset-md-3 text-monospace pt-3 pb-3">
@@ -93,18 +101,24 @@ $liste_activites_autres = array_diff($liste_activites_eleves, $liste_activites_c
                             <div class="text-center font-weight-bold">lien secret</div>
                             <div class="text-center p-2 text-break align-middle border border-danger rounded"><a href="/classe-console/{{strtoupper($classe->jeton_secret)}}" target="_blank" class="text-danger">www.codepuzzle.io/classe-console/{{strtoupper($classe->jeton_secret)}}</a></div>
                             <div class="small text-muted p-1"><span class="text-danger"><i class="fas fa-exclamation-circle"></i> Ne pas partager ce lien</span><br />Il permet d'accéder à la console de la classe.</div>
-
                         </div>
                     </div>
                 </div>
             </div>
+            @endif
 
             <div class="col-md-2">
                 <div class="text-monospace" style="color:silver;font-size:70%;margin-bottom:-5px;">classe</div>
                 <div class="text-monospace font-weight-bold" style="font-size:120%;">{{strtoupper($classe->nom_classe)}}</div>
-                <div class="mt-2 mb-4"><a class="btn btn-dark btn-sm" href="/classe-modifier/{{$jeton_secret}}" role="button"><i class="fa-solid fa-pen mr-2"></i> modifier</a></div>
+                <div class="text-monospace small">
+                    <ul>
+                        <li>{{ count($eleves)}} élèves</li>
+                        <li>{{ count($liste_activites_classe)}} activités</li>
+                    </ul>
+                </div>
+                <div class="mt-2 mb-4"><a class="btn btn-dark btn-sm" href="/classe-modifier/{{$jeton_secret}}" role="button" data-toggle="tooltip" data-placement="right" title="{{__('modifier')}}"><i class="fa-solid fa-pen"></i></a></div>
             </div>
-
+            
         </div><!-- /row -->
 
         <div class="row pt-2">

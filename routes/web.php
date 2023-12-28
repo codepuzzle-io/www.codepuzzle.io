@@ -103,6 +103,7 @@ Route::any('/console', [App\Http\Controllers\ConsoleController::class, 'console'
 Route::any('/console/puzzles', [App\Http\Controllers\ConsoleController::class, 'console_puzzles'])->name('console-puzzles');
 Route::any('/console/defis', [App\Http\Controllers\ConsoleController::class, 'console_defis'])->name('console-defis');
 Route::any('/console/devoirs', [App\Http\Controllers\ConsoleController::class, 'console_devoirs'])->name('console-devoirs');
+Route::any('/console/classes', [App\Http\Controllers\ConsoleController::class, 'console_classes'])->name('console-classes');
 
 // puzzle modifier
 Route::get('/console/puzzle-modifier/', [App\Http\Controllers\ConsoleController::class, 'redirect']);
@@ -128,6 +129,13 @@ Route::post('/console/devoir-ajouter-console', [App\Http\Controllers\ConsoleCont
 // devoir supprimer
 Route::any('/console/devoir-supprimer', [App\Http\Controllers\ConsoleController::class, 'redirect']);
 Route::any('/console/devoir-supprimer/{devoir_id}', [App\Http\Controllers\ConsoleController::class, 'devoir_supprimer'])->name('devoir-supprimer');
+
+// classe ajouter console
+Route::post('/console/classe-ajouter-console', [App\Http\Controllers\ConsoleController::class, 'classe_ajouter_console'])->name('classe-ajouter-console');
+
+// classe supprimer
+Route::any('/console/classe-supprimer', [App\Http\Controllers\ConsoleController::class, 'redirect']);
+Route::any('/console/classe-supprimer/{devoir_id}', [App\Http\Controllers\ConsoleController::class, 'classe_supprimer'])->name('classe-supprimer');
 
 
 // ============================================================================
