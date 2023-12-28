@@ -89,13 +89,21 @@
 		</div>
 	</div>
 
-	<div class="container mt-5">
+	<div id="bas" class="container pt-5" style="background-color:#f8fafc;overflow:auto;">
 		<div class="row">
 			<div class="col-md-10 offset-md-1">
-			<div class="font-weight-bold text-monospace text-uppercase">Bac à sable Python</div>
-				<div style="width:100%;margin:0px auto 8px auto;"><div id="editor_code" style="border-radius:5px;"></div></div>
+				<div class="font-weight-bold text-monospace text-uppercase">
+					<a class="text-dark pl-1" href="#" onclick="fullscreen('bas')" data-toggle="tooltip" data-placement="top" data-title="mode plein écran">
+						<i id="fs_on" class="fas fa-expand"></i>
+						<i id="fs_off" class="fas fa-compress" style="display:none;"></i>
+					</a>
+					Bac à sable Python
+				</div>
+				<div style="width:100%;margin:0px auto 8px auto;"><div id="editor_code" style="border-radius:5px;"># bac à sable python
+for _ in range(4):
+    print("Code Puzzle")</div></div>
 				<!-- boutons run / stop / restart -->
-				<div class="row" style="min-height:40px;">
+				<div class="row">
 					<div class="col-md-6 text-left">
 						<button id="run" type="button" class="btn btn-primary btn-sm pl-4 pr-4"><i class="fas fa-circle-notch fa-spin"></i></button>
 						<button id="stop" type="button" class="btn btn-dark btn-sm pl-3 pr-3" style="padding-top:6px;display:none;" data-bs-toggle="tooltip" data-bs-placement="right"  data-bs-trigger="hover" title="{{__('Interruption de l\'exécution du code (en cas de boucle infinie ou de traitement trop long). L\'arrêt peut prendre quelques secondes.')}}"><i class="fas fa-stop"></i></button>
@@ -106,10 +114,10 @@
 				</div>
 			</div>
 		</div>
-		<div class="row mt-2 pb-4">
+		<div class="row mt-3 pb-4">
 			<div class="col-md-10 offset-md-1">
 				<div class="text-monospace">Console</div>
-				<pre id="output" class="text-monospace p-3 text-white bg-dark" style="border-radius:4px;border:1px solid silver;min-height:150px;"></pre>
+				<pre id="output" class="text-monospace p-3 text-white bg-dark" style="border-radius:4px;border:1px solid silver;min-height:150px;font-size:130%;"></pre>
 			</div>
 		</div>  
 	</div>
@@ -256,6 +264,62 @@
 		}
 	</script>
 
+	<script>
+		function fullscreen(id) {
+			var el = document.getElementById(id);
+			var isFullscreen = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+
+			if (isFullscreen) {
+				// Quitter le plein écran
+				if (document.exitFullscreen) {
+					document.exitFullscreen();
+				} else if (document.webkitExitFullscreen) { /* Safari */
+					document.webkitExitFullscreen();
+				} else if (document.msExitFullscreen) { /* IE11 */
+					document.msExitFullscreen();
+				}
+			} else {
+				// Entrer en plein écran
+				if (el.requestFullscreen) {
+					el.requestFullscreen();
+				} else if (el.webkitRequestFullscreen) { /* Safari */
+					el.webkitRequestFullscreen();
+				} else if (el.msRequestFullscreen) { /* IE11 */
+					el.msRequestFullscreen();
+				}
+			}
+		}
+
+		document.addEventListener("fullscreenchange", function() {
+			updateFsButton();
+		}, false);
+
+		document.addEventListener("webkitfullscreenchange", function() {
+			updateBupdateFsButtonutton();
+		}, false);
+
+		document.addEventListener("mozfullscreenchange", function() {
+			updateFsButton();
+		}, false);
+
+		document.addEventListener("MSFullscreenChange", function() {
+			updateFsButton();
+		}, false);
+
+		function updateFsButton() {
+			var fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+			var button = document.getElementById("fullscreenButton");
+			
+			if (fullscreenElement) {
+				document.getElementById('fs_on').style.display = "none";
+				document.getElementById('fs_off').style.display = "inline";
+			} else {
+				document.getElementById('fs_on').style.display = "inline";
+				document.getElementById('fs_off').style.display = "none";
+			}
+		}
+	</script>   
+
 	<script src="{{ asset('js/ace/ace.js') }}" type="text/javascript" charset="utf-8"></script>
 	<script>
 		var editor_code = ace.edit("editor_code", {
@@ -263,7 +327,7 @@
 			mode: "ace/mode/python",
 			maxLines: 500,
 			minLines: 10,
-			fontSize: 14,
+			fontSize: 20,
 			wrap: true,
 			useWorker: false,
 			autoScrollEditorIntoView: true,
@@ -325,10 +389,6 @@
 						run.innerHTML = '<i class="fas fa-play"></i>';
 						stop.style.display = 'none';
 						restart.style.display = 'none';
-					}
-
-					if (event.data.status == 'success'){
-						run.style.display = "none";
 					}
 				}
 
