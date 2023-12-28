@@ -435,7 +435,7 @@
 			theme: "ace/theme/puzzle_code",
 			mode: "ace/mode/python",
 			maxLines: 500,
-			minLines: 10,
+			minLines: 8,
 			//fontSize: 20,
 			wrap: true,
 			useWorker: false,
