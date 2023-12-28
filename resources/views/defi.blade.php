@@ -184,7 +184,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 			</div>
 		</div><!-- row -->
 
-		<div class="row mt-3 pb-5" @if(!$defi->with_console) style="display:none" @endif>
+		<div class="row mt-3 pb-5 text-monospace" @if(!$defi->with_console) style="display:none" @endif>
 			<div class="col-md-4 offset-md-1">
 				<div>Console</div>
 				<pre id="output1" class="text-monospace p-2 small text-muted" style="border-radius:4px;border:1px solid silver;min-height:150px;"></pre>

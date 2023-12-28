@@ -101,13 +101,13 @@
 				</div>
 				<div style="width:100%;margin:0px auto 8px auto;"><div id="editor_code" style="border-radius:5px;"># bac à sable python
 for _ in range(4):
-print("Code Puzzle")</div></div>
+    print("Code Puzzle")</div></div>
 
 			</div>
 		</div><!-- row --> 
 
 		<!-- boutons run / stop / restart -->
-		<div class="row" style="min-height:40px;">
+		<div class="row">
 			<div class="col-md-5 offset-md-1 text-left">
 				<button id="run" type="button" class="btn btn-primary btn-sm pl-4 pr-4"><i class="fas fa-circle-notch fa-spin"></i></button>
 				<button id="stop" type="button" class="btn btn-dark btn-sm pl-3 pr-3" style="padding-top:6px;display:none;" data-toggle="tooltip" data-placement="right"  data-trigger="hover" title="{{__('Interruption de l\'exécution du code (en cas de boucle infinie ou de traitement trop long). L\'arrêt peut prendre quelques secondes.')}}"><i class="fas fa-stop"></i></button>
@@ -447,8 +447,14 @@ print("Code Puzzle")</div></div>
 			console.log("Web Worker redémarré.");
 		}
 
-	</script>`
+	</script>
 
+	<script>
+		var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+		var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+		  return new bootstrap.Tooltip(tooltipTriggerEl)
+		})
+	</script>
 
 </body>
 </html>
