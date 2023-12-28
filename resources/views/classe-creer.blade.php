@@ -58,7 +58,7 @@
 					<!-- ACTIVITES -->
 					<a id="activites_anchor"></a>
 					<div class="mt-4 text-monospace">{{strtoupper(__('ACTIVITES'))}} <i class="text-muted" style="font-size:70%;">optionnel</i></div>
-					<div class="text-monospace small text-muted pb-1">Les activités indiquées ci-dessous apparaîtront dans la console de la classe et dans la console des élèves. Une activité peut être un puzzle ou un défi. Saisir les codes des activités séparés par des virgules.<br />Exemple: DQMSK,DXSR8,DWMX2,DEHSD,DL92R</div>
+					<div class="text-monospace small text-muted pb-1">Les activités indiquées ci-dessous apparaîtront dans la console de la classe et dans la console des élèves. Une activité peut être un puzzle ou un défi. Vous pouvez ajouter des activités maintenant ou plus tard. Saisir les codes des activités séparés par des virgules.<br />Exemple: DQMSK,DXSR8,DWMX2,DEHSD,DL92R</div>
 					<textarea id="activites" name="activites" class="form-control @error('activites') is-invalid @enderror" rows="2">{{ old('activites') }}</textarea>
 					@error('activites')
 						<span class="invalid-feedback" role="alert">

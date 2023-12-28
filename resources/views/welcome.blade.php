@@ -23,14 +23,14 @@
 					<div class="card-body p-0">
 						<h2>{!!__('Créer et partager des puzzles de Parsons', ['link' => route('about')])!!}</h2>
 						<div class="mx-auto mt-3 text-center" style="width:60%">
-							<a class="btn btn-success btn-sm btn-block p-2" href="{{ route('puzzle-creer-get')}}" role="button"><i class="fa-solid fa-circle-plus pt-1 pb-1"></i><br />{!!__('puzzle')!!}</a>
+							<a class="btn btn-success btn-sm btn-block p-2" href="{{ route('puzzle-creer-get')}}" role="button"><i class="fa-solid fa-circle-plus pt-1 pb-1 mr-2"></i>{!!__('puzzle')!!}</a>
 						</div>
 						<div class="mt-3 small text-muted text-justify">
 							Puzzles de Parsons en mode "réorganiser" ou "glisser-déposer".<br />Avec ou sans code à compléter.
 						</div>	
 					</div>
 					<div class="text-center pt-2">
-						<a class="btn btn-light btn-sm pl-3 pr-3" href="#puzzle" role="button" data-toggle="tooltip" data-placement="top" title="plus d'infos"><i class="fa-solid fa-circle-info"></i></a>
+						<a class="btn btn-light btn-sm pl-3 pr-3" href="#puzzle" role="button" data-toggle="tooltip" data-placement="top" title="plus d'informations"><i class="fa-solid fa-circle-info"></i></a>
 					</div>
 				</div>
 
@@ -38,14 +38,14 @@
 					<div class="card-body p-0">
 						<h2>{!!__('Créer et partager des défis')!!}</h2>				
 						<div class="mx-auto mt-3 text-center" style="width:60%">
-							<a class="btn btn-success btn-sm btn-block p-2" href="{{ route('defi-creer-get')}}" role="button"><i class="fa-solid fa-circle-plus pt-1 pb-1"></i><br />{!!__('défi')!!}</a>
+							<a class="btn btn-success btn-sm btn-block p-2" href="{{ route('defi-creer-get')}}" role="button"><i class="fa-solid fa-circle-plus pt-1 pb-1 mr-2"></i>{!!__('défi')!!}</a>
 						</div>
 						<div class="mt-3 small text-muted text-justify">
 							Défis avec jeux de tests à valider.<br />Écrire une fonction en suivant les consignes fournies.
 						</div>	
 					</div>
 					<div class="text-center pt-2">
-						<a class="btn btn-light btn-sm pl-3 pr-3" href="#defi" role="button" data-toggle="tooltip" data-placement="top" title="plus d'infos"><i class="fa-solid fa-circle-info"></i></a>
+						<a class="btn btn-light btn-sm pl-3 pr-3" href="#defi" role="button" data-toggle="tooltip" data-placement="top" title="plus d'informations"><i class="fa-solid fa-circle-info"></i></a>
 						<a class="btn btn-light btn-sm pl-3 pr-3" href="/defis-banque" role="button" data-toggle="tooltip" data-placement="top" title="banque de défis"><i class="fa-solid fa-box-archive"></i></a>
 					</div>
 				</div>
@@ -54,14 +54,39 @@
 					<div class="card-body p-0">
 						<h2>{!!__('Créer et partager des devoirs')!!}</h2>				
 						<div class="mx-auto mt-3 text-center" style="width:60%">
-							<a class="btn btn-success btn-sm btn-block p-2" href="{{ route('devoir-creer-get')}}" role="button"><i class="fa-solid fa-circle-plus pt-1 pb-1"></i><br />{!!__('devoir')!!}</a>
+							<a class="btn btn-success btn-sm btn-block p-2" href="{{ route('devoir-creer-get')}}" role="button"><i class="fa-solid fa-circle-plus pt-1 pb-1 mr-2"></i>{!!__('devoir')!!}</a>
 						</div>
 						<div class="mt-3 small text-muted text-justify">
 							Activités en classe de type examen dans un environnement anti-triche.<br />Récupération automatique des travaux avec exécution du code et correction en ligne.
 						</div>	
 					</div>
 					<div class="text-center pt-2">
-						<a class="btn btn-light btn-sm pl-3 pr-3" href="#devoir" role="button" data-toggle="tooltip" data-placement="top" title="plus d'infos"><i class="fa-solid fa-circle-info"></i></a>
+						<a class="btn btn-light btn-sm pl-3 pr-3" href="#devoir" role="button" data-toggle="tooltip" data-placement="top" title="plus d'informations"><i class="fa-solid fa-circle-info"></i></a>
+					</div>
+				</div>
+
+				<div class="card pt-1 pb-0" style="border:none !important;background-color:transparent !important">
+					<div class="card-body p-0">				
+						<div class="mx-auto text-center" style="width:80%">
+							<a class="btn btn-dark btn-sm btn-block p-2" href="{{ route('classe-creer-get')}}" role="button"><i class="fas fa-chalkboard mr-2"></i><b>{!!__('CLASSE')!!}</b> <sup class="text-danger">bêta</sup></a>
+						</div>
+						<div class="mt-2 small text-muted text-justify">
+							Créer une classe pour proposer des activités (puzzles, défis...) aux élèves et suivre l'avancement de leur travail.
+
+							<a class="text-dark" href="#classe" role="button" data-toggle="tooltip" data-placement="top" title="plus d'informations"><i class="fa-solid fa-circle-info"></i></a>
+						</div>
+
+						<div class="pt-5 mx-auto text-center" style="width:80%">
+						<i style="font-size:70%;color:silver;">optionnel</i>
+						<a class="btn btn-secondary btn-sm btn-block" style="font-size:80%;opacity:0.6" href="{{route('register')}}" role="button">{{__('créer un compte')}}</a>
+</div>
+						<div class="text-center mt-1">
+				
+				<span style="font-size:70%;color:silver;">{{__('pour créer, sauvegarder, modifier et partager les activités proposées aux élèves')}}</span>
+			</div>
+
+
+
 					</div>
 				</div>
 
@@ -70,13 +95,6 @@
 	</div>
 
 	<div class="container mt-3">
-
-		<div class="row pt-3">
-			<div class="col-md-2 offset-md-5 text-center">
-				<a class="btn btn-secondary btn-sm btn-block mt-3 mb-1" style="font-size:80%;opacity:0.6" href="{{route('register')}}" role="button">{{__('créer un compte')}}</a>
-				<span style="font-size:70%;color:silver;">{{__('pour créer, sauvegarder, modifier et partager les activités proposées aux élèves')}}</span>
-			</div>
-		</div>
 
 		<a name="puzzle"></a>
 		<div class="row mt-5 text-monospace">
@@ -141,37 +159,37 @@
 				<div id="carouselCaptions" class="carousel slide" data-interval="false">
 					<div class="carousel-inner">
 						<div class="carousel-item active" style="margin-top:100px;">
-							<img src="{{ asset('img/entrainement/entrainement-00.png') }}" class="d-block w-100" alt="E1">
+							<img src="{{ asset('img/devoir/devoir-00.png') }}" class="d-block w-100" alt="E1">
 							<div class="carousel-caption d-none d-md-block text-center text-white small">
 								<span class="bg-dark p-1 pl-2 pr-2">console enseignant</span>
 							</div>
 						</div>
 						<div class="carousel-item" style="margin-top:100px;">
-							<img src="{{ asset('img/entrainement/entrainement-01.png') }}" class="d-block w-100" alt="E1">
+							<img src="{{ asset('img/devoir/devoir-01.png') }}" class="d-block w-100" alt="E1">
 							<div class="carousel-caption d-none d-md-block text-center text-white small">
 								<span class="bg-dark p-1 pl-2 pr-2">création d'un nouvel entraînement/devoir</span>
 							</div>
 						</div>
 						<div class="carousel-item" style="margin-top:100px;">
-							<img src="{{ asset('img/entrainement/entrainement-02.png') }}" class="d-block w-100" alt="E1">
+							<img src="{{ asset('img/devoir/devoir-02.png') }}" class="d-block w-100" alt="E1">
 							<div class="carousel-caption d-none d-md-block text-center text-white small">
 								<span class="bg-dark p-1 pl-2 pr-2">correction du travail d'un élève</span>
 							</div>
 						</div>
 						<div class="carousel-item" style="margin-top:100px;">
-							<img src="{{ asset('img/entrainement/entrainement-03.png') }}" class="d-block w-100" alt="E1">
+							<img src="{{ asset('img/devoir/devoir-03.png') }}" class="d-block w-100" alt="E1">
 							<div class="carousel-caption d-none d-md-block text-center text-white small">
 								<span class="bg-dark p-1 pl-2 pr-2">lancement de l'entraînement/devoir côté élève</span>
 							</div>
 						</div>
 						<div class="carousel-item" style="margin-top:100px;">
-							<img src="{{ asset('img/entrainement/entrainement-04.png') }}" class="d-block w-100" alt="E1">
+							<img src="{{ asset('img/devoir/devoir-04.png') }}" class="d-block w-100" alt="E1">
 							<div class="carousel-caption d-none d-md-block text-center text-white small">
 								<span class="bg-dark p-1 pl-2 pr-2">page de l'entraînement/devoir</span>
 							</div>
 						</div>	
 						<div class="carousel-item" style="margin-top:100px;">
-							<img src="{{ asset('img/entrainement/entrainement-05.png') }}" class="d-block w-100" alt="E1">
+							<img src="{{ asset('img/devoir/devoir-05.png') }}" class="d-block w-100" alt="E1">
 							<div class="carousel-caption d-none d-md-block text-center text-white small">
 								<span class="bg-dark p-1 pl-2 pr-2">page verrouillée - appel de l'enseignant</span>
 							</div>
@@ -187,6 +205,17 @@
 					</a>
 				</div>
 
+			</div>
+		</div>	
+
+		<a name="classe"></a>
+		<div class="row mt-5 text-monospace">
+			<div class="col-md-2">
+				<div class="font-weight-bold text-success">CLASSE</div>
+				<div class="font-weight-bold">Suivi des activités</div>
+			</div>
+			<div class="col-md-10 exemple">
+				<img src="{{ asset('img/classe/classe_suivi.png') }}" class="d-block w-100" />
 			</div>
 		</div>	
 
