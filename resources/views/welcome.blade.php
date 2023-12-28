@@ -1,4 +1,5 @@
 @include('inc-top')
+<!doctype html>
 <html lang="{{ app()->getLocale() }}">
 <head>
 	@php
@@ -257,99 +258,6 @@ for _ in range(4):
 	@include('inc-bottom-js')
 
 	<script>
-		for (var i = 1; i <= 4; i++) {
-			(function(index) {
-				document.getElementById('exemple' + index + '_iframe').addEventListener('load', function() {
-					var iframeHeight = document.getElementById('exemple' + index + '_iframe').contentWindow.document.body.scrollHeight;
-					document.getElementById('exemple' + index + '_div').style.height = iframeHeight+20 + 'px';
-				});
-			})(i);
-		}
-	</script>
-
-	<script>
-		function fullscreen(id) {
-			var el = document.getElementById(id);
-			var isFullscreen = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
-
-			if (isFullscreen) {
-				// Quitter le plein écran
-				if (document.exitFullscreen) {
-					document.exitFullscreen();
-				} else if (document.webkitExitFullscreen) { /* Safari */
-					document.webkitExitFullscreen();
-				} else if (document.msExitFullscreen) { /* IE11 */
-					document.msExitFullscreen();
-				}
-			} else {
-				// Entrer en plein écran
-				if (el.requestFullscreen) {
-					el.requestFullscreen();
-				} else if (el.webkitRequestFullscreen) { /* Safari */
-					el.webkitRequestFullscreen();
-				} else if (el.msRequestFullscreen) { /* IE11 */
-					el.msRequestFullscreen();
-				}
-			}
-		}
-
-		document.addEventListener("fullscreenchange", function() {
-			updateFsButton();
-		}, false);
-
-		document.addEventListener("webkitfullscreenchange", function() {
-			updateBupdateFsButtonutton();
-		}, false);
-
-		document.addEventListener("mozfullscreenchange", function() {
-			updateFsButton();
-		}, false);
-
-		document.addEventListener("MSFullscreenChange", function() {
-			updateFsButton();
-		}, false);
-
-		function updateFsButton() {
-			var fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
-			var button = document.getElementById("fullscreenButton");
-			
-			if (fullscreenElement) {
-				document.getElementById('fs_on').style.display = "none";
-				document.getElementById('fs_off').style.display = "inline";
-			} else {
-				document.getElementById('fs_on').style.display = "inline";
-				document.getElementById('fs_off').style.display = "none";
-			}
-		}
-	</script>   
-
-	<script src="{{ asset('js/ace/ace.js') }}" type="text/javascript" charset="utf-8"></script>
-	<script>
-		var editor_code = ace.edit("editor_code", {
-			theme: "ace/theme/puzzle_code",
-			mode: "ace/mode/python",
-			maxLines: 500,
-			minLines: 10,
-			fontSize: 20,
-			wrap: true,
-			useWorker: false,
-			autoScrollEditorIntoView: true,
-			highlightActiveLine: false,
-			highlightSelectedWord: false,
-			highlightGutterLine: true,
-			showPrintMargin: false,
-			displayIndentGuides: true,
-			showLineNumbers: true,
-			showGutter: true,
-			showFoldWidgets: false,
-			useSoftTabs: true,
-			navigateWithinSoftTabs: false,
-			tabSize: 4
-		});
-		editor_code.container.style.lineHeight = 1.5;
-	</script> 
-
-	`<script>
 		// PYODIDE
 
 		const run = document.getElementById("run");
@@ -448,6 +356,99 @@ for _ in range(4):
 		}
 
 	</script>
+
+	<script>
+		for (var i = 1; i <= 4; i++) {
+			(function(index) {
+				document.getElementById('exemple' + index + '_iframe').addEventListener('load', function() {
+					var iframeHeight = document.getElementById('exemple' + index + '_iframe').contentWindow.document.body.scrollHeight;
+					document.getElementById('exemple' + index + '_div').style.height = iframeHeight+20 + 'px';
+				});
+			})(i);
+		}
+	</script>
+
+	<script>
+		function fullscreen(id) {
+			var el = document.getElementById(id);
+			var isFullscreen = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+
+			if (isFullscreen) {
+				// Quitter le plein écran
+				if (document.exitFullscreen) {
+					document.exitFullscreen();
+				} else if (document.webkitExitFullscreen) { /* Safari */
+					document.webkitExitFullscreen();
+				} else if (document.msExitFullscreen) { /* IE11 */
+					document.msExitFullscreen();
+				}
+			} else {
+				// Entrer en plein écran
+				if (el.requestFullscreen) {
+					el.requestFullscreen();
+				} else if (el.webkitRequestFullscreen) { /* Safari */
+					el.webkitRequestFullscreen();
+				} else if (el.msRequestFullscreen) { /* IE11 */
+					el.msRequestFullscreen();
+				}
+			}
+		}
+
+		document.addEventListener("fullscreenchange", function() {
+			updateFsButton();
+		}, false);
+
+		document.addEventListener("webkitfullscreenchange", function() {
+			updateBupdateFsButtonutton();
+		}, false);
+
+		document.addEventListener("mozfullscreenchange", function() {
+			updateFsButton();
+		}, false);
+
+		document.addEventListener("MSFullscreenChange", function() {
+			updateFsButton();
+		}, false);
+
+		function updateFsButton() {
+			var fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+			var button = document.getElementById("fullscreenButton");
+			
+			if (fullscreenElement) {
+				document.getElementById('fs_on').style.display = "none";
+				document.getElementById('fs_off').style.display = "inline";
+			} else {
+				document.getElementById('fs_on').style.display = "inline";
+				document.getElementById('fs_off').style.display = "none";
+			}
+		}
+	</script>   
+
+	<script src="{{ asset('js/ace/ace.js') }}" type="text/javascript" charset="utf-8"></script>
+	<script>
+		var editor_code = ace.edit("editor_code", {
+			theme: "ace/theme/puzzle_code",
+			mode: "ace/mode/python",
+			maxLines: 500,
+			minLines: 10,
+			fontSize: 20,
+			wrap: true,
+			useWorker: false,
+			autoScrollEditorIntoView: true,
+			highlightActiveLine: false,
+			highlightSelectedWord: false,
+			highlightGutterLine: true,
+			showPrintMargin: false,
+			displayIndentGuides: true,
+			showLineNumbers: true,
+			showGutter: true,
+			showFoldWidgets: false,
+			useSoftTabs: true,
+			navigateWithinSoftTabs: false,
+			tabSize: 4
+		});
+		editor_code.container.style.lineHeight = 1.5;
+	</script> 
 
 	<script>
 		var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
