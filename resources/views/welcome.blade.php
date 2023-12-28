@@ -80,7 +80,7 @@
 							<i style="font-size:70%;color:silver;">optionnel</i>
 							<a class="btn btn-secondary btn-sm btn-block" style="font-size:80%;opacity:0.6" href="{{route('register')}}" role="button">{{__('créer un compte')}}</a>
 						</div>
-						<div class="text-center mt-1">
+						<div class="text-center mt-1" style="line-height:1;">
 							<span style="font-size:70%;color:silver;">{{__('pour créer, sauvegarder, modifier et partager les activités proposées aux élèves')}}</span>
 						</div>
 					</div>
