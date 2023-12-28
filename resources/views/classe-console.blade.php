@@ -90,7 +90,7 @@ $liste_activites_autres = array_diff($liste_activites_eleves, $liste_activites_c
 
             </div>
 
-            @if(!Auth::check())
+            @if($classe->user_id == 0)
             <div class="col-md-8">
                 <div id="frame" class="frame">
                     <div class="row">
