@@ -26,7 +26,7 @@
 							<a class="btn btn-success btn-sm btn-block p-2" href="{{ route('puzzle-creer-get')}}" role="button"><i class="fa-solid fa-circle-plus pt-1 pb-1 mr-2"></i>{!!__('puzzle')!!}</a>
 						</div>
 						<div class="mt-3 small text-muted text-justify">
-							Puzzles de Parsons en mode "réorganiser" ou "glisser-déposer".<br />Avec ou sans code à compléter.
+							Puzzles de Parsons en mode "réorganiser" ou "glisser-déposer". Avec ou sans code à compléter. Pour apprendre Python sans écrire de code.
 						</div>	
 					</div>
 					<div class="text-center pt-2">
