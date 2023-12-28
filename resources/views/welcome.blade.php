@@ -101,26 +101,29 @@
 				</div>
 				<div style="width:100%;margin:0px auto 8px auto;"><div id="editor_code" style="border-radius:5px;"># bac à sable python
 for _ in range(4):
-    print("Code Puzzle")</div></div>
-				<!-- boutons run / stop / restart -->
-				<div class="row">
-					<div class="col-md-6 text-left">
-						<button id="run" type="button" class="btn btn-primary btn-sm pl-4 pr-4"><i class="fas fa-circle-notch fa-spin"></i></button>
-						<button id="stop" type="button" class="btn btn-dark btn-sm pl-3 pr-3" style="padding-top:6px;display:none;" data-bs-toggle="tooltip" data-bs-placement="right"  data-bs-trigger="hover" title="{{__('Interruption de l\'exécution du code (en cas de boucle infinie ou de traitement trop long). L\'arrêt peut prendre quelques secondes.')}}"><i class="fas fa-stop"></i></button>
-					</div>
-					<div class="col-md-6 text-right">
-						<button id="restart" type="button" class="btn btn-warning btn-sm pl-3 pr-3" style="padding-top:6px;display:none;" data-bs-toggle="tooltip" data-bs-placement="right"  data-bs-trigger="hover" title="{{__('Si le bouton d\'arrêt ne permet pas d\'interrompre  l\'exécution du code, cliquer ici. Python redémarrera complètement mais votre code sera conservé dans l\'éditeur. Le redémarrage peut prendre quelques secondes.')}}"><i class="fas fa-skull"></i></button>
-					</div>
-				</div>
+print("Code Puzzle")</div></div>
+
 			</div>
-		</div>
+		</div><!-- row --> 
+
+		<!-- boutons run / stop / restart -->
+		<div class="row" style="min-height:40px;">
+			<div class="col-md-5 offset-md-1 text-left">
+				<button id="run" type="button" class="btn btn-primary btn-sm pl-4 pr-4"><i class="fas fa-circle-notch fa-spin"></i></button>
+				<button id="stop" type="button" class="btn btn-dark btn-sm pl-3 pr-3" style="padding-top:6px;display:none;" data-toggle="tooltip" data-placement="right"  data-trigger="hover" title="{{__('Interruption de l\'exécution du code (en cas de boucle infinie ou de traitement trop long). L\'arrêt peut prendre quelques secondes.')}}"><i class="fas fa-stop"></i></button>
+			</div>
+			<div class="col-md-5 text-right">
+				<button id="restart" type="button" class="btn btn-warning btn-sm pl-3 pr-3" style="padding-top:6px;display:none;" data-toggle="tooltip" data-placement="right"  data-trigger="hover" title="{{__('Si le bouton d\'arrêt ne permet pas d\'interrompre  l\'exécution du code, cliquer ici. Python redémarrera complètement mais votre code sera conservé dans l\'éditeur. Le redémarrage peut prendre quelques secondes.')}}"><i class="fas fa-skull"></i></button>
+			</div>
+		</div><!-- row --> 
+
 		<div class="row mt-3 pb-4">
 			<div class="col-md-10 offset-md-1">
 				<div class="text-monospace">Console</div>
 				<pre id="output" class="text-monospace p-3 text-white bg-dark" style="border-radius:4px;border:1px solid silver;min-height:150px;font-size:130%;"></pre>
 			</div>
-		</div>  
-	</div>
+		</div><!-- row --> 
+	</div><!-- container -->
 
 	<div class="container mt-3">
 
