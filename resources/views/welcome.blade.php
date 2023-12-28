@@ -93,7 +93,6 @@
 	<div id="bas" class="container pt-5" style="background-color:#f8fafc;overflow:auto;">
 		<div class="row">
 			<div class="col-md-1 text-right">
-				<br />
 				<div class="btn-group-vertical mb-2">
 					<a  class="btn btn-light" href="#" onclick="fullscreen('bas')" role="button">
 						<i id="fs_on" class="fas fa-expand"></i>
@@ -107,9 +106,7 @@
 				</div>
 			</div>
 			<div class="col-md-10">
-				<div class="font-weight-bold text-monospace text-uppercase ml-1">Bac à sable Python</div>
-				<div style="width:100%;margin:0px auto 8px auto;"><div id="editor_code" style="border-radius:5px;"># bac à sable python
-for _ in range(4):
+				<div style="width:100%;margin:0px auto 8px auto;"><div id="editor_code" style="border-radius:5px;">for _ in range(4):
     print("Code Puzzle")</div></div>
 
 			</div>
