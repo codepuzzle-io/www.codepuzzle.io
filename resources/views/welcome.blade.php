@@ -75,23 +75,43 @@
 
 							<a class="text-dark" href="#classe" role="button" data-toggle="tooltip" data-placement="top" title="plus d'informations"><i class="fa-solid fa-circle-info"></i></a>
 						</div>
-
 						<div class="pt-5 mx-auto text-center" style="width:80%">
-						<i style="font-size:70%;color:silver;">optionnel</i>
-						<a class="btn btn-secondary btn-sm btn-block" style="font-size:80%;opacity:0.6" href="{{route('register')}}" role="button">{{__('créer un compte')}}</a>
-</div>
+							<i style="font-size:70%;color:silver;">optionnel</i>
+							<a class="btn btn-secondary btn-sm btn-block" style="font-size:80%;opacity:0.6" href="{{route('register')}}" role="button">{{__('créer un compte')}}</a>
+						</div>
 						<div class="text-center mt-1">
-				
-				<span style="font-size:70%;color:silver;">{{__('pour créer, sauvegarder, modifier et partager les activités proposées aux élèves')}}</span>
-			</div>
-
-
-
+							<span style="font-size:70%;color:silver;">{{__('pour créer, sauvegarder, modifier et partager les activités proposées aux élèves')}}</span>
+						</div>
 					</div>
 				</div>
 
 			</div>
 		</div>
+	</div>
+
+	<div class="container mt-5">
+		<div class="row">
+			<div class="col-md-10 offset-md-1">
+			<div class="font-weight-bold text-monospace text-uppercase">Bac à sable Python</div>
+				<div style="width:100%;margin:0px auto 8px auto;"><div id="editor_code" style="border-radius:5px;"></div></div>
+				<!-- boutons run / stop / restart -->
+				<div class="row" style="min-height:40px;">
+					<div class="col-md-6 text-left">
+						<button id="run" type="button" class="btn btn-primary btn-sm pl-4 pr-4"><i class="fas fa-circle-notch fa-spin"></i></button>
+						<button id="stop" type="button" class="btn btn-dark btn-sm pl-3 pr-3" style="padding-top:6px;display:none;" data-bs-toggle="tooltip" data-bs-placement="right"  data-bs-trigger="hover" title="{{__('Interruption de l\'exécution du code (en cas de boucle infinie ou de traitement trop long). L\'arrêt peut prendre quelques secondes.')}}"><i class="fas fa-stop"></i></button>
+					</div>
+					<div class="col-md-6 text-right">
+						<button id="restart" type="button" class="btn btn-warning btn-sm pl-3 pr-3" style="padding-top:6px;display:none;" data-bs-toggle="tooltip" data-bs-placement="right"  data-bs-trigger="hover" title="{{__('Si le bouton d\'arrêt ne permet pas d\'interrompre  l\'exécution du code, cliquer ici. Python redémarrera complètement mais votre code sera conservé dans l\'éditeur. Le redémarrage peut prendre quelques secondes.')}}"><i class="fas fa-skull"></i></button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row mt-2 pb-4">
+			<div class="col-md-10 offset-md-1">
+				<div class="text-monospace">Console</div>
+				<pre id="output" class="text-monospace p-3 text-white bg-dark" style="border-radius:4px;border:1px solid silver;min-height:150px;"></pre>
+			</div>
+		</div>  
 	</div>
 
 	<div class="container mt-3">
@@ -235,6 +255,136 @@
 			})(i);
 		}
 	</script>
+
+	<script src="{{ asset('js/ace/ace.js') }}" type="text/javascript" charset="utf-8"></script>
+	<script>
+		var editor_code = ace.edit("editor_code", {
+			theme: "ace/theme/puzzle_code",
+			mode: "ace/mode/python",
+			maxLines: 500,
+			minLines: 10,
+			fontSize: 14,
+			wrap: true,
+			useWorker: false,
+			autoScrollEditorIntoView: true,
+			highlightActiveLine: false,
+			highlightSelectedWord: false,
+			highlightGutterLine: true,
+			showPrintMargin: false,
+			displayIndentGuides: true,
+			showLineNumbers: true,
+			showGutter: true,
+			showFoldWidgets: false,
+			useSoftTabs: true,
+			navigateWithinSoftTabs: false,
+			tabSize: 4
+		});
+		editor_code.container.style.lineHeight = 1.5;
+	</script> 
+
+	`<script>
+		// PYODIDE
+
+		const run = document.getElementById("run");
+		const stop = document.getElementById("stop");
+		const restart = document.getElementById("restart");
+		const output = document.getElementById("output");
+
+		// webworker
+		let pyodideWorker = createWorker();
+
+		function createWorker() {
+			output.innerText = "Initialisation...\n";
+			run.disabled = true;
+			stop.style.display = 'none';
+			restart.style.display = 'none';
+
+			let pyodideWorker = new Worker("{{ asset('pyodideworker/bas-pyodideWorker.js') }}");
+
+			pyodideWorker.onmessage = function(event) {
+				
+				// reponses du WebWorker
+				console.log("EVENT: ", event.data);
+
+				if (typeof event.data.init !== 'undefined') {
+					output.innerText = "Prêt!\n";
+					run.innerHTML = '<i class="fas fa-play"></i>';
+					run.disabled = false;
+				}
+
+				if (typeof event.data.status !== 'undefined') {
+
+					if (event.data.status == 'running'){
+						run.disabled = true;
+						run.innerHTML = '<i class="fas fa-cog fa-spin"></i>';
+						stop.style.display = 'inline';
+					}
+
+					if (event.data.status == 'completed'){
+						run.disabled = false;
+						run.innerHTML = '<i class="fas fa-play"></i>';
+						stop.style.display = 'none';
+						restart.style.display = 'none';
+					}
+
+					if (event.data.status == 'success'){
+						run.style.display = "none";
+					}
+				}
+
+				if (typeof event.data.output !== 'undefined') {
+					output.innerHTML += event.data.output;
+				}	
+
+			};
+
+			@if(App::isProduction())
+				// ne fonctionne pas en local a cause de COEP et COOP
+				// interruption python
+				let interruptBuffer = new Uint8Array(new SharedArrayBuffer(1));
+				pyodideWorker.postMessage({ cmd: "setInterruptBuffer", interruptBuffer });
+			@endif
+
+			stop.onclick = function() {
+				@if(App::isProduction())
+					// ne fonctionne pas en local a cause de COEP et COOP
+					// 2 stands for SIGINT.
+					interruptBuffer[0] = 2;
+				@endif
+				// bouton 'restart'
+				restart.style.display = 'inline';
+			}
+			
+			// arrete et redemarre le webworker
+			restart.onclick = function() {
+				restartWorker();
+			}
+
+			// envoi des donnees au webworker pour execution
+			run.onclick = function() {
+				@if(App::isProduction())
+					// ne fonctionne pas en local a cause de COEP et COOP
+					interruptBuffer[0] = 0;
+				@endif
+				const code = editor_code.getSession().getValue();
+				output.innerHTML = "";
+				pyodideWorker.postMessage({ code: code });		
+			}
+
+			return pyodideWorker
+
+		}
+
+		function restartWorker() {
+			if (pyodideWorker) {
+				pyodideWorker.terminate();
+				console.log("Web Worker supprimé.");
+			}
+			pyodideWorker = createWorker();
+			console.log("Web Worker redémarré.");
+		}
+
+	</script>`
 
 
 </body>
