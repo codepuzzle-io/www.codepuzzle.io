@@ -94,10 +94,17 @@
 		<div class="row">
 			<div class="col-md-1 text-right">
 				<br />
-				<a class="text-muted" href="#" onclick="fullscreen('bas')" data-toggle="tooltip" data-placement="top" data-offset="0, 10" data-title="mode plein écran">
-					<i id="fs_on" class="fas fa-expand fa-2x"></i>
-					<i id="fs_off" class="fas fa-compress fa-2x" style="display:none;"></i>
-				</a>
+				<div class="btn-group-vertical mb-2">
+					<a  class="btn btn-light" href="#" onclick="fullscreen('bas')" role="button">
+						<i id="fs_on" class="fas fa-expand"></i>
+						<i id="fs_off" class="fas fa-compress" style="display:none;"></i>
+					</a>
+				</div>
+				<br />
+				<div class="btn-group-vertical">
+					<button id="increaseFont" type="button" class="btn btn-light"><i class="fas fa-plus"></i></button>
+					<button id="decreaseFont" type="button" class="btn btn-light"><i class="fas fa-minus"></i></button>
+				</div>
 			</div>
 			<div class="col-md-10">
 				<div class="font-weight-bold text-monospace text-uppercase ml-1">Bac à sable Python</div>
@@ -122,7 +129,7 @@ for _ in range(4):
 		<div class="row mt-3 pb-4">
 			<div class="col-md-10 offset-md-1">
 				<div class="text-monospace">Console</div>
-				<pre id="output" class="text-monospace p-3 text-white bg-dark" style="border-radius:4px;border:1px solid silver;min-height:150px;font-size:130%;"></pre>
+				<pre id="output" class="text-monospace p-3 text-white bg-dark" style="border-radius:4px;border:1px solid silver;min-height:150px;font-size:20px;"></pre>
 			</div>
 		</div><!-- row --> 
 	</div><!-- container -->
@@ -432,7 +439,7 @@ for _ in range(4):
 			mode: "ace/mode/python",
 			maxLines: 500,
 			minLines: 10,
-			fontSize: 20,
+			//fontSize: 20,
 			wrap: true,
 			useWorker: false,
 			autoScrollEditorIntoView: true,
@@ -449,7 +456,25 @@ for _ in range(4):
 			tabSize: 4
 		});
 		editor_code.container.style.lineHeight = 1.5;
+		var fontSize = 20;
+		editor_code.setFontSize(fontSize);
 	</script> 
+
+	<script>
+		document.getElementById("increaseFont").addEventListener("click", function() {
+			fontSize++;
+			editor_code.setFontSize(fontSize);
+			document.getElementById("output").style.fontSize = fontSize + 'px';
+		});
+
+		document.getElementById("decreaseFont").addEventListener("click", function() {
+			if (fontSize > 1) {
+				fontSize--;
+				editor_code.setFontSize(fontSize);
+				document.getElementById("output").style.fontSize = fontSize + 'px';
+			}
+		});
+	</script>	
 
 	<script>
 		var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
