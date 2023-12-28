@@ -92,14 +92,15 @@
 
 	<div id="bas" class="container pt-5" style="background-color:#f8fafc;overflow:auto;">
 		<div class="row">
-			<div class="col-md-10 offset-md-1">
-				<div class="font-weight-bold text-monospace text-uppercase">
-					<a class="text-dark pl-1" href="#" onclick="fullscreen('bas')" data-toggle="tooltip" data-placement="top" data-title="mode plein écran">
-						<i id="fs_on" class="fas fa-expand"></i>
-						<i id="fs_off" class="fas fa-compress" style="display:none;"></i>
-					</a>
-					Bac à sable Python
-				</div>
+			<div class="col-md-1 text-right">
+				<br />
+				<a class="text-muted" href="#" onclick="fullscreen('bas')" data-toggle="tooltip" data-placement="top" data-offset="0, 10" data-title="mode plein écran">
+					<i id="fs_on" class="fas fa-expand fa-2x"></i>
+					<i id="fs_off" class="fas fa-compress fa-2x" style="display:none;"></i>
+				</a>
+			</div>
+			<div class="col-md-10">
+				<div class="font-weight-bold text-monospace text-uppercase ml-1">Bac à sable Python</div>
 				<div style="width:100%;margin:0px auto 8px auto;"><div id="editor_code" style="border-radius:5px;"># bac à sable python
 for _ in range(4):
     print("Code Puzzle")</div></div>
