@@ -80,7 +80,7 @@
                                 <!-- options -->
     							<div style="float:right;">
 
-                                    <a class='btn btn-dark btn-sm' href='/devoir-console/{{ $devoir->jeton_secret }}' role='button' data-toggle="tooltip" data-placement="top" title="{{__('voir')}}"><i class="fas fa-check"></i></a>
+                                    <a class='btn btn-dark btn-sm' href='/devoir-console/{{ $devoir->jeton_secret }}' role='button' data-toggle="tooltip" data-placement="top" title="{{__('voir / corriger')}}"><i class="fas fa-check"></i></a>
                
                                     <a class='btn btn-light btn-sm' data-toggle="collapse" href="#collapse-{{$loop->iteration}}" role='button' aria-expanded="false" aria-controls="collapse-{{$loop->iteration}}"><i class="fas fa-bars" style="margin-top:0px;" data-toggle="tooltip" data-offset="0, 9" data-placement="top" title="{{__('déplier plier')}}"></i></a>
 

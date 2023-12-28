@@ -62,17 +62,17 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 
                             <table class="table table-borderless text-monospace m-0" style="border-spacing:5px;border-collapse:separate;">
                                 <tr>
-                                    @if (!Auth::check()) <td class="text-center font-weight-bold p-0" style="width:33%">lien secret</td> @endif
+                                    @if($devoir->user_id == 0 OR !Auth::check()) <td class="text-center font-weight-bold p-0" style="width:33%">lien secret</td> @endif
                                     <td class="text-center font-weight-bold p-0" style="width:33%">code secret</td>
                                     <td class="text-center font-weight-bold p-0" style="width:33%">lien élèves</td>
                                 </tr>
                                 <tr>
-                                    @if (!Auth::check()) <td class="text-center p-2 text-break align-middle border border-danger rounded"><a href="/devoir-console/{{strtoupper($devoir->jeton_secret)}}" target="_blank" class="text-danger">www.codepuzzle.io/devoir-console/{{strtoupper($devoir->jeton_secret)}}</a></td> @endif
+                                    @if ($devoir->user_id == 0 OR !Auth::check()) <td class="text-center p-2 text-break align-middle border border-danger rounded"><a href="/devoir-console/{{strtoupper($devoir->jeton_secret)}}" target="_blank" class="text-danger">www.codepuzzle.io/devoir-console/{{strtoupper($devoir->jeton_secret)}}</a></td> @endif
                                     <td class="text-center p-2 text-break align-middle border border-danger rounded text-danger">{{$devoir->mot_secret}}</td>
                                     <td class="text-center text-white p-2 text-break align-middle rounded bg-secondary"><a href="/E{{strtoupper($devoir->jeton)}}" target="_blank" class="text-white">www.codepuzzle.io/E{{strtoupper($devoir->jeton)}}</a></td>
                                 </tr>
                                 <tr>
-                                    @if (!Auth::check()) <td class="small text-muted p-0"><span class="text-danger"><i class="fas fa-exclamation-circle"></i> Ne pas partager ce lien</span><br />Il permet d'accéder à la console du devoir (sujet, lien pour les élèves, correction...).</td> @endif
+                                    @if ($devoir->user_id == 0 OR !Auth::check()) <td class="small text-muted p-0"><span class="text-danger"><i class="fas fa-exclamation-circle"></i> Ne pas partager ce lien</span><br />Il permet d'accéder à la console du devoir (sujet, lien pour les élèves, correction...).</td> @endif
                                     <td class="small text-muted p-0"><span class="text-danger"><i class="fas fa-exclamation-circle"></i> Ne pas partager ce code</span><br />Il permet de déverrouiller la copie d'un élève.</td>
                                     <td class="small text-muted p-0">Lien à fournir aux élèves.<!--<br />QR code: <img src="https://api.qrserver.com/v1/create-qr-code/?data={{urlencode('https://www.codepuzzle.io/E' . strtoupper($devoir->jeton))}}&amp;size=200x200" style="width:50px" alt="www.codepuzzle.io/E{{strtoupper($devoir->jeton)}}" data-toggle="tooltip" data-placement="bottom" title="{{__('clic droit + Enregistrer l image sous... pour sauvegarder l image')}}" />--></td>
                                 </tr>
