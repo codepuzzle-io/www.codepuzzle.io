@@ -12,6 +12,77 @@
 
     @include('inc-nav')
 
+
+    <?php
+    $EP23 = [
+        '01.1' => 'DCDG3',
+        '01.2' => 'DBZF2',
+        '02.1' => 'D83WJ',
+        '02.2' => 'DHBUS',
+        '03.1' => 'DXC9G',
+        '04.1' => 'DW5F2',
+        '05.1' => 'D7WXY',
+        '05.2' => 'D2LKW',
+        '06.1' => 'DL4SC',
+        '06.2' => 'DT3GD',
+        '07.1' => 'DJMQH',
+        '07.2' => 'D5QNZ',
+        '08.1' => 'DQMSK',
+        '08.2' => 'DPVN9',
+        '09.1' => 'DEHSD',
+        '09.2' => 'DMTC9',
+        '10.1' => 'DL92R',
+        '10.2' => 'DAWZM',
+        '11.1' => 'DSPBU',
+        '11.2' => 'DRG7N',
+        '12.2' => 'DJ9FX',
+        '13.1' => 'DXKF8',
+        '13.2' => 'DRG6S',
+        '14.1' => 'DUTZL',
+        '14.2' => 'DWPEL',
+        '15.1' => 'DCHQV',
+        '15.2' => 'DF6TL',
+        '16.1' => 'DBQ7X',
+        '17.1' => 'DTSW2',
+        '18.1' => 'DXSR8',
+        '18.2' => 'DPZ6V',
+        '19.1' => 'DWMX2',
+        '19.2' => 'DDXSV',
+        '20.1' => 'DLMC5',
+        '21.1' => 'DA5GP',
+        '22.1' => 'DBAJY',
+        '22.2' => 'DG8ZR',
+        '23.1' => 'DWPRZ',
+        '23.2' => 'D9HM6',
+        '24.2' => 'DK764',
+        '25.1' => 'DAB8Z',
+        '27.1' => 'DV6CM',
+        '28.1' => 'D9VE2',
+        '30.1' => 'DAZW3',
+        '31.1' => 'DHBUV',
+        '32.1' => 'DSJZB',
+        '34.1' => 'DALHQ',
+        '36.1' => 'DSU4B',
+        '37.1' => 'DYTAM',
+        '38.1' => 'DBW2D',
+        '39.1' => 'D4VAY',
+        '40.1' => 'D8PNJ',
+        '41.1' => 'DQKV9',
+        '42.1' => 'DVGJ5',
+        '43.1' => 'DGEXL',
+        '44.1' => 'DMZQY',
+        '45.1' => 'DZLGR',
+    ];
+    $jetons_EP23 = "";
+    foreach ($EP23 AS $titre => $jeton) {
+        $jetons_EP23 .= $jeton . ',';
+    }
+    $jetons_EP23 = rtrim($jetons_EP23, ',');
+    ?>
+
+
+
+
     <?php
     $jetons = [
         //'DEB7Q', // AOC2023 Day1Part1
@@ -105,6 +176,24 @@
 			<div class="col-md-10 pl-3 pr-3">
 
                 <h1>Banque de défis</h1>
+
+                <div class="text-monospace mb-4"style="border:solid 1px silver;padding:10px;border-radius:4px;">
+                    <b>ÉPREUVE PRATIQUE 2023</b>
+                    <div class="mb-1">
+                    Liste des sujets de l'épreuve pratique de 2023 à intégrer dans une <a href="/classe-creer" target="_blank">classe</a> pour proposer des entraînements aux élèves et <a href="/#classe" target="_blank">suivre leur progression</a>. Cocher ou décocher  les sujets afin de générer une liste à ajouter dans une classe. Si un sujet est déjà présent dans la classe, il n'est pas ajouté une deuxième fois.
+                    </div>
+                    <div class="mb-2 text-danger">Remarque: tous les sujets ne sont pas encore présents</div>
+                    <div class="small">
+                        @foreach($EP23 as $titre => $jeton)
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="{{ $titre }}" data-code="{{ $jeton }}" checked>
+                                <label class="form-check-label" for="{{ $titre }}">{{ $titre }}</label>
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="ml-1 mt-3">Codes sélectionnés:</div>
+                    <textarea id="codes" class="form-control" rows="4">{{$jetons_EP23}}</textarea>
+                </div>
 
                 <div class="card-columns mb-5">
                     @foreach($jetons as $jeton)
@@ -240,8 +329,27 @@ IFrame('https://www.codepuzzle.io/I{{ strtoupper($jeton) }}', width='100%', heig
         }
         };
     </script>
-    <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
-    </script>    
+    <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>    
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var checkboxes = document.querySelectorAll('input[type="checkbox"][data-code]');
+            checkboxes.forEach(function(checkbox) {
+                checkbox.addEventListener('change', function() {
+                    updateCodes();
+                });
+            });
+        });
+
+        function updateCodes() {
+            var selectedCodes = [];
+            var checkboxes = document.querySelectorAll('input[type="checkbox"][data-code]:checked');
+            checkboxes.forEach(function(checkbox) {
+                selectedCodes.push(checkbox.getAttribute('data-code'));
+            });
+            document.getElementById('codes').textContent = selectedCodes.join(',');
+        }
+    </script>
 
 </body>
 </html>
