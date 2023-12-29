@@ -1,4 +1,4 @@
-name: ♻️ GITLAB-SYNC
+name: ♻️ FORGE-AEIF-SYNC
 
 on:
   - push
