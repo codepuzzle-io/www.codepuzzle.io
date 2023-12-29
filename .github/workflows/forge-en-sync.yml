@@ -1,4 +1,4 @@
-name: ♻️ GITLAB-SYNC
+name: ♻️ FORGE-EN-SYNC
 
 on:
   - push
@@ -16,4 +16,4 @@ jobs:
       with:
         target-url: https://forge.apps.education.fr/code-puzzle/www-codepuzzle-io
         target-username: laurent.abbal
-        target-token: ${{ secrets.GITLAB_TOKEN }}
+        target-token: ${{ secrets.FORGE_EDU_SYNC_GROUPE_TOKEN }}
