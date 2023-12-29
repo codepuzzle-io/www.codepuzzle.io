@@ -147,13 +147,13 @@ $liste_activites_autres = array_diff($liste_activites_eleves, $liste_activites_c
                     <table class="mt-1 table table-striped table-bordered table-hover table-sm text-monospace small">
 
                         <tr>
-                            <td class="p-1"></td>
+                            <td style="padding:1px"></td>
                             <?php
                             foreach($liste_activites_classe AS $activite_jeton => $activite_nom) {
-                                echo '<td class="p-1 pt-2 pb-3" style="vertical-align:middle;writing-mode:vertical-rl;transform:rotate(-180deg);"><a href="/'. $activite_jeton . '" target="_blank">' . $activite_nom . '&nbsp;<sup>*</sup></a></td>';
+                                echo '<td style="padding:4px 1px 8px 1px;vertical-align:middle;writing-mode:vertical-rl;transform:rotate(-180deg);"><a href="/'. $activite_jeton . '" target="_blank">' . $activite_nom . '&nbsp;<sup>*</sup></a></td>';
                             }
                             foreach($liste_activites_autres AS $activite_jeton => $activite_nom) {
-                                echo '<td class="p-1 pt-2 pb-3" style="vertical-align:middle;writing-mode:vertical-rl;transform:rotate(-180deg);"><a href="/'. $activite_jeton . '" target="_blank">' . $activite_nom . '</a></td>';
+                                echo '<td style="padding:4px 1px 8px 1px;vertical-align:middle;writing-mode:vertical-rl;transform:rotate(-180deg);"><a href="/'. $activite_jeton . '" target="_blank">' . $activite_nom . '</a></td>';
                             }
                             ?>
                         </tr>
@@ -161,10 +161,10 @@ $liste_activites_autres = array_diff($liste_activites_eleves, $liste_activites_c
                         <?php
                         foreach($eleves AS $eleve) {
                             echo '<tr>';
-                            echo '<td class="p-1" nowrap style="vertical-align:middle;"><a href="/@/'.strtoupper($eleve->jeton_eleve).'" target="_blank">' . $eleve->eleve . '</a></td>';
+                            echo '<td style="padding:1px 1px 1px 6px" nowrap style="vertical-align:middle;"><a href="/@/'.strtoupper($eleve->jeton_eleve).'" target="_blank">' . $eleve->eleve . '</a></td>';
                         
                                 foreach($liste_activites_classe AS $activite_jeton => $activite_nom) {
-                                    echo '<td class="p-1">';
+                                    echo '<td style="padding:1px">';
                                     $validations = App\Models\Classes_activite::where([['jeton_eleve', $eleve->jeton_eleve], ['jeton_activite', $activite_jeton]])->get();
                                     $popover = "";
                                     foreach ($validations as $validation){
@@ -182,7 +182,7 @@ $liste_activites_autres = array_diff($liste_activites_eleves, $liste_activites_c
                                 }
  
                                 foreach($liste_activites_autres AS $activite_jeton => $activite_nom) {
-                                    echo '<td class="p-1">';
+                                    echo '<td style="padding:1px">';
                                     $validations = App\Models\Classes_activite::where([['jeton_eleve', $eleve->jeton_eleve], ['jeton_activite', $activite_jeton]])->get();
                                     $popover = "";
                                     foreach ($validations as $validation){
