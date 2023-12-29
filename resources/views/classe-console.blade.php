@@ -194,7 +194,7 @@ $liste_activites_autres = array_diff($liste_activites_eleves, $liste_activites_c
                                 if (sizeof($validations) != 0) {
                                     echo '<div class="validation_info bg-success text-white rounded text-center small" style="padding:2px;cursor:pointer;" data-container="body" data-toggle="popover" data-placement="top" data-content="'.$popover.'">'.sizeof($validations).'</div>';
                                 } else {
-                                    echo '&nbsp;';
+                                    echo '&nbsp;'; 
                                 }
                                 echo '</td>';
                             }                                
