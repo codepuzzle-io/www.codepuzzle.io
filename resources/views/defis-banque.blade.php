@@ -78,74 +78,16 @@
         $jetons_EP23 .= $jeton . ',';
     }
     $jetons_EP23 = rtrim($jetons_EP23, ',');
-    ?>
 
-
-
-
-    <?php
-    $jetons = [
-        //'DEB7Q', // AOC2023 Day1Part1
-        //'DMN79', // AOC2023 Day1Part2
-        'DCDG3', // [EP23] - 1.1
-        'D83WJ', // [EP23] - 2.1
-        'DXC9G', // [EP23] - 3.1
-        'DW5F2', // [EP23] - 4.1
-        'D7WXY', // [EP23] - 5.1
-        'DL4SC', // [EP23] - 6.1
-        'DJMQH', // [EP23] - 7.1
-        'DQMSK', // [EP23] - 8.1
-        'DEHSD', // [EP23] - 9.1
-        'DL92R', // [EP23] - 10.1
-        'DSPBU', // [EP23] - 11.1
-        'DXKF8', // [EP23] - 13.1
-        'DUTZL', // [EP23] - 14.1
-        'DCHQV', // [EP23] - 15.1
-        'DBQ7X', // [EP23] - 16.1
-        'DTSW2', // [EP23] - 17.1
-        'DXSR8', // [EP23] - 18.1
-        'DWMX2', // [EP23] - 19.1
-        'DLMC5', // [EP23] - 20.1
-        'DA5GP', // [EP23] - 21.1
-        'DBAJY', // [EP23] - 22.1
-        'DWPRZ', // [EP23] - 23.1
-        'DAB8Z', // [EP23] - 25.1
-        'DV6CM', // [EP23] - 27.1
-        'D9VE2', // [EP23] - 28.1
-        'DAZW3', // [EP23] - 30.1
-        'DHBUV', // [EP23] - 31.1
-        'DSJZB', // [EP23] - 32.1
-        'DALHQ', // [EP23] - 34.1
-        'DSU4B', // [EP23] - 36.1
-        'DYTAM', // [EP23] - 37.1
-        'DBW2D', // [EP23] - 38.1
-        'D4VAY', // [EP23] - 39.1
-        'D8PNJ', // [EP23] - 40.1
-        'DQKV9', // [EP23] - 41.1
-        'DVGJ5', // [EP23] - 42.1
-        'DGEXL', // [EP23] - 43.1
-        'DMZQY', // [EP23] - 44.1
-        'DZLGR', // [EP23] - 45.1
-        'DBZF2', // [EP23] - 01.2
-        'DHBUS', // [EP23] - 02.2
-        'D2LKW', // [EP23] - 05.2
-        'DT3GD', // [EP23] - 06.2
-        'D5QNZ', // [EP23] - 07.2
-        'DPVN9', // [EP23] - 08.2
-        'DMTC9', // [EP23] - 09.2
-        'DAWZM', // [EP23] - 10.2
-        'DRG7N', // [EP23] - 11.2
-        'DJ9FX', // [EP23] - 12.2
-        'DRG6S', // [EP23] - 13.2
-        'DWPEL', // [EP23] - 14.2
-        'DF6TL', // [EP23] - 15.2
-        'DPZ6V', // [EP23] - 18.2
-        'DDXSV', // [EP23] - 19.2
-        'DG8ZR', // [EP23] - 22.2
-        'D9HM6', // [EP23] - 23.2
-        'DK764', // [EP23] - 24.2
-
+    $autres = [
+        'AOC2023 Day1Part1' => 'DEB7Q',
+        'AOC2023 Day1Part2' => 'DMN79',
     ];
+
+    $defis = array_merge($EP23, $autres);
+
+
+
     $lang ='/';
     ?>
 
@@ -196,7 +138,7 @@
                 </div>
 
                 <div class="card-columns mb-5">
-                    @foreach($jetons as $jeton)
+                    @foreach($defis as $titre => $jeton)
                         <?php
                             $defi = App\Models\Defi::where('jeton', substr($jeton, 1))->first();
                             $url_twitter = 'https://twitter.com/intent/tweet?text='.rawurlencode("🧩 Défi ".$jeton."\n\n➡️ https://www.codepuzzle.io/".$jeton."\n\n#Python #NSI #SNT");
