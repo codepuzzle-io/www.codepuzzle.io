@@ -93,33 +93,29 @@
 	<div id="bas" class="container pt-5" style="background-color:#f8fafc;overflow:auto;">
 		<div class="row">
 			<div class="col-md-1 text-right">
-				<div class="btn-group-vertical mb-2">
-					<a  class="btn btn-light" href="#" onclick="fullscreen('bas')" role="button">
+
+				<div class="mb-2">
+					<!-- boutons run / stop / restart -->
+					<button id="run" style="width:40px;" type="button" class="btn btn-primary text-center mb-1"><i class="fas fa-circle-notch fa-spin"></i></button>
+					<button id="stop" style="width:40px;" type="button" class="btn btn-dark text-center mb-1" style="padding-top:6px;display:none;" data-toggle="tooltip" data-placement="right"  data-trigger="hover" title="{{__('Interruption de l\'exécution du code (en cas de boucle infinie ou de traitement trop long). L\'arrêt peut prendre quelques secondes.')}}"><i class="fas fa-stop"></i></button>
+					<button id="restart" style="width:40px;" type="button" class="btn btn-warning" style="padding-top:6px;display:none;" data-toggle="tooltip" data-placement="right"  data-trigger="hover" title="{{__('Si le bouton d\'arrêt ne permet pas d\'interrompre  l\'exécution du code, cliquer ici. Python redémarrera complètement mais votre code sera conservé dans l\'éditeur. Le redémarrage peut prendre quelques secondes.')}}"><i class="fas fa-skull"></i></button>
+				</div>
+
+				<div class="mb-2">
+					<a class="btn btn-light text-center" href="#" onclick="fullscreen('bas')" role="button" style="width:40px;">
 						<i id="fs_on" class="fas fa-expand"></i>
 						<i id="fs_off" class="fas fa-compress" style="display:none;"></i>
 					</a>
 				</div>
-				<br />
 				<div class="btn-group-vertical">
-					<button id="increaseFont" type="button" class="btn btn-light"><i class="fas fa-plus"></i></button>
-					<button id="decreaseFont" type="button" class="btn btn-light"><i class="fas fa-minus"></i></button>
+					<button id="increaseFont" style="width:40px;" type="button" class="btn btn-light text-center"><i class="fas fa-plus"></i></button>
+					<button id="decreaseFont" style="width:40px;" type="button" class="btn btn-light text-center"><i class="fas fa-minus"></i></button>
 				</div>
 			</div>
 			<div class="col-md-10">
 				<div style="width:100%;margin:0px auto 8px auto;"><div id="editor_code" style="border-radius:5px;">for _ in range(4):
     print("Code Puzzle")</div></div>
 
-			</div>
-		</div><!-- row --> 
-
-		<!-- boutons run / stop / restart -->
-		<div class="row">
-			<div class="col-md-5 offset-md-1 text-left">
-				<button id="run" type="button" class="btn btn-primary btn-sm pl-4 pr-4"><i class="fas fa-circle-notch fa-spin"></i></button>
-				<button id="stop" type="button" class="btn btn-dark btn-sm pl-3 pr-3" style="padding-top:6px;display:none;" data-toggle="tooltip" data-placement="right"  data-trigger="hover" title="{{__('Interruption de l\'exécution du code (en cas de boucle infinie ou de traitement trop long). L\'arrêt peut prendre quelques secondes.')}}"><i class="fas fa-stop"></i></button>
-			</div>
-			<div class="col-md-5 text-right">
-				<button id="restart" type="button" class="btn btn-warning btn-sm pl-3 pr-3" style="padding-top:6px;display:none;" data-toggle="tooltip" data-placement="right"  data-trigger="hover" title="{{__('Si le bouton d\'arrêt ne permet pas d\'interrompre  l\'exécution du code, cliquer ici. Python redémarrera complètement mais votre code sera conservé dans l\'éditeur. Le redémarrage peut prendre quelques secondes.')}}"><i class="fas fa-skull"></i></button>
 			</div>
 		</div><!-- row --> 
 
