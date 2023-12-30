@@ -138,7 +138,7 @@
 				
 					<div id="console" class="col-md-12 mb-2">
 						<div class="text-muted small text-monospace" style="float:right;padding:5px 12px 0px 0px">console</div>
-						<div id="output" class="text-monospace p-3 text-white bg-dark" style="border-radius:4px;min-height:100px;height:100%;font-size:20px;"></div>
+						<pre id="output" class="text-monospace p-3 text-white bg-dark" style="border-radius:4px;min-height:100px;height:100%;font-size:20px;"></pre>
 					</div>
 
 				</div><!-- row --> 
