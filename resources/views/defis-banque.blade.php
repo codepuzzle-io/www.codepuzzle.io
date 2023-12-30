@@ -12,7 +12,6 @@
 
     @include('inc-nav')
 
-
     <?php
     $EP23 = [
         '01.1' => 'DCDG3',
@@ -83,11 +82,6 @@
         '44.2' => 'DECSJ',
         '45.1' => 'DZLGR',
     ];
-    $jetons_EP23 = "";
-    foreach ($EP23 AS $titre => $jeton) {
-        $jetons_EP23 .= $jeton . ',';
-    }
-    $jetons_EP23 = rtrim($jetons_EP23, ',');
 
     $autres = [
         //'AOC2023 Day1Part1' => 'DEB7Q',
@@ -96,7 +90,12 @@
 
     $defis = array_merge($EP23, $autres);
 
-
+    // JETONS
+    $jetons_EP23 = "";
+    foreach ($EP23 AS $titre => $jeton) {
+        $jetons_EP23 .= $jeton . ',';
+    }
+    $jetons_EP23 = rtrim($jetons_EP23, ',');
 
     $lang ='/';
     ?>
