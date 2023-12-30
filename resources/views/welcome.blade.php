@@ -92,6 +92,7 @@
 
 	<div id="bas" class="container pt-5" style="background-color:#f8fafc;overflow:auto;">
 		<div class="row">
+
 			<div class="col-md-1 text-right">
 
 				<!-- boutons run / stop / restart -->
@@ -106,31 +107,43 @@
 						<button style="width:40px;" type="button" class="btn btn-warning" style="padding-top:6px;display:none;" data-toggle="tooltip" data-placement="right"  data-trigger="hover" title="{{__('Si le bouton d\'arrêt ne permet pas d\'interrompre  l\'exécution du code, cliquer ici. Python redémarrera complètement mais votre code sera conservé dans l\'éditeur. Le redémarrage peut prendre quelques secondes.')}}"><i class="fas fa-skull"></i></button>
 					</div>
 				</div>
+				<!-- /boutons run / stop / restart -->
 
-
+				<!-- options -->
 				<div class="mb-2">
 					<a class="btn btn-light text-center" href="#" onclick="fullscreen('bas')" role="button" style="width:40px;">
 						<i id="fs_on" class="fas fa-expand"></i>
 						<i id="fs_off" class="fas fa-compress" style="display:none;"></i>
 					</a>
 				</div>
-				<div class="btn-group-vertical">
+				<div class="btn-group-vertical mb-2">
 					<button id="increaseFont" style="width:40px;" type="button" class="btn btn-light text-center"><i class="fas fa-plus"></i></button>
 					<button id="decreaseFont" style="width:40px;" type="button" class="btn btn-light text-center"><i class="fas fa-minus"></i></button>
 				</div>
+				<div>
+					<button id="editeur_console" style="width:40px;" type="button" class="btn btn-light text-center"><i class="fas fa-sort fa-rotate-90"></i></button>
+				</div>
+				<!-- /options -->				
 			</div>
+
 			<div class="col-md-10">
-				<div style="width:100%;margin:0px auto 8px auto;"><div id="editor_code" style="border-radius:5px;">for _ in range(4):
-    print("Code Puzzle")</div></div>
+				<div class="row">
 
-			</div>
-		</div><!-- row --> 
+					<div id="editeur" class="col-md-12 mb-2">
+						<div style="width:100%;">
+							<div id="editor_code" style="border-radius:5px;">for _ in range(4):
+    print("Code Puzzle")</div>
+						</div>
+					</div>
+				
+					<div id="console" class="col-md-12 mb-2">
+						<div class="text-muted small text-monospace" style="float:right;padding:5px 12px 0px 0px">console</div>
+						<div id="output" class="text-monospace p-3 text-white bg-dark" style="border-radius:4px;min-height:100px;height:100%;font-size:20px;"></div>
+					</div>
 
-		<div class="row mt-3 pb-4">
-			<div class="col-md-10 offset-md-1">
-				<div class="text-monospace">Console</div>
-				<pre id="output" class="text-monospace p-3 text-white bg-dark" style="border-radius:4px;border:1px solid silver;min-height:150px;font-size:20px;"></pre>
+				</div><!-- row --> 
 			</div>
+
 		</div><!-- row --> 
 	</div><!-- container -->
 
@@ -438,7 +451,7 @@
 			theme: "ace/theme/puzzle_code",
 			mode: "ace/mode/python",
 			maxLines: 500,
-			minLines: 6,
+			minLines: 8,
 			//fontSize: 20,
 			wrap: true,
 			useWorker: false,
@@ -468,13 +481,38 @@
 		});
 
 		document.getElementById("decreaseFont").addEventListener("click", function() {
-			if (fontSize > 1) {
+			if (fontSize > 10) {
 				fontSize--;
 				editor_code.setFontSize(fontSize);
 				document.getElementById("output").style.fontSize = fontSize + 'px';
 			}
 		});
-	</script>	
+	</script>
+	
+	<script>
+		var div_editeur_console = document.getElementById("editeur_console");
+		div_editeur_console.addEventListener("click", function() {
+			var div_editeur = document.getElementById("editeur");
+			var div_console = document.getElementById("console");
+			if (div_editeur.classList.contains("col-md-12")) {
+				div_editeur_console.innerHTML = '<i class="fas fa-sort"></i>';
+				div_editeur.classList.remove("col-md-12");
+    			div_editeur.classList.add("col-md-6");
+				div_console.classList.remove("col-md-12");
+    			div_console.classList.add("col-md-6");				
+			} else {
+				div_editeur_console.innerHTML = '<i class="fas fa-sort fa-rotate-90"></i>';
+				div_editeur.classList.remove("col-md-6");
+    			div_editeur.classList.add("col-md-12");
+				div_console.classList.remove("col-md-6");
+    			div_console.classList.add("col-md-12");
+			}
+		});
+	</script>
+
+
+
+
 
 	<script>
 		var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
