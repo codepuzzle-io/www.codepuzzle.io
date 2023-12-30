@@ -80,8 +80,8 @@
     $jetons_EP23 = rtrim($jetons_EP23, ',');
 
     $autres = [
-        'AOC2023 Day1Part1' => 'DEB7Q',
-        'AOC2023 Day1Part2' => 'DMN79',
+        //'AOC2023 Day1Part1' => 'DEB7Q',
+        //'AOC2023 Day1Part2' => 'DMN79',
     ];
 
     $defis = array_merge($EP23, $autres);
