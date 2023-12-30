@@ -94,12 +94,19 @@
 		<div class="row">
 			<div class="col-md-1 text-right">
 
+				<!-- boutons run / stop / restart -->
 				<div class="mb-2">
-					<!-- boutons run / stop / restart -->
-					<button id="run" style="width:40px;" type="button" class="btn btn-primary text-center mb-1"><i class="fas fa-circle-notch fa-spin"></i></button>
-					<button id="stop" style="width:40px;" type="button" class="btn btn-dark text-center mb-1" style="padding-top:6px;display:none;" data-toggle="tooltip" data-placement="right"  data-trigger="hover" title="{{__('Interruption de l\'exécution du code (en cas de boucle infinie ou de traitement trop long). L\'arrêt peut prendre quelques secondes.')}}"><i class="fas fa-stop"></i></button>
-					<button id="restart" style="width:40px;" type="button" class="btn btn-warning" style="padding-top:6px;display:none;" data-toggle="tooltip" data-placement="right"  data-trigger="hover" title="{{__('Si le bouton d\'arrêt ne permet pas d\'interrompre  l\'exécution du code, cliquer ici. Python redémarrera complètement mais votre code sera conservé dans l\'éditeur. Le redémarrage peut prendre quelques secondes.')}}"><i class="fas fa-skull"></i></button>
+					<div>
+						<button id="run" style="width:40px;" type="button" class="btn btn-primary text-center mb-1"><i class="fas fa-circle-notch fa-spin"></i></button>
+					</div>
+					<div id="stop" class="mt-1 mb-1">
+						<button style="width:40px;" type="button" class="btn btn-dark text-center mb-1" style="padding-top:6px;display:none;" data-toggle="tooltip" data-placement="right"  data-trigger="hover" title="{{__('Interruption de l\'exécution du code (en cas de boucle infinie ou de traitement trop long). L\'arrêt peut prendre quelques secondes.')}}"><i class="fas fa-stop"></i></button>
+					</div>
+					<div id="restart">
+						<button style="width:40px;" type="button" class="btn btn-warning" style="padding-top:6px;display:none;" data-toggle="tooltip" data-placement="right"  data-trigger="hover" title="{{__('Si le bouton d\'arrêt ne permet pas d\'interrompre  l\'exécution du code, cliquer ici. Python redémarrera complètement mais votre code sera conservé dans l\'éditeur. Le redémarrage peut prendre quelques secondes.')}}"><i class="fas fa-skull"></i></button>
+					</div>
 				</div>
+
 
 				<div class="mb-2">
 					<a class="btn btn-light text-center" href="#" onclick="fullscreen('bas')" role="button" style="width:40px;">
@@ -293,7 +300,7 @@
 					if (event.data.status == 'running'){
 						run.disabled = true;
 						run.innerHTML = '<i class="fas fa-cog fa-spin"></i>';
-						stop.style.display = 'inline';
+						stop.style.display = 'block';
 					}
 
 					if (event.data.status == 'completed'){
@@ -324,7 +331,7 @@
 					interruptBuffer[0] = 2;
 				@endif
 				// bouton 'restart'
-				restart.style.display = 'inline';
+				restart.style.display = 'block';
 			}
 			
 			// arrete et redemarre le webworker
