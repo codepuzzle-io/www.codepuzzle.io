@@ -90,7 +90,7 @@
 		</div>
 	</div>
 
-	<div class="mt-4 text-center"><a href="/REPL"><img src="{{ asset('img/REPL.png') }}" class="img-fluid" alt="REPL" /></a></div>
+	<div class="mt-4 text-center"><a href="/REPL"><img src="{{ asset('img/REPL.png') }}" class="img-fluid" alt="REPL" data-toggle="tooltip" data-placement="top" title="Ouvrir le REPL Python" /></a></div>
 
 	<div class="container mt-3">
 
