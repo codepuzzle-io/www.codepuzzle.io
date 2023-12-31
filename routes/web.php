@@ -108,35 +108,46 @@ Route::any('/console/puzzles', [App\Http\Controllers\ConsoleController::class, '
 Route::any('/console/defis', [App\Http\Controllers\ConsoleController::class, 'console_defis'])->name('console-defis');
 Route::any('/console/devoirs', [App\Http\Controllers\ConsoleController::class, 'console_devoirs'])->name('console-devoirs');
 Route::any('/console/classes', [App\Http\Controllers\ConsoleController::class, 'console_classes'])->name('console-classes');
+Route::any('/console/programmes', [App\Http\Controllers\ConsoleController::class, 'console_programmes'])->name('console-programmes');
 
+// PUZZLES
 // puzzle modifier
 Route::get('/console/puzzle-modifier/', [App\Http\Controllers\ConsoleController::class, 'redirect']);
 Route::get('/console/puzzle-modifier/{puzzle_id}', [App\Http\Controllers\ConsoleController::class, 'puzzle_modifier_get'])->name('puzzle-modifier-get');
 Route::post('/console/puzzle-modifier', [App\Http\Controllers\ConsoleController::class, 'puzzle_modifier_post'])->name('puzzle-modifier-post');
-
-// defi modifier
-Route::get('/console/defi-modifier/', [App\Http\Controllers\ConsoleController::class, 'redirect']);
-Route::get('/console/defi-modifier/{defi_id}', [App\Http\Controllers\ConsoleController::class, 'defi_modifier_get'])->name('defi-modifier-get');
-Route::post('/console/defi-modifier', [App\Http\Controllers\ConsoleController::class, 'defi_modifier_post'])->name('defi-modifier-post');
-
 // puzzle supprimer
 Route::any('/console/puzzle-supprimer', [App\Http\Controllers\ConsoleController::class, 'redirect']);
 Route::any('/console/puzzle-supprimer/{puzzle_id}', [App\Http\Controllers\ConsoleController::class, 'puzzle_supprimer'])->name('puzzle-supprimer');
 
+// DEFIS
+// defi modifier
+Route::get('/console/defi-modifier/', [App\Http\Controllers\ConsoleController::class, 'redirect']);
+Route::get('/console/defi-modifier/{defi_id}', [App\Http\Controllers\ConsoleController::class, 'defi_modifier_get'])->name('defi-modifier-get');
+Route::post('/console/defi-modifier', [App\Http\Controllers\ConsoleController::class, 'defi_modifier_post'])->name('defi-modifier-post');
 // defi supprimer
 Route::any('/console/defi-supprimer', [App\Http\Controllers\ConsoleController::class, 'redirect']);
 Route::any('/console/defi-supprimer/{defi_id}', [App\Http\Controllers\ConsoleController::class, 'defi_supprimer'])->name('defi-supprimer');
 
+// PROGRAMMES
+// programme modifier
+Route::get('/console/programme-modifier/', [App\Http\Controllers\ConsoleController::class, 'redirect']);
+Route::get('/console/programme-modifier/{programme_id}', [App\Http\Controllers\ConsoleController::class, 'programme_modifier_get'])->name('programme-modifier-get');
+Route::post('/console/programme-modifier', [App\Http\Controllers\ConsoleController::class, 'programme_modifier_post'])->name('programme-modifier-post');
+// programme supprimer
+Route::any('/console/programme-supprimer', [App\Http\Controllers\ConsoleController::class, 'redirect']);
+Route::any('/console/programme-supprimer/{programme_id}', [App\Http\Controllers\ConsoleController::class, 'programme_supprimer'])->name('programme-supprimer');
+
+
+// DEVOIRS
 // devoir ajouter console
 Route::post('/console/devoir-ajouter-console', [App\Http\Controllers\ConsoleController::class, 'devoir_ajouter_console'])->name('devoir-ajouter-console');
-
 // devoir supprimer
 Route::any('/console/devoir-supprimer', [App\Http\Controllers\ConsoleController::class, 'redirect']);
 Route::any('/console/devoir-supprimer/{devoir_id}', [App\Http\Controllers\ConsoleController::class, 'devoir_supprimer'])->name('devoir-supprimer');
 
+// CLASSES
 // classe ajouter console
 Route::post('/console/classe-ajouter-console', [App\Http\Controllers\ConsoleController::class, 'classe_ajouter_console'])->name('classe-ajouter-console');
-
 // classe supprimer
 Route::any('/console/classe-supprimer', [App\Http\Controllers\ConsoleController::class, 'redirect']);
 Route::any('/console/classe-supprimer/{devoir_id}', [App\Http\Controllers\ConsoleController::class, 'classe_supprimer'])->name('classe-supprimer');

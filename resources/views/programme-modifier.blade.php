@@ -2,15 +2,11 @@
 <html lang="fr">
 <head>
 	@include('inc-meta')
-    <title>{{ config('app.name') }} | {{ ucfirst(__('nouveau programme')) }}</title>
+    <title>{{ config('app.name') }} | {{ ucfirst(__('programme')) }} | {{ ucfirst(__('modifier')) }}</title>
 </head>
 <body>
 
-	@if(Auth::check())
-		@include('inc-nav-console')
-	@else
-		@include('inc-nav')
-	@endif
+    @include('inc-nav-console')
 
 	<!-- MODAL MARKDOWN HELP -->
 	<div class="modal fade" id="markdown_help" tabindex="-1" aria-labelledby="markdown_helpLabel" aria-hidden="true">
@@ -87,79 +83,73 @@
 	</div>
 	<!-- MODAL MARKDOWN HELP -->
 
+	<?php
+        $programme = App\Models\Programme::where([['user_id', Auth::id()], ['id', Crypt::decryptString($programme_id)]])->first();
+    ?>
 
-	<div class="container mt-4 mb-5">
+    <div class="container mt-4 mb-5">
 
 		<div class="row">
 
-			<div class="col-md-2 text-right">
-				@if(Auth::check())
+            <div class="col-md-2 text-right pt-4">
 				<a class="btn btn-light btn-sm" href="/console/programmes" role="button"><i class="fas fa-arrow-left"></i></a>
-				@else
-				<a class="btn btn-light btn-sm" href="/" role="button"><i class="fas fa-arrow-left"></i></a>
-				@endif
 			</div>
 
-			<div class="col-md-10 pl-4 pr-4">
+            <div class="col-md-9 pt-4">
 
-				<h1>{{__('nouveau programme')}}</h1>
-
-				<form method="POST" action="{{route('programme-creer-post')}}">
+				<form method="POST" action="{{route('programme-modifier-post')}}">
 
 					@csrf
-				
+
 					<!-- TITRE -->
-					@if(Auth::check())
 					<div class="text-monospace">{{strtoupper(__('titre'))}}<sup class="text-danger small">*</sup></div>
 					<div class="text-monospace text-muted small text-justify mb-1">{{__('Visible par vous seulement')}}</div>
-					<input id="titre_enseignant" type="text" class="form-control @error('titre_enseignant') is-invalid @enderror" name="titre_enseignant" value="{{ old('titre_enseignant') }}" autofocus>
+					<input id="titre_enseignant" type="text" class="form-control @error('titre_enseignant') is-invalid @enderror" name="titre_enseignant" value="{{ old('titre_enseignant', $programme->titre_enseignant) }}" autofocus>
 					@error('titre_enseignant')
 						<span class="invalid-feedback" role="alert">
 							<strong>{{ $message }}</strong>
 						</span>
 					@enderror
-					@endif
 					<!-- /TITRE -->
 
 					<!-- SOUS TITRE -->
-					@if(Auth::check())
 					<div class="mt-4 text-monospace">{{strtoupper(__('sous-titre'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
 					<div class="text-monospace text-muted small text-justify mb-1">{{__('Visible par vous seulement')}}</div>
-					<input id="sous_titre_enseignant" type="text" class="form-control @error('sous_titre_enseignant') is-invalid @enderror" name="sous_titre_enseignant" value="{{ old('sous_titre_enseignant') }}" autofocus>
-					@endif
+					<input id="sous_titre_enseignant" type="text" class="form-control @error('sous_titre_enseignant') is-invalid @enderror" name="sous_titre_enseignant" value="{{ old('sous_titre_enseignant', $programme->sous_titre_enseignant) }}" autofocus>
 					<!-- /SOUS TITRE -->
 
 					<!-- TITRE ELEVE -->
-					@if(Auth::check())
 					<div class="mt-4 text-monospace">{{strtoupper(__('titre élève'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
 					<div class="text-monospace text-muted small text-justify mb-1">{{__('Visible par l élève')}}</div>
-					<input id="titre_eleve" type="text" class="form-control @error('titre_eleve') is-invalid @enderror" name="titre_eleve" value="{{ old('titre_eleve') }}" autofocus>
-					@endif
+					<input id="titre_eleve" type="text" class="form-control @error('titre_eleve') is-invalid @enderror" name="titre_eleve" value="{{ old('titre_eleve', $programme->titre_eleve) }}" autofocus>
 					<!-- /TITRE ELEVE -->
 
 					<!-- NOTES PERSONNELLES -->
 					<div class="mt-4 text-monospace">
-						{{strtoupper(__('notes personnelles'))}}
+						{{strtoupper(__('notes personnelles'))}}<sup class="text-danger small">*</sup>
 						<i class="fas fa-info-circle" style="cursor:pointer;color:#e74c3c;opacity:0.5" data-toggle="modal" data-target="#markdown_help"></i>
 					</div>
 					<div class="text-monospace text-muted small text-justify mb-1">{{__('Visibles par vous seulement')}}</div>
-					<textarea class="form-control @error('notes_personnelles') is-invalid @enderror" name="notes_personnelles" id="notes_personnelles" rows="6">{{ old('notes_personnelles') }}</textarea>
+					<textarea class="form-control @error('notes_personnelles') is-invalid @enderror" name="notes_personnelles" id="notes_personnelles" rows="6">{{ old('notes_personnelles', $programme->notes_personnelles) }}</textarea>
 					@error('notes_personnelles')
 						<span class="invalid-feedback" role="alert">
 							<strong>{{ $message }}</strong>
 						</span>
 					@enderror
+					<!-- /CONSIGNES -->
 
 					<!-- CODE --> 
-					<div class="mt-4 text-monospace">{{strtoupper(__('code'))}}<sup class="text-danger small ml-1">*</sup></div>
+					<div class="mt-4 text-monospace">{{strtoupper(__('code'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
+					<div class="text-monospace text-muted small text-justify mb-1">{{__('Ce code sera proposé comme point de départ du défi')}}</div>
 					<textarea name="code" style="display:none;" id="code"></textarea>
-					<div id="editor_code" style="border-radius:5px;">{{old('code')}}</div>
+					<div id="editor_code" style="border-radius:5px;">{{old('code', $programme->code)}}</div>
 					<!-- /CODE --> 
 
+                    <input type="hidden" name="programme_id" value="{{ $programme_id }}" />
 					<input id="lang" type="hidden" name="lang" value="{{app()->getLocale()}}" />
 
 					<button type="submit" class="btn btn-primary mt-4 mb-5 pl-4 pr-4"><i class="fas fa-check"></i></button>
-					
+
 				</form>
 
 			</div>
@@ -174,13 +164,12 @@
 	<script>
 		// Chargement de ace et initialisation des éditeurs.
 		var editor_code;
-		
 		async function init_editors() {
 			editor_code = ace.edit("editor_code", {
 				theme: "ace/theme/puzzle_code",
 				mode: "ace/mode/python",
 				maxLines: 500,
-				minLines: 8,
+				minLines: 4,
 				fontSize: 14,
 				wrap: true,
 				useWorker: false,
