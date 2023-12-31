@@ -86,7 +86,7 @@
 
                         <div class="row">
                             <div class="col-md-12 text-monospace small text-muted">
-                                <i class="fas fa-share-alt ml-1 mr-1" style="cursor:help" data-toggle="tooltip" data-placement="top" title="{{__('lien à partager avec les élèves')}}"></i> <a href="/{{ strtoupper('D'.$programme->jeton) }}" target="_blank" data-toggle="tooltip" data-placement="top" title="{{__('ouvrir ce programme dans un nouvel onglet pour le tester')}}">www.codepuzzle.io/R{{ strtoupper($programme->jeton) }}</a>
+                                <i class="fas fa-share-alt ml-1 mr-1" style="cursor:help" data-toggle="tooltip" data-placement="top" title="{{__('lien à partager avec les élèves')}}"></i> <a href="/{{ strtoupper('R'.$programme->jeton) }}" target="_blank" data-toggle="tooltip" data-placement="top" title="{{__('ouvrir ce programme dans un nouvel onglet pour le tester')}}">www.codepuzzle.io/R{{ strtoupper($programme->jeton) }}</a>
                             </div>
                         </div>
 
