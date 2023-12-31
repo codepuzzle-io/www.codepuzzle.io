@@ -178,17 +178,6 @@
 	</script>
 
 	<script>
-		for (var i = 1; i <= 4; i++) {
-			(function(index) {
-				document.getElementById('exemple' + index + '_iframe').addEventListener('load', function() {
-					var iframeHeight = document.getElementById('exemple' + index + '_iframe').contentWindow.document.body.scrollHeight;
-					document.getElementById('exemple' + index + '_div').style.height = iframeHeight+20 + 'px';
-				});
-			})(i);
-		}
-	</script>
-
-	<script>
 		function fullscreen(id) {
 			var el = document.getElementById(id);
 			var isFullscreen = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
@@ -308,11 +297,7 @@
 			}
 		});
 	</script>
-
-
-
-
-
+	
 	<script>
 		var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 		var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
