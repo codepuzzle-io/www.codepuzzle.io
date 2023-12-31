@@ -1,15 +1,28 @@
+<?php
+// recuperation du programme en fonction du jeton
+$programme = App\Models\Programme::where('jeton', $jeton)->first();
+?>
 @include('inc-top')
 <!doctype html>
-<html lang="{{ app()->getLocale() }}">
+<html lang="fr">
 <head>
 	@php
-		$description = __('Puzzles de Parsons, défis & entraînements/devoirs pour apprendre Python');
-		$description_og = __('Puzzles de Parsons, défis & entraînements/devoirs pour apprendre Python');
-	@endphp
-	@include('inc-meta')
-    <title>Code Puzzle | REPL</title>
+        $description = __('Générateur et gestionnaire de puzzles de Parsons') . ' | Programme - R' . strtoupper($jeton);
+        $description_og = 'Programme - R' . strtoupper($jeton);
+    @endphp
+	@include('inc-meta-jeton')
+    <title>{{ config('app.name') }} | Programme - R{{ $jeton }}</title>
 </head>
+
 <body>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-10 offset-md-1">
+				<h1><a class="navbar-brand mt-2" href="/"><img src="{{ asset('img/codepuzzle.png') }}" width="220" alt="CODE PUZZLE" /></a></h1>
+			</div>
+		</div>
+	</div>
 
 	<div id="bas" class="container-fluid pt-4" style="height:100%;background-color:#f8fafc;overflow:auto;">
 		<div class="row" style="height:100%;">
@@ -44,9 +57,6 @@
 				<div>
 					<button id="editeur_console" style="width:40px;" type="button" class="btn btn-light text-center"><i class="fas fa-sort fa-rotate-90"></i></button>
 				</div>
-				<div class="mt-3">
-					<a href="/"><img src="{{ asset('img/nav-home.png') }}" class="rounded" width="40" alt="CODE PUZZLE" /></a>
-				</div>
 				<!-- /options -->	
 
 			</div>
@@ -56,8 +66,7 @@
 
 					<div id="editeur" class="col-md-12 mb-2">
 						<div style="width:100%;">
-							<div id="editor_code" style="border-radius:5px;">for _ in range(4):
-    print("Code Puzzle")</div>
+							<div id="editor_code" style="border-radius:5px;">{{ $programme->code}}</div>
 						</div>
 					</div>
 				

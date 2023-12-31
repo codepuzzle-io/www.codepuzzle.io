@@ -15,12 +15,12 @@
 	@endphp
 	@include('inc-nav')
 
-	<div class="container mt-3">
+	<div class="container-fluid mt-3 pl-3 pr-3">
 
-		<div class="row pt-3">
+		<div class="row pt-3 pl-4 pr-4">
 			<div class="card-deck text-monospace">
 				
-				<div class="card">
+				<div class="card ml-1 mr-1">
 					<div class="card-body p-0">
 						<h2>{!!__('Créer et partager des puzzles de Parsons', ['link' => route('about')])!!}</h2>
 						<div class="mx-auto mt-3 text-center" style="width:60%">
@@ -35,7 +35,7 @@
 					</div>
 				</div>
 
-				<div class="card">
+				<div class="card ml-1 mr-1">
 					<div class="card-body p-0">
 						<h2>{!!__('Créer et partager des défis')!!}</h2>				
 						<div class="mx-auto mt-3 text-center" style="width:60%">
@@ -51,7 +51,22 @@
 					</div>
 				</div>
 
-				<div class="card">
+				<div class="card ml-1 mr-1">
+					<div class="card-body p-0">
+						<h2>{!!__('Créer et partager des programmes')!!}</h2>				
+						<div class="mx-auto mt-3 text-center" style="width:60%">
+							<a class="btn btn-success btn-sm btn-block p-2" href="{{ route('programme-creer-get')}}" role="button"><i class="fa-solid fa-circle-plus pt-1 pb-1 mr-2"></i>{!!__('programme')!!}</a>
+						</div>
+						<div class="mt-3 small text-muted text-justify">
+							Programmes à partager, disponibles dans un environnement Python interactif. Les programmes peuvent être modifiés et exécutés. Démonstrations au tableau, entraînements, exemples...
+						</div>	
+					</div>
+					<div class="text-center pt-2">
+						<a class="btn btn-light btn-sm pl-3 pr-3" href="#programme" role="button" data-toggle="tooltip" data-placement="top" title="plus d'informations"><i class="fa-solid fa-circle-info"></i></a>
+					</div>
+				</div>				
+
+				<div class="card ml-1 mr-1">
 					<div class="card-body p-0">
 						<h2>{!!__('Créer et partager des devoirs')!!}</h2>				
 						<div class="mx-auto mt-3 text-center" style="width:60%">
@@ -66,7 +81,7 @@
 					</div>
 				</div>
 
-				<div class="card pt-1 pb-0" style="border:none !important;background-color:transparent !important">
+				<div class="card ml-1 mr-1 pt-1 pb-0" style="border:none !important;background-color:transparent !important">
 					<div class="card-body p-0">				
 						<div class="mx-auto text-center" style="width:80%">
 							<a class="btn btn-dark btn-sm btn-block p-2" href="{{ route('classe-creer-get')}}" role="button"><i class="fas fa-chalkboard mr-2"></i><b>{!!__('CLASSE')!!}</b> <sup class="text-danger">bêta</sup></a>

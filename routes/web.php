@@ -146,21 +146,28 @@ Route::any('/console/classe-supprimer/{devoir_id}', [App\Http\Controllers\Consol
 // == SITE CONTROLLER
 // ============================================================================
 
+// PUZZLES
 // puzzle creer
 Route::get('/puzzle-creer', [App\Http\Controllers\SiteController::class, 'puzzle_creer_get'])->name('puzzle-creer-get');
 Route::post('/puzzle-creer', [App\Http\Controllers\SiteController::class, 'puzzle_creer_post'])->name('puzzle-creer-post');
-
 // puzzle info
 Route::any('/puzzle-info/{puzzle_jeton}', [App\Http\Controllers\SiteController::class, 'puzzle_info'])->name('puzzle-info');
 
+// DEFIS
 // defi creer
 Route::get('/defi-creer', [App\Http\Controllers\SiteController::class, 'defi_creer_get'])->name('defi-creer-get');
 Route::post('/defi-creer', [App\Http\Controllers\SiteController::class, 'defi_creer_post'])->name('defi-creer-post');
-
 // defi info
 Route::any('/defi-info/{defi_jeton}', [App\Http\Controllers\SiteController::class, 'defi_info'])->name('defi-info');
 
-// devoirs
+// PROGRAMMES
+// programme creer
+Route::get('/programme-creer', [App\Http\Controllers\SiteController::class, 'programme_creer_get'])->name('programme-creer-get');
+Route::post('/programme-creer', [App\Http\Controllers\SiteController::class, 'programme_creer_post'])->name('programme-creer-post');
+// programme info
+Route::any('/programme-info/{programme_jeton}', [App\Http\Controllers\SiteController::class, 'programme_info'])->name('programme-info');
+
+// DEVOIRS
 Route::get('/devoir-creer', [App\Http\Controllers\SiteController::class, 'devoir_creer_get'])->name('devoir-creer-get');
 Route::get('/devoir-creer/{jeton_secret}', [App\Http\Controllers\SiteController::class, 'devoir_modifier_get'])->name('devoir-modifier-get');
 Route::post('/devoir-creer', [App\Http\Controllers\SiteController::class, 'devoir_creer_post'])->name('devoir-creer-post');
@@ -182,7 +189,7 @@ Route::any('/devoir-imprimer/{jeton_secret}', [App\Http\Controllers\SiteControll
 Route::any('/devoir-eleve-supprimer/{devoir_eleve_id}', [App\Http\Controllers\SiteController::class, 'devoir_eleve_supprimer'])->name('devoir-eleve-supprimer');
 
 
-// classes
+// CLASSES
 Route::get('/classe-creer', [App\Http\Controllers\SiteController::class, 'classe_creer_get'])->name('classe-creer-get');
 Route::post('/classe-creer', [App\Http\Controllers\SiteController::class, 'classe_creer_post'])->name('classe-creer-post');
 Route::get('/classe-modifier/{jeton_secret}', [App\Http\Controllers\SiteController::class, 'classe_modifier_get'])->name('classe-modifier-get');
@@ -192,12 +199,7 @@ Route::any('/classe-eleve-supprimer/{eleve_id}', [App\Http\Controllers\SiteContr
 Route::post('/classe-activite-enregistrer', [App\Http\Controllers\SiteController::class, 'classe_activite_enregistrer'])->name('classe-activite-enregistrer');
 Route::any('/classe-eleve-activite-supprimer/{classes_activites_id}', [App\Http\Controllers\SiteController::class, 'classe_eleve_activite_supprimer'])->name('classe-eleve-activite-supprimer');
 
-// eleves
-/*
-Route::get('/eleve-console/{jeton_eleve?}', function (?string $jeton_eleve = null) {
-    return view('eleve-console')->with(['jeton_eleve' => $jeton_eleve]);
-});
-*/
+// ELEVES
 Route::get('/@/{jeton_eleve}', function ($jeton_eleve) {
     return view('eleve-console')->with(['jeton_eleve' => $jeton_eleve]);
 });
