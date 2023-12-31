@@ -34,23 +34,43 @@
             </div>
 
 			<div class="col-md-10">
-                <div class="row mb-3"> 
-                    <div class="col-md-3"> 
-                        <div class="mb-3 text-center"><a class="btn btn-light" href="{{route('console-puzzles')}}" role="button" style="width:80%;"><i class="fas fa-folder-open mr-2"></i>{{__('PUZZLES')}}</a></div>
-                        <div class="mb-4 text-center"><a class="btn btn-success btn-sm text-monospace" href="{{route('puzzle-creer-get')}}" role="button" style="width:80%;">{{__('nouveau puzzle')}}</a></div>
+                <div class="card-deck text-monospace">
+
+                    <div class="card ml-1 mr-1 p-3">
+                        <div class="card-body p-0">
+                            <div class="mb-3 text-center"><a class="btn btn-light d-block" href="{{route('console-puzzles')}}" role="button"><i class="fas fa-puzzle-piece mr-2"></i>{{__('PUZZLES')}}</a></div>
+                            <div class="text-center"><a class="btn btn-success btn-sm d-block" href="{{route('puzzle-creer-get')}}" role="button">{{__('nouveau puzzle')}}</a></div>
+                        </div>
                     </div>
-                    <div class="col-md-3"> 
-                        <div class="mb-3 text-center"><a class="btn btn-light" href="{{route('console-defis')}}" role="button" style="width:80%;"><i class="fas fa-folder-open mr-2"></i>{{__('DÉFIS')}}</a></div>
-                        <div class="mb-4 text-center"><a class="btn btn-success btn-sm text-monospace" href="{{route('defi-creer-get')}}" role="button" style="width:80%;">{{__('nouveau défi')}}</a></div>
+
+				    <div class="card ml-1 mr-1 p-3">
+					    <div class="card-body p-0">
+                            <div class="mb-3 text-center"><a class="btn btn-light d-block" href="{{route('console-defis')}}" role="button"><i class="fas fa-tasks mr-2"></i>{{__('DÉFIS')}}</a></div>
+                            <div class="text-center"><a class="btn btn-success btn-sm d-block" href="{{route('defi-creer-get')}}" role="button">{{__('nouveau défi')}}</a></div>
+                        </div>
                     </div>
-                    <div class="col-md-3"> 
-                        <div class="mb-3 text-center"><a class="btn btn-light" href="{{route('console-devoirs')}}" role="button" style="width:80%;"><i class="fas fa-folder-open mr-2"></i>{{__('DEVOIRS')}}</a></div>
-                        <div class="mb-4 text-center"><a class="btn btn-success btn-sm text-monospace" href="{{route('devoir-creer-get')}}" role="button" style="width:80%;">{{__('nouveau devoir')}}</a></div>
+
+                    <div class="card ml-1 mr-1 p-3">
+					    <div class="card-body p-0">
+                            <div class="mb-3 text-center"><a class="btn btn-light d-block" href="{{route('console-programmes')}}" role="button"><i class="fas fa-code mr-2"></i>{{__('PROGRAMMES')}}</a></div>
+                            <div class="text-center"><a class="btn btn-success btn-sm d-block" href="{{route('programme-creer-get')}}" role="button">{{__('nouveau programme')}}</a></div>
+                        </div>
+                    </div>
+
+                    <div class="card ml-1 mr-1 p-3">
+					    <div class="card-body p-0">
+                            <div class="mb-3 text-center"><a class="btn btn-light d-block" href="{{route('console-devoirs')}}" role="button"><i class="fas fa-graduation-cap mr-2"></i>{{__('DEVOIRS')}}</a></div>
+                            <div class="text-center"><a class="btn btn-success btn-sm d-block" href="{{route('devoir-creer-get')}}" role="button">{{__('nouveau devoir')}}</a></div>
+                        </div>    
                     </div>    
-                    <div class="col-md-3"> 
-                        <div class="mb-3 text-center"><a class="btn btn-dark" href="{{route('console-classes')}}" role="button" style="width:80%;"><i class="fas fa-chalkboard mr-2"></i>{{__('CLASSES')}}</a></div>
-                        <div class="mb-4 text-center"><a class="btn btn-success btn-sm text-monospace" href="{{route('classe-creer-get')}}" role="button" style="width:80%;">{{__('nouvelle classe')}}</a></div>
+
+                    <div class="card ml-1 mr-1 p-3">
+					    <div class="card-body p-0">
+                            <div class="mb-3 text-center"><a class="btn btn-dark d-block" href="{{route('console-classes')}}" role="button"><i class="fas fa-chalkboard mr-2"></i>{{__('CLASSES')}}</a></div>
+                            <div class="text-center"><a class="btn btn-success btn-sm d-block" href="{{route('classe-creer-get')}}" role="button">{{__('nouvelle classe')}}</a></div>
+                        </div>          
                     </div>          
+              
                 </div>               
             </div>
 
