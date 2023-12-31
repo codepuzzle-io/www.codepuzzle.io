@@ -40,6 +40,9 @@
                         <div class="card-body p-0">
                             <div class="mb-3 text-center"><a class="btn btn-light d-block" href="{{route('console-puzzles')}}" role="button"><i class="fas fa-puzzle-piece mr-2"></i>{{__('PUZZLES')}}</a></div>
                             <div class="text-center"><a class="btn btn-success btn-sm d-block" href="{{route('puzzle-creer-get')}}" role="button">{{__('nouveau puzzle')}}</a></div>
+                            <div class="mt-3 small text-muted">
+                                Puzzles de Parsons en mode "réorganiser" ou "glisser-déposer". Avec ou sans code à compléter. Pour apprendre Python sans écrire de code.
+                            </div>
                         </div>
                     </div>
 
@@ -47,6 +50,9 @@
 					    <div class="card-body p-0">
                             <div class="mb-3 text-center"><a class="btn btn-light d-block" href="{{route('console-defis')}}" role="button"><i class="fas fa-tasks mr-2"></i>{{__('DÉFIS')}}</a></div>
                             <div class="text-center"><a class="btn btn-success btn-sm d-block" href="{{route('defi-creer-get')}}" role="button">{{__('nouveau défi')}}</a></div>
+                            <div class="mt-3 small text-muted">
+                                Défis Python avec jeux de tests à valider. Écrire ou compléter un programme Python en suivant les consignes fournies et tester le code en ligne.
+                            </div>
                         </div>
                     </div>
 
@@ -54,6 +60,9 @@
 					    <div class="card-body p-0">
                             <div class="mb-3 text-center"><a class="btn btn-light d-block" href="{{route('console-programmes')}}" role="button"><i class="fas fa-code mr-2"></i>{{__('PROGRAMMES')}}</a></div>
                             <div class="text-center"><a class="btn btn-success btn-sm d-block" href="{{route('programme-creer-get')}}" role="button">{{__('nouveau programme')}}</a></div>
+                            <div class="mt-3 small text-muted">
+                                Programmes à partager dans un environnement Python interactif. Peuvent être modifiés et exécutés. Démonstrations au tableau, entraînements, exemples...
+                            </div>
                         </div>
                     </div>
 
@@ -61,6 +70,9 @@
 					    <div class="card-body p-0">
                             <div class="mb-3 text-center"><a class="btn btn-light d-block" href="{{route('console-devoirs')}}" role="button"><i class="fas fa-graduation-cap mr-2"></i>{{__('DEVOIRS')}}</a></div>
                             <div class="text-center"><a class="btn btn-success btn-sm d-block" href="{{route('devoir-creer-get')}}" role="button">{{__('nouveau devoir')}}</a></div>
+                            <div class="mt-3 small text-muted">
+                                Activités en classe de type examen dans un environnement anti-triche. Récupération automatique des travaux avec exécution du code et correction en ligne.
+                            </div>
                         </div>    
                     </div>    
 
@@ -68,6 +80,9 @@
 					    <div class="card-body p-0">
                             <div class="mb-3 text-center"><a class="btn btn-dark d-block" href="{{route('console-classes')}}" role="button"><i class="fas fa-chalkboard mr-2"></i>{{__('CLASSES')}}</a></div>
                             <div class="text-center"><a class="btn btn-success btn-sm d-block" href="{{route('classe-creer-get')}}" role="button">{{__('nouvelle classe')}}</a></div>
+                            <div class="mt-3 small text-muted">
+                                Créer une classe pour proposer des activités (puzzles, défis...) aux élèves et suivre l'avancement de leur travail.
+                            </div>
                         </div>          
                     </div>          
               

@@ -58,7 +58,7 @@
 							<a class="btn btn-success btn-sm btn-block p-2" href="{{ route('programme-creer-get')}}" role="button"><i class="fa-solid fa-circle-plus pt-1 pb-1 mr-2"></i>{!!__('programme')!!}</a>
 						</div>
 						<div class="mt-3 small text-muted text-justify">
-							Programmes à partager, disponibles dans un environnement Python interactif. Les programmes peuvent être modifiés et exécutés. Démonstrations au tableau, entraînements, exemples...
+							Programmes à partager dans un environnement Python interactif. Peuvent être modifiés et exécutés. Démonstrations au tableau, entraînements, exemples...
 						</div>	
 					</div>
 					<div class="text-center pt-2">
