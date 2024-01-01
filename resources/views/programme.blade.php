@@ -27,7 +27,7 @@ $programme = App\Models\Programme::where('jeton', $jeton)->first();
 	<div id="bas" class="container-fluid pt-4" style="height:100%;background-color:#f8fafc;overflow:auto;">
 		<div class="row" style="height:100%;">
 
-			<div id="controle" style="position:absolute;bottom:20px;left:20px;width:42px;">
+			<div id="controle" style="position:absolute;bottom:40px;left:20px;width:42px;">
 
 				<!-- boutons run / stop / restart -->
 				<div class="mb-2">
@@ -57,12 +57,32 @@ $programme = App\Models\Programme::where('jeton', $jeton)->first();
 				<div>
 					<button id="editeur_console" style="width:40px;" type="button" class="btn btn-light text-center"><i class="fas fa-sort fa-rotate-90"></i></button>
 				</div>
+
+				@if(Auth::check())
+				<?php
+				$programmes_liens = "<div class='text-monospace'><b>PROGRAMMES</b></div><ul class='text-monospace m-0 pl-3'>";
+				$liste_programmes = App\Models\Programme::where('user_id', Auth::id())->get();
+				foreach($liste_programmes AS $item) {
+					$programmes_liens .= "<li><a href='/R".strtoupper($item->jeton)."' target='_blank'>" . $item->titre_enseignant . "</a></li>";
+				}
+				$programmes_liens .= '</ul>';
+				?>
+				<div>
+					<button id="liste_programmes" style="width:40px;" type="button" class="mt-2 btn btn-light text-center"data-toggle="popover" data-html="true" data-content="{!! $programmes_liens !!}"><i class="fas fa-list-ul"></i></button>
+				</div>
+				@endif
 				<!-- /options -->	
 
 			</div>
 
 			<div class="col-md-10 offset-md-1">
 				<div class="row">
+				
+					@if ($programme->titre_eleve !== NULL)
+						<div class="col-md-12 mb-2 text-monospace ">
+							<b>{{ $programme->titre_eleve}}</b>
+						</div>
+					@endif
 
 					<div id="editeur" class="col-md-12 mb-2">
 						<div style="width:100%;">
@@ -303,13 +323,36 @@ $programme = App\Models\Programme::where('jeton', $jeton)->first();
 			}
 		});
 	</script>
-	
+
 	<script>
+        $("#liste_programmes").popover({
+            html: true,
+            sanitize: false,
+			container: "#liste_programmes",
+        });
+
+        jQuery(function ($) {
+            $("[data-toggle='popover']").popover({trigger: "hover"}).click(function (event) {
+                event.stopPropagation();
+
+            }).on('inserted.bs.popover', function () {
+                $(".popover").click(function (event) {
+                event.stopPropagation();
+                })
+            })
+
+            $(document).click(function () {
+                $("[data-toggle='popover']").popover('hide')
+            })
+        })
+    </script>
+
+    <script>
 		var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 		var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 		  return new bootstrap.Tooltip(tooltipTriggerEl)
 		})
 	</script>
-
+	
 </body>
 </html>

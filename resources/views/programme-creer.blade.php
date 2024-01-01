@@ -143,17 +143,19 @@
 						<i class="fas fa-info-circle" style="cursor:pointer;color:#e74c3c;opacity:0.5" data-toggle="modal" data-target="#markdown_help"></i>
 					</div>
 					<div class="text-monospace text-muted small text-justify mb-1">{{__('Visibles par vous seulement')}}</div>
-					<textarea class="form-control @error('notes_personnelles') is-invalid @enderror" name="notes_personnelles" id="notes_personnelles" rows="6">{{ old('notes_personnelles') }}</textarea>
-					@error('notes_personnelles')
-						<span class="invalid-feedback" role="alert">
-							<strong>{{ $message }}</strong>
-						</span>
-					@enderror
+					<textarea class="form-control" name="notes_personnelles" id="notes_personnelles" rows="6">{{ old('notes_personnelles') }}</textarea>
+					<!-- /NOTES PERSONNELLES -->
 
 					<!-- CODE --> 
+
 					<div class="mt-4 text-monospace">{{strtoupper(__('code'))}}<sup class="text-danger small ml-1">*</sup></div>
 					<textarea name="code" style="display:none;" id="code"></textarea>
-					<div id="editor_code" style="border-radius:5px;">{{old('code')}}</div>
+					<div id="editor_code" class="@error('code') is-invalid @enderror" style="border-radius:5px;">{{old('code')}}</div>
+					@error('code')
+						<div class="invalid-feedback" role="alert">
+							<strong>{{ $message }}</strong>
+						</div>
+					@enderror					
 					<!-- /CODE --> 
 
 					<input id="lang" type="hidden" name="lang" value="{{app()->getLocale()}}" />
