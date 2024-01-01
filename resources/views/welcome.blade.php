@@ -160,7 +160,18 @@
 				</div>
 			</div>
 		</div>	
-		
+	
+		<a name="programme"></a>
+		<div class="row mt-5 text-monospace">
+			<div class="col-md-2">
+				<div class="font-weight-bold text-success">PROGRAMMES</div>
+				<div class="font-weight-bold">Mode plein écran avec commandes (taille de la police, orientation, banque de programmes...)</div>
+			</div>
+			<div class="col-md-10 exemple">
+				<img src="{{ asset('img/programme/programmes.png') }}" class="d-block w-100" />
+			</div>
+		</div>		
+
 		<a name="devoir"></a>
 		<div class="row mt-5 text-monospace">
 			<div class="col-md-2">
