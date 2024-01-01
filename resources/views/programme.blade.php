@@ -60,7 +60,7 @@ $programme = App\Models\Programme::where('jeton', $jeton)->first();
 
 				@if(Auth::check())
 				<?php
-				$programmes_liens = "<div class='p-2'><div class='text-monospace'><b>PROGRAMMES</b></div><ul class='text-monospace m-0 pl-3'>";
+				$programmes_liens = "<div class='p-2' style='width:300px'><div class='text-monospace'><b>PROGRAMMES</b></div><ul class='text-monospace m-0 pl-3'>";
 				$liste_programmes = App\Models\Programme::where('user_id', Auth::id())->get();
 				foreach($liste_programmes AS $item) {
 					$programmes_liens .= "<li class='mt-1 mb-1'><a href='/R".strtoupper($item->jeton)."' target='_blank'>" . $item->titre_enseignant . "</a></li>";
