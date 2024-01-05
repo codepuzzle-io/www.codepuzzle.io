@@ -60,6 +60,7 @@
         '24.1' => 'DNRPY',
         '24.2' => 'DK764',
         '25.1' => 'DAB8Z',
+        '26.1' => 'D35DN',
         '27.1' => 'DV6CM',
         '27.2' => 'DWG82',
         '28.1' => 'D9VE2',
@@ -154,7 +155,7 @@
                         @endforeach
                     </div>
                     <div class="ml-1 mt-3">Codes sélectionnés:</div>
-                    <textarea id="codes" class="form-control" rows="4">{{$jetons_EP23}}</textarea>
+                    <textarea id="codes" class="form-control" rows="6">{{$jetons_EP23}}</textarea>
                 </div>
 
                 <div class="card-columns mb-5">
