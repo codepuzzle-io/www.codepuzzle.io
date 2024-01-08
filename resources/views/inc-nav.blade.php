@@ -20,7 +20,7 @@
 		@endphp
 
 		<div class="col-md-6 text-center">
-			<h1><a class="navbar-brand m-1" href="{{ $lang }}"><img src="{{ asset('img/codepuzzle.png') }}" width="280" alt="CODE PUZZLE" /></a></h1>
+			<h1><a class="navbar-brand m-1" href="{{ $lang }}"><img src="{{ asset('img/codepuzzle-python.png') }}" width="280" alt="CODE PUZZLE - PYTHON" /></a></h1>
 		</div>
 
 		<div class="col-md-3">
