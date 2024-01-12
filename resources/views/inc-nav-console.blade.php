@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="text-center">
 			<div>
-				<img src="{{ asset('img/nav-home.png') }}" width="40" />
+				<a href="/console"><img src="{{ asset('img/nav-home.png') }}" width="40" /></a>
 				<br />
 				<span class="text-monospace small" style="color:#c5c7c9;">{{__('console')}}</span>
 			</div>
