@@ -57,8 +57,29 @@
                 $defis = App\Models\Defi::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get();
                 ?>
 
-                <a class="btn btn-success btn-sm mb-4 pl-3 pr-3 text-monospace" href="{{route('defi-creer-get')}}" role="button">{{__('nouveau défi')}}</a>
+                <div class="mb-5 text-monospace">
+                    <div class="form-inline">
+                        @csrf
+                        <div class="form-group">
 
+                            <a class="btn btn-success btn-sm pl-3 pr-3" href="{{route('defi-creer-get')}}" role="button">{{__('nouveau défi')}}</a>
+                        </div>
+                        <div class="text-muted small">
+                            <i class="fas fa-ellipsis-v ml-3 mr-2"></i> importer des défis existants <a data-toggle="collapse" href="#collapseImport" role="button" aria-expanded="false" aria-controls="collapseImport"> <i class="fa-solid fa-circle-chevron-down"></i></a>
+                        </div>
+                    </div>
+                    <div class="collapse" id="collapseImport">
+                        <form method="POST" action="{{route('defis-importer-codes')}}">
+                            @csrf
+                            <div class="small text-muted mt-3 pb-1">
+                                Indiquez ci-dessous les codes des défis que vous souhaitez importer. Saisir les codes en les séparant par des virgules.<br />Exemple: DQMSK,DXSR8,DWMX2,DEHSD,DL92R<br />
+                                Pour trouver des défis à importer: <a href="/defis-banque" target="_blank">banque de défis</a>. Des codes peuvent aussi être échangés entre enseignants.
+                            </div>
+                            <textarea id="codes_defis" name="codes_defis" class="form-control" rows="4"></textarea>
+                            <button type="submit" class="btn btn-primary btn-sm mt-1 pl-3 pr-3"><i class="fas fa-check"></i></button>       
+                        </form>
+                    </div>
+                </div>
 
                 @foreach($defis as $defi)
                     <div id="frame_{{$loop->iteration}}" class="frame">

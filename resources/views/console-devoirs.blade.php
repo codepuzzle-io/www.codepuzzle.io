@@ -63,7 +63,7 @@
                         <a class="btn btn-success btn-sm pl-3 pr-3 text-monospace" href="{{route('devoir-creer-get')}}" role="button">{{__('nouveau devoir')}}</a>
                     </div>
                     <div class="form-group text-muted small">
-                        <i class="fas fa-ellipsis-v ml-3 mr-3"></i> enregistrer un devoir existant <sup><i class="fas fa-info-circle ml-1 mr-1" data-toggle="tooltip" data-placement="top" title="{{__('si le lien secret du devoir est: "www.codepuzzle.io/devoir-console/BAZU4DML3C", le code à saisir est "BAZU4DML3C".')}}"></i></sup>: <input name="jeton_secret" type="text" class="ml-1 mr-1 form-control form-control-sm" placeholder="code" />
+                        <i class="fas fa-ellipsis-v ml-3 mr-3"></i> importer un devoir existant <sup><i class="fas fa-info-circle ml-1 mr-1" data-toggle="tooltip" data-placement="top" title="{{__('si le lien secret du devoir est: "www.codepuzzle.io/devoir-console/BAZU4DML3C", le code à saisir est "BAZU4DML3C".')}}"></i></sup>: <input name="jeton_secret" type="text" class="ml-1 mr-1 form-control form-control-sm" placeholder="code" />
                     </div>
                     <button type="submit" class="btn btn-primary btn-sm mr-3"><i class="fas fa-check"></i></button>
                     @if ($errors->has('wrong_code'))

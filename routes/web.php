@@ -127,6 +127,8 @@ Route::post('/console/defi-modifier', [App\Http\Controllers\ConsoleController::c
 // defi supprimer
 Route::any('/console/defi-supprimer', [App\Http\Controllers\ConsoleController::class, 'redirect']);
 Route::any('/console/defi-supprimer/{defi_id}', [App\Http\Controllers\ConsoleController::class, 'defi_supprimer'])->name('defi-supprimer');
+// importer codes defis
+Route::post('/console/defis-importer-codes', [App\Http\Controllers\ConsoleController::class, 'defis_importer_codes'])->name('defis-importer-codes');
 
 // PROGRAMMES
 // programme modifier
