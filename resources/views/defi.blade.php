@@ -142,22 +142,25 @@ $asserts = '[' . trim($asserts, ',') . ']';
 
 			<div class="col-md-8 offset-md-1 text-center">
 				<textarea name="code" style="display:none;" id="code"></textarea>
-				<div style="width:100%;margin:0px auto 0px auto;"><div id="editor_code" style="border-radius:5px;">{{$defi->code}}</div></div>
+				<div style="width:100%;margin:0px auto 0px auto;position:relative">
+					<div style="position:absolute;top:8px;right:10px;z-index:10000;color:white;cursor:pointer" onclick="copierCode(this)"><i class="fa-regular fa-copy fa-lg"></i></div>
+					<div id="editor_code" style="border-radius:5px;">{{$defi->code}}</div>
+				</div>
 			</div>
 
 			<div class="col-md-2">
 				<div class="small mb-3 p-2" style="height:100%;background-color:#f5f7f9;border-radius:5px;border:solid 1px #ebedef;">
 					<table style="width:100%">
-					@foreach($tests AS $test)
-					<tr>
-					<td class="text-center" style="vertical-align:top"><div id="test_{{$loop->index}}" class="test"><i class="fas fa-question-circle"></i></div></td>
-					<td style="width:100%;">
-						<div id="test_message_{{$loop->index}}" class="text-muted pl-2" style="height:100%;">
-							<div>Test {{$loop->index + 1}}</div>
-						</div>
-					</td>
-					</tr>
-					@endforeach
+						@foreach($tests AS $test)
+							<tr>
+								<td class="text-center" style="vertical-align:top"><div id="test_{{$loop->index}}" class="test"><i class="fas fa-question-circle"></i></div></td>
+								<td style="width:100%;">
+									<div id="test_message_{{$loop->index}}" class="text-muted pl-2" style="height:100%;">
+										<div>Test {{$loop->index + 1}}</div>
+									</div>
+								</td>
+							</tr>
+						@endforeach
 					</table>
 				</div>
 			</div>
@@ -198,6 +201,34 @@ $asserts = '[' . trim($asserts, ',') . ']';
 	</div><!-- container -->
 
     @include('inc-bottom-js')
+
+	<script>
+		function copierCode(bouton) {
+
+			var tempTextArea = document.createElement("textarea");
+			tempTextArea.style.position = 'absolute';
+			tempTextArea.style.left = '-9999px';
+			tempTextArea.style.top = '0';
+			tempTextArea.value = document.getElementById("code").value;
+			document.body.appendChild(tempTextArea);
+
+			// sélectionner le texte
+			tempTextArea.select();
+			tempTextArea.setSelectionRange(0, 99999); // Pour la compatibilité mobile
+
+			// copier le texte dans le presse-papiers
+			document.execCommand("copy");
+
+			// supprimer l'élément temporaire
+			document.body.removeChild(tempTextArea);
+
+			// remplacer l'icone pendant 4s
+			bouton.innerHTML = '<i class="fa-solid fa-check fa-lg"></i>';
+			setTimeout(function() {
+				bouton.innerHTML = '<i class="fa-regular fa-copy fa-lg"></i>';
+			}, 2000);
+		}
+	</script>
 
     <script>
 		// PYODIDE
