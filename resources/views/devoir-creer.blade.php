@@ -30,6 +30,12 @@ if (isset($jeton_secret)) {
 </head>
 <body>
 
+	@if(Auth::check())
+		@include('inc-nav-console')
+	@else
+		@include('inc-nav')
+	@endif
+
 	<!-- MODAL MARKDOWN HELP -->
 	<div class="modal fade" id="markdown_help" tabindex="-1" aria-labelledby="markdown_helpLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
@@ -125,6 +131,7 @@ if (isset($jeton_secret)) {
 				<a class="btn btn-light btn-sm" href="/console/devoirs" role="button"><i class="fas fa-arrow-left"></i></a>
 				@else
 				<a class="btn btn-light btn-sm" href="/" role="button"><i class="fas fa-arrow-left"></i></a>
+				<div class="mt-3 small text-monospace text-muted">Vous pouvez <a href="/creer-un-compte" target="_blank">créer un compte</a> pour regrouper, gérer et partager vos devoirs.</div>
 				@endif
 			</div>
 
