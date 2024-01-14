@@ -4,7 +4,7 @@ $defi = App\Models\Defi::where('jeton', $jeton)->first();
 $tests = unserialize($defi->tests);
 $asserts = '';
 foreach($tests as $test){
-	$asserts .=  '["assert '.$test[0].'", "'.addslashes($test[1]).'"],';
+	$asserts .=  '["assert '.addslashes($test[0]).'", "'.addslashes($test[1]).'"],';
 }
 $asserts = '[' . trim($asserts, ',') . ']';
 ?>
@@ -20,7 +20,8 @@ $asserts = '[' . trim($asserts, ',') . ']';
     <title>{{ config('app.name') }} | Défi - D{{ $jeton }}</title>
 </head>
 
-<body class="no-mathjax" oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
+<body>
+<!--<body class="no-mathjax" oncontextmenu="return false" onselectstart="return false" ondragstart="return false">-->
 
 	<?php
 	// defi avec jeton eleve
