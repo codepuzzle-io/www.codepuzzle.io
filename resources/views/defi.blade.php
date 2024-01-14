@@ -20,8 +20,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
     <title>{{ config('app.name') }} | Défi - D{{ $jeton }}</title>
 </head>
 
-<body>
-<!--<body class="no-mathjax" oncontextmenu="return false" onselectstart="return false" ondragstart="return false">-->
+<body class="no-mathjax" oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 
 	<?php
 	// defi avec jeton eleve
