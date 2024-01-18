@@ -54,6 +54,28 @@ if ($devoir_eleve->code_eleve == "") {
 
 <body class="no-mathjax" oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 
+	    <!-- Écran de démarrage -->
+
+    <div id="demarrer" class="demarrer">
+		<div id="commencer" @if ($devoir->with_console == 1) style="display:none" @endif>
+			<i class="fas fa-exclamation-triangle text-danger"></i>
+			<br />
+			<div class="text-monospace text-danger text-left" style="width:320px;margin:0px auto 0px auto;">
+			&#8226; ne pas quitter le mode plein écran<br />
+			&#8226; ne pas revenir en arrière<br />
+			&#8226; ne pas quitter la page<br />
+			&#8226; ne pas recharger la page<br />
+			&#8226; ne pas cliquer en-dehors de la page
+			</div>
+			<br/>
+			<button onclick="commencer()" type="button" class="btn btn-primary btn-lg text-monospace" style="width:80px;font-size:100%;"><i class="fas fa-check"></i></button>
+		</div>
+		@if ($devoir->with_console == 1)
+		<span id="attendre" class="text-muted"><i class="fa-solid fa-circle-notch fa-spin fa-6x mb-2"></i></span>
+		@endif
+    </div>
+	
+
 	<div class="bg-danger text-white p-2 text-monospace text-center mb-4">ne pas quitter cette page - ne pas recharger cette page - ne pas cliquer en-dehors de cette page - ne pas quitter le mode plein écran</div>
 
     <div class="container mt-5">
