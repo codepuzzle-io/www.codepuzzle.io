@@ -57,7 +57,7 @@ if ($devoir_eleve->code_eleve == "") {
 	    <!-- Écran de démarrage -->
 
     <div id="demarrer" class="demarrer">
-		<div id="commencer" @if ($devoir->with_console == 1) style="display:none" @endif>
+		<div id="commencer">
 			<i class="fas fa-exclamation-triangle text-danger"></i>
 			<br />
 			<div class="text-monospace text-danger text-left" style="width:320px;margin:0px auto 0px auto;">
