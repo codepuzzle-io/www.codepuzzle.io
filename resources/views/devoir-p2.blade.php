@@ -70,9 +70,6 @@ if ($devoir_eleve->code_eleve == "") {
 			<br/>
 			<button onclick="commencer()" type="button" class="btn btn-primary btn-lg text-monospace" style="width:80px;font-size:100%;"><i class="fas fa-check"></i></button>
 		</div>
-		@if ($devoir->with_console == 1)
-		<span id="attendre" class="text-muted"><i class="fa-solid fa-circle-notch fa-spin fa-6x mb-2"></i></span>
-		@endif
     </div>
 	
 
