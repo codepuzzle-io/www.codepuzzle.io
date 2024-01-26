@@ -177,10 +177,8 @@ $asserts = '[' . trim($asserts, ',') . ']';
 				<div class="row" style="min-height:40px;">
 					<div class="col-md-6 text-left">
 						<button id="run" type="button" class="btn btn-primary btn-sm pl-4 pr-4"><i class="fas fa-circle-notch fa-spin"></i></button>
-						<button id="stop" type="button" class="btn btn-dark btn-sm pl-3 pr-3" style="padding-top:6px;display:none;" data-bs-toggle="tooltip" data-bs-placement="right"  data-bs-trigger="hover" title="{{__('Interruption de l\'exécution du code (en cas de boucle infinie ou de traitement trop long). L\'arrêt peut prendre quelques secondes.')}}"><i class="fas fa-stop"></i></button>
-					</div>
-					<div class="col-md-6 text-right">
-						<button id="restart" type="button" class="btn btn-warning btn-sm pl-3 pr-3" style="padding-top:6px;display:none;" data-bs-toggle="tooltip" data-bs-placement="right"  data-bs-trigger="hover" title="{{__('Si le bouton d\'arrêt ne permet pas d\'interrompre  l\'exécution du code, cliquer ici. Python redémarrera complètement mais votre code sera conservé dans l\'éditeur. Le redémarrage peut prendre quelques secondes.')}}"><i class="fas fa-skull"></i></button>
+						<!--<button id="stop" type="button" class="btn btn-dark btn-sm pl-3 pr-3" style="padding-top:6px;display:none;" data-bs-toggle="tooltip" data-bs-placement="right"  data-bs-trigger="hover" title="{{__('Interruption de l\'exécution du code (en cas de boucle infinie ou de traitement trop long). L\'arrêt peut prendre quelques secondes.')}}"><i class="fas fa-stop"></i></button>-->
+						<button id="restart" type="button" class="btn btn-dark btn-sm pl-3 pr-3" style="padding-top:6px;display:none;" data-bs-toggle="tooltip" data-bs-placement="right"  data-bs-trigger="hover" title="{{__('Interruption de l\'exécution du code (en cas de boucle infinie ou de traitement trop long). L\'arrêt et le redémarrage peuvent prendre quelques secondes.')}}"><i class="fas fa-stop"></i></button>
 					</div>
 				</div>
 
@@ -234,7 +232,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 		// PYODIDE
 
 		const run = document.getElementById("run");
-		const stop = document.getElementById("stop");
+		//const stop = document.getElementById("stop");
 		const restart = document.getElementById("restart");
 		const output1 = document.getElementById("output1");
 		const output2 = document.getElementById("output2");
@@ -245,7 +243,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
         function createWorker() {
 			output1.innerText = "Initialisation...\n";
 			run.disabled = true;
-			stop.style.display = 'none';
+			//stop.style.display = 'none';
 			restart.style.display = 'none';
 
             let pyodideWorker = new Worker("{{ asset('pyodideworker/defi-pyodideWorker.js') }}");
@@ -266,13 +264,14 @@ $asserts = '[' . trim($asserts, ',') . ']';
 					if (event.data.status == 'running'){
 						run.disabled = true;
 						run.innerHTML = '<i class="fas fa-cog fa-spin"></i>';
-						stop.style.display = 'inline';
+						//stop.style.display = 'inline';
+						restart.style.display = 'inline';
 					}
 
 					if (event.data.status == 'completed'){
 						run.disabled = false;
 						run.innerHTML = '<i class="fas fa-play"></i>';
-						stop.style.display = 'none';
+						//stop.style.display = 'none';
 						restart.style.display = 'none';
 					}
 
@@ -311,13 +310,16 @@ $asserts = '[' . trim($asserts, ',') . ']';
 
 			};
 
+			/*
 			@if(App::isProduction())
 				// ne fonctionne pas en local a cause de COEP et COOP
 				// interruption python
 				let interruptBuffer = new Uint8Array(new SharedArrayBuffer(1));
 				pyodideWorker.postMessage({ cmd: "setInterruptBuffer", interruptBuffer });
 			@endif
+			*/
 
+			/*
 			stop.onclick = function() {
 				@if(App::isProduction())
 					// ne fonctionne pas en local a cause de COEP et COOP
@@ -327,6 +329,7 @@ $asserts = '[' . trim($asserts, ',') . ']';
 				// bouton 'restart'
 				restart.style.display = 'inline';
 			}
+			*/
 			
 			// arrete et redemarre le webworker
 			restart.onclick = function() {
@@ -335,10 +338,12 @@ $asserts = '[' . trim($asserts, ',') . ']';
 
 			// envoi des donnees au webworker pour execution
 			run.onclick = function() {
+				/*
 				@if(App::isProduction())
 					// ne fonctionne pas en local a cause de COEP et COOP
 					interruptBuffer[0] = 0;
 				@endif
+				*/
 				const code = document.getElementById("code").value;
 				const asserts = {!!$asserts!!};
 				output1.innerHTML = "";

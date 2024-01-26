@@ -202,6 +202,12 @@ Route::any('/devoir-imprimer/{jeton_secret}', [App\Http\Controllers\SiteControll
 Route::any('/devoir-eleve-supprimer/{devoir_eleve_id}', [App\Http\Controllers\SiteController::class, 'devoir_eleve_supprimer'])->name('devoir-eleve-supprimer');
 
 
+// SUJETS
+Route::get('/sujet-creer-p1', [App\Http\Controllers\SiteController::class, 'sujet_creer_get'])->name('sujet-creer-get');
+//Route::post('/sujet-creer-p2-md', [App\Http\Controllers\SiteController::class, 'sujet_creer_get'])->name('sujet-creer-get');
+Route::view('/sujet-creer-p2-md', 'sujet-creer-p2-md');
+Route::view('/sujet-copie', 'sujet-copie');
+
 // CLASSES
 Route::get('/classe-creer', [App\Http\Controllers\SiteController::class, 'classe_creer_get'])->name('classe-creer-get');
 Route::post('/classe-creer', [App\Http\Controllers\SiteController::class, 'classe_creer_post'])->name('classe-creer-post');

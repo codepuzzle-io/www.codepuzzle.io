@@ -54,8 +54,7 @@ if ($devoir_eleve->code_eleve == "") {
 
 <body class="no-mathjax" oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 
-	    <!-- Écran de démarrage -->
-
+	<!-- Écran de démarrage -->
     <div id="demarrer" class="demarrer">
 		<div id="commencer">
 			<i class="fas fa-exclamation-triangle text-danger"></i>
@@ -72,7 +71,6 @@ if ($devoir_eleve->code_eleve == "") {
 		</div>
     </div>
 	
-
 	<div class="bg-danger text-white p-2 text-monospace text-center mb-4">ne pas quitter cette page - ne pas recharger cette page - ne pas cliquer en-dehors de cette page - ne pas quitter le mode plein écran</div>
 
     <div class="container mt-5">
