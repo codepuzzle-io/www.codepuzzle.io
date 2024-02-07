@@ -100,7 +100,7 @@ $liste_activites_autres = array_diff($liste_activites_eleves, $liste_activites_c
                             @endif
                             <div class="text-center font-weight-bold">lien secret</div>
                             <div class="text-center p-2 text-break align-middle border border-danger rounded"><a href="/classe-console/{{strtoupper($classe->jeton_secret)}}" target="_blank" class="text-danger">www.codepuzzle.io/classe-console/{{strtoupper($classe->jeton_secret)}}</a></div>
-                            <div class="small text-muted p-1"><span class="text-danger"><i class="fas fa-exclamation-circle"></i> Ne pas partager ce lien</span><br />Il permet d'accéder à la console de la classe.</div>
+                            <div class="small text-muted p-1"><span class="text-danger"><i class="fas fa-exclamation-circle"></i> Ne pas partager ce lien. </span> Il permet de revenir sur cette page.</div>
                         </div>
                     </div>
                 </div>

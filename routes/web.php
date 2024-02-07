@@ -202,12 +202,6 @@ Route::any('/devoir-imprimer/{jeton_secret}', [App\Http\Controllers\SiteControll
 Route::any('/devoir-eleve-supprimer/{devoir_eleve_id}', [App\Http\Controllers\SiteController::class, 'devoir_eleve_supprimer'])->name('devoir-eleve-supprimer');
 
 
-// SUJETS
-Route::get('/sujet-creer-p1', [App\Http\Controllers\SiteController::class, 'sujet_creer_get'])->name('sujet-creer-get');
-//Route::post('/sujet-creer-p2-md', [App\Http\Controllers\SiteController::class, 'sujet_creer_get'])->name('sujet-creer-get');
-Route::view('/sujet-creer-p2-md', 'sujet-creer-p2-md');
-Route::view('/sujet-copie', 'sujet-copie');
-
 // CLASSES
 Route::get('/classe-creer', [App\Http\Controllers\SiteController::class, 'classe_creer_get'])->name('classe-creer-get');
 Route::post('/classe-creer', [App\Http\Controllers\SiteController::class, 'classe_creer_post'])->name('classe-creer-post');
@@ -218,10 +212,24 @@ Route::any('/classe-eleve-supprimer/{eleve_id}', [App\Http\Controllers\SiteContr
 Route::post('/classe-activite-enregistrer', [App\Http\Controllers\SiteController::class, 'classe_activite_enregistrer'])->name('classe-activite-enregistrer');
 Route::any('/classe-eleve-activite-supprimer/{classes_activites_id}', [App\Http\Controllers\SiteController::class, 'classe_eleve_activite_supprimer'])->name('classe-eleve-activite-supprimer');
 
+
+// SUJETS
+Route::get('/sujet-creer', [App\Http\Controllers\SujetController::class, 'sujet_creer_get'])->name('sujet-creer-get');
+Route::get('/sujet-creer/{jeton_secret}', [App\Http\Controllers\SujetController::class, 'sujet_modifier_get'])->name('sujet-modifier-get');
+Route::post('/sujet-creer', [App\Http\Controllers\SujetController::class, 'sujet_creer_post'])->name('sujet-creer-post');
+Route::get('/sujet-creer/{jeton_secret}/md', [App\Http\Controllers\SujetController::class, 'sujet_creer_md_get'])->name('sujet-creer-md-get');
+Route::post('/sujet-creer/{jeton_secret}/md', [App\Http\Controllers\SujetController::class, 'sujet_creer_md_post'])->name('sujet-creer-md-post');
+Route::get('/sujet-creer/{jeton_secret}/pdf', [App\Http\Controllers\SujetController::class, 'sujet_creer_pdf_get'])->name('sujet-creer-pdf-get');
+Route::post('/sujet-creer/{jeton_secret}/pdf', [App\Http\Controllers\SujetController::class, 'sujet_creer_pdf_post'])->name('sujet-creer-pdf-post');
+Route::any('/sujet-console/{jeton_secret}', [App\Http\Controllers\SujetController::class, 'sujet_console'])->name('sujet-view');
+Route::post('/sujet-change-type', [App\Http\Controllers\SujetController::class, 'sujet_change_type'])->name('sujet-change-type');
+
+
 // ELEVES
 Route::get('/@/{jeton_eleve}', function ($jeton_eleve) {
     return view('eleve-console')->with(['jeton_eleve' => $jeton_eleve]);
 });
+
 
 
 // ============================================================================

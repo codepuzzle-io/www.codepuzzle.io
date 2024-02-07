@@ -1,22 +1,17 @@
 <?php
 if (isset($jeton_secret)) {
-	$devoir = App\Models\Devoir::where('jeton_secret', $jeton_secret)->first();
-	if (!$devoir) {
-		echo "<pre>Ce devoir n'existe pas.</pre>";
+	$sujet = App\Models\Sujet::where('jeton_secret', $jeton_secret)->first();
+	if (!$sujet) {
+		echo "<pre>Ce sujet n'existe pas.</pre>";
 		exit();
 	} else {
-		$titre_enseignant = $devoir->titre_enseignant;
-		$sous_titre_enseignant = $devoir->sous_titre_enseignant;
-		$titre_eleve = $devoir->titre_eleve;
-		$consignes = $devoir->consignes_eleve;
-		$code_eleve = $devoir->code_eleve;
-		$code_enseignant = $devoir->code_enseignant;
-		$solution = $devoir->solution;
-		$with_chrono = $devoir->with_chrono;
-		$with_console = $devoir->with_console;
+		$titre_enseignant = $sujet->titre_enseignant;
+		$sous_titre_enseignant = $sujet->sous_titre_enseignant;
+		$titre_eleve = $sujet->titre_eleve;
+		$consignes = $sujet->consignes_eleve;
 
-		if ($devoir->user_id !== 0 && (!Auth::check() || (Auth::check() && Auth::id() !== $devoir->user_id))) {
-			echo "<pre>Vous ne pouvez pas accéder à ce devoir.</pre>";
+		if ($sujet->user_id !== 0 && (!Auth::check() || (Auth::check() && Auth::id() !== $sujet->user_id))) {
+			echo "<pre>Vous ne pouvez pas accéder à ce sujet.</pre>";
 			exit();
 		}
 	}
@@ -129,10 +124,14 @@ if (isset($jeton_secret)) {
 
 			<div class="col-md-2 text-right">
 				@if(Auth::check())
-				<a class="btn btn-light btn-sm" href="/console/devoirs" role="button"><i class="fas fa-arrow-left"></i></a>
+					<a class="btn btn-light btn-sm" href="/console/devoirs" role="button"><i class="fas fa-arrow-left"></i></a>
 				@else
-				<a class="btn btn-light btn-sm" href="/" role="button"><i class="fas fa-arrow-left"></i></a>
-				<div class="mt-3 small text-monospace text-muted">Vous pouvez <a href="/creer-un-compte" target="_blank">créer un compte</a> pour regrouper, gérer et partager vos sujets.</div>
+					@if (isset($jeton_secret))
+						<a class="btn btn-light btn-sm" href="/sujet-console/{{ $jeton_secret }}" role="button"><i class="fas fa-arrow-left"></i></a>
+					@else
+						<a class="btn btn-light btn-sm" href="/" role="button"><i class="fas fa-arrow-left"></i></a>
+					@endif
+					<div class="mt-3 small text-monospace text-muted">Vous pouvez <a href="/creer-un-compte" target="_blank">créer un compte</a> pour regrouper, gérer et partager vos sujets.</div>
 				@endif
 			</div>
 
@@ -140,7 +139,8 @@ if (isset($jeton_secret)) {
 
 				<h1>{{__('nouveau sujet')}}</h1>
 
-				<form method="POST" action="{{route('devoir-creer-post')}}">
+
+				<form method="POST" action="{{route('sujet-creer-post')}}">
 
 					@csrf
 
@@ -176,7 +176,7 @@ if (isset($jeton_secret)) {
 					<!-- CONSIGNES -->
 					<div class="mt-4 text-monospace">{{strtoupper(__('consignes / instructions'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
 
-					<div class="text-monospace text-muted small text-justify mb-1">{{__('Le contenu de ce champ apparaîtra juste au-dessus du sujet.')}}</div>
+					<div class="text-monospace text-muted small text-justify mb-1">{{__('Le contenu de ce champ optionnel apparaîtra juste au-dessus du sujet.')}}</div>
 					<textarea class="form-control @error('consignes_eleve') is-invalid @enderror" name="consignes_eleve" id="consignes_eleve" rows="6">{{ old('consignes_eleve') ?? $consignes ?? '' }}</textarea>
 					@error('consignes_eleve')
 						<span class="invalid-feedback" role="alert">
@@ -185,10 +185,19 @@ if (isset($jeton_secret)) {
 					@enderror
 					<!-- /CONSIGNES -->
 
-					<div class="text-center mt-4 mb-5">
-						<button type="submit" class="btn btn-primary pl-4 pr-4 mr-2"><i class="fa-brands fa-markdown mr-2"></i> Écrire le sujet au format Markdown</button>
-						<button type="submit" class="btn btn-primary pl-4 pr-4 ml-2"><i class="fa-solid fa-file-pdf mr-2"></i> Importer un sujet au format PDF</button>
-					</div>
+					@if (isset($jeton_secret))
+						<input type="hidden" name="jeton_secret" value="{{$jeton_secret}}" />
+						<div class="text-center mt-4 mb-5">
+							<button type="submit" name="action" value="update" class="btn btn-primary pl-4 pr-4 mb-2 mr-1" data-toggle="tooltip" data-placement="top" title="Enregistrer"><i class="fa-solid fa-check"></i></button>
+							<button type="submit" name="sujet_type" value="md" class="btn btn-primary pl-4 pr-4 mb-2 ml-1 mr-1" data-toggle="tooltip" data-placement="top" title="Enregistrer et modifier le sujet au format Markdown"><i class="fa-solid fa-check mr-1"></i>+<i class="fa-brands fa-markdown ml-1 mr-2"></i> </button>
+							<button type="submit" name="sujet_type" value="pdf" class="btn btn-primary pl-4 pr-4 mb-2 mr-1" data-toggle="tooltip" data-placement="top" title="Enregistrer et modifier le sujet au format PDF"><i class="fa-solid fa-check mr-1"></i>+<i class="fa-solid fa-file-pdf ml-1"></i> </button>
+						</div>
+					@else
+						<div class="text-center mt-4 mb-5">
+							<button type="submit" name="sujet_type" value="md" class="btn btn-primary pl-4 pr-4 mb-2 mr-1" data-toggle="tooltip" data-placement="top" title="Écrire le sujet au format Markdown"><i class="fa-brands fa-markdown"></i></button>
+							<button type="submit" name="sujet_type" value="pdf" class="btn btn-primary pl-4 pr-4 mb-2 ml-1" data-toggle="tooltip" data-placement="top" title="Importer un sujet au format PDF"><i class="fa-solid fa-file-pdf"></i></button>
+						</div>
+					@endif
 
 				</form>
 
