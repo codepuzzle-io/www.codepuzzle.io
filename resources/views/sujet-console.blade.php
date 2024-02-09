@@ -234,6 +234,7 @@ if (isset($jeton_secret)) {
             console.log('md');
             document.getElementById("sujet_md_checked").style.display = this.checked ? "block" : "none";
             document.getElementById("sujet_pdf_checked").style.display = "none";
+            postData('/sujet-change-type', { sujet_id: '{{ Crypt::encryptString($sujet->id) }}', sujet_type:'md' })
         });
 
         document.getElementById("radio_pdf").addEventListener("change", function() {
@@ -241,9 +242,6 @@ if (isset($jeton_secret)) {
             document.getElementById("sujet_pdf_checked").style.display = this.checked ? "block" : "none";
             document.getElementById("sujet_md_checked").style.display = "none";
             postData('/sujet-change-type', { sujet_id: '{{ Crypt::encryptString($sujet->id) }}', sujet_type:'pdf' })
-            .then(data => {
-                console.log('DATA: ', data); 
-            });
         });
     </script>
 

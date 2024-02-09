@@ -254,7 +254,7 @@ Route::view('/devoir-fin', 'devoir-fin');
 // == HUB
 // ============================================================================
 
-Route::any('/{hub_jeton}/{jeton_eleve?}', [App\Http\Controllers\SiteController::class, 'hub'])->name('hub');
+Route::any('/{hub_jeton}/{extra?}', [App\Http\Controllers\SiteController::class, 'hub'])->name('hub');
 
 
 // ============================================================================
