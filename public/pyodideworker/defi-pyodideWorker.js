@@ -21,6 +21,7 @@ let pyodideReadyPromise = main();
 self.onmessage = async (event) => {
 
     const code = event.data.code;
+    const code_pre_tests = event.data.code_pre_tests;
     const asserts = event.data.asserts;
     var output_message = "";
 
@@ -92,7 +93,7 @@ self.onmessage = async (event) => {
                 }
                 // ========================================================================
 
-                self.pyodide.runPython(code + "\n" + assert[0] + ', "' + assert[1] + '"');	
+                self.pyodide.runPython(code + "\n" + code_pre_tests + "\n" + assert[0] + ', "' + assert[1] + '"');	
 
                 self.postMessage({ assert_valide: n });
 

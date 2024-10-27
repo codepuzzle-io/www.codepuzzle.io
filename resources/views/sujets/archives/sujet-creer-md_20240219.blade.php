@@ -24,6 +24,8 @@ if (isset($jeton_secret)) {
 	@include('inc-meta')
     <title>SUJET | CRÉER / MODIFIER</title>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
     <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
     <style>
@@ -57,6 +59,14 @@ if (isset($jeton_secret)) {
             background: white;
             border-color: #dae0e5;
             border-radius: 4px;
+        }
+
+        pre {
+            display:block;
+            border:solid 1px #CED4DA;
+            background-color:#F8FAFC;
+            border-radius:4px;
+            padding:10px;
         }
     </style>
 
@@ -191,6 +201,10 @@ if (isset($jeton_secret)) {
 
 	@include('inc-bottom-js')
 
+    <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+
     <script>
         //const easyMDE = new EasyMDE({element: document.getElementById('my-text-area')});
         const editor = new EasyMDE({
@@ -264,14 +278,16 @@ if (isset($jeton_secret)) {
                 image: "Custom prompt for URL:",
                 link: "Custom prompt for URL:",
             },
+            */
             renderingConfig: {
                 singleLineBreaks: false,
                 codeSyntaxHighlighting: true,
                 sanitizerFunction: (renderedHTML) => {
                     // Using DOMPurify and only allowing <b> tags
-                    return DOMPurify.sanitize(renderedHTML, {ALLOWED_TAGS: ['b']})
+                    return DOMPurify.sanitize(renderedHTML)
                 },
             },
+            /*
             shortcuts: {
                 drawTable: "Cmd-Alt-T"
             },

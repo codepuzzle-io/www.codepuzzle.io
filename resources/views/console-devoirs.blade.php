@@ -4,45 +4,24 @@
     @include('inc-meta')
     <title>{{ config('app.name') }} | {{ ucfirst(__('console')) }}</title>
 </head>
-<body class="no-mathjax">
+<body>
     @php
 		$lang_switch = '<a href="/console/lang/fr" class="kbd mr-1">fr</a><a href="/console/lang/en" class="kbd">en</a>';
 	@endphp
     @include('inc-nav-console')
 
-    <?php
-    include('lib/parsedownmath/ParsedownMath.php');
-    $Parsedown = new ParsedownMath([
-        'math' => [
-            'enabled' => true, // Write true to enable the module
-            'matchSingleDollar' => true // default false
-        ]
-    ]);
-    ?>
+	<div class="container mt-3 mb-5">
 
-	<div class="container mt-4 mb-5">
+		<div class="row">
 
-		<div class="row pt-3">
-
-			<div class="col-md-2">
-
-                <div class="text-right mb-3">
-                    <a class="btn btn-light btn-sm" href="/console" role="button"><i class="fas fa-arrow-left"></i></a>
-                </div>
-
-
-                <a href="https://github.com/codepuzzle-io/www.codepuzzle.io/discussions" target="_blank" role="button" class="mt-2 btn btn-light btn-sm text-left text-muted" style="width:100%;opacity:0.8;">
-                	<span style="font-size:80%"><i class="fas fa-comment-alt" style="float:left;margin:4px 8px 5px 0px;"></i> {{__('discussions')}} <span style="opacity:0.6;font-size:90%;">&</span> {{__('annonces')}}</span>
-                </a>
-
-                <a href="https://github.com/codepuzzle-io/www.codepuzzle.io/issues/new/choose" target="_blank" role="button"  class="mt-1 btn btn-light text-left btn-sm text-muted" style="width:100%;opacity:0.8;">
-                	<span style="font-size:80%"><i class="fas fa-bug" style="float:left;margin:4px 8px 5px 0px;"></i> {{__('signalement de bogue')}} <span style="opacity:0.6;font-size:90%;">&</span> {{__('questions techniques')}}</span>
-                </a>
-
-                <div class="mt-3 text-muted text-monospace pl-1 mb-5" style="font-size:70%;opacity:0.8;">
-                	<span><i class="fa fa-envelope"></i> contact@codepuzzle.io</span>
-                </div>
-
+            <div class="col-md-2">
+                <div class="text-right mb-3"><a class="btn btn-light btn-sm" href="/console" role="button"><i class="fas fa-arrow-left"></i></a></div>
+                <div class="mb-1 text-center" style="opacity:0.4"><a class="btn btn-light btn-sm d-block" href="{{route('console-puzzles')}}" role="button">{{__('PUZZLES')}}</a></div>
+                <div class="mb-1 text-center" style="opacity:0.4"><a class="btn btn-light btn-sm d-block" href="{{route('console-defis')}}" role="button">{{__('DÉFIS')}}</a></div>
+                <div class="mb-1 text-center" style="opacity:0.4"><a class="btn btn-light btn-sm d-block" href="{{route('console-sujets')}}" role="button">{{__('SUJETS')}}</a></div>
+                <div class="mb-1 text-center" style="opacity:1.0"><a class="btn btn-light btn-sm d-block" href="{{route('console-devoirs')}}" role="button">{{__('DEVOIRS')}}</a></div>
+                <div class="mb-1 text-center" style="opacity:0.4"><a class="btn btn-light btn-sm d-block" href="{{route('console-programmes')}}" role="button">{{__('PROGRAMMES')}}</a></div>
+                <div class="mb-3 text-center" style="opacity:0.4"><a class="btn btn-light btn-sm d-block" href="{{route('console-classes')}}" role="button">{{__('CLASSES')}}</a></div>           
             </div>
 
 			<div class="col-md-10 pl-4 pr-4">
@@ -60,7 +39,7 @@
                 <form method="POST" action="{{route('devoir-ajouter-console')}}" class="form-inline text-monospace mb-5">
                     @csrf
                     <div class="form-group">
-                        <a class="btn btn-success btn-sm pl-3 pr-3 text-monospace" href="{{route('devoir-creer-get')}}" role="button">{{__('nouveau devoir')}}</a>
+                        <a class="btn btn-success btn-sm pl-3 pr-3 text-monospace" href="{{route('sujet-creer-get')}}" role="button">{{__('nouveau sujet')}}</a>
                     </div>
                     <div class="form-group text-muted small">
                         <i class="fas fa-ellipsis-v ml-3 mr-3"></i> importer un devoir existant <sup><i class="fas fa-info-circle ml-1 mr-1" data-toggle="tooltip" data-placement="top" title="{{__('si le lien secret du devoir est: "www.codepuzzle.io/devoir-console/BAZU4DML3C", le code à saisir est "BAZU4DML3C".')}}"></i></sup>: <input name="jeton_secret" type="text" class="ml-1 mr-1 form-control form-control-sm" placeholder="code" />
@@ -77,16 +56,27 @@
                         <div class="row">
 
                             <div class="col-md-12 text-monospace text-muted">
+
                                 <!-- options -->
     							<div style="float:right;">
 
-                                    <a class='btn btn-dark btn-sm' href='/devoir-console/{{ $devoir->jeton_secret }}' role='button' data-toggle="tooltip" data-placement="top" title="{{__('voir / corriger')}}"><i class="fas fa-check"></i></a>
+                                    <a class='btn btn-dark btn-sm' href='/devoir-console/{{ $devoir->jeton_secret }}' role='button' data-toggle="tooltip" data-placement="top" title="{{__('voir / corriger')}}"><i class="fas fa-eye"></i></a>
                
-                                    <a class='btn btn-light btn-sm' data-toggle="collapse" href="#collapse-{{$loop->iteration}}" role='button' aria-expanded="false" aria-controls="collapse-{{$loop->iteration}}"><i class="fas fa-bars" style="margin-top:0px;" data-toggle="tooltip" data-offset="0, 9" data-placement="top" title="{{__('déplier plier')}}"></i></a>
-
-    								<a class='btn btn-light btn-sm' href='/devoir-creer/{{ $devoir->jeton_secret }}' role='button' data-toggle="tooltip" data-placement="top" title="{{__('modifier')}}"><i class="fas fa-pen"></i></a>
-
-                                    <a tabindex='0' id='/console/devoir-supprimer/{{ Crypt::encryptString($devoir->id) }}' class='btn btn-danger btn-sm text-light' role='button'  style="cursor:pointer;outline:none;" data-toggle="popover" data-trigger="focus" data-placement="left" data-html="true" data-content="<a href='/console/devoir-supprimer/{{ Crypt::encryptString($devoir->id) }}' class='btn btn-danger btn-sm text-light' role='button'>{{__('confirmer')}}</a><a class='btn btn-light btn-sm ml-2' href='#' role='button'>{{__('annuler')}}</a>"><i class='fas fa-trash fa-sm' data-toggle="tooltip" data-placement="top" data-offset="0, 15" title="{{__('supprimer')}}"></i></a>
+                                    <!-- supprimer -->
+                                    <span id="supprimer_button_{{$loop->iteration}}">
+                                        <div onclick="showConfirm('supprimer_button_{{$loop->iteration}}', 'supprimer_confirm_{{$loop->iteration}}')" class="d-inline-block" type="button">
+                                            <a tabindex='0' class='btn btn-light btn-sm' role='button'  style="cursor:pointer;outline:none;"><i class='fa-solid fa-xmark'></i></a>
+                                        </div>
+                                    </span>
+                                    <span id="supprimer_confirm_{{$loop->iteration}}" style="display:none">
+                                        <div id="supprimer_{{$loop->iteration}}" class="d-inline-block">
+                                            <a href='/console/devoir-supprimer/{{ Crypt::encryptString($devoir->id) }}' class='btn btn-danger btn-sm text-light ml-3' role='button'  style="cursor:pointer;outline:none;" data-toggle="tooltip" data-placement="top" title="{{__('supprimer')}}"><i class='fas fa-trash fa-sm'></i></a>
+                                        </div>
+                                        <div id="supprimer_cancel_{{$loop->iteration}}" onclick="hideConfirm('supprimer_button_{{$loop->iteration}}', 'supprimer_confirm_{{$loop->iteration}}')" class="d-inline-block" type="button">
+                                            <a tabindex='0' class='btn btn-light btn-sm' role='button' style="cursor:pointer;outline:none;" data-toggle="tooltip" data-placement="top" title="{{__('annuler')}}"><i class="fa-solid fa-chevron-right" ></i></a>
+                                        </div>
+                                    </span>
+                                    <!-- /supprimer -->
 
     							</div>
     							<!-- /options -->
@@ -95,39 +85,22 @@
                                     @if ($devoir->titre_enseignant == NULL)
                                         Devoir {{$devoir->jeton_secret}}
                                     @else
-                                    {{$devoir->titre_enseignant}}
+                                        {{$devoir->titre_enseignant}}
                                     @endif
                                 </h2>
-                                <div class="text-monospace small" style="color:silver;">{{ $devoir->sous_titre_enseignant }}</div>
+                                @if ($devoir->sous_titre_enseignant !== NULL)
+                                    <div class="text-monospace small" style="color:silver;">{{ $devoir->sous_titre_enseignant }}</div>
+                                @endif
+
+                                <div class="row mt-1" style="clear:both;">
+                                    <div class="col-md-12 text-monospace text-muted">
+                                        <span class="small"><i class="fas fa-share-alt ml-1 mr-2"></i>lien élèves: </span><a id="lien_{{$loop->iteration}}" href="/{{ strtoupper('E'.$devoir->jeton) }}" target="_blank">www.codepuzzle.io/E{{ strtoupper($devoir->jeton) }}</a><span class="pl-2" onclick="copier('lien_{{$loop->iteration}}')" style="cursor:pointer;"><i class="fa-regular fa-copy"></i></span><span id="lien_{{$loop->iteration}}_copie_confirmation" class="pl-3 text-right small text-monospace text muted">&nbsp;</span>
+                                    </div>
+                                </div>                           
 
                             </div>
                         </div>
-
-                        <div class="row">
-                            <div class="col-md-12 text-monospace small text-muted">
-                                <i class="fas fa-share-alt ml-1 mr-2"></i>lien élèves: <a href="/{{ strtoupper('E'.$devoir->jeton) }}" target="_blank">www.codepuzzle.io/E{{ strtoupper($devoir->jeton) }}</a>
-                            </div>
-                        </div>
-
-                        <div class="collapse" id="collapse-{{$loop->iteration}}">
-                            <div class="row mt-3">
-                                <div class="col-md-12">
-                                    @if ($devoir->titre_eleve !== NULL OR $devoir->consignes_eleve !== NULL)
-                                        <div class="pt-3 pl-3 pr-3 pb-1" style="background-color:#f3f5f7;border-radius:5px;">
-                                            @if ($devoir->titre_eleve !== NULL)
-                                                <div class="text-monospace mb-1 font-weight-bold">{{ $devoir->titre_eleve }}</div>
-                                            @endif
-                                            @if ($devoir->consignes_eleve !== NULL)
-                                                <div class="text-monospace text-muted mathjax consignes">
-                                                    {!! $Parsedown->text($devoir->consignes_eleve) !!}
-                                                </div>
-                                            @endif
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-
+                        
                     </div>
                 @endforeach
 
@@ -135,22 +108,63 @@
         </div>
 	</div><!-- /container -->
 
-    <script>
-		MathJax = {
-			tex: {
-				inlineMath: [['$', '$'], ['\\(', '\\)']],
-				displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-				processEscapes: true
-			},
-			options: {
-				ignoreHtmlClass: "no-mathjax",
-				processHtmlClass: "mathjax"
-			}
-		};        
-	</script>  
-	<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script> 
-
 	@include('inc-bottom-js')
+	@include('markdown/inc-markdown-afficher-js')
+
+	{{-- == Mécanisme confirmation suppression cellule ======================= --}}
+	<script>
+		function showConfirm(buttonId, confirmId) {
+			// Cacher le bouton delete_button et afficher delete_confirm
+			document.getElementById(buttonId).style.display = 'none';
+			document.getElementById(confirmId).style.display = 'inline';
+		}
+
+		function hideConfirm(buttonId, confirmId) {
+			// Cacher delete_confirm et réafficher delete_button
+			document.getElementById(confirmId).style.display = 'none';
+			document.getElementById(buttonId).style.display = 'inline';
+		}
+	</script>
+	{{-- == /Mécanisme bouton confirmation =================================== --}}	
+
+    {{-- == Copie lien ======================================================= --}}	
+	<script>
+	function copier(id) {
+		var texte = document.getElementById(id).textContent;
+		if (!navigator.clipboard) {
+			// Alternative pour les navigateurs ne prenant pas en charge navigator.clipboard
+			var zoneDeCopie = document.createElement("textarea");
+			zoneDeCopie.value = texte;
+			document.body.appendChild(zoneDeCopie);
+			zoneDeCopie.select();
+			document.execCommand("copy");
+			document.body.removeChild(zoneDeCopie);
+			return;
+		}
+
+		navigator.clipboard.writeText(texte).then(function() {
+			//alert("Le texte a été copié dans le presse-papiers.");
+		}, function() {
+			// Gérer les erreurs éventuelles
+			//alert("Impossible de copier le texte dans le presse-papiers. Veuillez le faire manuellement.");
+		});
+		
+		var status = document.getElementById(id+'_copie_confirmation');
+        status.innerText = "copié";
+		
+		status.style.opacity = '1';
+		var fadeOutInterval = setInterval(function() {
+			var opacity = parseFloat(status.style.opacity);
+			if (opacity <= 0) {
+				clearInterval(fadeOutInterval);
+				status.innerHTML = "&nbsp;"; // Effacer le texte après l'animation
+			} else {
+				status.style.opacity = (opacity - 0.1).toString();
+			}
+		}, 150);
+	}
+	</script>
+    {{-- == /Copie lien ====================================================== --}}	
 
 </body>
 </html>

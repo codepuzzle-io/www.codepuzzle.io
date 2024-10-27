@@ -64,6 +64,48 @@ h2 {
     font-weight:bold;
 }
 
+/* MARKDOWN CONTENT */
+.markdown_content h1 {
+	font-size: 17px;
+	text-transform: uppercase;
+	text-align:left;
+	color:black;
+    font-weight:bold;
+    padding:0px 0px 8px 0px;
+    margin:0px;
+}
+
+.markdown_content h2 {
+    font-size: 16px;
+	text-transform: uppercase;
+    text-align:left;
+	color: #2c3e50;
+    font-weight:bold;
+    padding:0px 0px 5px 0px;
+    margin:0px;
+}
+
+.markdown_content p {
+    margin: 0px 0px 5px 0px;
+}
+
+.markdown_content pre {
+    padding:10px;
+    border:solid 1px #ced4da;
+    background-color:#fafcfe;
+    border-radius:4px;
+    /*color:#6c757d;*/
+    font-size:95%;
+}
+
+
+
+
+
+
+
+
+
 .exemple {
     background-color: #eef0f2;
     padding:10px;
@@ -114,6 +156,7 @@ h2 {
 
 .card:hover {
     background-color: #f3f5f7  !important;
+    border:1px dashed #c0c3c6 !important;
 }
 
 .card h2 {
@@ -217,18 +260,7 @@ h3 {
     border-radius:5px;
 }
 
-.consignes p {
-    margin: 0px 0px 10px 0px;
-}
 
-.consignes pre {
-    padding:10px;
-    border:solid 1px #ced4da;
-    background-color:#fafcfe;
-    border-radius:4px;
-    color:#6c757d;
-    font-size:95%;
-}
 
 
 
@@ -700,9 +732,6 @@ svg {
 
 
 
-
-
-
 .badge-warning {
     color: gray;
     background-color: #e0edf9;
@@ -724,3 +753,113 @@ svg {
     background-color: #f8f9fa;
     border: 0;
 }
+
+
+
+/* ==================== */
+
+.cellule {
+    margin: 5px 0px 5px 0px;
+}
+
+.cellule_content {
+    padding: 8px;
+    border: 1px solid #CED4DA;
+    border-radius:4px;
+    background-color:white;
+    overflow: hidden;
+    resize: none;
+    font-family: 'Latin Modern Roman', serif;
+    font-size:17px;
+}
+
+.cellule_content pre code {
+    font-size:15px;
+}
+
+.cellule_marked {
+    background-color:#fafafa;
+}
+
+.control_bouton {
+    display:inline-block;
+    width:20px;
+    text-align:center;
+    cursor:pointer;
+    border-radius:2px;
+    opacity:0.2;
+}
+
+.control_bouton:hover {
+    background-color:#e2e6ea;
+    opacity:0.8;
+}
+
+.control_bouton_delete {
+    display:inline-block;
+    width:20px;
+    text-align:center;
+    cursor:pointer;
+    border-radius:2px;
+    opacity:0.4;
+    color: #e3342f;
+}
+
+.control_bouton_delete:hover {
+    background-color:#e2e6ea;
+    opacity:1;
+}
+
+.control_bouton_cancel {
+    display:inline-block;
+    width:20px;
+    text-align:center;
+    cursor:pointer;
+    border-radius:2px;
+    opacity:0.2;
+}
+
+.control_bouton_cancel:hover {
+    background-color:#e2e6ea;
+    opacity:0.8;
+}
+
+.ace_editor {
+    border-radius:4px;    
+}
+
+
+.markedarea_icon {
+    position: absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    z-index:1000;         
+}
+
+.markedarea_icon i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    display:none;
+}
+
+.markedarea_icon:hover {
+    cursor:text;
+}
+
+.markedarea_icon:hover i {
+    display:inline;
+}
+
+.cellule_marked pre {
+    display:block;
+    border:solid 1px #CED4DA;
+    background-color:#F8FAFC;
+    border-radius:4px;
+}
+
+/* ==================== */

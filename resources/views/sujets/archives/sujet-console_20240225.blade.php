@@ -1,5 +1,22 @@
 <?php
-$sujet = App\Models\Sujet::where('jeton', $jeton)->first();
+if (isset($jeton_secret)) {
+	$sujet = App\Models\Sujet::where('jeton_secret', $jeton_secret)->first();
+	if (!$sujet) {
+		echo "<pre>Ce devoir n'existe pas.</pre>";
+		exit();
+	} else {
+		$titre_enseignant = $sujet->titre_enseignant;
+		$sous_titre_enseignant = $sujet->sous_titre_enseignant;
+		$titre_eleve = $sujet->titre_eleve;
+		$consignes = $sujet->consignes_eleve;
+		$sujet_md = $sujet->sujet_md;
+		$sujet_pdf = $sujet->sujet_pdf;
+		if ($sujet->user_id !== 0 && (!Auth::check() || (Auth::check() && Auth::id() !== $sujet->user_id))) {
+			echo "<pre>Vous ne pouvez pas accéder à ce sujet.</pre>";
+			exit();
+		}
+	}
+}
 ?>
 <!doctype html>
 <html lang="fr">
@@ -83,62 +100,82 @@ $sujet = App\Models\Sujet::where('jeton', $jeton)->first();
 </head>
 <body>
 
+	@if(Auth::check())
+		@include('inc-nav-console')
+	@else
+		@include('inc-nav')
+	@endif
+
 	<div class="container mt-4 mb-5">
 
 		<div class="row">
 
-			<div class="col pl-4 pr-4">
+			<div class="col-md-2 text-right">
+				@if(Auth::check())
+				    <a class="btn btn-light btn-sm" href="/console/sujets" role="button"><i class="fas fa-arrow-left"></i></a>
+				@else
+				    <a class="btn btn-light btn-sm" href="/" role="button"><i class="fas fa-arrow-left"></i></a>
+				    <div class="mt-3 small text-monospace text-muted">Vous pouvez <a href="/creer-un-compte" target="_blank">créer un compte</a> pour regrouper, gérer et partager vos sujets.</div>
+				@endif
+			</div>
 
-                <h1 class="mt-2 mb-2 text-center"><a class="navbar-brand m-1" href="{{ url('/') }}"><img src="{{ asset('img/codepuzzle.png') }}" height="25" alt="CODE PUZZLE" /></a></h1>
-                <div class="p-2 mb-4 mr-4 ml-4 small text-monospace rounded border border-danger text-danger">
-                    Version alpha</br>
-                    A faire:</br>
-                    * intégration des sujets dans les devoirs avec environnement anti-triche</br>
-                    * intégration des sujets / devoirs dans les classes</br>
-                    * création d'une banque de sujets</br>
-                    * téléchargement des copies au format PDF</br>
-                    * partage des copies avec lien unique</br>
-                    * ...</br>
-                    Bugs/questions/commentaires:</br>
-                     - https://github.com/codepuzzle-io/www.codepuzzle.io/issues</br>
-                     - https://github.com/codepuzzle-io/www.codepuzzle.io/discussions</br>
-                     - contact@codepuzzle.io
-                </div>
+			<div class="col-md-10 pl-4 pr-4">
 
-                <h2 class="p-0 m-0">{{$sujet->titre_enseignant}}</h2>
-                <div class="text-monospace small" style="color:silver;">{{$sujet->sous_titre_enseignant}}</div>
-                <div class="text-monospace small" style="color:silver;">Titre élève: {{$sujet->titre_eleve}}</div>
-
-                <div class="mt-3 mb-4 text-center">
-                    <a class="btn btn-outline-secondary btn-sm text-monospace" href="/S{{strtoupper($sujet->jeton)}}/copie" role="button" target="_blank">ouvrir une copie</a>
-                    <a class="btn btn-outline-secondary btn-sm text-monospace" href="" role="button">créer un devoir</a>
-                </div>
-
-                <div class="mt-2 mb-3 p-3" style="background-color:#f3f5f7;border-radius:5px;">
-                    <div class="text-monospace text-muted mathjax consignes">{{$sujet->consignes_eleve}}</div>
-                </div>
-
-                @if ($sujet->sujet_type == 'md')
-                <div id="sujet_md_checked" class="mt-4 mb-5" @if ($sujet->sujet_type !== 'md') style="display:none" @endif>
-                    <div class="row no-gutters">
-
-                        <div class="col">
-                            <div id="sujet_md" class="cellule_content exclure cellule_marked hover-edit"></div>
+                @if($sujet->user_id == 0 OR !Auth::check())
+                <div id="frame" class="frame">
+                    <div class="row">
+                        <div class="col-md-8 offset-md-2 text-monospace pt-3 pb-3">
+                            @if(isset($_GET['i']))
+                                <div class="text-danger text-center font-weight-bold m-2">SAUVEGARDEZ LES INFORMATIONS CI-DESSOUS AVANT DE QUITTER CETTE PAGE</div>
+                            @endif
+                            <div class="text-center font-weight-bold">lien secret</div>
+                            <div class="text-center p-2 text-break align-middle border border-danger rounded"><a href="/sujet-console/{{strtoupper($sujet->jeton_secret)}}" target="_blank" class="text-danger">www.codepuzzle.io/sujet-console/{{strtoupper($sujet->jeton_secret)}}</a></div>
+                            <div class="small text-muted p-1"><span class="text-danger"><i class="fas fa-exclamation-circle"></i> Ne pas partager ce lien. </span> Il permet de revenir sur cette page.</div>
                         </div>
                     </div>
                 </div>
                 @endif
 
-                @if ($sujet->sujet_type == 'pdf')
+                <h2 class="p-0 m-0">{{$titre_enseignant}}</h2>
+
+
+
+                <div class="mt-3 mb-4 text-center">
+                    <a class="btn btn-dark btn-sm text-monospace mr-2" href="/sujet-creer/{{$jeton_secret}}" role="button"><i class="fa-solid fa-pen mr-2"></i>modifier</a>
+                    <a class="btn btn-outline-secondary btn-sm text-monospace ml-2" href="/devoir-creer/sujet/{{$sujet->jeton}}" role="button">créer un devoir</a>
+                </div>
+
+                <div class="text-muted mt-4 mb-4">
+                    <i class="fas fa-share-alt mr-1"></i> Lien public à partager: <a class="text-monospace ml-1" href="/S{{strtoupper($sujet->jeton)}}" role="button" target="_blank">www.codepuzzle.io/S{{strtoupper($sujet->jeton)}}</a>
+                </div>
+
+                @if($consignes)
+                <div class="mt-2 mb-3 p-3" style="background-color:#f3f5f7;border-radius:5px;">
+                    <div class="text-monospace text-muted mathjax consignes">{{$consignes}}</div>
+                </div>
+                @endif
+
+                <div id="sujet_md_checked" class="mt-4 mb-5" @if ($sujet->sujet_type !== 'md') style="display:none" @endif>
+                    <div class="row no-gutters">
+                        <div class="col-auto mr-2">
+                            <div><a class="btn btn-dark btn-sm text-monospace" href="/sujet-creer/{{$jeton_secret}}/md" role="button"><i class="fa-solid fa-pen"></i></a></div>
+                        </div>
+                        <div class="col">
+                            <div id="sujet_md" class="cellule_content exclure cellule_marked hover-edit"></div>
+                        </div>
+                    </div>
+                </div>
+                
                 <div id="sujet_pdf_checked" class="mt-4 mb-5" @if ($sujet->sujet_type !== 'pdf') style="display:none" @endif>
                     <div class="row no-gutters">
-  
+                        <div class="col-auto mr-2">
+                            <div><a class="btn btn-dark btn-sm text-monospace" href="/sujet-creer/{{$jeton_secret}}/pdf" role="button"><i class="fa-solid fa-pen"></i></a></div>
+                        </div>
                         <div class="col">
-                            <iframe id="sujet_pdf" src="{{Storage::url('SUJETS/PDF/'.$sujet->jeton.'.pdf')}}" width="100%" height="800" style="border: none;" class="rounded"></iframe>
+                            <iframe id="sujet_pdf" src="{{Storage::url('SUJETS/PDF/'.$sujet->jeton.'.pdf')}}" width="100%" height="1000" style="border: none;" class="rounded"></iframe>
                         </div>
                     </div>  
-                </div> 
-                @endif 
+                </div>  
     
 			</div>
 
@@ -178,9 +215,10 @@ $sujet = App\Models\Sujet::where('jeton', $jeton)->first();
                 //inlineText() { return undefined },
             }
         });
-        document.getElementById('sujet_md').innerHTML = marked.parse(`{{ $sujet->sujet_md }}`);
+        document.getElementById('sujet_md').innerHTML = marked.parse(`{{ $sujet_md }}`);
     </script>
 
+    @if ($sujet->sujet_md !== NULL AND $sujet->sujet_pdf !== NULL)
     <script>
         document.getElementById("radio_md").addEventListener("change", function() {
             console.log('md');
@@ -196,6 +234,7 @@ $sujet = App\Models\Sujet::where('jeton', $jeton)->first();
             postData('/sujet-change-type', { sujet_id: '{{ Crypt::encryptString($sujet->id) }}', sujet_type:'pdf' })
         });
     </script>
+    @endif
 
     <script>
         async function postData(url = '', data = {}) {

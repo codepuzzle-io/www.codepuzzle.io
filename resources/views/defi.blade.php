@@ -7,6 +7,7 @@ foreach($tests as $test){
 	$asserts .=  '["assert '.addslashes($test[0]).'", "'.addslashes($test[1]).'"],';
 }
 $asserts = '[' . trim($asserts, ',') . ']';
+$code_pre_tests = $defi->code_pre_tests;
 ?>
 @include('inc-top')
 <!doctype html>
@@ -346,9 +347,10 @@ $asserts = '[' . trim($asserts, ',') . ']';
 				*/
 				const code = document.getElementById("code").value;
 				const asserts = {!!$asserts!!};
+				const code_pre_tests = `{!! $code_pre_tests  !!}`;
 				output1.innerHTML = "";
 				output2.innerHTML = "";
-				pyodideWorker.postMessage({ code: code, asserts: asserts });		
+				pyodideWorker.postMessage({ code: code, code_pre_tests: code_pre_tests, asserts: asserts });		
 			}
 
 			return pyodideWorker

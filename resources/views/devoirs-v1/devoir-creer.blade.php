@@ -15,10 +15,20 @@ if (isset($jeton_secret)) {
 		$with_chrono = $devoir->with_chrono;
 		$with_console = $devoir->with_console;
 
+		$jeton_sujet = $devoir->sujet;
+
 		if ($devoir->user_id !== 0 && (!Auth::check() || (Auth::check() && Auth::id() !== $devoir->user_id))) {
 			echo "<pre>Vous ne pouvez pas accéder à ce devoir.</pre>";
 			exit();
 		}
+	}
+}
+
+if (isset($jeton_sujet)) {
+	$sujet = App\Models\Sujet::where('jeton', $jeton_sujet)->first();
+	if (!$sujet) {
+		echo "<pre>Le sujet n'existe pas.</pre>";
+		exit();
 	}
 }
 ?>
@@ -172,38 +182,54 @@ if (isset($jeton_secret)) {
 					@endif
 					<!-- /TITRE ELEVE -->					
 				
-					<!-- CONSIGNES -->
-					<div class="mt-4 text-monospace">
-						{{strtoupper(__('consignes'))}}<sup class="text-danger small">*</sup>
-						<i class="fas fa-info-circle" style="cursor:pointer;color:#e74c3c;opacity:0.5" data-toggle="modal" data-target="#markdown_help"></i>
-					</div>
-					<textarea class="form-control @error('consignes_eleve') is-invalid @enderror" name="consignes_eleve" id="consignes_eleve" rows="6">{{ old('consignes_eleve') ?? $consignes ?? '' }}</textarea>
-					@error('consignes_eleve')
-						<span class="invalid-feedback" role="alert">
-							<strong>{{ $message }}</strong>
-						</span>
-					@enderror
+					@if (isset($jeton_sujet))
 
-					<!-- CODE ELEVE --> 
-					<div class="mt-4 text-monospace">{{strtoupper(__("code ÉlÈve"))}} <span class="font-italic small" style="color:silver;">{{__("optionnel")}}</span></div>
-					<div class="text-monospace text-muted small text-justify mb-1">{{__("Ce code sera proposé à l'élève comme point de départ de l'entraînement.")}}</div>
-					<textarea name="code_eleve" style="display:none;" id="code_eleve"></textarea>
-					<div id="editor_code_eleve" style="border-radius:5px;">{{ old('code_eleve') ?? $code_eleve ?? '' }}</div>
-					<!-- /CODE ELEVE -->
+						<div class="mt-4 text-monospace">{{strtoupper(__('sujet'))}}</div>
+						@if ($sujet->sujet_type == 'pdf')
+							<div class="row no-gutters mt-1 mb-4">
+								<div class="col">
+									<iframe id="sujet_pdf" src="{{Storage::url('SUJETS/PDF/'.$sujet->jeton.'.pdf')}}" width="100%" height="400" style="border: none;" class="rounded"></iframe>
+								</div>
+							</div>  
+						@endif
+						<input type="hidden" name="sujet" value="{{$sujet->jeton}}" />
 
-					<!-- CODE ENSEIGNANT --> 
-					<div class="mt-4 text-monospace">{{strtoupper(__("code enseignant"))}} <span class="font-italic small" style="color:silver;">{{__("optionnel")}}</span></div>
-					<div class="text-monospace text-muted small text-justify mb-1">{{__("Pour les enseignants seulement. Vous pouvez y placer un jeu de tests par exemple. Ce code pourra être exécuté en même temps que celui de l'élève ou seul pendant l'évaluation de l'entraînement quand l'entraînement apparaîtra dans la console de l'enseignant.")}}</div>
-					<textarea name="code_enseignant" style="display:none;" id="code_enseignant"></textarea>
-					<div id="editor_code_enseignant" style="border-radius:5px;">{{ old('code_enseignant') ?? $code_enseignant ?? '' }}</div>
-					<!-- /CODE ENSEIGNANT -->
+					@else
 
-					<!-- SOLUTION --> 
-					<div class="mt-4 text-monospace">{{strtoupper(__('solution possible'))}} <span class="font-italic small" style="color:silver;">{{__("optionnel")}}</span></div>
-					<div class="text-monospace text-muted small text-justify mb-1">{{__("Pour les enseignants seulement. Cette soluton possible sert seulement de référence.")}}</div>
-					<textarea name="solution" style="display:none;" id="solution"></textarea>
-					<div id="editor_solution" style="border-radius:5px;">{{ old('solution') ?? $solution ?? '' }}</div>
-					<!-- /SOLUTION --> 					
+						<!-- CONSIGNES -->
+						<div class="mt-4 text-monospace">
+							{{strtoupper(__('consignes'))}}<sup class="text-danger small">*</sup>
+							<i class="fas fa-info-circle" style="cursor:pointer;color:#e74c3c;opacity:0.5" data-toggle="modal" data-target="#markdown_help"></i>
+						</div>
+						<textarea class="form-control @error('consignes_eleve') is-invalid @enderror" name="consignes_eleve" id="consignes_eleve" rows="6">{{ old('consignes_eleve') ?? $consignes ?? '' }}</textarea>
+						@error('consignes_eleve')
+							<span class="invalid-feedback" role="alert">
+								<strong>{{ $message }}</strong>
+							</span>
+						@enderror
+						
+						<!-- CODE ELEVE --> 
+						<div class="mt-4 text-monospace">{{strtoupper(__("code ÉlÈve"))}} <span class="font-italic small" style="color:silver;">{{__("optionnel")}}</span></div>
+						<div class="text-monospace text-muted small text-justify mb-1">{{__("Ce code sera proposé à l'élève comme point de départ de l'entraînement.")}}</div>
+						<textarea name="code_eleve" style="display:none;" id="code_eleve"></textarea>
+						<div id="editor_code_eleve" style="border-radius:5px;">{{ old('code_eleve') ?? $code_eleve ?? '' }}</div>
+						<!-- /CODE ELEVE -->
+
+						<!-- CODE ENSEIGNANT --> 
+						<div class="mt-4 text-monospace">{{strtoupper(__("code enseignant"))}} <span class="font-italic small" style="color:silver;">{{__("optionnel")}}</span></div>
+						<div class="text-monospace text-muted small text-justify mb-1">{{__("Pour les enseignants seulement. Vous pouvez y placer un jeu de tests par exemple. Ce code pourra être exécuté en même temps que celui de l'élève ou seul pendant l'évaluation de l'entraînement quand l'entraînement apparaîtra dans la console de l'enseignant.")}}</div>
+						<textarea name="code_enseignant" style="display:none;" id="code_enseignant"></textarea>
+						<div id="editor_code_enseignant" style="border-radius:5px;">{{ old('code_enseignant') ?? $code_enseignant ?? '' }}</div>
+						<!-- /CODE ENSEIGNANT -->
+
+						<!-- SOLUTION --> 
+						<div class="mt-4 text-monospace">{{strtoupper(__('solution possible'))}} <span class="font-italic small" style="color:silver;">{{__("optionnel")}}</span></div>
+						<div class="text-monospace text-muted small text-justify mb-1">{{__("Pour les enseignants seulement. Cette soluton possible sert seulement de référence.")}}</div>
+						<textarea name="solution" style="display:none;" id="solution"></textarea>
+						<div id="editor_solution" style="border-radius:5px;">{{ old('solution') ?? $solution ?? '' }}</div>
+						<!-- /SOLUTION --> 	
+
+					@endif				
 
 					<!-- OPTIONS -->
 					<div class="mt-4 text-monospace">OPTIONS</div>
@@ -220,10 +246,12 @@ if (isset($jeton_secret)) {
 						<input class="form-check-input" name="with_chrono" type="checkbox" id="with_chrono" {{$with_chrono_checked}} />
 						<label class="form-check-label text-monospace text-muted small" for="with_chrono">{{__('ne pas afficher le chronomètre')}}</label>
 					</div>
+					@if (!isset($jeton_sujet))
 					<div class="form-check">
 						<input class="form-check-input" name="with_console" type="checkbox" id="with_console" {{$with_console_checked}} />
 						<label class="form-check-label text-monospace text-muted small" for="with_console">{{__('ne pas afficher la console')}}</label>
-					</div>													
+					</div>	
+					@endif												
 					<!-- /OPTIONS -->
 
 					<input id="lang" type="hidden" name="lang" value="{{app()->getLocale()}}" />
@@ -244,103 +272,105 @@ if (isset($jeton_secret)) {
 
 	@include('inc-bottom-js')
 
-	<script src="{{ asset('js/ace/ace.js') }}" type="text/javascript" charset="utf-8"></script>
-	<script>
-		// Chargement de ace et initialisation des éditeurs.
-		var editor_code;
-		
-		async function init_editors() {
-			editor_code_eleve = ace.edit("editor_code_eleve", {
-				theme: "ace/theme/puzzle_code",
-				mode: "ace/mode/python",
-				maxLines: 500,
-				minLines: 4,
-				fontSize: 14,
-				wrap: true,
-				useWorker: false,
-				autoScrollEditorIntoView: true,
-				highlightActiveLine: false,
-				highlightSelectedWord: false,
-				highlightGutterLine: true,
-				showPrintMargin: false,
-				displayIndentGuides: true,
-				showLineNumbers: true,
-				showGutter: true,
-				showFoldWidgets: false,
-				useSoftTabs: true,
-				navigateWithinSoftTabs: false,
-				tabSize: 4
-			});
-			editor_code_eleve.container.style.lineHeight = 1.5;
-			editor_code_eleve.getSession().on('change', function () {
+	@if (!isset($jeton_sujet))
+		<script src="{{ asset('js/ace/ace.js') }}" type="text/javascript" charset="utf-8"></script>
+		<script>
+			// Chargement de ace et initialisation des éditeurs.
+			var editor_code;
+			
+			async function init_editors() {
+				editor_code_eleve = ace.edit("editor_code_eleve", {
+					theme: "ace/theme/puzzle_code",
+					mode: "ace/mode/python",
+					maxLines: 500,
+					minLines: 4,
+					fontSize: 14,
+					wrap: true,
+					useWorker: false,
+					autoScrollEditorIntoView: true,
+					highlightActiveLine: false,
+					highlightSelectedWord: false,
+					highlightGutterLine: true,
+					showPrintMargin: false,
+					displayIndentGuides: true,
+					showLineNumbers: true,
+					showGutter: true,
+					showFoldWidgets: false,
+					useSoftTabs: true,
+					navigateWithinSoftTabs: false,
+					tabSize: 4
+				});
+				editor_code_eleve.container.style.lineHeight = 1.5;
+				editor_code_eleve.getSession().on('change', function () {
+					document.getElementById('code_eleve').value = editor_code_eleve.getSession().getValue();
+				});
 				document.getElementById('code_eleve').value = editor_code_eleve.getSession().getValue();
-			});
-			document.getElementById('code_eleve').value = editor_code_eleve.getSession().getValue();
 
 
-			editor_code_enseignant = ace.edit("editor_code_enseignant", {
-				theme: "ace/theme/puzzle_code",
-				mode: "ace/mode/python",
-				maxLines: 500,
-				minLines: 4,
-				fontSize: 14,
-				wrap: true,
-				useWorker: false,
-				autoScrollEditorIntoView: true,
-				highlightActiveLine: false,
-				highlightSelectedWord: false,
-				highlightGutterLine: true,
-				showPrintMargin: false,
-				displayIndentGuides: true,
-				showLineNumbers: true,
-				showGutter: true,
-				showFoldWidgets: false,
-				useSoftTabs: true,
-				navigateWithinSoftTabs: false,
-				tabSize: 4
-			});
-			editor_code_enseignant.container.style.lineHeight = 1.5;
-			editor_code_enseignant.getSession().on('change', function () {
-				document.getElementById('code_enseignant').value = editor_code_enseignant.getSession().getValue();
-			});
-			document.getElementById('code_enseignant').value = editor_code_enseignant.getSession().getValue();			
+				editor_code_enseignant = ace.edit("editor_code_enseignant", {
+					theme: "ace/theme/puzzle_code",
+					mode: "ace/mode/python",
+					maxLines: 500,
+					minLines: 4,
+					fontSize: 14,
+					wrap: true,
+					useWorker: false,
+					autoScrollEditorIntoView: true,
+					highlightActiveLine: false,
+					highlightSelectedWord: false,
+					highlightGutterLine: true,
+					showPrintMargin: false,
+					displayIndentGuides: true,
+					showLineNumbers: true,
+					showGutter: true,
+					showFoldWidgets: false,
+					useSoftTabs: true,
+					navigateWithinSoftTabs: false,
+					tabSize: 4
+				});
+				editor_code_enseignant.container.style.lineHeight = 1.5;
+				editor_code_enseignant.getSession().on('change', function () {
+					document.getElementById('code_enseignant').value = editor_code_enseignant.getSession().getValue();
+				});
+				document.getElementById('code_enseignant').value = editor_code_enseignant.getSession().getValue();			
 
 
-			var editor_solution;
-			editor_solution = ace.edit("editor_solution", {
-				theme: "ace/theme/puzzle_fakecode",
-				mode: "ace/mode/python",
-				maxLines: 500,
-				minLines: 4,
-				fontSize: 14,
-				wrap: true,
-				useWorker: false,
-				autoScrollEditorIntoView: true,
-				highlightActiveLine: false,
-				highlightSelectedWord: false,
-				highlightGutterLine: true,
-				showPrintMargin: false,
-				displayIndentGuides: true,
-				showLineNumbers: true,
-				showGutter: true,
-				showFoldWidgets: false,
-				useSoftTabs: true,
-				navigateWithinSoftTabs: false,
-				tabSize: 4
-			});
-			editor_solution.container.style.lineHeight = 1.5;
-			editor_solution.getSession().on('change', function () {
+				var editor_solution;
+				editor_solution = ace.edit("editor_solution", {
+					theme: "ace/theme/puzzle_fakecode",
+					mode: "ace/mode/python",
+					maxLines: 500,
+					minLines: 4,
+					fontSize: 14,
+					wrap: true,
+					useWorker: false,
+					autoScrollEditorIntoView: true,
+					highlightActiveLine: false,
+					highlightSelectedWord: false,
+					highlightGutterLine: true,
+					showPrintMargin: false,
+					displayIndentGuides: true,
+					showLineNumbers: true,
+					showGutter: true,
+					showFoldWidgets: false,
+					useSoftTabs: true,
+					navigateWithinSoftTabs: false,
+					tabSize: 4
+				});
+				editor_solution.container.style.lineHeight = 1.5;
+				editor_solution.getSession().on('change', function () {
+					document.getElementById('solution').value = editor_solution.getSession().getValue();
+				});
 				document.getElementById('solution').value = editor_solution.getSession().getValue();
-			});
-			document.getElementById('solution').value = editor_solution.getSession().getValue();
-		}
-		(async function() {
-			// Chargement asynchrone de ace et initialisation des éditeurs
-			const editors_initialized_promise = init_editors();
-			// Pour être sur que ace est chargé et les éditeurs initialisés.
-			await editors_initialized_promise;		
-		})();	
-	</script>
+			}
+			(async function() {
+				// Chargement asynchrone de ace et initialisation des éditeurs
+				const editors_initialized_promise = init_editors();
+				// Pour être sur que ace est chargé et les éditeurs initialisés.
+				await editors_initialized_promise;		
+			})();	
+		</script>
+	@endif
 
 	<?php
 	/*

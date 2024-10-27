@@ -4,7 +4,7 @@ if (!$devoir) {
     echo "<pre>Ce devoir n'existe pas</pre>";
     exit();
 }
-$devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)->orderBy('pseudo')->get();
+$devoir_eleves = App\Models\Copie::where('jeton_devoir', $devoir->jeton)->orderBy('pseudo')->get();
 ?>
 <!doctype html>
 <html lang="fr">
@@ -33,24 +33,14 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                     @endif
                 </div>
 
-                <a class="btn btn-success btn-sm pl-3 pr-3 text-monospace" style="width:100%" href="{{route('devoir-creer-get')}}" role="button">{{__('nouveau devoir')}}</a>
-
-                <a href="https://github.com/codepuzzle-io/www.codepuzzle.io/discussions" target="_blank" role="button" class="mt-2 btn btn-light btn-sm text-left text-muted" style="width:100%;opacity:0.8;">
-                	<span style="font-size:80%"><i class="fas fa-comment-alt" style="float:left;margin:4px 8px 5px 0px;"></i> {{__('discussions')}} <span style="opacity:0.6;font-size:90%;">&</span> {{__('annonces')}}</span>
-                </a>
-
-                <a href="https://github.com/codepuzzle-io/www.codepuzzle.io/issues/new/choose" target="_blank" role="button"  class="mt-1 btn btn-light text-left btn-sm text-muted" style="width:100%;opacity:0.8;">
-                	<span style="font-size:80%"><i class="fas fa-bug" style="float:left;margin:4px 8px 5px 0px;"></i> {{__('signalement de bogue')}} <span style="opacity:0.6;font-size:90%;">&</span> {{__('questions techniques')}}</span>
-                </a>
-
-                <div class="mt-3 text-muted text-monospace pl-1 mb-3" style="font-size:70%;opacity:0.8;">
-                	<span><i class="fa fa-envelope"></i> contact@codepuzzle.io</span>
-                </div>
-
             </div>
 
 			<div class="col-md-10 pl-4 pr-4">
-
+                <div class="col-md-12 text-monospace p-2 pl-3 pr-3 mb-3 text-danger" style="border:dashed 2px #e3342f;border-radius:8px;">
+                Les "devoirs" ont changé! Ceci est une ancienne version des "devoirs". Si vous n'arrivez à récupérer des informations ou si vous avez des questions, écrivez à contact@codepuzzle.io en indiquant le code du devoir ({{$devoir->jeton_secret}}).
+                </div>
+                <?php
+                /*
                 <div id="frame" class="frame">
 
                     <div class="row">
@@ -88,6 +78,8 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                         <a class="btn btn-dark btn-sm ml-3" href="/devoir-supervision/{{$jeton_secret}}" role="button"><i class="fa-solid fa-eye mr-2"></i></i> superviser</a>
                     </div>
                 </div>
+                */
+                ?>
 
 
                 <div id="frame" class="frame">
@@ -101,20 +93,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 
                                 <!-- CONSIGNES -->
                                 <div class="text-monospace mt-3">{{strtoupper(__('consignes'))}}</div>
-                                <div class="card card-body">
-                                    <div class="text-monospace consignes mathjax">
-                                        <?php
-                                        include('lib/parsedownmath/ParsedownMath.php');
-                                        $Parsedown = new ParsedownMath([
-                                            'math' => [
-                                                'enabled' => true, // Write true to enable the module
-                                                'matchSingleDollar' => true // default false
-                                            ]
-                                        ]);
-                                        echo $Parsedown->text($devoir->consignes_eleve);
-                                        ?>
-                                    </div>
-                                </div>
+                                <div class="markdown_content border rounded bg-light text-monospace p-3">{{ $devoir->consignes_eleve }}</div>
                                 <!-- CONSIGNES -->
 
                                 <!-- CODE ELEVE --> 
@@ -271,20 +250,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 
     @include('inc-bottom-js')
 
-    <script>
-        MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-                processEscapes: true
-            },
-            options: {
-                ignoreHtmlClass: "no-mathjax",
-                processHtmlClass: "mathjax"
-            }
-        };        
-    </script>  
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    @include('markdown/inc-markdown-afficher-js')
 
     <script src="{{ asset('js/ace/ace.js') }}" type="text/javascript" charset="utf-8"></script>
 
@@ -452,13 +418,13 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
                     if (event.data.status == 'running'){
                         runButton.disabled = true;
                         runButton.innerHTML = '<i class="fas fa-cog fa-spin"></i>';
-                        stopButton.style.display = 'inline';
+                        //stopButton.style.display = 'inline';
                     }
 
                     if (event.data.status == 'completed'){
                         runButton.disabled = false;
                         runButton.innerHTML = '<i class="fas fa-play"></i>';
-                        stopButton.style.display = 'none';
+                        //stopButton.style.display = 'none';
                         restartButton.style.display = 'none';
                     }
                     
@@ -470,12 +436,14 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 
             };
 
+            /*
             @if(App::isProduction())
                 // ne fonctionne pas en local a cause de COEP et COOP
                 // interruption python
                 interruptBuffer = new Uint8Array(new SharedArrayBuffer(1));
                 pyodideWorker.postMessage({ cmd: "setInterruptBuffer", interruptBuffer });
             @endif
+            */
          
             return pyodideWorker
 
@@ -485,14 +453,16 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
         function run(id){
 
             runButton = document.getElementById("run-"+id);
-            stopButton = document.getElementById("stop-"+id);
+            //stopButton = document.getElementById("stop-"+id);
             restartButton = document.getElementById("restart-"+id);
             output = document.getElementById("output-"+id);
 
+            /*
             @if(App::isProduction())
                 // ne fonctionne pas en local a cause de COEP et COOP
                 interruptBuffer[0] = 0;
             @endif
+            */
 
             let code = "";
             if (document.getElementById("code_option_1_devoir-" + id).checked) {
@@ -529,7 +499,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
             pyodideWorker = createWorker();
             console.log("Web Worker redémarré.");
             runButton.disabled = true;
-            stopButton.style.display = 'none';
+            //stopButton.style.display = 'none';
             restartButton.style.display = 'none';
         }
 

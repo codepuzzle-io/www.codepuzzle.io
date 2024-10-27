@@ -266,16 +266,25 @@ $liste_activites_autres = array_diff($liste_activites_eleves, $liste_activites_c
                                 <thead>
                                     <tr>
                                         <th class="font-weight-bold pb-2" style="width:100%">identifiant</th>
-                                        <th class="font-weight-bold pb-2">console</th>
+                                        <th class="font-weight-bold pb-2">console élève</th>
                                         <th class="font-weight-bold pb-2">code&nbsp;individuel</th>
+                                        <th class="font-weight-bold pb-2"></th>
                                     </tr>  
                                 </thead>    
                                 <tbody>                  
                                     @foreach($eleves AS $eleve)
+										<?php
+										$nb_activites = App\Models\Classes_activite::where([['jeton_eleve', $eleve->jeton_eleve]])->count();
+										?>
                                         <tr>                                
                                             <td>{{$eleve->eleve}}</td>
                                             <td nowrap><a href="/@/{{strtoupper($eleve->jeton_eleve)}}" target="_blank">www.codepuzzle.io/@/{{strtoupper($eleve->jeton_eleve)}}</a></td>
                                             <td class="text-monospace text-center">{{strtoupper($eleve->jeton_eleve)}}</td>
+											<td>
+												<div class="validation_info bg-success text-white rounded text-center small" style="padding:2px 6px 2px 6px;">
+													{{ $nb_activites }}
+												</div>
+											</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

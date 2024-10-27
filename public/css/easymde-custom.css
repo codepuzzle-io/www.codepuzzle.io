@@ -1,0 +1,42 @@
+.EasyMDEContainer .CodeMirror {
+    box-sizing: border-box;
+    height: auto;
+    border: 1px solid #dae0e5;
+    border-radius: 4px;
+    padding: 10px;
+    font: inherit;
+    z-index: 0;
+    word-wrap: break-word;
+    margin-top: 2px;
+}
+
+.editor-toolbar {
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    padding: 4px;
+    border: 1px solid #dae0e5;
+    border-radius: 4px;
+    background-color: none;;
+}
+
+.editor-toolbar button.table {
+    width:30px !important;
+}
+
+.editor-toolbar button.active, .editor-toolbar button:hover {
+    background: white;
+    border-color: #dae0e5;
+    border-radius: 4px;
+}
+
+.editor-preview pre {
+    display:block;
+    border:solid 1px #CED4DA;
+    background-color:#F8FAFC;
+    border-radius:4px;
+    padding:10px;
+}

@@ -85,7 +85,7 @@ app()->setLocale($puzzle->lang)
     <div class="container-fluid">
 
         @if(!$iframe)
-        <h1 class="mt-2 mb-5 text-center"><a class="navbar-brand m-1" href="{{ url('/') }}"><img src="{{ asset('img/codepuzzle.png') }}" width="200" alt="CODE PUZZLE" /></a></h1>
+        <h1 class="mt-2 mb-5 text-center"><a class="navbar-brand m-1" href="{{ url('/') }}"><img src="{{ asset('img/code-puzzle.png') }}" width="140" alt="CODE PUZZLE" /></a></h1>
         @endif
 
 		@if ($puzzle->with_chrono == 1 OR $puzzle->with_chrono == 1)
@@ -120,12 +120,7 @@ app()->setLocale($puzzle->lang)
                         <div class="font-monospace small mb-1">{{ $puzzle->titre_eleve }}</div>
                     @endif
                     @if ($puzzle->consignes_eleve !== NULL)
-                        <div class="font-monospace text-muted small consignes">
-                            <?php
-                            $Parsedown = new Parsedown();
-                            echo $Parsedown->text($puzzle->consignes_eleve);
-                            ?>
-                        </div>
+                        <div class="markdown_content font-monospace text-muted small consignes">{{$puzzle->consignes_eleve}}</div>
                     @endif
                 </div>
             </div>
@@ -178,6 +173,7 @@ app()->setLocale($puzzle->lang)
     </div><!-- container -->
 
     @include('inc-obfuscate')
+	@include('markdown/inc-markdown-afficher-js')
 
 	@if(isset($jeton_eleve))
 

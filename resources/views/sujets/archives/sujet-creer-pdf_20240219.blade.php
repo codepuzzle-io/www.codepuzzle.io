@@ -46,18 +46,29 @@ if (isset($jeton_secret)) {
 				@if(Auth::check())
 				    <a class="btn btn-light btn-sm" href="/console/sujets" role="button"><i class="fas fa-arrow-left"></i></a>
 				@else
-				    <a class="btn btn-light btn-sm" href="/sujet-creer/{{$sujet->jeton_secret}}" role="button"><i class="fas fa-arrow-left"></i></a>
+				    <a class="btn btn-light btn-sm" href="/sujet-console/{{$sujet->jeton_secret}}" role="button"><i class="fas fa-arrow-left"></i></a>
 				@endif
 			</div>
 
 			<div class="col-md-10 pl-4 pr-4">
 
+                @if($titre_enseignant)
                 <h2 class="p-0 m-0">{{$titre_enseignant}}</h2>
+                @endif
+
+                @if($sous_titre_enseignant)
                 <div class="text-monospace small" style="color:silver;">{{$sous_titre_enseignant}}</div>
+                @endif
+
+                @if($titre_eleve)
                 <div class="text-monospace small" style="color:silver;">Titre élève: {{$titre_eleve}}</div>
+                @endif
+
+                @if($consignes)
                 <div class="mt-2 mb-3 p-3" style="background-color:#f3f5f7;border-radius:5px;">
                     <div class="text-monospace text-muted mathjax consignes">{{$consignes}}</div>
                 </div>
+                @endif
 
                 <!-- dropzone -->
                 <div id="dropzonepdf" class="dropzone text-monospace"></div>
@@ -69,8 +80,6 @@ if (isset($jeton_secret)) {
 	</div><!-- /container -->
 
  
-
-    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/min/dropzone.min.js"></script>
     <script>
         // Désactiver l'auto-découverte de Dropzone
@@ -157,9 +166,6 @@ if (isset($jeton_secret)) {
                 });
             }
         };
-
-
-
     </script>
 
 

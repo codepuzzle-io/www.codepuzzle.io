@@ -14,6 +14,9 @@
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 
+<link href="https://fonts.googleapis.com/css2?family=Latin+Modern+Roman:wght@400&display=swap" rel="stylesheet">
+
+
 <!-- Description -->
 <meta name="description" content="CODE PUZZLE | {{ $description ?? '' }}" />
 

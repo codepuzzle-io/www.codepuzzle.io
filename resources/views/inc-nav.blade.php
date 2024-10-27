@@ -1,74 +1,12 @@
-<nav class="navbar navbar-expand-md navbar-light">
+@php
+$lang = (app()->getLocale() == 'fr') ? '/':'/en';
+@endphp
+<nav class="navbar navbar-expand-md navbar-light mt-1">
+	<div class="container" style="align-items: flex-start;">
 
-	<div class="container">
-
-		<div class="col-md-3">
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="text-monospace text-center" style="opacity:0.8">
-				{{--
-				{!! $lang_switch ?? '' !!}
-				--}}
-				<a rel="me" href="https://mastodon.social/@codepuzzle" target="_blank"><i class="fa-brands fa-mastodon"></i></a>
-				<a rel="me" href="https://twitter.com/codepuzzleio" target="_blank"><i class="fa-brands fa-twitter"></i></a>
-			</div>
-		</div>
-
-		@php
-		$lang = (app()->getLocale() == 'fr') ? '/':'/en';
-		@endphp
-
-		<div class="col-md-6 text-center">
-			<h1><a class="navbar-brand m-1" href="{{ $lang }}"><img src="{{ asset('img/codepuzzle-python.png') }}" width="280" alt="CODE PUZZLE - PYTHON" /></a></h1>
-		</div>
-
-		<div class="col-md-3">
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-				<!-- Left Side Of Navbar -->
-				<ul class="navbar-nav mr-auto">
-
-				</ul>
-
-				<!-- Right Side Of Navbar -->
-				<ul class="navbar-nav ml-auto">
-
-					<!-- Authentication Links -->
-					@guest
-						<li class="nav-item">
-							<a class="btn btn-outline-secondary btn-xs" style="opacity:0.4;margin:2px 0px 0px 4px" href="{{ route('login') }}">{{__('se connecter')}}</a>
-						</li>
-						<!--
-						@if (Route::has('register'))
-							<li class="nav-item">
-								<a class="btn btn-outline-secondary btn-sm " style="font-size:80%;opacity:0.4;margin:2px 0px 0px 4px" href="{{ route('register') }}">{{__('créer un compte')}}</a>
-							</li>
-						@endif
-					-->
-					@else
-						<li class="nav-item">
-							<a class="btn btn-outline-secondary btn-xs" style="opacity:0.4;margin:2px 0px 0px 4px" href="{{ route('console') }}">
-								{{__('console')}}
-							</a>
-						</li>
-						<li class="nav-item">
-							<a class="btn btn-outline-secondary btn-xs" style="opacity:0.4;margin:2px 0px 0px 4px" href="{{ route('logout') }}"
-							   onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-								{{__('se déconnecter')}}
-							</a>
-
-							<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-								@csrf
-							</form>
-						</li>
-					@endguest
-
-				</ul>
-
-			</div>
+		<div class="col-md-12">
+			<h1 class="text-left"><a class="navbar-brand" href="{{ $lang }}"><img src="{{ asset('img/code-puzzle.png') }}" width="140" alt="CODE PUZZLE - PYTHON" /></a></h1>
 		</div>
 
 	</div><!-- container -->
-
 </nav>

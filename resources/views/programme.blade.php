@@ -16,14 +16,6 @@ $programme = App\Models\Programme::where('jeton', $jeton)->first();
 
 <body>
 
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-10 offset-md-1">
-				<h1><a class="navbar-brand mt-2" href="/"><img src="{{ asset('img/codepuzzle.png') }}" width="220" alt="CODE PUZZLE" /></a></h1>
-			</div>
-		</div>
-	</div>
-
 	<div id="bas" class="container-fluid pt-4" style="height:100%;background-color:#f8fafc;overflow:auto;">
 		<div class="row" style="height:100%;">
 
@@ -34,11 +26,13 @@ $programme = App\Models\Programme::where('jeton', $jeton)->first();
 					<div>
 						<button id="run" style="width:40px;" type="button" class="btn btn-primary text-center mb-1"><i class="fas fa-circle-notch fa-spin"></i></button>
 					</div>
+					<!--
 					<div id="stop" class="mt-1 mb-1">
 						<button style="width:40px;" type="button" class="btn btn-dark text-center mb-1" style="padding-top:6px;display:none;" data-toggle="tooltip" data-placement="right"  data-trigger="hover" title="{{__('Interruption de l\'exécution du code (en cas de boucle infinie ou de traitement trop long). L\'arrêt peut prendre quelques secondes.')}}"><i class="fas fa-stop"></i></button>
 					</div>
+					-->
 					<div id="restart">
-						<button style="width:40px;" type="button" class="btn btn-warning" style="padding-top:6px;display:none;" data-toggle="tooltip" data-placement="right"  data-trigger="hover" title="{{__('Si le bouton d\'arrêt ne permet pas d\'interrompre  l\'exécution du code, cliquer ici. Python redémarrera complètement mais votre code sera conservé dans l\'éditeur. Le redémarrage peut prendre quelques secondes.')}}"><i class="fas fa-skull"></i></button>
+						<button style="width:40px;" type="button" class="btn btn-dark text-center mb-1" style="padding-top:6px;display:none;" data-toggle="tooltip" data-placement="right"  data-trigger="hover" title="{{__('Interruption de l\'exécution du code (en cas de boucle infinie ou de traitement trop long). L\'arrêt et le redémarrage peuvent prendre quelques secondes.')}}"><i class="fas fa-stop"></i></button>
 					</div>
 				</div>
 				<!-- /boutons run / stop / restart -->
@@ -75,8 +69,13 @@ $programme = App\Models\Programme::where('jeton', $jeton)->first();
 
 			</div>
 
-			<div class="col-md-10 offset-md-1">
+			<div class="col-md-11 offset-md-1">
 				<div class="row">
+				
+					<div class="col-md-12 mb-2">
+						<h1><a href="/"><img src="{{ asset('img/codepuzzle.png') }}" width="220" alt="CODE PUZZLE" /></a></h1>
+					</div>
+
 				
 					@if ($programme->titre_eleve !== NULL)
 						<div class="col-md-12 mb-2 text-monospace ">
@@ -90,14 +89,14 @@ $programme = App\Models\Programme::where('jeton', $jeton)->first();
 						</div>
 					</div>
 				
-					<div id="console" class="col-md-12 mb-2">
+					<div id="console" class="col-md-12" style="padding-bottom:1000px">
 						<div class="text-muted small text-monospace" style="float:right;padding:5px 12px 0px 0px">console</div>
 						<div id="output" class="text-monospace p-3 text-white bg-dark" style="white-space: pre-wrap;border-radius:4px;min-height:100px;height:100%;font-size:20px;"></div>
 					</div>
-
+										
 				</div><!-- row --> 
 			</div>
-
+			
 		</div><!-- row --> 
 	</div><!-- container -->
 
@@ -107,7 +106,7 @@ $programme = App\Models\Programme::where('jeton', $jeton)->first();
 		// PYODIDE
 
 		const run = document.getElementById("run");
-		const stop = document.getElementById("stop");
+		//const stop = document.getElementById("stop");
 		const restart = document.getElementById("restart");
 		const output = document.getElementById("output");
 
@@ -117,7 +116,7 @@ $programme = App\Models\Programme::where('jeton', $jeton)->first();
 		function createWorker() {
 			output.innerText = "Initialisation...\n";
 			run.disabled = true;
-			stop.style.display = 'none';
+			//stop.style.display = 'none';
 			restart.style.display = 'none';
 
 			let pyodideWorker = new Worker("{{ asset('pyodideworker/bas-pyodideWorker.js') }}");
@@ -138,13 +137,14 @@ $programme = App\Models\Programme::where('jeton', $jeton)->first();
 					if (event.data.status == 'running'){
 						run.disabled = true;
 						run.innerHTML = '<i class="fas fa-cog fa-spin"></i>';
-						stop.style.display = 'block';
+						//stop.style.display = 'block';
+						restart.style.display = 'block';
 					}
 
 					if (event.data.status == 'completed'){
 						run.disabled = false;
 						run.innerHTML = '<i class="fas fa-play"></i>';
-						stop.style.display = 'none';
+						//stop.style.display = 'none';
 						restart.style.display = 'none';
 					}
 				}
@@ -155,13 +155,16 @@ $programme = App\Models\Programme::where('jeton', $jeton)->first();
 
 			};
 
+			/*
 			@if(App::isProduction())
 				// ne fonctionne pas en local a cause de COEP et COOP
 				// interruption python
 				let interruptBuffer = new Uint8Array(new SharedArrayBuffer(1));
 				pyodideWorker.postMessage({ cmd: "setInterruptBuffer", interruptBuffer });
 			@endif
+			*/
 
+			/*
 			stop.onclick = function() {
 				@if(App::isProduction())
 					// ne fonctionne pas en local a cause de COEP et COOP
@@ -171,6 +174,7 @@ $programme = App\Models\Programme::where('jeton', $jeton)->first();
 				// bouton 'restart'
 				restart.style.display = 'block';
 			}
+			*/
 			
 			// arrete et redemarre le webworker
 			restart.onclick = function() {
@@ -179,10 +183,12 @@ $programme = App\Models\Programme::where('jeton', $jeton)->first();
 
 			// envoi des donnees au webworker pour execution
 			run.onclick = function() {
+				/*
 				@if(App::isProduction())
 					// ne fonctionne pas en local a cause de COEP et COOP
 					interruptBuffer[0] = 0;
 				@endif
+				*/
 				const code = editor_code.getSession().getValue();
 				output.innerHTML = "";
 				pyodideWorker.postMessage({ code: code });		

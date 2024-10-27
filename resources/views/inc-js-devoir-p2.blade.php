@@ -153,7 +153,7 @@
     // PYODIDE
 
     const run = document.getElementById("run");
-    const stop = document.getElementById("stop");
+    //const stop = document.getElementById("stop");
     const restart = document.getElementById("restart");
     const output = document.getElementById("output");
 
@@ -163,7 +163,7 @@
     function createWorker() {
         output.innerText = "Initialisation...\n";
         run.disabled = true;
-        stop.style.display = 'none';
+        //stop.style.display = 'none';
         restart.style.display = 'none';
 
         let pyodideWorker = new Worker("{{ asset('pyodideworker/devoir-pyodideWorker.js') }}");
@@ -184,13 +184,13 @@
                 if (event.data.status == 'running'){
                     run.disabled = true;
                     run.innerHTML = '<i class="fas fa-cog fa-spin"></i>';
-                    stop.style.display = 'inline';
+                    //stop.style.display = 'inline';
                 }
 
                 if (event.data.status == 'completed'){
                     run.disabled = false;
                     run.innerHTML = '<i class="fas fa-play"></i>';
-                    stop.style.display = 'none';
+                    //stop.style.display = 'none';
                     restart.style.display = 'none';
                 }
 
@@ -205,13 +205,16 @@
 
         };
 
+        /*
         @if(App::isProduction())
             // ne fonctionne pas en local a cause de COEP et COOP
             // interruption python
             let interruptBuffer = new Uint8Array(new SharedArrayBuffer(1));
             pyodideWorker.postMessage({ cmd: "setInterruptBuffer", interruptBuffer });
         @endif
+        */
 
+        /*
         stop.onclick = function() {
             @if(App::isProduction())
                 // ne fonctionne pas en local a cause de COEP et COOP
@@ -221,6 +224,7 @@
             // bouton 'restart'
             restart.style.display = 'inline';
         }
+        */
         
         // arrete et redemarre le webworker
         restart.onclick = function() {
@@ -229,10 +233,12 @@
 
         // envoi des donnees au webworker pour execution
         run.onclick = function() {
+            /*
             @if(App::isProduction())
                 // ne fonctionne pas en local a cause de COEP et COOP
                 interruptBuffer[0] = 0;
             @endif
+            */
             const code = editor_code.getSession().getValue();
             output.innerHTML = "";
             pyodideWorker.postMessage({ code: code });		

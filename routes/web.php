@@ -84,13 +84,19 @@ Route::view($lang.__('a-propos'), 'a-propos')->name('about');
 Route::view($lang.__('donnees-personnelles'), 'donnees-personnelles')->name('donnees-personnelles');
 
 
-// DEFIS BANQUE
-Route::view($lang.__('defis-banque'), 'defis-banque')->name('defis-banque');
+
 
 // DEFIS REPL
 Route::view($lang.__('REPL'), 'repl')->name('REPL');
 Route::view($lang.__('repl'), 'repl')->name('REPL');
 
+
+// ============================================================================
+// == BANQUES
+// ============================================================================
+Route::view($lang.__('banque-puzzles'), 'banques/banque-puzzles')->name('banque-puzzles');
+Route::view($lang.__('banque-defis'), 'banques/banque-defis')->name('banque-defis');
+Route::view($lang.__('banque-sujets'), 'banques/banque-sujets')->name('banque-sujets');
 
 // ============================================================================
 // == SAVE OPENGRAPH IMAGE
@@ -100,15 +106,17 @@ Route::post('/save-opengraph-image', [App\Http\Controllers\SiteController::class
 
 
 // ============================================================================
-// == CONSOLE CONTROLLER
+// == CONSOLE
 // ============================================================================
 
-Route::any('/console', [App\Http\Controllers\ConsoleController::class, 'console'])->name('console');
-Route::any('/console/puzzles', [App\Http\Controllers\ConsoleController::class, 'console_puzzles'])->name('console-puzzles');
-Route::any('/console/defis', [App\Http\Controllers\ConsoleController::class, 'console_defis'])->name('console-defis');
-Route::any('/console/devoirs', [App\Http\Controllers\ConsoleController::class, 'console_devoirs'])->name('console-devoirs');
-Route::any('/console/classes', [App\Http\Controllers\ConsoleController::class, 'console_classes'])->name('console-classes');
-Route::any('/console/programmes', [App\Http\Controllers\ConsoleController::class, 'console_programmes'])->name('console-programmes');
+Route::any('/console', function (){return view('console');})->name('console');
+Route::any('/console/puzzles', function (){return view('console-puzzles');})->name('console-puzzles');
+Route::any('/console/defis', function (){return view('console-defis');})->name('console-defis');
+Route::any('/console/sujets', function (){return view('console-sujets');})->name('console-sujets');
+Route::any('/console/devoirs', function (){return view('console-devoirs');})->name('console-devoirs');
+Route::any('/console/programmes', function (){return view('console-programmes');})->name('console-programmes');
+Route::any('/console/classes', function (){return view('console-classes');})->name('console-classes');
+
 
 // PUZZLES
 // puzzle modifier
@@ -180,26 +188,63 @@ Route::post('/programme-creer', [App\Http\Controllers\SiteController::class, 'pr
 // programme info
 Route::any('/programme-info/{programme_jeton}', [App\Http\Controllers\SiteController::class, 'programme_info'])->name('programme-info');
 
+
+// ============================================================================
 // DEVOIRS
-Route::get('/devoir-creer', [App\Http\Controllers\SiteController::class, 'devoir_creer_get'])->name('devoir-creer-get');
-Route::get('/devoir-creer/{jeton_secret}', [App\Http\Controllers\SiteController::class, 'devoir_modifier_get'])->name('devoir-modifier-get');
-Route::post('/devoir-creer', [App\Http\Controllers\SiteController::class, 'devoir_creer_post'])->name('devoir-creer-post');
-Route::any('/devoir-info', [App\Http\Controllers\SiteController::class, 'redirect']);
-Route::any('/devoir-info/{jeton_secret}', [App\Http\Controllers\SiteController::class, 'devoir_info'])->name('devoir-info');
-Route::post('/devoir', [App\Http\Controllers\SiteController::class, 'devoir_post'])->name('devoir_post');
-Route::get('/devoir', [App\Http\Controllers\SiteController::class, 'devoir_get'])->name('devoir_get');
-Route::post('/devoir-unlock', [App\Http\Controllers\SiteController::class, 'devoir_unlock'])->name('devoir-unlock');
-Route::post('/devoir-eleve-check-lock-status', [App\Http\Controllers\SiteController::class, 'devoir_eleve_check_lock_status'])->name('devoir-eleve-check-lock-status');
-Route::post('/devoir-any-check-lock-status', [App\Http\Controllers\SiteController::class, 'devoir_any_check_lock_status'])->name('devoir-any-check-lock-status');
-Route::post('/devoir-unlock-from-supervision', [App\Http\Controllers\SiteController::class, 'devoir_unlock_from_supervision'])->name('devoir-unlock-from-supervision');
-Route::post('/devoir-autosave', [App\Http\Controllers\SiteController::class, 'devoir_autosave']);
-Route::post('/devoir-save-commentaires', [App\Http\Controllers\SiteController::class, 'devoir_save_commentaires']);
-Route::post('/devoir-rendre', [App\Http\Controllers\SiteController::class, 'devoir_rendre']);
-Route::post('/devoir-fin', [App\Http\Controllers\SiteController::class, 'devoir_rendre']);
-Route::any('/devoir-console/{jeton_secret}', [App\Http\Controllers\SiteController::class, 'devoir_console'])->name('devoir-console');
-Route::any('/devoir-supervision/{jeton_secret}', [App\Http\Controllers\SiteController::class, 'devoir_supervision'])->name('devoir-supervision');
-Route::any('/devoir-imprimer/{jeton_secret}', [App\Http\Controllers\SiteController::class, 'devoir_imprimer'])->name('devoir-imprimer');
-Route::any('/devoir-eleve-supprimer/{devoir_eleve_id}', [App\Http\Controllers\SiteController::class, 'devoir_eleve_supprimer'])->name('devoir-eleve-supprimer');
+// ============================================================================
+
+Route::get('/devoir-console/{jeton_secret}', function ($jeton_secret){
+    $devoir = App\Models\Devoir::where('jeton_secret', $jeton_secret)->first();
+    if ($devoir->sujet_id == NULL){
+        return view('devoirs-v1/devoir-console')->with('jeton_secret', $jeton_secret);
+    }else{
+        return view('devoirs/devoir-console')->with('jeton_secret', $jeton_secret);
+    }
+})->name('devoir-console');
+
+Route::get('/devoir-supervision/{devoir_id}', function ($devoir_id){return view('devoirs/devoir-supervision')->with('devoir_id', $devoir_id);})->name('devoir-supervision');
+Route::get('/devoir-imprimer/{devoir_id}', function ($devoir_id){return view('devoirs/devoir-imprimer')->with('devoir_id', $devoir_id);})->name('devoir-imprimer');
+
+Route::get('/devoir-creer', [App\Http\Controllers\DevoirController::class, 'redirect']);
+Route::get('/devoir-creer/{sujet_id}', function ($sujet_id) {return view('devoirs/devoir-creer')->with('sujet_id', $sujet_id);}); 
+Route::get('/devoir-modifier/{devoir_id}', function ($devoir_id) {return view('devoirs/devoir-creer')->with('devoir_id', $devoir_id);}); 
+Route::get('/devoir-modifier', [App\Http\Controllers\DevoirController::class, 'redirect']);
+
+
+//Route::get('/devoir-creer/sujet/{jeton}', [App\Http\Controllers\DevoirController::class, 'devoir_creer_sujet_get'])->name('devoir-creer-sujet_get');
+//Route::get('/devoir-creer/{jeton_secret}', [App\Http\Controllers\DevoirController::class, 'devoir_modifier_get'])->name('devoir-modifier-get');
+Route::post('/devoir-creer', [App\Http\Controllers\DevoirController::class, 'devoir_creer_post'])->name('devoir-creer-post');
+Route::any('/devoir-info', [App\Http\Controllers\DevoirController::class, 'redirect']);
+Route::any('/devoir-info/{jeton_secret}', [App\Http\Controllers\DevoirController::class, 'devoir_info'])->name('devoir-info');
+
+Route::post('/devoir', [App\Http\Controllers\DevoirController::class, 'devoir_post'])->name('devoir_post');
+Route::get('/devoir', [App\Http\Controllers\DevoirController::class, 'devoir_get'])->name('devoir_get');
+
+Route::post('/devoir-unlock', [App\Http\Controllers\DevoirController::class, 'devoir_unlock'])->name('devoir-unlock');
+Route::post('/devoir-eleve-check-lock-status', [App\Http\Controllers\DevoirController::class, 'devoir_eleve_check_lock_status'])->name('devoir-eleve-check-lock-status');
+Route::post('/devoir-any-check-lock-status', [App\Http\Controllers\DevoirController::class, 'devoir_any_check_lock_status'])->name('devoir-any-check-lock-status');
+Route::post('/devoir-unlock-from-supervision', [App\Http\Controllers\DevoirController::class, 'devoir_unlock_from_supervision'])->name('devoir-unlock-from-supervision');
+
+Route::post('/devoir-fin', [App\Http\Controllers\DevoirController::class, 'devoir_rendre']);
+
+Route::any('/devoir-eleve-supprimer/{devoir_eleve_id}', [App\Http\Controllers\DevoirController::class, 'devoir_eleve_supprimer'])->name('devoir-eleve-supprimer');
+
+Route::view('/devoir-fin', 'devoirs/devoir-fin');
+
+// correction
+Route::get('/devoir-corriger/{devoir_id}/{copie_num}', function ($devoir_id, $copie_num){return view('devoirs/devoir-corriger')->with('devoir_id', $devoir_id)->with('copie_num', $copie_num);})->name('devoir-corriger');
+Route::post('/devoir-correction-sauvegarder', [App\Http\Controllers\DevoirController::class, 'devoir_correction_sauvegarder']);
+// ============================================================================
+
+
+// ============================================================================
+// COPIES
+// ============================================================================
+Route::get('/copies/{devoir_id}', function ($devoir_id){return view('copies/copies')->with('devoir_id', $devoir_id);});
+Route::get('/copie-eleve/{copie_id}', function ($copie_id){return view('copies/copie-eleve')->with('copie_id', $copie_id);});
+Route::post('/copie-sauvegarder', [App\Http\Controllers\CopieController::class, 'copie_sauvegarder']);
+// ============================================================================
+
 
 
 // CLASSES
@@ -213,16 +258,29 @@ Route::post('/classe-activite-enregistrer', [App\Http\Controllers\SiteController
 Route::any('/classe-eleve-activite-supprimer/{classes_activites_id}', [App\Http\Controllers\SiteController::class, 'classe_eleve_activite_supprimer'])->name('classe-eleve-activite-supprimer');
 
 
+// ============================================================================
 // SUJETS
+// ============================================================================
+
+// creer
 Route::get('/sujet-creer', [App\Http\Controllers\SujetController::class, 'sujet_creer_get'])->name('sujet-creer-get');
-Route::get('/sujet-creer/{jeton_secret}', [App\Http\Controllers\SujetController::class, 'sujet_modifier_get'])->name('sujet-modifier-get');
 Route::post('/sujet-creer', [App\Http\Controllers\SujetController::class, 'sujet_creer_post'])->name('sujet-creer-post');
-Route::get('/sujet-creer/{jeton_secret}/md', [App\Http\Controllers\SujetController::class, 'sujet_creer_md_get'])->name('sujet-creer-md-get');
-Route::post('/sujet-creer/{jeton_secret}/md', [App\Http\Controllers\SujetController::class, 'sujet_creer_md_post'])->name('sujet-creer-md-post');
-Route::get('/sujet-creer/{jeton_secret}/pdf', [App\Http\Controllers\SujetController::class, 'sujet_creer_pdf_get'])->name('sujet-creer-pdf-get');
-Route::post('/sujet-creer/{jeton_secret}/pdf', [App\Http\Controllers\SujetController::class, 'sujet_creer_pdf_post'])->name('sujet-creer-pdf-post');
-Route::any('/sujet-console/{jeton_secret}', [App\Http\Controllers\SujetController::class, 'sujet_console'])->name('sujet-view');
-Route::post('/sujet-change-type', [App\Http\Controllers\SujetController::class, 'sujet_change_type'])->name('sujet-change-type');
+
+// exo
+Route::get('/sujet-exo-creer/{sujet_id?}/{dupliquer?}', [App\Http\Controllers\SujetController::class, 'sujet_exo_creer_get'])->name('sujet-exo-creer-get');
+Route::post('/sujet-exo-creer', [App\Http\Controllers\SujetController::class, 'sujet_exo_creer_post'])->name('sujet-exo-creer-post');
+
+// pdf
+Route::get('/sujet-pdf-creer/{sujet_id?}/{dupliquer?}', [App\Http\Controllers\SujetController::class, 'sujet_pdf_creer_get'])->name('sujet-psd-creer-get');
+Route::post('/sujet-pdf-creer', [App\Http\Controllers\SujetController::class, 'sujet_pdf_creer_post'])->name('sujet-pdf-creer-post');
+
+// md
+//Route::get('/sujet-creer/{jeton_secret}/md', [App\Http\Controllers\SujetController::class, 'sujet_creer_md_get'])->name('sujet-creer-md-get');
+//Route::post('/sujet-creer/{jeton_secret}/md', [App\Http\Controllers\SujetController::class, 'sujet_creer_md_post'])->name('sujet-creer-md-post');
+
+// console
+Route::any('/sujet-console/{jeton_secret}', [App\Http\Controllers\SujetController::class, 'sujet_console'])->name('sujet-console');
+// ============================================================================
 
 
 // ELEVES
@@ -243,12 +301,6 @@ Route::any('/iframe/{puzzle_jeton}', function ($puzzle_jeton) {
     return view('puzzle')->with(['jeton' => $puzzle_jeton, 'iframe' => true]);
 });
 
-
-// ============================================================================
-// == DEVOIR FIN
-// ============================================================================
-
-Route::view('/devoir-fin', 'devoir-fin');
 
 // ============================================================================
 // == HUB
