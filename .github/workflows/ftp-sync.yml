@@ -6,16 +6,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: 🚚 Get latest code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: 📂 Sync files
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
         server: ${{ secrets.ftp_host }}
         username: ${{ secrets.ftp_username }}
         password: ${{ secrets.ftp_password }}
         protocol: ftp
-        server-dir: www/codepuzzledotio/
         exclude: |
           **/.git*
           **/.git*/**
