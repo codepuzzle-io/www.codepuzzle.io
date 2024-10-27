@@ -15,7 +15,6 @@ jobs:
         username: ${{ secrets.ftp_username }}
         password: ${{ secrets.ftp_password }}
         protocol: ftp
-        server-dir: www/codepuzzledotio/
         exclude: |
           **/.git*
           **/.git*/**
