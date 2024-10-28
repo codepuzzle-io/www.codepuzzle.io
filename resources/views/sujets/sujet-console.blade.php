@@ -88,6 +88,5 @@ if (isset($jeton_secret)) {
 
 	@include('inc-bottom-js')
     @include('sujets/inc-sujet-afficher-js')
-
 </body>
 </html>

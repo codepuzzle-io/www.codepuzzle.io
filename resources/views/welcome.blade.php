@@ -44,8 +44,8 @@
 							<div class="mt-3 small text-muted text-justify">
 								Puzzles de Parsons en mode "réorganiser" ou "glisser-déposer".<br />Avec ou sans code à compléter.<br />Pour découvrir les bases du langage Python, les algorithmes classiques et commencer à apprendre à programmer sans avoir à écrire de code.
 							</div>	
-							<div class="small mt-2"><i class="fa-solid fa-caret-right"></i> <a href="" class="text-success">exemple 1</a></div>
-							<div class="small mb-2"><i class="fa-solid fa-caret-right"></i> <a href="" class="text-success">exemple 2</a></div>
+							<div class="small mt-2"><i class="fa-solid fa-caret-right"></i> <a href="https://www.codepuzzle.io/PZNQEJ" class="text-success">exemple 1</a></div>
+							<div class="small mb-2"><i class="fa-solid fa-caret-right"></i> <a href="https://www.codepuzzle.io/PPMJU6" class="text-success">exemple 2</a></div>
 						</div>
 						<div class="card-footer pt-2 text-center">
 							<a class="btn btn-light btn-sm text-left pl-3 pr-3" href="/banque-puzzles" role="button">
@@ -65,8 +65,8 @@
 							<div class="mt-3 small text-muted text-justify">
 								Défis Python avec jeux de tests à valider. Écrire ou compléter un programme Python en suivant les consignes fournies et exécuter le code jusqu'à validation de l'ensemble des tests.<br />Entraînement en autonomie pour l'Épreuve Pratiques de NSI.
 							</div>	
-							<div class="small mt-2"><i class="fa-solid fa-caret-right"></i> <a href="" class="text-success">exemple 1</a></div>
-							<div class="small mb-2"><i class="fa-solid fa-caret-right"></i> <a href="" class="text-success">exemple 2</a></div>
+							<div class="small mt-2"><i class="fa-solid fa-caret-right"></i> <a href="https://www.codepuzzle.io/DEKRL" class="text-success">exemple 1</a></div>
+							<div class="small mb-2"><i class="fa-solid fa-caret-right"></i> <a href="https://www.codepuzzle.io/DQJG6" class="text-success">exemple 2</a></div>
 						</div>
 						<div class="card-footer pt-2 text-center">
 							<a class="btn btn-light btn-sm text-left pl-3 pr-3" href="/banque-defis" role="button">
@@ -135,7 +135,7 @@
 							<div class="mt-3 small text-muted text-justify">
 								Programmes à exécuter dans un environnement Python en ligne, pour des démonstrations au tableau, travailler sur des exemples en classe...
 							</div>	
-							<div class="small mt-2"><i class="fa-solid fa-caret-right"></i> <a href="" class="text-success">exemple</a></div>
+							<div class="small mt-2"><i class="fa-solid fa-caret-right"></i> <a href="https://www.codepuzzle.io/R63DBS" class="text-success">exemple</a></div>
 						</div>
 					</div>	
 					

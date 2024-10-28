@@ -8,10 +8,10 @@
     {{-- ============== --}}
 
     <!-- ÉNONCÉ --> 
-    <div id="enonce">{{ $sujet_json->enonce }}</div>
+    <div class="markdown_content">{{ $sujet_json->enonce }}</div>
     <!-- /ÉNONCÉ --> 
 
-    @if (isset($page_devoir_console) or isset($page_devoir_creer) or isset($page_sujet))
+    @if (isset($page_sujet_console) or isset($page_devoir_console) or isset($page_devoir_creer) or isset($page_sujet))
         @foreach($sujet_json->code AS $code)
             @if(count((array) $sujet_json->code) > 1)
                 <div class="text-monospace mt-3 small">PROGRAMME {{ $loop->iteration }}</div>
