@@ -148,6 +148,10 @@ Route::middleware('auth')->group(function () {
     Route::any('/console/programme-supprimer', [App\Http\Controllers\ConsoleController::class, 'redirect']);
     Route::any('/console/programme-supprimer/{programme_id}', [App\Http\Controllers\ConsoleController::class, 'programme_supprimer'])->name('programme-supprimer');
 
+    // SUJETS
+    // sujet supprimer
+    Route::any('/console/sujet-supprimer/{sujet_id}', [App\Http\Controllers\ConsoleController::class, 'sujet_supprimer'])->name('sujet-supprimer');
+
 
     // DEVOIRS
     // devoir ajouter console
@@ -162,7 +166,7 @@ Route::middleware('auth')->group(function () {
     // classe supprimer
     Route::any('/console/classe-supprimer', [App\Http\Controllers\ConsoleController::class, 'redirect']);
     Route::any('/console/classe-supprimer/{devoir_id}', [App\Http\Controllers\ConsoleController::class, 'classe_supprimer'])->name('classe-supprimer');
-    
+
 });
 
 // ============================================================================
@@ -279,9 +283,6 @@ Route::post('/sujet-pdf-creer', [App\Http\Controllers\SujetController::class, 's
 // md
 //Route::get('/sujet-creer/{jeton_secret}/md', [App\Http\Controllers\SujetController::class, 'sujet_creer_md_get'])->name('sujet-creer-md-get');
 //Route::post('/sujet-creer/{jeton_secret}/md', [App\Http\Controllers\SujetController::class, 'sujet_creer_md_post'])->name('sujet-creer-md-post');
-
-// supprimer
-Route::any('/sujet-supprimer/{sujet_id}', [App\Http\Controllers\ConsoleController::class, 'sujet_supprimer'])->name('sujet-supprimer');
 
 // console
 Route::any('/sujet-console/{jeton_secret}', [App\Http\Controllers\SujetController::class, 'sujet_console'])->name('sujet-console');
