@@ -21,9 +21,7 @@ if (isset($sujet_id)) {
 <html lang="fr">
 <head>
     @include('inc-meta')
-    <link href="{{ asset('css/highlight.css') }}" rel="stylesheet">
-	<link href="{{ asset('css/easymde.css') }}" rel="stylesheet">
-	<link href="{{ asset('css/easymde-custom.css') }}" rel="stylesheet">
+	@include('markdown/inc-markdown-css')
     <link href="{{ asset('css/dropzone-basic.css') }}" rel="stylesheet">
     <link href="{{ asset('css/dropzone.css') }}" rel="stylesheet">
     <title>SUJET PDF | CRÉER / MODIFIER</title>
@@ -70,13 +68,14 @@ if (isset($sujet_id)) {
                      
 					<!-- ÉNONCÉ -->
 					<div class="mt-4 text-monospace">{{strtoupper(__('ÉNONCÉ'))}} <span class="font-italic small" style="color:silver;">{{__("optionnel")}}</span></div>
-					<textarea id="enonce" class="form-control" name="enonce" rows="6">{{ $sujet_json->enonce ?? '' }}</textarea>
+					<textarea id="markdown_content" class="form-control" name="enonce" rows="6">{{ $sujet_json->enonce ?? '' }}</textarea>
 					<!-- /ÉNONCÉ -->
 
                     <!-- PDF -->
                     <div class="mt-4 text-monospace">{{strtoupper(__('fichier pdf'))}}<sup class="ml-1 text-danger small">*</sup></div>
                     @if (isset($sujet_id))
-                        <div class="text-monospace text-muted small text-justify mb-1">{{__('Déposer ci-dessous un fichier pdf pour remplacer le précedent')}}</div>
+                        <iframe id="sujet_pdf" src="{{Storage::url('SUJETS/sujet_'.$sujet->jeton.'.pdf')}}" width="100%" height="400" style="border: none;" class="rounded"></iframe>
+                        <div class="text-monospace text-muted small text-justify mb-1">{{__('Déposer ci-dessous un fichier pdf pour remplacer le pdf actuel.')}}</div>
                     @else
                         <div class="text-monospace text-muted small text-justify mb-1">{{__('Déposer ci-dessous le sujet au format pdf')}}</div>
                     @endif
@@ -85,7 +84,11 @@ if (isset($sujet_id)) {
                     <!-- /PDF -->
 
                     @if(isset($sujet_id))
-                        <input id="sujet_id" type="hidden" name="sujet_id" value="{{Crypt::encryptString($sujet->id)}}" />
+                        <input type="hidden" name="sujet_id" value="{{Crypt::encryptString($sujet->id)}}" />
+                    @endif
+
+                    @if(isset($dupliquer))
+                        <input type="hidden" name="dupliquer" value="true" />
                     @endif
 
                     <button type="submit" id="dropzone_submit" class="btn btn-primary mt-3 mb-5 pl-4 pr-4"><i class="fas fa-check"></i></button>
@@ -96,6 +99,8 @@ if (isset($sujet_id)) {
 		</div><!-- /row -->
 	</div><!-- /container -->
 
+	@include('inc-bottom-js')
+	@include('markdown/inc-markdown-editeur-js')
  
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/min/dropzone.min.js"></script>
     <script>
@@ -222,106 +227,7 @@ if (isset($sujet_id)) {
                 });
             }
         };
-    </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
-
-    <script>
-        MathJax = {
-            tex: {
-                inlineMath: [["$","$"]], 
-                displayMath: [["$$","$$"]], 
-            },
-            svg: {
-                fontCache: 'global'
-            }
-        };
-    </script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script>
-        marked.use({
-            tokenizer: {
-                //space() { return undefined },
-                //code() { return undefined },
-                //fences() { return undefined },
-                heading() { return undefined },
-                //hr() { return undefined },
-                blockquote() { return undefined },
-                //list() { return undefined },
-                html() { return undefined },
-                //def() { return undefined },
-                //table() { return undefined },
-                lheading() { return undefined },
-                //paragraph() { return undefined },
-                //text() { return undefined },
-                //escape() { return undefined },
-                tag() { return undefined },
-                //link() { return undefined },
-                reflink() { return undefined },
-                //emStrong() { return undefined },
-                //codespan() { return undefined },
-                //br() { return undefined },
-                //del() { return undefined }, // texte barré
-                autolink() { return undefined },
-                //url() { return undefined },
-                //inlineText() { return undefined },           
-            },      
-        }) 	
-    </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
-    <script>
-        const markdown_editor = new EasyMDE({
-            element: document.getElementById('enonce'),
-            autofocus: true,
-            minHeight: "100px",
-            spellChecker: false,
-            hideIcons: ["heading", "quote"],
-            showIcons: ["code", "undo", "redo", "table"],
-            status: false,
-            //previewRender: (plainText) => DOMPurify.sanitize(marked.parse(plainText)),
-            previewRender: (plainText, preview) => { // Async method
-                setTimeout(() => {
-                    // Remplacement des doubles slashes par des triples dans les blocs LaTex
-                    var plainText2 = plainText.replace(/\$\$(.+?)\$\$/gs, function(match) {
-                        return match.replace(/\\\\/g, '\\\\\\\\');
-                    });
-                    preview.innerHTML = DOMPurify.sanitize(marked.parse(plainText2));
-                    MathJax.typeset()
-                }, 10);
-                return "...";
-            },
-            autosave: {
-                enabled: false,
-                uniqueId: "MyUniqueID",
-                delay: 1000,
-                submit_delay: 5000,
-                timeFormat: {
-                    locale: 'en-US',
-                    format: {
-                        year: 'numeric',
-                        month: 'long',
-                        day: '2-digit',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                    },
-                },
-                text: "> "
-            },
-            renderingConfig: {			
-                singleLineBreaks: false,
-                codeSyntaxHighlighting: true,
-                sanitizerFunction: (renderedHTML) => {
-                    return DOMPurify.sanitize(renderedHTML)
-                },
-            },
-        });
-    </script>    
+    </script> 
 
 </body>
 </html>

@@ -61,8 +61,6 @@
 
                                     <a class='btn btn-dark btn-sm' href='/classe-console/{{ $classe->jeton_secret }}' role='button' data-toggle="tooltip" data-placement="top" title="{{__('voir')}}"><i class="fas fa-eye"></i></a>
                
-    								<a class='btn btn-light btn-sm' href='/classe-modifier/{{ $classe->jeton_secret }}' role='button' data-toggle="tooltip" data-placement="top" title="{{__('modifier')}}"><i class="fas fa-pen"></i></a>
-
                                     <!-- supprimer -->
                                     <span id="supprimer_button_{{$loop->iteration}}">
                                         <div onclick="showConfirm('supprimer_button_{{$loop->iteration}}', 'supprimer_confirm_{{$loop->iteration}}')" class="d-inline-block" type="button">

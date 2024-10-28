@@ -32,12 +32,12 @@ Route::get('lang/{locale}', function ($locale){
 });
 
 // Lang Auth
-Route::get('console/lang/{locale}', function ($locale){
+Route::get('/console/lang/{locale}', function ($locale){
     if (in_array($locale, ['fr', 'en'])) {
         Session::put('lang',$locale);
     }
     return redirect('console/');
-});
+})->middleware('auth');
 
 
 // ============================================================================
@@ -108,60 +108,62 @@ Route::post('/save-opengraph-image', [App\Http\Controllers\SiteController::class
 // ============================================================================
 // == CONSOLE
 // ============================================================================
+Route::middleware('auth')->group(function () {
 
-Route::any('/console', function (){return view('console');})->name('console');
-Route::any('/console/puzzles', function (){return view('console-puzzles');})->name('console-puzzles');
-Route::any('/console/defis', function (){return view('console-defis');})->name('console-defis');
-Route::any('/console/sujets', function (){return view('console-sujets');})->name('console-sujets');
-Route::any('/console/devoirs', function (){return view('console-devoirs');})->name('console-devoirs');
-Route::any('/console/programmes', function (){return view('console-programmes');})->name('console-programmes');
-Route::any('/console/classes', function (){return view('console-classes');})->name('console-classes');
-
-
-// PUZZLES
-// puzzle modifier
-Route::get('/console/puzzle-modifier/', [App\Http\Controllers\ConsoleController::class, 'redirect']);
-Route::get('/console/puzzle-modifier/{puzzle_id}', [App\Http\Controllers\ConsoleController::class, 'puzzle_modifier_get'])->name('puzzle-modifier-get');
-Route::post('/console/puzzle-modifier', [App\Http\Controllers\ConsoleController::class, 'puzzle_modifier_post'])->name('puzzle-modifier-post');
-// puzzle supprimer
-Route::any('/console/puzzle-supprimer', [App\Http\Controllers\ConsoleController::class, 'redirect']);
-Route::any('/console/puzzle-supprimer/{puzzle_id}', [App\Http\Controllers\ConsoleController::class, 'puzzle_supprimer'])->name('puzzle-supprimer');
-
-// DEFIS
-// defi modifier
-Route::get('/console/defi-modifier/', [App\Http\Controllers\ConsoleController::class, 'redirect']);
-Route::get('/console/defi-modifier/{defi_id}', [App\Http\Controllers\ConsoleController::class, 'defi_modifier_get'])->name('defi-modifier-get');
-Route::post('/console/defi-modifier', [App\Http\Controllers\ConsoleController::class, 'defi_modifier_post'])->name('defi-modifier-post');
-// defi supprimer
-Route::any('/console/defi-supprimer', [App\Http\Controllers\ConsoleController::class, 'redirect']);
-Route::any('/console/defi-supprimer/{defi_id}', [App\Http\Controllers\ConsoleController::class, 'defi_supprimer'])->name('defi-supprimer');
-// importer codes defis
-Route::post('/console/defis-importer-codes', [App\Http\Controllers\ConsoleController::class, 'defis_importer_codes'])->name('defis-importer-codes');
-
-// PROGRAMMES
-// programme modifier
-Route::get('/console/programme-modifier/', [App\Http\Controllers\ConsoleController::class, 'redirect']);
-Route::get('/console/programme-modifier/{programme_id}', [App\Http\Controllers\ConsoleController::class, 'programme_modifier_get'])->name('programme-modifier-get');
-Route::post('/console/programme-modifier', [App\Http\Controllers\ConsoleController::class, 'programme_modifier_post'])->name('programme-modifier-post');
-// programme supprimer
-Route::any('/console/programme-supprimer', [App\Http\Controllers\ConsoleController::class, 'redirect']);
-Route::any('/console/programme-supprimer/{programme_id}', [App\Http\Controllers\ConsoleController::class, 'programme_supprimer'])->name('programme-supprimer');
+    Route::any('/console', function (){return view('console');})->name('console');
+    Route::any('/console/puzzles', function (){return view('console-puzzles');})->name('console-puzzles');
+    Route::any('/console/defis', function (){return view('console-defis');})->name('console-defis');
+    Route::any('/console/sujets', function (){return view('console-sujets');})->name('console-sujets');
+    Route::any('/console/devoirs', function (){return view('console-devoirs');})->name('console-devoirs');
+    Route::any('/console/programmes', function (){return view('console-programmes');})->name('console-programmes');
+    Route::any('/console/classes', function (){return view('console-classes');})->name('console-classes');
 
 
-// DEVOIRS
-// devoir ajouter console
-Route::post('/console/devoir-ajouter-console', [App\Http\Controllers\ConsoleController::class, 'devoir_ajouter_console'])->name('devoir-ajouter-console');
-// devoir supprimer
-Route::any('/console/devoir-supprimer', [App\Http\Controllers\ConsoleController::class, 'redirect']);
-Route::any('/console/devoir-supprimer/{devoir_id}', [App\Http\Controllers\ConsoleController::class, 'devoir_supprimer'])->name('devoir-supprimer');
+    // PUZZLES
+    // puzzle modifier
+    Route::get('/console/puzzle-modifier/', [App\Http\Controllers\ConsoleController::class, 'redirect']);
+    Route::get('/console/puzzle-modifier/{puzzle_id}', [App\Http\Controllers\ConsoleController::class, 'puzzle_modifier_get'])->name('puzzle-modifier-get');
+    Route::post('/console/puzzle-modifier', [App\Http\Controllers\ConsoleController::class, 'puzzle_modifier_post'])->name('puzzle-modifier-post');
+    // puzzle supprimer
+    Route::any('/console/puzzle-supprimer', [App\Http\Controllers\ConsoleController::class, 'redirect']);
+    Route::any('/console/puzzle-supprimer/{puzzle_id}', [App\Http\Controllers\ConsoleController::class, 'puzzle_supprimer'])->name('puzzle-supprimer');
 
-// CLASSES
-// classe ajouter console
-Route::post('/console/classe-ajouter-console', [App\Http\Controllers\ConsoleController::class, 'classe_ajouter_console'])->name('classe-ajouter-console');
-// classe supprimer
-Route::any('/console/classe-supprimer', [App\Http\Controllers\ConsoleController::class, 'redirect']);
-Route::any('/console/classe-supprimer/{devoir_id}', [App\Http\Controllers\ConsoleController::class, 'classe_supprimer'])->name('classe-supprimer');
+    // DEFIS
+    // defi modifier
+    Route::get('/console/defi-modifier/', [App\Http\Controllers\ConsoleController::class, 'redirect']);
+    Route::get('/console/defi-modifier/{defi_id}', [App\Http\Controllers\ConsoleController::class, 'defi_modifier_get'])->name('defi-modifier-get');
+    Route::post('/console/defi-modifier', [App\Http\Controllers\ConsoleController::class, 'defi_modifier_post'])->name('defi-modifier-post');
+    // defi supprimer
+    Route::any('/console/defi-supprimer', [App\Http\Controllers\ConsoleController::class, 'redirect']);
+    Route::any('/console/defi-supprimer/{defi_id}', [App\Http\Controllers\ConsoleController::class, 'defi_supprimer'])->name('defi-supprimer');
+    // importer codes defis
+    Route::post('/console/defis-importer-codes', [App\Http\Controllers\ConsoleController::class, 'defis_importer_codes'])->name('defis-importer-codes');
 
+    // PROGRAMMES
+    // programme modifier
+    Route::get('/console/programme-modifier/', [App\Http\Controllers\ConsoleController::class, 'redirect']);
+    Route::get('/console/programme-modifier/{programme_id}', [App\Http\Controllers\ConsoleController::class, 'programme_modifier_get'])->name('programme-modifier-get');
+    Route::post('/console/programme-modifier', [App\Http\Controllers\ConsoleController::class, 'programme_modifier_post'])->name('programme-modifier-post');
+    // programme supprimer
+    Route::any('/console/programme-supprimer', [App\Http\Controllers\ConsoleController::class, 'redirect']);
+    Route::any('/console/programme-supprimer/{programme_id}', [App\Http\Controllers\ConsoleController::class, 'programme_supprimer'])->name('programme-supprimer');
+
+
+    // DEVOIRS
+    // devoir ajouter console
+    Route::post('/console/devoir-ajouter-console', [App\Http\Controllers\ConsoleController::class, 'devoir_ajouter_console'])->name('devoir-ajouter-console');
+    // devoir supprimer
+    Route::any('/console/devoir-supprimer', [App\Http\Controllers\ConsoleController::class, 'redirect']);
+    Route::any('/console/devoir-supprimer/{devoir_id}', [App\Http\Controllers\ConsoleController::class, 'devoir_supprimer'])->name('devoir-supprimer');
+
+    // CLASSES
+    // classe ajouter console
+    Route::post('/console/classe-ajouter-console', [App\Http\Controllers\ConsoleController::class, 'classe_ajouter_console'])->name('classe-ajouter-console');
+    // classe supprimer
+    Route::any('/console/classe-supprimer', [App\Http\Controllers\ConsoleController::class, 'redirect']);
+    Route::any('/console/classe-supprimer/{devoir_id}', [App\Http\Controllers\ConsoleController::class, 'classe_supprimer'])->name('classe-supprimer');
+    
+});
 
 // ============================================================================
 // == SITE CONTROLLER
@@ -271,12 +273,15 @@ Route::get('/sujet-exo-creer/{sujet_id?}/{dupliquer?}', [App\Http\Controllers\Su
 Route::post('/sujet-exo-creer', [App\Http\Controllers\SujetController::class, 'sujet_exo_creer_post'])->name('sujet-exo-creer-post');
 
 // pdf
-Route::get('/sujet-pdf-creer/{sujet_id?}/{dupliquer?}', [App\Http\Controllers\SujetController::class, 'sujet_pdf_creer_get'])->name('sujet-psd-creer-get');
+Route::get('/sujet-pdf-creer/{sujet_id?}/{dupliquer?}', [App\Http\Controllers\SujetController::class, 'sujet_pdf_creer_get'])->name('sujet-pdf-creer-get');
 Route::post('/sujet-pdf-creer', [App\Http\Controllers\SujetController::class, 'sujet_pdf_creer_post'])->name('sujet-pdf-creer-post');
 
 // md
 //Route::get('/sujet-creer/{jeton_secret}/md', [App\Http\Controllers\SujetController::class, 'sujet_creer_md_get'])->name('sujet-creer-md-get');
 //Route::post('/sujet-creer/{jeton_secret}/md', [App\Http\Controllers\SujetController::class, 'sujet_creer_md_post'])->name('sujet-creer-md-post');
+
+// supprimer
+Route::any('/sujet-supprimer/{sujet_id}', [App\Http\Controllers\ConsoleController::class, 'sujet_supprimer'])->name('sujet-supprimer');
 
 // console
 Route::any('/sujet-console/{jeton_secret}', [App\Http\Controllers\SujetController::class, 'sujet_console'])->name('sujet-console');

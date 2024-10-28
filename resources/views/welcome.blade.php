@@ -16,7 +16,16 @@
 	@include('inc-nav-welcome')
 
 	<div class="container mt-3">
-
+		
+		<div class="row pb-3 text-monospace">
+			<div class="col-md-8 offset-md-2">
+				<div class="border border-danger rounded p-2 text-danger small">
+					<b>beta</b><br />
+					La nouvelle version du site a entraîné de nombreux changements dans le code. Des bugs sont donc certainement présents. Vous pouvez les signaler en ouvrant un ticket <a href="https://forge.apps.education.fr/code-puzzle/www-codepuzzle-io/-/issues/" target="_blank">ici</a> ou en écrivant à <a href="mailto:contact@codepuzzle.io">contact@codepuzzle.io</a>.
+				</div>
+			</div>
+		</div>
+		
 		<div class="row pt-3 text-monospace">
 			<div class="col-md-1 text-muted text-right small">
 				Activités
@@ -26,7 +35,7 @@
 					
 					<div class="card ml-1 mr-1">
 						<div style="position:absolute;right:10px;top:8px;">
-							<a class="text-secondary" href="" role="button" data-toggle="tooltip" data-placement="top" title="documentation"><i class="fa-solid fa-circle-info"></i></a>
+							<a class="text-secondary" href="https://code-puzzle.forge.apps.education.fr/" target="_blank" role="button" data-toggle="tooltip" data-placement="top" title="documentation"><i class="fa-solid fa-circle-info"></i></a>
 						</div>
 						<div class="card-body p-0">
 							<div class="mx-auto text-center" style="width:60%">
@@ -47,7 +56,7 @@
 
 					<div class="card ml-1 mr-1">
 						<div style="position:absolute;right:10px;top:8px;">
-							<a class="text-secondary" href="" role="button" data-toggle="tooltip" data-placement="top" title="documentation"><i class="fa-solid fa-circle-info"></i></a>
+							<a class="text-secondary" href="https://code-puzzle.forge.apps.education.fr/" target="_blank" role="button" data-toggle="tooltip" data-placement="top" title="documentation"><i class="fa-solid fa-circle-info"></i></a>
 						</div>
 						<div class="card-body p-0">
 							<div class="mx-auto text-center" style="width:60%">
@@ -68,7 +77,7 @@
 
 					<div class="card ml-1 mr-1" style="flex-grow:2;">
 						<div style="position:absolute;right:10px;top:8px;">
-							<a class="text-secondary" href="" role="button" data-toggle="tooltip" data-placement="top" title="documentation"><i class="fa-solid fa-circle-info"></i></a>
+							<a class="text-secondary" href="https://code-puzzle.forge.apps.education.fr/" target="_blank" role="button" data-toggle="tooltip" data-placement="top" title="documentation"><i class="fa-solid fa-circle-info"></i></a>
 						</div>
 						<div class="card-body p-0">
 							<div class="text-center">
@@ -117,7 +126,7 @@
 				
 					<div class="card ml-1 mr-1">
 						<div style="position:absolute;right:10px;top:8px;">
-							<a class="text-secondary" href="" role="button" data-toggle="tooltip" data-placement="top" title="documentation"><i class="fa-solid fa-circle-info"></i></a>
+							<a class="text-secondary" href="https://code-puzzle.forge.apps.education.fr/" target="_blank" role="button" data-toggle="tooltip" data-placement="top" title="documentation"><i class="fa-solid fa-circle-info"></i></a>
 						</div>
 						<div class="card-body p-0">
 							<div class="text-center">
@@ -132,7 +141,7 @@
 					
 					<div class="card ml-1 mr-1">
 						<div style="position:absolute;right:10px;top:8px;">
-							<a class="text-secondary" href="" role="button" data-toggle="tooltip" data-placement="top" title="documentation"><i class="fa-solid fa-circle-info"></i></a>
+							<a class="text-secondary" href="https://code-puzzle.forge.apps.education.fr/" target="_blank" role="button" data-toggle="tooltip" data-placement="top" title="documentation"><i class="fa-solid fa-circle-info"></i></a>
 						</div>
 						<div class="card-body p-0">
 							<div class="text-center">
@@ -146,19 +155,21 @@
 
 				</div>
 			</div>
+		</div>	
+		
+		<div class="row pt-5 text-monospace">
+			<div class="col-md-1 text-muted text-right small">
+				Python en ligne
+			</div>
+			<div class="col-md-11">
+				<div class="text-center"><h2 class="p-0 m-0">ENVIRONNEMENT PYTHON EN LIGNE</h2></div>
+				<div class="text-center small">Pour des démonstrations en classe ou pour s'entraîner. Cliquer sur l'image pour lancer l'environnement Python.</div>
+				<div class="text-center"><a href="/REPL"><img src="{{ asset('img/REPL.png') }}" class="img-fluid" alt="REPL" data-toggle="tooltip" data-placement="top" title="Ouvrir le REPL Python" /></a></div>
+			</div>		
 		</div>		
 
-
 	</div>
 
-	<div class="container mt-3">
-		<div class="row text-monospace">
-			<div class="col-md-11 offset-md-1">
-				<div class="text-center"><h2>ENVIRONNEMENT PYTHON EN LIGNE</h2></div>
-				<div class="mt-2 text-center"><a href="/REPL"><img src="{{ asset('img/REPL.png') }}" class="img-fluid" alt="REPL" data-toggle="tooltip" data-placement="top" title="Ouvrir le REPL Python" /></a></div>
-			</div>
-		</div>
-	</div>
 
 	@include('inc-footer')
 	<div style="padding-bottom:400px;">&nbsp;</div>

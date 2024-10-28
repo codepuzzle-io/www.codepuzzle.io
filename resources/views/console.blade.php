@@ -26,17 +26,17 @@
                 <div class="mb-1 text-center"><a class="btn btn-light btn-sm d-block" href="{{route('console-programmes')}}" role="button">{{__('PROGRAMMES')}}</a></div>
                 <div class="mb-3 text-center"><a class="btn btn-light btn-sm d-block" href="{{route('console-classes')}}" role="button">{{__('CLASSES')}}</a></div>
 
-                <div class="mt-5 text-muted text-monospace" style="font-size:70%;opacity:0.7;">
+                <div class="mt-5 text-muted text-monospace small" style="text-align:justify">
                     <i class="fas fa-comment-alt" style="float:left;margin:3px 8px 5px 0px;"></i>
                     <a href="https://github.com/codepuzzle-io/www.codepuzzle.io/discussions" target="_blank"> {{__('discussions')}} & {{__('annonces')}}</a>
                 </div>
 
-                <div class="mt-1 text-muted text-monospace" style="font-size:70%;opacity:0.7;">
+                <div class="mt-1 text-muted text-monospace small" style="text-align:justify">
                     <i class="fas fa-bug" style="float:left;margin:3px 8px 5px 0px;"></i>
-                    <a href="https://github.com/codepuzzle-io/www.codepuzzle.io/issues/new/choose" target="_blank">{{__('signalement de bogue')}} & {{__('questions techniques')}}</a>
+                    <a href="https://github.com/codepuzzle-io/www.codepuzzle.io/issues/new/choose" target="_blank">{{__('signalement de bogues')}} & {{__('questions techniques')}}</a>
                 </div>
 
-                <div class="mt-1 text-muted text-monospace" style="font-size:70%;opacity:0.7;">
+                <div class="mt-1 text-muted text-monospace small">
                     <i class="fa fa-envelope" style="float:left;margin:3px 8px 5px 0px;"></i>
                     contact@codepuzzle.io
                 </div>

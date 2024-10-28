@@ -2,6 +2,7 @@
 <html lang="fr">
 <head>
 	@include('inc-meta')
+	@include('markdown/inc-markdown-css')
     <title>{{ config('app.name') }} | {{ ucfirst(__('nouveau programme')) }}</title>
 </head>
 <body>
@@ -11,82 +12,6 @@
 	@else
 		@include('inc-nav')
 	@endif
-
-	<!-- MODAL MARKDOWN HELP -->
-	<div class="modal fade" id="markdown_help" tabindex="-1" aria-labelledby="markdown_helpLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<b class="modal-title" id="exampleModalLabel">Formatage du texte</b>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<table class="table table-bordered table-hover small">
-						<tr>
-							<td></td>
-							<td class="p-2 text-center">SYNTAXE</td>
-							<td class="p-2 text-center">RENDU</td>
-						</tr>
-						<tr>
-							<td class="p-2">PARAGRAPHES</td>
-							<td class="p-2 text-monospace text-muted">paragraphe<br /><br />paragraphe<p class="mt-2 mb-0" style="color:silver">Laisser une ligne vide pour marquer un nouveau paragraphe.</p></td>
-							<td class="p-2" style="vertical-align:top"><p class="mb-1">paragraphe</p>paragraphe</td>
-						</tr>
-						<tr>
-							<td class="p-2">RETOUR À LA LIGNE</td>
-							<td class="p-2 text-monospace text-muted">ligne \<br />ligne<p class="mt-2 mb-0" style="color:silver">Ajouter un \ en bout de ligne pour forcer le retour à la ligne.</p></td>
-							<td class="p-2" style="vertical-align:top">ligne<br />ligne</td>
-						</tr>
-						<tr>
-							<td class="p-2">LISTES</td>
-							<td class="p-2 text-monospace text-muted">* point 1<br />* point 2<br /></td>
-							<td class="p-2" style="vertical-align:top"><ul style="padding-left:20px;margin-left:0;margin-bottom:0"><li>point 1</li><li>point 2</li></ul></td>
-						</tr>
-						<tr>
-							<td class="p-2">ITALIQUE</td>
-							<td class="p-2 text-monospace text-muted">*italique*</td>
-							<td class="p-2"><em>italique</em></td>
-						</tr>
-						<tr>
-							<td class="p-2">GRAS</td>
-							<td class="p-2 text-monospace text-muted">**gras**</td>
-							<td class="p-2"><b>gras</b></td>
-						</tr>
-						<tr>
-							<td class="p-2">SOULIGNÉ</td>
-							<td class="p-2 text-monospace text-muted">__souligné__</td>
-							<td class="p-2"><u>souligné</u></td>
-						</tr>
-						<tr>
-							<td class="p-2">IMAGE</td>
-							<td class="p-2 text-monospace text-muted">
-								<p>![](url-image)</p>
-								<p class="mb-0"><i>Exemple : ![](https://www.codepuzzle.io/img/codepuzzle.png)<i></p>
-							</td>
-							<td class="p-2"><img src="https://www.codepuzzle.io/img/codepuzzle.png" width="160"/></td>
-						</tr>
-						<tr>
-							<td class="p-2">LIEN</td>
-							<td class="p-2 text-monospace text-muted">
-								<p>[texte-cliquable](url-site)</p>
-								<p class="mb-1"><i>Exemple 1 : Un [lien](https://eduscol.education.fr) vers Eduscol.</i></p>
-								<p class="mb-0"><i>Exemple 2 : Un lien vers [Eduscol](https://eduscol.education.fr).</i></p>
-							</td>
-							<td class="p-2">
-								<p><br /></p>
-								<p class="mb-1">Un <a href="http://pep8online.com/" target="_blank">lien</a> vers PEP8 online.</p>
-								<p class="mb-0">Un lien vers <a href="http://pep8online.com/" target="_blank">PEP8 online</a>.</p>
-							</td>
-						</tr>
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- MODAL MARKDOWN HELP -->
-
 
 	<div class="container mt-4 mb-5">
 
@@ -144,7 +69,7 @@
 						<i class="fas fa-info-circle" style="cursor:pointer;color:#e74c3c;opacity:0.5" data-toggle="modal" data-target="#markdown_help"></i>
 					</div>
 					<div class="text-monospace text-muted small text-justify mb-1">{{__('Visibles par vous seulement')}}</div>
-					<textarea class="form-control" name="notes_personnelles" id="notes_personnelles" rows="6">{{ old('notes_personnelles') }}</textarea>
+					<textarea id="markdown_content" class="form-control" name="notes_personnelles" id="notes_personnelles" rows="6">{{ old('notes_personnelles') }}</textarea>
 					<!-- /NOTES PERSONNELLES -->
 
 					<!-- CODE --> 
@@ -172,6 +97,7 @@
 	</div><!-- container -->
 
 	@include('inc-bottom-js')
+	@include('markdown/inc-markdown-editeur-js')
 
 	<script src="{{ asset('js/ace/ace.js') }}" type="text/javascript" charset="utf-8"></script>
 	<script>

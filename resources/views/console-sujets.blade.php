@@ -59,49 +59,35 @@
                                 <!-- options -->
     							<div style="float:right;">
 
-                                    <a class='btn btn-dark btn-sm' href='/sujet-console/{{ $sujet->jeton_secret }}' role='button' data-toggle="tooltip" data-placement="top" title="{{__('voir / corriger')}}"><i class="fas fa-check"></i></a>
+                                    <a class='btn btn-dark btn-sm' href='/sujet-console/{{ $sujet->jeton_secret }}' role='button' data-toggle="tooltip" data-placement="top" title="{{__('voir / corriger')}}"><i class="fas fa-eye"></i></a>
                
-                                    <a class='btn btn-light btn-sm' data-toggle="collapse" href="#collapse-{{$loop->iteration}}" role='button' aria-expanded="false" aria-controls="collapse-{{$loop->iteration}}"><i class="fas fa-bars" style="margin-top:0px;" data-toggle="tooltip" data-offset="0, 9" data-placement="top" title="{{__('déplier plier')}}"></i></a>
-
-    								<a class='btn btn-light btn-sm' href='/sujet-creer/{{ $sujet->jeton_secret }}' role='button' data-toggle="tooltip" data-placement="top" title="{{__('modifier')}}"><i class="fas fa-pen"></i></a>
-
-                                    <a tabindex='0' id='/console/sujet-supprimer/{{ Crypt::encryptString($sujet->id) }}' class='btn btn-danger btn-sm text-light' role='button'  style="cursor:pointer;outline:none;" data-toggle="popover" data-trigger="focus" data-placement="left" data-html="true" data-content="<a href='/console/sujet-supprimer/{{ Crypt::encryptString($sujet->id) }}' class='btn btn-danger btn-sm text-light' role='button'>{{__('confirmer')}}</a><a class='btn btn-light btn-sm ml-2' href='#' role='button'>{{__('annuler')}}</a>"><i class='fas fa-trash fa-sm' data-toggle="tooltip" data-placement="top" data-offset="0, 15" title="{{__('supprimer')}}"></i></a>
+                                    <!-- supprimer -->
+                                    <span id="supprimer_button_{{$loop->iteration}}">
+                                        <div onclick="showConfirm('supprimer_button_{{$loop->iteration}}', 'supprimer_confirm_{{$loop->iteration}}')" class="d-inline-block" type="button">
+                                            <a tabindex='0' class='btn btn-light btn-sm' role='button'  style="cursor:pointer;outline:none;"><i class='fa-solid fa-xmark'></i></a>
+                                        </div>
+                                    </span>
+                                    <span id="supprimer_confirm_{{$loop->iteration}}" style="display:none">
+                                        <div id="supprimer_{{$loop->iteration}}" class="d-inline-block">
+                                            <a href='/console/sujet-supprimer/{{ Crypt::encryptString($sujet->id) }}' class='btn btn-danger btn-sm text-light ml-3' role='button'  style="cursor:pointer;outline:none;" data-toggle="tooltip" data-placement="top" title="{{__('supprimer')}}"><i class='fas fa-trash fa-sm'></i></a>
+                                        </div>
+                                        <div id="supprimer_cancel_{{$loop->iteration}}" onclick="hideConfirm('supprimer_button_{{$loop->iteration}}', 'supprimer_confirm_{{$loop->iteration}}')" class="d-inline-block" type="button">
+                                            <a tabindex='0' class='btn btn-light btn-sm' role='button' style="cursor:pointer;outline:none;" data-toggle="tooltip" data-placement="top" title="{{__('annuler')}}"><i class="fa-solid fa-chevron-right" ></i></a>
+                                        </div>
+                                    </span>
+                                    <!-- /supprimer -->
 
     							</div>
     							<!-- /options -->
 
-                                <h2 class="p-0 m-0">
-                                    @if ($sujet->titre_enseignant == NULL)
-                                        Devoir {{$sujet->jeton_secret}}
-                                    @else
-                                    {{$sujet->titre_enseignant}}
-                                    @endif
-                                </h2>
-                                <div class="text-monospace small" style="color:silver;">{{ $sujet->sous_titre_enseignant }}</div>
+                                <h2 class="p-0 m-0">{{$sujet->titre}}</h2>
 
-                            </div>
-                        </div>
+                                <div class="row mt-1" style="clear:both;">
+                                    <div class="col-md-12 text-monospace text-muted">
+                                        <span class="small"><i class="fas fa-share-alt ml-1 mr-2"></i>lien public: </span><a id="lien_{{$loop->iteration}}" href="/{{ strtoupper('S'.$sujet->jeton) }}" target="_blank">www.codepuzzle.io/S{{ strtoupper($sujet->jeton) }}</a><span class="pl-2" onclick="copier('lien_{{$loop->iteration}}')" style="cursor:pointer;"><i class="fa-regular fa-copy"></i></span><span id="lien_{{$loop->iteration}}_copie_confirmation" class="pl-3 text-right small text-monospace text muted">&nbsp;</span>
+                                    </div>
+                                </div>     
 
-                        <div class="row">
-                            <div class="col-md-12 text-monospace small text-muted">
-                                <i class="fas fa-share-alt ml-1 mr-2"></i>lien élèves: <a href="/{{ strtoupper('E'.$sujet->jeton) }}" target="_blank">www.codepuzzle.io/E{{ strtoupper($sujet->jeton) }}</a>
-                            </div>
-                        </div>
-
-                        <div class="collapse" id="collapse-{{$loop->iteration}}">
-                            <div class="row mt-3">
-                                <div class="col-md-12">
-                                    @if ($sujet->titre_eleve !== NULL OR $sujet->consignes_eleve !== NULL)
-                                        <div class="pt-3 pl-3 pr-3 pb-1" style="background-color:#f3f5f7;border-radius:5px;">
-                                            @if ($sujet->titre_eleve !== NULL)
-                                                <div class="text-monospace mb-1 font-weight-bold">{{ $sujet->titre_eleve }}</div>
-                                            @endif
-                                            @if ($sujet->consignes_eleve !== NULL)
-                                                <div class="markdown_content border rounded bg-light text-monospace p-3">{{ $sujet->consignes_eleve }}</div>
-                                            @endif
-                                        </div>
-                                    @endif
-                                </div>
                             </div>
                         </div>
 

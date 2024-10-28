@@ -64,9 +64,8 @@ $liste_activites_autres = array_diff($liste_activites_eleves, $liste_activites_c
 
 		<div class="row pt-3">
 
-            <div class="col-md-2">
-
-                <div class="text-right mb-3">
+            <div class="col-md-1 text-right">
+                <div class=" mb-3">
                     @if(Auth::check())
                     <a class="btn btn-light btn-sm" href="/console/classes" role="button"><i class="fas fa-arrow-left"></i></a>
                     @else
@@ -74,24 +73,12 @@ $liste_activites_autres = array_diff($liste_activites_eleves, $liste_activites_c
                     @endif
                 </div>
 
-                <a class="btn btn-success btn-sm pl-3 pr-3 text-monospace" style="width:100%" href="{{route('classe-creer-get')}}" role="button">{{__('nouvelle classe')}}</a>
-
-                <a href="https://github.com/codepuzzle-io/www.codepuzzle.io/discussions" target="_blank" role="button" class="mt-2 btn btn-light btn-sm text-left text-muted" style="width:100%;opacity:0.8;">
-                    <span style="font-size:80%"><i class="fas fa-comment-alt" style="float:left;margin:4px 8px 5px 0px;"></i> {{__('discussions')}} <span style="opacity:0.6;font-size:90%;">&</span> {{__('annonces')}}</span>
-                </a>
-
-                <a href="https://github.com/codepuzzle-io/www.codepuzzle.io/issues/new/choose" target="_blank" role="button"  class="mt-1 btn btn-light text-left btn-sm text-muted" style="width:100%;opacity:0.8;">
-                    <span style="font-size:80%"><i class="fas fa-bug" style="float:left;margin:4px 8px 5px 0px;"></i> {{__('signalement de bogue')}} <span style="opacity:0.6;font-size:90%;">&</span> {{__('questions techniques')}}</span>
-                </a>
-
-                <div class="mt-3 text-muted text-monospace pl-1 mb-3" style="font-size:70%;opacity:0.8;">
-                    <span><i class="fa fa-envelope"></i> contact@codepuzzle.io</span>
-                </div>
+                <div class="mt-2 mb-4"><a class="btn btn-dark btn-sm" href="/classe-modifier/{{$jeton_secret}}" role="button" data-toggle="tooltip" data-placement="right" title="{{__('modifier')}}"><i class="fa-solid fa-pen"></i></a></div>
 
             </div>
 
             @if($classe->user_id == 0 OR !Auth::check())
-            <div class="col-md-8">
+            <div class="col-md-10">
                 <div id="frame" class="frame">
                     <div class="row">
                         <div class="col-md-6 offset-md-3 text-monospace pt-3 pb-3">
@@ -116,13 +103,12 @@ $liste_activites_autres = array_diff($liste_activites_eleves, $liste_activites_c
                         <li>{{ count($liste_activites_classe)}} activités</li>
                     </ul>
                 </div>
-                <div class="mt-2 mb-4"><a class="btn btn-dark btn-sm" href="/classe-modifier/{{$jeton_secret}}" role="button" data-toggle="tooltip" data-placement="right" title="{{__('modifier')}}"><i class="fa-solid fa-pen"></i></a></div>
             </div>
             
         </div><!-- /row -->
 
         <div class="row pt-2">
-            <div class="col-md-8 offset-md-2">
+            <div class="col-md-10 offset-md-1">
                 <div class="text-monospace">{{strtoupper(__('SUIVI DES ACTIVITÉS'))}}</div>
                 @if (!empty($liste_activites_classe) OR !empty($liste_activites_autres))
                     @if (!empty($liste_activites_classe))
@@ -214,7 +200,7 @@ $liste_activites_autres = array_diff($liste_activites_eleves, $liste_activites_c
     
     <div class="container">
         <div class="row">
-            <div class="col-md-8 offset-md-2">
+            <div class="col-md-10 offset-md-1">
 
                 @if (empty($liste_activites_classe) AND empty($liste_activites_autres))
                     <div class='text-muted small text-monospace'>Aucune activité n'a été enregistrée pour le moment.</div>
