@@ -21,7 +21,7 @@
 			<div class="col-md-8 offset-md-2">
 				<div class="border border-danger rounded p-2 text-danger small">
 					<b>beta</b><br />
-					La nouvelle version du site a entraîné de nombreux changements dans le code. Des bugs sont donc certainement présents. Vous pouvez les signaler en ouvrant un ticket <a href="https://forge.apps.education.fr/code-puzzle/www-codepuzzle-io/-/issues/" target="_blank">ici</a> ou en écrivant à <a href="mailto:contact@codepuzzle.io">contact@codepuzzle.io</a>.
+					La nouvelle version du site a entraîné de nombreux changements dans le code. Des bugs sont donc certainement présents. Vous pouvez les signaler en ouvrant un ticket <a href="https://forge.apps.education.fr/code-puzzle/www-codepuzzle-io/-/issues/" target="_blank">ici</a> ou en écrivant à <a href="mailto:contact@codepuzzle.io">contact@codepuzzle.io</a>.<br />Vous pouvez aussi intervenir sur <a href="https://mastodon.social/@codepuzzle" target="_blank">Mastodon</a> ou <a href="https://x.com/codepuzzleio" target="_blank">X/Twitter</a>. 
 				</div>
 			</div>
 		</div>
