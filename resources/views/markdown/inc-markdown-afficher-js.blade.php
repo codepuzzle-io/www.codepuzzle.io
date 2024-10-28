@@ -46,9 +46,6 @@
     }) 
 
 
-
-
-
     // markdown_content
     document.querySelectorAll('.markdown_content').forEach(el => {
 
@@ -62,6 +59,7 @@
         
 
         // Latex
+        /*
         document.addEventListener("DOMContentLoaded", function() {
             // Vérifie si MathJax est chargé et que typesetPromise est disponible
             if (typeof MathJax !== "undefined" && MathJax.typesetPromise) {
@@ -73,6 +71,21 @@
                 MathJax.startup.promise.then(() => {
                     MathJax.typesetPromise(Array.from(elements)).then(() => {
                         console.log("MathJax a rendu les équations pour tous les éléments !");
+                    }).catch((err) => console.error("Erreur lors du rendu avec MathJax:", err));
+                });
+            } else {
+                console.error("MathJax n'est pas disponible ou la fonction typesetPromise n'existe pas.");
+            }
+        });
+        */
+        document.addEventListener("DOMContentLoaded", function() {
+            if (typeof MathJax !== "undefined" && MathJax.typesetPromise) {
+                MathJax.startup.promise = MathJax.startup.promise || Promise.resolve();
+                
+                // Démarrer le rendu pour l'ensemble du document
+                MathJax.startup.promise.then(() => {
+                    MathJax.typesetPromise().then(() => {
+                        console.log("MathJax a rendu les équations pour toute la page !");
                     }).catch((err) => console.error("Erreur lors du rendu avec MathJax:", err));
                 });
             } else {

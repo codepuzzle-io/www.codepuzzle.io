@@ -89,7 +89,7 @@
 									<div class="text-center text-white bg-dark small" style="float:left;font-weight:bold;border-radius:50%;width:15px;margin:2px 8px 5px 0px;">1</div> Créer un sujet (exercice Python, PDF, Markdown...)
 								</div>
 								<div style="clear:both;">
-									<div class="text-center text-white bg-dark small" style="float:left;font-weight:bold;border-radius:50%;width:15px;margin:2px 8px 5px 0px;">2</div> Modifier / duplier / partager le sujet
+									<div class="text-center text-white bg-dark small" style="float:left;font-weight:bold;border-radius:50%;width:15px;margin:2px 8px 5px 0px;">2</div> Modifier / dupliquer / partager le sujet
 								</div>
 								<div style="clear:both;">
 									<div class="text-center text-white bg-dark small" style="float:left;font-weight:bold;border-radius:50%;width:15px;margin:2px 8px 5px 0px;">3</div> Proposer un environnement sujet-copie aux élèves
