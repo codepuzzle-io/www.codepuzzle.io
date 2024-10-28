@@ -99,10 +99,10 @@
 								</div>					
 							</div>	
 							<div class="small pl-1 mt-2" style="clear:both;">
-								<i class="fa-solid fa-caret-right"></i> exemple 1: <a href="https://www.codepuzzle.io/S6DBRS" class="text-success">sujet</a> | <a href="https://www.codepuzzle.io/S6DBRS/copie" class="text-success">sujet-copie</a> | <a href="https://www.codepuzzle.io/devoir-console/UCVPKGZBTH5AJDRS?i" class="text-success">devoir</a>
+								<i class="fa-solid fa-caret-right"></i> exemple 1: <a href="https://www.codepuzzle.io/SX46G3" class="text-success">sujet</a> | <a href="https://www.codepuzzle.io/SX46G3/copie" class="text-success">sujet-copie</a> | <a href="https://www.codepuzzle.io/devoir-console/7WAG8QURFKYES5B6?i" class="text-success">devoir</a>
 							</div>
 							<div class="small pl-1 mb-2" style="clear:both;">
-								<i class="fa-solid fa-caret-right"></i> exemple 2: <a href="https://www.codepuzzle.io/S2BGDW" class="text-success">sujet</a> | <a href="https://www.codepuzzle.io/S2BGDW/copie" class="text-success">sujet-copie</a> | <a href="https://www.codepuzzle.io/devoir-console/T26YUPAEM8C4HJSW?i" class="text-success">devoir</a>
+								<i class="fa-solid fa-caret-right"></i> exemple 2: <a href="https://www.codepuzzle.io/S2BGDW" class="text-success">sujet</a> | <a href="https://www.codepuzzle.io/S2BGDW/copie" class="text-success">sujet-copie</a> | <a href="https://www.codepuzzle.io/devoir-console/QBWAHREKUGT69CFM?i" class="text-success">devoir</a>
 							</div>
 						</div>
 						<div class="card-footer pt-2 text-center">
