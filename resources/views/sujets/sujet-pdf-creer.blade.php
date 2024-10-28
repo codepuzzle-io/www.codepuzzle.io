@@ -150,7 +150,7 @@ if (isset($sujet_id)) {
                     e.preventDefault();
                     e.stopPropagation();
 
-                    var regex = /^[\p{L}0-9\s\-_.,!?()@#&%$'"]*$/u;
+                    var regex = /^[\p{L}0-9\s\-_.,!?()@#&%$'"\[\]]*$/u;
 
                     // initialisation messages erreur
                     document.getElementById('titre').classList.remove('is-invalid');
