@@ -31,7 +31,7 @@
                 @else
                     <div class="font-weight-bold text-monospace">PROGRAMME</div>
                 @endif
-                <div id="code_editor_{{ $loop->iteration }}" class="mb-2 code-editor"></div>
+                <div id="code_editor_{{ $loop->iteration }}" class="mb-2 code-editor">{{$code->code_eleve}}</div>
                 <div class="row no-gutters mb-5">
                     <div class="col-auto mr-2">
                         <div>

@@ -132,7 +132,6 @@
                 tabSize: 4
             });
             editor_code[{{ $loop->iteration }}].container.style.lineHeight = 1.5;
-            editor_code[{{ $loop->iteration }}].setValue('{{$code->code_eleve}}', -1);
         @endforeach
     </script>
     
