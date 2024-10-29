@@ -78,6 +78,7 @@
             }
         });
         */
+       /*
         document.addEventListener("DOMContentLoaded", function() {
             if (typeof MathJax !== "undefined" && MathJax.typesetPromise) {
                 MathJax.startup.promise = MathJax.startup.promise || Promise.resolve();
@@ -92,6 +93,7 @@
                 console.error("MathJax n'est pas disponible ou la fonction typesetPromise n'existe pas.");
             }
         });
+        */
 
     });  
     
