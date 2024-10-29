@@ -78,7 +78,19 @@
 
                                 <div class="row mt-1" style="clear:both;">
                                     <div class="col-md-12 text-monospace text-muted">
-                                        <span class="small"><i class="fas fa-share-alt ml-1 mr-2"></i>lien élèves: </span><a id="lien_{{$loop->iteration}}" href="/P{{ strtoupper($puzzle->jeton) }}" target="_blank">www.codepuzzle.io/P{{ strtoupper($puzzle->jeton) }}</a><span class="pl-2" onclick="copier('lien_{{$loop->iteration}}')" style="cursor:pointer;"><i class="fa-regular fa-copy"></i></span><span id="lien_{{$loop->iteration}}_copie_confirmation" class="pl-3 text-right small text-monospace text muted">&nbsp;</span>
+                                        
+                                        <span class="small"><i class="fas fa-share-alt ml-1 mr-2"></i>lien élèves: </span><a id="lien_{{$loop->iteration}}" href="/P{{ strtoupper($puzzle->jeton) }}" target="_blank">www.codepuzzle.io/P{{ strtoupper($puzzle->jeton) }}</a>
+
+                                        <span class="pl-2" onclick="fullscreen('fullscreen_{{$loop->iteration}}')" style="cursor:pointer;"><i class="fas fa-expand"></i></span>
+                                        <div id="fullscreen_{{$loop->iteration}}" class="bg-white text-center" style="display:none">
+                                            <br /><br /><br /><br /><br /><br />
+										    <img src="{{ asset('img/code-puzzle.png') }}" width="200" />
+                                            <br /><br /><br /><br /><br /><br /><br /><br />
+										    <div class="text-monospace text-dark font-weight-bold" style="font-size:5vw;">www.codepuzzle.io/P{{ strtoupper($puzzle->jeton) }}</div>
+									    </div>
+
+                                        <span class="pl-2" onclick="copier('lien_{{$loop->iteration}}')" style="cursor:pointer;"><i class="fa-regular fa-copy"></i></span><span id="lien_{{$loop->iteration}}_copie_confirmation" class="pl-3 text-right small text-monospace text muted">&nbsp;</span>
+
                                     </div>
                                 </div>
 
@@ -241,6 +253,64 @@ IFrame('https://www.codepuzzle.io/IP{{ strtoupper($puzzle->jeton) }}', width='10
 	}
 	</script>
     {{-- == /Copie lien ====================================================== --}}	
+
+    {{-- == Fullscreen lien ================================================== --}}
+    <script>
+        function fullscreen(id) {
+            var el = document.getElementById(id);
+            var isFullscreen = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement || document.mozFullScreenElement;
+
+            if (isFullscreen) {
+                // Quitter le plein écran
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) { /* Safari */
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) { /* IE11 */
+                    document.msExitFullscreen();
+                } else if (document.mozCancelFullScreen) { /* Firefox */
+                    document.mozCancelFullScreen();
+                }
+            } else {
+                // Afficher l'élément et entrer en plein écran
+                el.style.display = 'block';
+                if (el.requestFullscreen) {
+                    el.requestFullscreen();
+                } else if (el.webkitRequestFullscreen) { /* Safari */
+                    el.webkitRequestFullscreen();
+                } else if (el.msRequestFullscreen) { /* IE11 */
+                    el.msRequestFullscreen();
+                } else if (el.mozRequestFullScreen) { /* Firefox */
+                    el.mozRequestFullScreen();
+                }
+            }
+        }
+
+        function updateFsButton() {
+            if (!document.fullscreenElement && !document.webkitFullscreenElement && 
+                !document.msFullscreenElement && !document.mozFullScreenElement) {
+                
+                if (currentFullscreenElement) {
+                    // L'élément n'est plus en plein écran, le cacher
+                    currentFullscreenElement.style.display = "none";
+                    currentFullscreenElement = null;  // Réinitialiser pour éviter toute ambiguïté
+                }
+            } else {
+                // Enregistrer l'élément en plein écran si ce n'est pas déjà fait
+                currentFullscreenElement = document.fullscreenElement || 
+                                        document.webkitFullscreenElement || 
+                                        document.msFullscreenElement || 
+                                        document.mozFullScreenElement;
+            }
+            console.log("État du plein écran changé");
+        }
+
+        document.addEventListener("fullscreenchange", updateFsButton, false);
+        document.addEventListener("webkitfullscreenchange", updateFsButton, false);
+        document.addEventListener("mozfullscreenchange", updateFsButton, false);
+        document.addEventListener("MSFullscreenChange", updateFsButton, false);
+    </script>
+    {{-- == /Fullscreen lien ================================================= --}}
 
 </body>
 </html>

@@ -305,8 +305,8 @@
             div.id = 'div_'+div_id;
 
             if (type == 'text') {
-                var div_content = `<textarea id="textarea_`+div_id+`" class="form-control cellule_content exclure" oninput="textarea_autosize(this)" row="4" style="height:100px;">`+content+`</textarea>
-                <div id="markedarea_`+div_id+`" class="cellule_content exclure cellule_marked hover-edit" style="position:relative;display:none;min-height:100px;">
+                var div_content = `<textarea id="textarea_`+div_id+`" class="form-control cellule_content exclure" oninput="textarea_autosize(this)" row="2">`+content+`</textarea>
+                <div id="markedarea_`+div_id+`" class="cellule_content exclure cellule_marked hover-edit" style="position:relative;display:none;min-height:40px;">
                     <div class="markedarea_icon" onclick="edit('`+div_id+`')"><i class="fas fa-pen-square fa-lg"></i></div>
                     <div id="markedarea_content_`+div_id+`"></div>
                 </div>`;

@@ -11,7 +11,6 @@ $page_devoir = true;
 <head>
 
 	<script>
-        /*
 		// FOCUS
 		window.addEventListener('blur', function() {
 			window.location.replace("/devoir");
@@ -31,7 +30,6 @@ $page_devoir = true;
                 window.location.replace("/devoir");
             }
         }
-        */
     </script>
 
 	<meta charset="utf-8">

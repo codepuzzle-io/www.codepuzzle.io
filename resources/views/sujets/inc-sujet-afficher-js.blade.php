@@ -1,10 +1,10 @@
+@include('markdown/inc-markdown-afficher-js')
+
 @if ($sujet->type == 'exo')
 
     {{-- ============== --}}
     {{-- ==== EXO ===== --}}
     {{-- ============== --}}
-
-    @include('markdown/inc-markdown-afficher-js')
 
     @if (isset($page_sujet_console) or isset($page_devoir_console) or isset($page_devoir_creer) or isset($page_sujet))
         <script>
@@ -102,16 +102,7 @@
     {{-- ==== PDF ===== --}}
     {{-- ============== --}}
 
-    <script>
-        function hauteur_iframe() {
-            var hauteur_grid_gauche = document.getElementById('gauche').offsetHeight;
-            var hauteur_sujet_entete = document.getElementById('sujet_entete').offsetHeight; 
-            var hauteur_sujet_titre = document.getElementById('sujet_titre').offsetHeight; 
-            document.getElementById('sujet_pdf').style.height = (hauteur_grid_gauche - hauteur_sujet_entete - hauteur_sujet_titre - 15) + 'px';
-        }
-        window.onload = hauteur_iframe;
-        window.onresize = hauteur_iframe;
-    </script>
+
 
     {{-- ============== --}}
     {{-- ==== /PDF ==== --}}

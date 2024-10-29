@@ -33,6 +33,10 @@ a:hover {
     background-color: transparent;
 }
 
+p {
+    margin: 0px 0px 4px 0px;
+}
+
 code {
     font-size: 100%;
     color: #71bb22;
@@ -86,7 +90,7 @@ h2 {
 }
 
 .markdown_content p {
-    margin: 0px 0px 5px 0px;
+    margin: 0px 0px 4px 0px;
 }
 
 .markdown_content pre {

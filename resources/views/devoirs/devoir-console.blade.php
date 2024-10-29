@@ -13,15 +13,12 @@ $page_devoir_console = true;
 <html lang="fr">
 <head>
     @include('inc-meta')
-    <link href="{{ asset('css/highlight.css') }}" rel="stylesheet">
-	<link href="{{ asset('css/easymde.css') }}" rel="stylesheet">
-	<link href="{{ asset('css/easymde-custom.css') }}" rel="stylesheet">
+
     <meta name="robots" content="noindex">
 
-    <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
     <title>DEVOIR | {{$devoir->jeton}} | CONSOLE</title>
 </head>
-<body class="no-mathjax">
+<body>
 
     @include('inc-nav')
 
@@ -45,31 +42,43 @@ $page_devoir_console = true;
                             <div class="text-monospace text-danger text-center font-weight-bold m-2">SAUVEGARDEZ LES INFORMATIONS CI-DESSOUS AVANT DE QUITTER CETTE PAGE</div>
                         @endif
 
-                        <table class="table table-borderless text-monospace m-0" style="border-spacing:4px;border-collapse:separate;">
-                            <tr>
-                                @if($devoir->user_id == 0 OR !Auth::check()) <td class="text-center font-weight-bold p-0 small" style="width:33%">lien secret</td> @endif
-                                <td class="text-center font-weight-bold p-0 small" style="width:33%">code secret</td>
-                                <td class="text-center font-weight-bold p-0 small" style="width:33%">lien élèves</td>
-                            </tr>
-                            <tr>
-                                @if ($devoir->user_id == 0 OR !Auth::check()) <td class="text-center text-break align-middle rounded bg-danger text-white"><a href="/devoir-console/{{strtoupper($devoir->jeton_secret)}}" target="_blank" class="text-white font-weight-bold">www.codepuzzle.io/devoir-console/{{strtoupper($devoir->jeton_secret)}}</a></td> @endif
-                                <td class="text-center border border-danger text-break align-middle rounded text-danger font-weight-bold">
-                                    {{$devoir->mot_secret}}
-                                </td>
-                                <td class="text-center text-white text-break align-middle rounded bg-secondary">
-                                    <a href="/E{{strtoupper($devoir->jeton)}}" target="_blank" class="text-white">www.codepuzzle.io/E{{strtoupper($devoir->jeton)}}</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                @if ($devoir->user_id == 0 OR !Auth::check()) <td class="small text-muted p-0"><span class="text-danger"><i class="fas fa-exclamation-circle"></i> Ne pas partager ce lien</span><br />Il permet d'accéder à la console du devoir (sujet, lien pour les élèves, correction...).</td> @endif
-                                <td class="small text-muted p-0"><span class="text-danger"><i class="fas fa-exclamation-circle"></i> Ne pas partager ce code</span><br />Il permet de déverrouiller la copie d'un élève.</td>
-                                <td class="small text-muted p-0">Lien à fournir aux élèves.<!--<br />QR code: <img src="https://api.qrserver.com/v1/create-qr-code/?data={{urlencode('https://www.codepuzzle.io/E' . strtoupper($devoir->jeton))}}&amp;size=200x200" style="width:50px" alt="www.codepuzzle.io/E{{strtoupper($devoir->jeton)}}" data-toggle="tooltip" data-placement="bottom" title="{{__('clic droit + Enregistrer l image sous... pour sauvegarder l image')}}" />--></td>
-                            </tr>
-                        </table>
+                        <div class="row justify-content-md-center">
+                            @if($devoir->user_id == 0 OR !Auth::check())
+                            <div class="col-md-auto">
+                                 <div class="text-center font-weight-bold small">lien secret</div>
+                                 <div class="text-center rounded bg-danger text-white p-3"><a href="/devoir-console/{{strtoupper($devoir->jeton_secret)}}" target="_blank" class="text-white font-weight-bold">www.codepuzzle.io/devoir-console/{{strtoupper($devoir->jeton_secret)}}</a></div>
+                                 <div class="small text-muted pt-1"><span class="text-danger"><i class="fas fa-exclamation-circle"></i> Ne pas partager ce lien</span><br />Il permet d'accéder à la console du devoir (sujet, lien pour les élèves, correction...).</div>
+                            </div>
+                            @endif
+                            <div class="col-md-auto">
+                                <div class="text-center font-weight-bold small">code secret</div>
+                                <div class="text-center border border-danger rounded text-danger font-weight-bold p-3">{{$devoir->mot_secret}}</div>
+                                <div class="small text-muted pt-1"><span class="text-danger"><i class="fas fa-exclamation-circle"></i> Ne pas partager ce code</span><br />Il permet de déverrouiller la copie d'un élève</div>
+                            </div>
+                        </div>
                         
                     </div>
                 </div>
 
+                <div class="mt-2 mb-4">
+                    <div class="text-center small text-muted p-0">lien à fournir aux élèves</div>
+                    <div class="text-center font-weight-bold text-monospace">
+						<a id="lien" href="/E{{strtoupper($devoir->jeton)}}" target="_blank" class="text-dark" style="font-size:24px">www.codepuzzle.io/E{{strtoupper($devoir->jeton)}}</a>
+                    </div>
+                    <div class="text-center">
+                        <span class="pr-1" onclick="fullscreen('fullscreen')" style="cursor:pointer;"><i class="fas fa-expand"></i></span>
+                        <div id="fullscreen" class="bg-white text-center" style="display:none">
+                            <br /><br /><br /><br /><br /><br />
+                            <img src="{{ asset('img/code-puzzle.png') }}" width="200" />
+                            <br /><br /><br /><br /><br /><br /><br /><br />
+                            <div class="text-monospace text-dark font-weight-bold" style="font-size:5vw;">www.codepuzzle.io/E{{ strtoupper($devoir->jeton) }}</div>
+                        </div>
+
+                        <span class="pl-1" onclick="copier('lien')" style="cursor:pointer;"><i class="fa-regular fa-copy"></i></span>
+                        <div id="lien_copie_confirmation" class="text-center small text-monospace text muted">&nbsp;</div>
+                    </div>
+
+                </div>
 
                 <!-- MODIFIER - SUPERVISER -->
                 <div class="row mt-3 mb-3">
@@ -82,9 +91,7 @@ $page_devoir_console = true;
 
                 <div class="mt-2 mb-1 text-monospace font-weight-bold">{{strtoupper(__($devoir->titre_enseignant))}}</div>
                 @if ($devoir->consignes_eleve != '')
-                    <div style="padding:20px;border:solid 1px #DBE0E5;border-radius:4px;background-color:#f3f5f7;border-radius:4px;">
-                        {{$devoir->consignes_eleve}}
-                    </div>
+                    <div class="markdown_content" style="padding:20px;border:solid 1px #DBE0E5;border-radius:4px;background-color:#f3f5f7;border-radius:4px;">{{$devoir->consignes_eleve}}</div>
                 @endif
 
                 <div class="mt-3 mb-1 text-monospace">{{strtoupper(__('copies'))}}</div>
@@ -196,8 +203,104 @@ $page_devoir_console = true;
     <br />
 
     @include('inc-bottom-js')
-    <!-- @include('devoirs/devoir-console-js') -->
     @include('sujets/inc-sujet-afficher-js')
+    
+    {{-- == Copie lien ======================================================= --}}	
+	<script>
+	function copier(id) {
+		var texte = document.getElementById(id).textContent;
+		if (!navigator.clipboard) {
+			// Alternative pour les navigateurs ne prenant pas en charge navigator.clipboard
+			var zoneDeCopie = document.createElement("textarea");
+			zoneDeCopie.value = texte;
+			document.body.appendChild(zoneDeCopie);
+			zoneDeCopie.select();
+			document.execCommand("copy");
+			document.body.removeChild(zoneDeCopie);
+			return;
+		}
+
+		navigator.clipboard.writeText(texte).then(function() {
+			//alert("Le texte a été copié dans le presse-papiers.");
+		}, function() {
+			// Gérer les erreurs éventuelles
+			//alert("Impossible de copier le texte dans le presse-papiers. Veuillez le faire manuellement.");
+		});
+		
+		var status = document.getElementById(id+'_copie_confirmation');
+        status.innerText = "copié";
+		
+		status.style.opacity = '1';
+		var fadeOutInterval = setInterval(function() {
+			var opacity = parseFloat(status.style.opacity);
+			if (opacity <= 0) {
+				clearInterval(fadeOutInterval);
+				status.innerHTML = "&nbsp;"; // Effacer le texte après l'animation
+			} else {
+				status.style.opacity = (opacity - 0.1).toString();
+			}
+		}, 150);
+	}
+	</script>
+    {{-- == /Copie lien ====================================================== --}}	
+
+    {{-- == Fullscreen lien ================================================== --}}
+    <script>
+        function fullscreen(id) {
+            var el = document.getElementById(id);
+            var isFullscreen = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement || document.mozFullScreenElement;
+
+            if (isFullscreen) {
+                // Quitter le plein écran
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) { /* Safari */
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) { /* IE11 */
+                    document.msExitFullscreen();
+                } else if (document.mozCancelFullScreen) { /* Firefox */
+                    document.mozCancelFullScreen();
+                }
+            } else {
+                // Afficher l'élément et entrer en plein écran
+                el.style.display = 'block';
+                if (el.requestFullscreen) {
+                    el.requestFullscreen();
+                } else if (el.webkitRequestFullscreen) { /* Safari */
+                    el.webkitRequestFullscreen();
+                } else if (el.msRequestFullscreen) { /* IE11 */
+                    el.msRequestFullscreen();
+                } else if (el.mozRequestFullScreen) { /* Firefox */
+                    el.mozRequestFullScreen();
+                }
+            }
+        }
+
+        function updateFsButton() {
+            if (!document.fullscreenElement && !document.webkitFullscreenElement && 
+                !document.msFullscreenElement && !document.mozFullScreenElement) {
+                
+                if (currentFullscreenElement) {
+                    // L'élément n'est plus en plein écran, le cacher
+                    currentFullscreenElement.style.display = "none";
+                    currentFullscreenElement = null;  // Réinitialiser pour éviter toute ambiguïté
+                }
+            } else {
+                // Enregistrer l'élément en plein écran si ce n'est pas déjà fait
+                currentFullscreenElement = document.fullscreenElement || 
+                                        document.webkitFullscreenElement || 
+                                        document.msFullscreenElement || 
+                                        document.mozFullScreenElement;
+            }
+            console.log("État du plein écran changé");
+        }
+
+        document.addEventListener("fullscreenchange", updateFsButton, false);
+        document.addEventListener("webkitfullscreenchange", updateFsButton, false);
+        document.addEventListener("mozfullscreenchange", updateFsButton, false);
+        document.addEventListener("MSFullscreenChange", updateFsButton, false);
+    </script>
+    {{-- == /Fullscreen lien ================================================= --}}
 
 </body>
 </html>

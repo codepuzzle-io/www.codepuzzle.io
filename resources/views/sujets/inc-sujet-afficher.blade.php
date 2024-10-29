@@ -50,7 +50,7 @@
     {{-- ============== --}}
     
     <!-- ÉNONCÉ --> 
-    <div id="enonce">{{ $sujet_json->enonce }}</div>
+    <div class="markdown_content">{{ $sujet_json->enonce }}</div>
     <!-- /ÉNONCÉ --> 
     <iframe id="sujet_pdf" src="{{Storage::url('SUJETS/sujet_'.$sujet->jeton.'.pdf')}}" width="100%" height="800" style="border: none;" class="mt-3 rounded"></iframe>
 
