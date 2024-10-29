@@ -1,4 +1,8 @@
+{{-- == MARKDOWN + LATEX + COLORATION CODE =========== --}}
+
 @include('markdown/inc-markdown-afficher-js')
+
+{{-- == /MARKDOWN + LATEX + COLORATION CODE ========== --}}
 
 @if ($sujet->type == 'exo')
 
@@ -106,6 +110,20 @@
 
     {{-- ============== --}}
     {{-- ==== /PDF ==== --}}
+    {{-- ============== --}}
+
+@endif
+
+@if ($sujet->type == 'md')
+
+    {{-- ============== --}}
+    {{-- ==== MD ====== --}}
+    {{-- ============== --}}
+
+
+
+    {{-- ============== --}}
+    {{-- ==== /MD ===== --}}
     {{-- ============== --}}
 
 @endif

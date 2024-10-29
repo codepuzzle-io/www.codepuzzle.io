@@ -1,5 +1,5 @@
 <div class="p-3" style="border:1px solid #ced4da;border-radius:4px;background-color:white;">
-<h2 id="sujet_titre" class="p-0 m-0 text-monospace pb-2">{{ $sujet->titre }}</h2>
+<div class="pb-2 text-uppercase font-weight-bold" style="color:black;font-size:20px;font-family: 'Latin Modern Roman', serif;">{{ $sujet->titre }}</div>
 
 @if ($sujet->type == 'exo')
 
@@ -56,6 +56,22 @@
 
     {{-- ============== --}}
     {{-- ==== /PDF ==== --}}
+    {{-- ============== --}}
+
+@endif 
+
+@if ($sujet->type == 'md')
+
+    {{-- ============== --}}
+    {{-- ==== MD ====== --}}
+    {{-- ============== --}}
+    
+    <!-- ÉNONCÉ --> 
+    <div class="markdown_content">{{ $sujet_json->enonce }}</div>
+    <!-- /ÉNONCÉ --> 
+
+    {{-- ============== --}}
+    {{-- ==== /MD ===== --}}
     {{-- ============== --}}
 
 @endif 

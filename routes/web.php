@@ -281,8 +281,8 @@ Route::get('/sujet-pdf-creer/{sujet_id?}/{dupliquer?}', [App\Http\Controllers\Su
 Route::post('/sujet-pdf-creer', [App\Http\Controllers\SujetController::class, 'sujet_pdf_creer_post'])->name('sujet-pdf-creer-post');
 
 // md
-//Route::get('/sujet-creer/{jeton_secret}/md', [App\Http\Controllers\SujetController::class, 'sujet_creer_md_get'])->name('sujet-creer-md-get');
-//Route::post('/sujet-creer/{jeton_secret}/md', [App\Http\Controllers\SujetController::class, 'sujet_creer_md_post'])->name('sujet-creer-md-post');
+Route::get('/sujet-md-creer/{sujet_id?}/{dupliquer?}', [App\Http\Controllers\SujetController::class, 'sujet_md_creer_get'])->name('sujet-md-creer-get');
+Route::post('/sujet-md-creer', [App\Http\Controllers\SujetController::class, 'sujet_md_creer_post'])->name('sujet-md-creer-post');
 
 // console
 Route::any('/sujet-console/{jeton_secret}', [App\Http\Controllers\SujetController::class, 'sujet_console'])->name('sujet-console');

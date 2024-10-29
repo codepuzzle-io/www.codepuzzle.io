@@ -69,23 +69,28 @@ h2 {
 }
 
 /* MARKDOWN CONTENT */
+.markdown_content {
+    font-family: 'Latin Modern Roman', serif;
+    font-size:17px;
+}
+
 .markdown_content h1 {
-	font-size: 17px;
+	font-size: 18px;
 	text-transform: uppercase;
 	text-align:left;
 	color:black;
     font-weight:bold;
-    padding:0px 0px 8px 0px;
+    padding:10px 0px 8px 0px;
     margin:0px;
 }
 
 .markdown_content h2 {
-    font-size: 16px;
+    font-size: 17px;
 	text-transform: uppercase;
     text-align:left;
-	color: #2c3e50;
+	color: black;
     font-weight:bold;
-    padding:0px 0px 5px 0px;
+    padding:10px 0px 5px 0px;
     margin:0px;
 }
 
@@ -94,7 +99,7 @@ h2 {
 }
 
 .markdown_content pre {
-    padding:10px;
+    padding:4px;
     border:solid 1px #ced4da;
     background-color:#fafcfe;
     border-radius:4px;

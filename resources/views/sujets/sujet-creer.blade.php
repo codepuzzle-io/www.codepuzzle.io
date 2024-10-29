@@ -36,6 +36,7 @@
 				<div class="text-center text-monospace">
 					<a class="btn btn-dark mr-1" href="/sujet-exo-creer" role="button">Exercice Python</a>
 					<a class="btn btn-dark ml-1" href="/sujet-pdf-creer" role="button">Sujet au format PDF</a>
+					<a class="btn btn-dark ml-1" href="/sujet-md-creer" role="button">Sujet au format Markdown</a>
 				</div>
 
 			</div>

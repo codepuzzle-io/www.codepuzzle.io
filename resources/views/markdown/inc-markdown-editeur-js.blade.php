@@ -23,9 +23,9 @@
             //space() { return undefined },
             //code() { return undefined },
             //fences() { return undefined },
-            heading() { return undefined },
+            //heading() { return undefined },
             //hr() { return undefined },
-            blockquote() { return undefined },
+            //blockquote() { return undefined },
             //list() { return undefined },
             html() { return undefined },
             //def() { return undefined },
@@ -65,8 +65,17 @@
                 var plainText2 = plainText.replace(/\$\$(.+?)\$\$/gs, function(match) {
                     return match.replace(/\\\\/g, '\\\\\\\\');
                 });
+
+                // Génère le HTML à partir du markdown et le nettoie
                 preview.innerHTML = DOMPurify.sanitize(marked.parse(plainText2));
+
+                // Applique MathJax
                 MathJax.typeset()
+
+                // Applique Highlight.js à chaque bloc de code
+                preview.querySelectorAll("pre code").forEach((block) => {
+                    hljs.highlightElement(block);
+                });
             }, 10);
             return "...";
         },
