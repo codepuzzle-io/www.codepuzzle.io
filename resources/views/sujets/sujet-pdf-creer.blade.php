@@ -161,9 +161,9 @@ if (isset($sujet_id)) {
                     if (document.getElementById('titre').value.length < 8) {
                         document.getElementById('titre').classList.add('is-invalid');
                         document.getElementById('error_titre').innerHTML = "huit caractères minimum";
-                    } else if (document.getElementById('titre').value.length > 60) {
+                    } else if (document.getElementById('titre').value.length > 100) {
                         document.getElementById('titre').classList.add('is-invalid');
-                        document.getElementById('error_titre').innerHTML = "pas plus de 60 caratères";
+                        document.getElementById('error_titre').innerHTML = "pas plus de 100 caratères";
                     } else if (regex.test(document.getElementById('titre').value) == false) {
                         document.getElementById('titre').classList.add('is-invalid');
                         document.getElementById('error_titre').innerHTML = "caractères spéciaux non autorisés";   
