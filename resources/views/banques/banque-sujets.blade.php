@@ -14,14 +14,17 @@
     <?php
     $lang ='/';
 
-
     $sujets = [
-        '[Bac NSI 2024] Métropole - Réunion - Mayotte - Jour 1 - 24-NSIJ1ME1' => 'S2K3Y6',
-        '[Bac NSI 2024] Métropole - Réunion - Mayotte - Jour 2 - 24-NSIJ2ME1' => 'SSDHAQ',
-        '[Bac NSI 2024] Asie - Jour 1 - 24-NSIJ1JA1' => 'S7PYZQ',
-        '[Bac NSI 2024] Asie - Jour 2 - 24-NSIJ2JA1' => 'SWU7SZ',
-        '[Bac NSI 2024] Amérique du Nord - Jour 1 - 24-NSIJ1AN1' => 'S2WNRK',
-        '[Bac NSI 2024] Amérique du Nord - Jour 2 - 24-NSIJ2AN1' => 'SA6T2M',
+        '[Bac NSI 2024] Métropole - Réunion - Mayotte - Jour 1 - 24-NSIJ1ME1'   => 'S2K3Y6',
+        '[Bac NSI 2024] Métropole - Réunion - Mayotte - Jour 2 - 24-NSIJ2ME1'   => 'SSDHAQ',
+        '[Bac NSI 2024] Asie - Jour 1 - 24-NSIJ1JA1'                            => 'S7PYZQ',
+        '[Bac NSI 2024] Asie - Jour 2 - 24-NSIJ2JA1'                            => 'SWU7SZ',
+        '[Bac NSI 2024] Amérique du Nord - Jour 1 - 24-NSIJ1AN1'                => 'S2WNRK',
+        '[Bac NSI 2024] Amérique du Nord - Jour 2 - 24-NSIJ2AN1'                => 'SA6T2M',
+        '[Bac NSI 2024] Polynésie française - Jour 1 - 24-NSIJ1PO1'             => 'SSDTU2',
+        '[Bac NSI 2024] Polynésie française - Jour 2 - 24-NSIJ2PO1'             => 'SBQGCN',
+        '[Bac NSI 2024] Centres étrangers - Groupe 1 - Jour 1 - 24-NSIJ1G11'    => 'SARP2E',
+        '[Bac NSI 2024] Centres étrangers - Groupe 1 - Jour 2 - 24-NSIJ2G11'    => 'SRQU25',
     ]
     ?>
 
