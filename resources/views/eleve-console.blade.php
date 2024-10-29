@@ -43,7 +43,7 @@ $Parsedown = new ParsedownMath([
                 <div class="mt-5 text-monospace font-weight-bold">{{strtoupper($classe->nom_classe)}}</div>
                 <div class="text-monospace pt-4 pb-2">{{strtoupper(__('ACTIVITÉS DE LA CLASSE'))}}</div>
 
-                @if(sizeof($activites_classe) > 1)
+                @if(sizeof($activites_classe) > 0)
                     <table class="table table-borderless table-sm text-monospace small m-0">
                         @foreach($activites_classe as $code)
                             @php
