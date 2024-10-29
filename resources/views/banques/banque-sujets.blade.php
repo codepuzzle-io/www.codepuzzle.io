@@ -13,6 +13,12 @@
     @include('inc-nav')
     <?php
     $lang ='/';
+
+
+    $sujets = [
+        '[Sujet Bac NSI 2024] Métropole - Réunion - Mayotte - Jour 1 - 24NSIJ1ME1' => 'S2K3Y6',
+        '[Sujet Bac NSI 2024] Métropole - Réunion - Mayotte - Jour 2 - 24NSIJ2ME1' => 'SSDHAQ',
+    ]
     ?>
 
 	<div class="container mt-4 mb-5">
@@ -28,7 +34,11 @@
 
                 <h1>Banque de sujets</h1>
 
-                <pre>en travaux</pre>
+                <ul class="text-monospace">
+                    @foreach($sujets AS $titre => $code)
+                        <li>{{$titre}}: <a href="/{{$code}}" target="_blank">www.codepuzzle.io/{{$code}}</a></li>
+                    @endforeach
+                </ul>
 
             </div>
         </div>
