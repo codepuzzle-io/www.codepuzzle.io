@@ -103,7 +103,10 @@ h2 {
     border:solid 1px #ced4da;
     background-color:#fafcfe;
     border-radius:4px;
-    font-size:80% !important;
+}
+
+.markdown_content code {
+    font-size:85% !important;
 }
 
 

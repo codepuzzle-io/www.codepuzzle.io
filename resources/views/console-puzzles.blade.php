@@ -127,7 +127,7 @@ IFrame('https://www.codepuzzle.io/IP{{ strtoupper($puzzle->jeton) }}', width='10
                                             <div class="mt-3 text-monospace small">{{__('CONSIGNES')}}</div>
                                         @endif
                                         @if ($puzzle->consignes_eleve !== NULL)
-                                            <div class="markdown_content border rounded bg-light text-monospace p-3">{{ $puzzle->consignes_eleve }}</div>
+                                            <div class="markdown_content border rounded bg-light p-3">{{ $puzzle->consignes_eleve }}</div>
                                         @endif
                                     @endif
                                     <div class="mt-3 text-monospace small">{{__('CODE')}}</div>

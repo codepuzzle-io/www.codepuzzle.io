@@ -90,5 +90,8 @@
     border:solid 1px #ced4da;
     background-color:#fafcfe;
     border-radius:4px;
-    font-size:80%;
+}
+
+.editor-preview code {
+    font-size:85%;
 }

@@ -152,7 +152,7 @@ IFrame('https://www.codepuzzle.io/ID{{ strtoupper($defi->jeton) }}', width='100%
                                             <div class="mt-3 text-monospace small">{{__('CONSIGNES')}}</div>
                                         @endif
                                         @if ($defi->consignes_eleve !== NULL)
-                                            <div class="markdown_content border rounded bg-light text-monospace p-3">{{ $defi->consignes_eleve }}</div>
+                                            <div class="markdown_content border rounded bg-light p-3">{{ $defi->consignes_eleve }}</div>
                                         @endif
                                     @endif
 

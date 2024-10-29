@@ -21,7 +21,7 @@ $code_pre_tests = $defi->code_pre_tests;
     <title>{{ config('app.name') }} | Défi - D{{ $jeton }}</title>
 </head>
 
-<body class="no-mathjax" oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
+<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 
 	<?php
 	// defi avec jeton eleve
@@ -70,7 +70,7 @@ $code_pre_tests = $defi->code_pre_tests;
 	<div class="container-fluid">
 
 		@if(!$iframe)
-		<h1 class="mt-2 mb-4 text-center"><a class="navbar-brand m-1" href="{{ url('/') }}"><img src="{{ asset('img/code-puzzle.png') }}" width="140" alt="CODE PUZZLE" /></a></h1>
+		<h1 class="mt-2 mb-3 text-center"><a class="navbar-brand m-1" href="{{ url('/') }}"><img src="{{ asset('img/code-puzzle.png') }}" width="140" alt="CODE PUZZLE" /></a></h1>
 		@endif
 
 		@if ($defi->with_chrono == 1 OR $defi->with_nbverif == 1)
@@ -102,32 +102,13 @@ $code_pre_tests = $defi->code_pre_tests;
 						<div class="mb-1 font-weight-bold">{{ $defi->titre_eleve }}</div>
 					@endif
 
-					<?php
-					include('lib/parsedownmath/ParsedownMath.php');
-					$Parsedown = new ParsedownMath([
-						'math' => [
-							'enabled' => true, // Write true to enable the module
-							'matchSingleDollar' => true // default false
-						]
-					]);
-					$consignes_parsed = $Parsedown->text($defi->consignes_eleve)
-					?>
-
 					@if ($defi->consignes_eleve !== NULL)
-						<div class="consignes mathjax" style="text-align:justify;">
-							<?php
-							echo $consignes_parsed;
-							?>
-						</div>
+						<div class="markdown_content consignes" style="text-align:justify;">{{$defi->consignes_eleve}}</div>
 					@endif
 
-					<div id="consignes_hidden" class="mathjax" style="padding:30px 20px 0px 20px;width:1200px;height:630px;background-color:white;display:none;">
+					<div id="consignes_hidden" style="padding:30px 20px 0px 20px;width:1200px;height:630px;background-color:white;display:none;">
 						<img src="{{ asset('img/codepuzzle.png') }}" height="30" />
-						<div class="consignes" style="text-align:justify;padding:20px 40px 20px 40px;margin-top:25px;border-radius:10px;font-size:28px;background-color:#F8FAFC;">
-							<?php
-							echo $consignes_parsed;
-							?>
-						</div>
+						<div class="markdown_content consignes" style="text-align:justify;padding:20px 40px 20px 40px;margin-top:25px;border-radius:10px;font-size:28px;background-color:#F8FAFC;">{{$defi->consignes_eleve}}</div>
 					</div>
 
 				</div>
@@ -200,6 +181,7 @@ $code_pre_tests = $defi->code_pre_tests;
 	</div><!-- container -->
 
     @include('inc-bottom-js')
+	@include('markdown/inc-markdown-afficher-js')
 
 	<script>
 		function copierCode(bouton) {
@@ -404,23 +386,6 @@ $code_pre_tests = $defi->code_pre_tests;
 			});
 		});
 	</script>
-
-
-	<script>
-		MathJax = {
-			tex: {
-				inlineMath: [['$', '$'], ['\\(', '\\)']],
-				displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-				processEscapes: true
-			},
-			options: {
-				ignoreHtmlClass: "no-mathjax",
-				processHtmlClass: "mathjax"
-			}
-		};        
-	</script>
-	<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script> 
-
 
 	<script src="{{ asset('js/ace/ace.js') }}" type="text/javascript" charset="utf-8"></script>
 	<script>
