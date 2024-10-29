@@ -59,7 +59,7 @@
                                 <!-- options -->
     							<div style="float:right;">
 
-                                    <a class='btn btn-dark btn-sm' href='/sujet-console/{{ $sujet->jeton_secret }}' role='button' data-toggle="tooltip" data-placement="top" title="{{__('voir / corriger')}}"><i class="fas fa-eye"></i></a>
+                                    <a class='btn btn-dark btn-sm' href='/sujet-console/{{ $sujet->jeton_secret }}' role='button' data-toggle="tooltip" data-placement="top" title="{{__('voir')}}"><i class="fas fa-eye"></i></a>
                
                                     <!-- supprimer -->
                                     <span id="supprimer_button_{{$loop->iteration}}">
