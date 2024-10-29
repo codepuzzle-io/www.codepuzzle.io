@@ -12,8 +12,10 @@
     };
 </script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
     marked.use({
@@ -57,44 +59,6 @@
         // Markdown
         el.innerHTML = DOMPurify.sanitize(marked.parse(texte));
         
-
-        // Latex
-        /*
-        document.addEventListener("DOMContentLoaded", function() {
-            // Vérifie si MathJax est chargé et que typesetPromise est disponible
-            if (typeof MathJax !== "undefined" && MathJax.typesetPromise) {
-                // Cible tous les éléments ayant la classe markdown_content
-                const elements = document.querySelectorAll(".markdown_content");
-
-                // Attendre le démarrage de MathJax et typer chaque élément
-                MathJax.startup.promise = MathJax.startup.promise || Promise.resolve();
-                MathJax.startup.promise.then(() => {
-                    MathJax.typesetPromise(Array.from(elements)).then(() => {
-                        console.log("MathJax a rendu les équations pour tous les éléments !");
-                    }).catch((err) => console.error("Erreur lors du rendu avec MathJax:", err));
-                });
-            } else {
-                console.error("MathJax n'est pas disponible ou la fonction typesetPromise n'existe pas.");
-            }
-        });
-        */
-       /*
-        document.addEventListener("DOMContentLoaded", function() {
-            if (typeof MathJax !== "undefined" && MathJax.typesetPromise) {
-                MathJax.startup.promise = MathJax.startup.promise || Promise.resolve();
-                
-                // Démarrer le rendu pour l'ensemble du document
-                MathJax.startup.promise.then(() => {
-                    MathJax.typesetPromise().then(() => {
-                        console.log("MathJax a rendu les équations pour toute la page !");
-                    }).catch((err) => console.error("Erreur lors du rendu avec MathJax:", err));
-                });
-            } else {
-                console.error("MathJax n'est pas disponible ou la fonction typesetPromise n'existe pas.");
-            }
-        });
-        */
-
     });  
     
     // coloration syntaxique
