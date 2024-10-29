@@ -56,7 +56,7 @@ if (isset($jeton)) {
                 <div class="pl-3 pr-3" style="direction: ltr;">
 
                     <h1 id="sujet_entete" class="text-center m-0 pb-3 pt-2">
-                        <a href="{{ url('/') }}"><img src="{{ asset('img/code-puzzle.png') }}" width="100" alt="CODE PUZZLE" /></a> 
+                        <a href="{{ url('/') }}"><img src="{{ asset('img/code-puzzle.png') }}" width="140" alt="CODE PUZZLE" /></a> 
                     </h1>
 
                     <!-- SUJET -->

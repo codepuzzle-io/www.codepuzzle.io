@@ -85,7 +85,7 @@ app()->setLocale($puzzle->lang)
     <div class="container-fluid">
 
         @if(!$iframe)
-        <h1 class="mt-2 mb-5 text-center"><a class="navbar-brand m-1" href="{{ url('/') }}"><img src="{{ asset('img/code-puzzle.png') }}" width="100" alt="CODE PUZZLE" /></a></h1>
+        <h1 class="mt-2 mb-5 text-center"><a class="navbar-brand m-1" href="{{ url('/') }}"><img src="{{ asset('img/code-puzzle.png') }}" width="140" alt="CODE PUZZLE" /></a></h1>
         @endif
 
 		@if ($puzzle->with_chrono == 1 OR $puzzle->with_chrono == 1)
