@@ -54,7 +54,7 @@
                             @csrf
                             <div class="small text-muted mt-3 pb-1">
                                 Indiquez ci-dessous les codes des défis que vous souhaitez importer. Saisir les codes en les séparant par des virgules.<br />Exemple: DQMSK,DXSR8,DWMX2,DEHSD,DL92R<br />
-                                Pour trouver des défis à importer: <a href="/defis-banque" target="_blank">banque de défis</a>. Des codes peuvent aussi être échangés entre enseignants.
+                                Pour trouver des défis à importer: <a href="/banque-defis" target="_blank">banque de défis</a>. Des codes peuvent aussi être échangés entre enseignants.
                             </div>
                             <textarea id="codes_defis" name="codes_defis" class="form-control" rows="4"></textarea>
                             <button type="submit" class="btn btn-primary btn-sm mt-1 pl-3 pr-3"><i class="fas fa-check"></i></button>       
