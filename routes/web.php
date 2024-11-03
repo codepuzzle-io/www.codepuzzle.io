@@ -203,14 +203,21 @@ Route::get('/devoir-console/{jeton_secret}', function ($jeton_secret){
     $devoir = App\Models\Devoir::where('jeton_secret', $jeton_secret)->first();
     if ($devoir->sujet_id == NULL){
         return view('devoirs-v1/devoir-console')->with('jeton_secret', $jeton_secret);
-    }else{
+    } else {
         return view('devoirs/devoir-console')->with('jeton_secret', $jeton_secret);
     }
 })->name('devoir-console');
 
-Route::get('/devoir-supervision/{devoir_id}', function ($devoir_id){return view('devoirs/devoir-supervision')->with('devoir_id', $devoir_id);})->name('devoir-supervision');
-Route::get('/devoir-imprimer/{devoir_id}', function ($devoir_id){return view('devoirs/devoir-imprimer')->with('devoir_id', $devoir_id);})->name('devoir-imprimer');
+Route::get('/devoir-imprimer/{devoir_id}', function ($devoir_id){
+    $devoir = App\Models\Devoir::find(Crypt::decryptString($devoir_id));
+    if ($devoir->sujet_id == NULL){
+        return view('devoirs-v1/devoir-imprimer')->with('devoir_id', $devoir_id);
+    } else {
+        return view('devoirs/devoir-imprimer')->with('devoir_id', $devoir_id);
+    }
+})->name('devoir-imprimer');
 
+Route::get('/devoir-supervision/{devoir_id}', function ($devoir_id){return view('devoirs/devoir-supervision')->with('devoir_id', $devoir_id);})->name('devoir-supervision');
 Route::get('/devoir-creer', [App\Http\Controllers\DevoirController::class, 'redirect']);
 Route::get('/devoir-creer/{sujet_id}', function ($sujet_id) {return view('devoirs/devoir-creer')->with('sujet_id', $sujet_id);}); 
 Route::get('/devoir-modifier/{devoir_id}', function ($devoir_id) {return view('devoirs/devoir-creer')->with('devoir_id', $devoir_id);}); 

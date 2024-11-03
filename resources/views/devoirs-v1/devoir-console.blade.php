@@ -1,5 +1,6 @@
 <?php
-$devoir = App\Models\Devoir::where('jeton_secret', $jeton_secret)->first();
+//$devoir = App\Models\Devoir::where('jeton_secret', $jeton_secret)->first();
+$devoir = App\Models\Devoir::find(Crypt::decryptString($devoir_id));
 if (!$devoir) {
     echo "<pre>Ce devoir n'existe pas</pre>";
     exit();
@@ -123,7 +124,7 @@ $devoir_eleves = App\Models\Copie::where('jeton_devoir', $devoir->jeton)->orderB
                 
                 <div class="row mt-3">
                     <div class="col-md-4 offset-4 text-center">
-                        <a class="btn btn-dark btn-sm d-block" href="/devoir-imprimer/{{$jeton_secret}}" role="button"><i class="fa-solid fa-print mr-2"></i> imprimer les comptes-rendus</a>
+                        <a class="btn btn-dark btn-sm d-block" href="/devoir-imprimer/{{ Crypt::encryptString($devoir->id) }}" role="button"><i class="fa-solid fa-print mr-2"></i> imprimer les comptes-rendus</a>
                         <div class="text-muted small mt-1">pour les annoter si nécessaire et les distribuer aux élèves</div>
                     </div>
                 </div>

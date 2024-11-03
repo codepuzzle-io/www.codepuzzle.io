@@ -1,10 +1,11 @@
 <?php
-$devoir = App\Models\Devoir::where('jeton_secret', $jeton_secret)->first();
+//$devoir = App\Models\Devoir::where('jeton_secret', $jeton_secret)->first();
+$devoir = App\Models\Devoir::find(Crypt::decryptString($devoir_id));
 if (!$devoir){
     echo "<pre>Cet entraînement n'existe pas</pre>";
     exit();
 }
-$devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)->orderBy('pseudo')->get();
+$devoir_eleves = App\Models\Copie::where('jeton_devoir', $devoir->jeton)->orderBy('pseudo')->get();
 ?>
 <!doctype html>
 <html lang="fr">
@@ -44,13 +45,13 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
     </style>  
     <title>ENTRAÎNEMENT / DEVOIR | {{$devoir->jeton}} | IMPRIMER</title>
 </head>
-<body class="no-mathjax">
+<body>
 
     <div id="header" class="container pt-3">
         <div class="row pt-3">
             <div class="col-md-2">
                 <div class="text-right mb-3">
-                    <a class="btn btn-light btn-sm" href="/devoir-console/{{strtoupper($jeton_secret)}}" role="button"><i class="fas fa-arrow-left"></i></a>
+                    <a class="btn btn-light btn-sm" href="/devoir-console/{{ $devoir->jeton_secret }}" role="button"><i class="fas fa-arrow-left"></i></a>
                 </div>
             </div>
             <div class="col-md-8">
@@ -67,18 +68,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 
         <!-- CONSIGNES -->
         <div class="text-monospace mt-3">{{strtoupper(__('consignes'))}}</div>
-        <div class="mathjax" style="padding:10px 15px 0px 15px;border-radius:4px;border:solid 1px gray;background-color:white;">
-            <?php
-            include('lib/parsedownmath/ParsedownMath.php');
-            $Parsedown = new ParsedownMath([
-                'math' => [
-                    'enabled' => true, // Write true to enable the module
-                    'matchSingleDollar' => true // default false
-                ]
-            ]);
-            echo $Parsedown->text($devoir->consignes_eleve);
-            ?>
-        </div>
+        <div class="markdown_content" style="padding:10px 15px 0px 15px;border-radius:4px;border:solid 1px gray;background-color:white;">{{ $devoir->consignes_eleve }}</div>
         <!-- CONSIGNES -->                    
 
         <!-- SOLUTION --> 
@@ -113,17 +103,7 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
 
                 <!-- CONSIGNES -->
                 <div class="text-monospace mt-3">{{strtoupper(__('consignes'))}}</div>
-                <div class="mathjax" style="padding:12px 15px 0px 15px;border-radius:4px;border:solid 1px gray;background-color:white;">
-                    <?php
-                    $Parsedown = new ParsedownMath([
-                        'math' => [
-                            'enabled' => true, // Write true to enable the module
-                            'matchSingleDollar' => true // default false
-                        ]
-                    ]);
-                    echo $Parsedown->text($devoir->consignes_eleve);
-                    ?>
-                </div>
+                <div class="markdown_content" style="padding:12px 15px 0px 15px;border-radius:4px;border:solid 1px gray;background-color:white;">{{ $devoir->consignes_eleve }}</div>
                 <!-- CONSIGNES -->                  
 
                 <!-- CODE ELEVE --> 
@@ -152,21 +132,9 @@ $devoir_eleves = App\Models\Devoir_eleve::where('jeton_devoir', $devoir->jeton)-
     {{-- /PRINT --}}
 
     @include('inc-bottom-js')
+    @include('markdown/inc-markdown-afficher-js')
 
-    <script>
-        MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-                processEscapes: true
-            },
-            options: {
-                ignoreHtmlClass: "no-mathjax",
-                processHtmlClass: "mathjax"
-            }
-        };        
-    </script>     
-    <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script> 	
+    	
 
 
     <script src="{{ asset('js/ace/ace.js') }}" type="text/javascript" charset="utf-8"></script>
