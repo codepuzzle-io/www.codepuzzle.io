@@ -1,4 +1,5 @@
 <?php
+$page_devoir_corriger = true;
 $devoir = App\Models\Devoir::find(Crypt::decryptString($devoir_id));
 if (!$devoir) {
     echo "<pre>Ce devoir n'existe pas</pre>";
@@ -64,6 +65,9 @@ dump($copie_cells);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
     <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
     
     <style>
         html,body {

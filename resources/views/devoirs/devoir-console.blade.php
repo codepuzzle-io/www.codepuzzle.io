@@ -35,9 +35,13 @@ $page_devoir_console = true;
 			</div>
 
 			<div class="col-md-10 pl-4 pr-4">
+
+                <h1 class="text-center">DEVOIR</h1>
+
                 <div class="row">
+                
                     <div class="col-md-12 text-monospace p-2 pl-3 pr-3 mb-3" style="border:dashed 2px #e3342f;border-radius:8px;">
-                 
+
                         @if(isset($_GET['i']) AND !Auth::check())
                             <div class="text-monospace text-danger text-center font-weight-bold m-2">SAUVEGARDEZ LES INFORMATIONS CI-DESSOUS AVANT DE QUITTER CETTE PAGE</div>
                         @endif

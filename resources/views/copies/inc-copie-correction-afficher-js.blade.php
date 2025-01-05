@@ -226,6 +226,7 @@
     
     @foreach($copie_cells AS $copie_cell)
         @if ($copie_cell->cell_type == 'code')
+
             editor_code_eleve[{{ $loop->iteration }}] = ace.edit('code_editor_eleve_' + {{ $loop->iteration }}, {
                 theme: "ace/theme/puzzle_code",
                 mode: "ace/mode/python",
@@ -249,7 +250,7 @@
                 tabSize: 4
             });
             editor_code_eleve[{{ $loop->iteration }}].container.style.lineHeight = 1.5;
-            editor_code_eleve[{{ $loop->iteration }}].setValue({!! json_encode($copie_cell->source[0]) ?? '' !!}, -1);
+            editor_code_eleve[{{ $loop->iteration }}].setValue({!! json_encode($copie_cell->source[0] ?? '') !!}, -1);
 
             editor_code_enseignant[{{ $loop->iteration }}] = ace.edit('code_editor_enseignant_' + {{ $loop->iteration }}, {
                 theme: "ace/theme/puzzle_code",
@@ -276,7 +277,8 @@
             @if ($copie->correction_enseignant != null)
                 editor_code_enseignant[{{ $loop->iteration }}].setValue({!! json_encode($copie_cell->source[1]) ?? '' !!}, -1);
             @elseif ($sujet->type == "exo")
-                editor_code_enseignant[{{ $loop->iteration }}].setValue({!! json_encode($sujet_json->code->{$loop->iteration}->code_enseignant) ?? '' !!}, -1);
+                // enseignant
+                editor_code_enseignant[{{ $loop->iteration }}].setValue({!! json_encode($sujet_json->code->{$loop->iteration}->code_enseignant ?? '') !!}, -1);
             @endif
             
         @endif

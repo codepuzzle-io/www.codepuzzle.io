@@ -37,6 +37,41 @@
         @endforeach
     @endif
 
+    @if (isset($page_devoir_corriger))
+        @foreach($sujet_json->code AS $code)
+            @if(count((array) $sujet_json->code) > 1)
+                <div class="text-monospace mt-3 small">PROGRAMME {{ $loop->iteration }}</div>
+            @else
+                <div class="text-monospace mt-3 small">PROGRAMME</div>
+            @endif
+            <div class="p-3" style="border:solid #ced4da 1px;border-radius:4px;background-color:#F3F5F7;">
+                <!-- CODE ELEVE --> 
+                <div class="mb-1 text-monospace small">{{strtoupper(__("code ÉlÈve"))}}</div>
+                <div class="highlight-me"><pre><code class="language-python rounded">{{ $code->code_eleve}} def fonc():</code></pre></div>
+                <!-- /CODE ELEVE -->
+
+                <!-- CODE ENSEIGNANT --> 
+                <div class="mt-4 text-monospace small">{{strtoupper(__("code enseignant"))}}</div>
+                <div class="highlight-me"><pre><code class="language-python rounded">{{ $code->code_enseignant }}</code></pre></div>
+                <!-- /CODE ENSEIGNANT -->
+
+                <!-- SOLUTION --> 
+                <div class="mt-4 text-monospace small">{{strtoupper(__('solution possible'))}}</div>
+                <div class="highlight-me"><pre><code class="language-python rounded">{{ $code->code_solution }}</code></pre></div>
+                <!-- /SOLUTION --> 	
+            </div>
+        @endforeach
+    @endif
+
+    <!-- Inclure Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script>
+        // Cibler uniquement les div avec la classe "highlight-me"
+        document.querySelectorAll('.highlight-me pre code').forEach((block) => {
+            hljs.highlightElement(block);
+        });
+    </script>
+
     {{-- ============== --}}
     {{-- ==== /EXO ==== --}}
     {{-- ============== --}}

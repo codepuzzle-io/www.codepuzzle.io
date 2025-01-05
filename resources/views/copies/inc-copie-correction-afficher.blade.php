@@ -18,11 +18,17 @@
                             <div id="programme_titre_{{ $loop->iteration }}" class="font-weight-bold text-monospace">PROGRAMME</div>
                         @endif           
                     @endif 
-                    <div class="cellule_content mb-2 p-3">   
+                    <div class="cellule_content mb-2 p-3">  
+
+                        <!-- Code élève -->
                         <div class="text-monospace small text-muted"><kbd>1</kbd> Code élève <i class="text-muted small">en lecture seule</i></div>
                         <div id="code_editor_eleve_{{ $loop->iteration }}" class="mt-1 mb-2 code-editor"></div>
+
+                        <!-- Code enseignant -->
                         <div class="text-monospace small text-muted"><kbd>2</kbd> Code enseignant</div>
                         <div id="code_editor_enseignant_{{ $loop->iteration }}" class="mt-1 mb-2 code-editor"></div>
+
+                        <!-- Console -->
                         <div class="row no-gutters">
                             <div class="col-auto mr-2">
                                 <div class="form-check d-block text-right pl-0">

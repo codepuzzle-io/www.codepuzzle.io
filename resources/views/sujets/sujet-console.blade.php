@@ -48,6 +48,8 @@ if (isset($jeton_secret)) {
 
 			<div class="col-md-10">
 
+				<h1 class="text-center">SUJET</h1>
+
                 @if($sujet->user_id == 0 OR !Auth::check())
                     <div class="row ml-1 mr-1">
                         <div class="col-md-10 offset-md-1 text-monospace p-2 pl-5 pr-5 mb-3" style="border:dashed 2px #e3342f;border-radius:8px;">
