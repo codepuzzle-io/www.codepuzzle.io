@@ -60,13 +60,13 @@
 
 @endif
 
-@if ($sujet->type == 'pdf')
+@if ($sujet->type == 'pdf' OR $sujet->type == 'md')
 
-    {{-- ============== --}}
-    {{-- ==== PDF ===== --}}
-    {{-- ============== --}}
+    {{-- =============== --}}
+    {{-- == PDF - MD === --}}
+    {{-- =============== --}}
 
-    <div style="padding:60px 15px 0 15px;">
+    <div style="padding:80px 15px 0 15px;">
 
         <div class="mb-4" style="position:absolute;top:0;right:25px;padding:10px 10px 10px 40px;width:100%;z-index:1000;background-color:#F8FAFC;">
 
@@ -80,13 +80,21 @@
             </button>
 
             @if (isset($page_sujet_copie))
-            <div style="float:right">
-                <div id="boutons">
-                    <a onclick="download_copie_text(this)" class="btn btn-outline-secondary btn-sm text-monospace" role="button" data-container="#boutons" data-toggle="tooltip" data-placement="auto" title="télécharger la copie au format texte (.txt)"><i class="fas fa-file-download"></i> texte</a>
-                    <a onclick="download_copie_ipynb(this)" class="btn btn-outline-secondary btn-sm text-monospace" role="button" data-container="#boutons" data-toggle="tooltip" data-placement="auto" title="télécharger la copie au format notebook (.ipynb)"><i class="fas fa-file-download"></i> notebook</a>
-                    <button type="button" style="float:right;" class="ml-5 btn btn-sm btn-danger" onclick="delete_localstorage()" data-container="#boutons" data-toggle="tooltip" data-placement="auto" title="réinitialiser la copie"><i class="fas fa-sync-alt"></i></button>
+                <div style="float:right">
+                    <div id="boutons">
+                        <a onclick="download_copie_text(this)" class="btn btn-outline-secondary btn-sm text-monospace" role="button" data-container="#boutons" data-toggle="tooltip" data-placement="auto" title="télécharger la copie au format texte (.txt)"><i class="fas fa-file-download"></i> texte</a>
+                        <a onclick="download_copie_ipynb(this)" class="btn btn-outline-secondary btn-sm text-monospace" role="button" data-container="#boutons" data-toggle="tooltip" data-placement="auto" title="télécharger la copie au format notebook (.ipynb)"><i class="fas fa-file-download"></i> notebook</a>
+                        <button onclick="document.getElementById('reinitialiser_copie').style.display='block';$(this).tooltip('hide');" type="button" style="float:right;width:35px;" class="ml-5 btn btn-sm btn-primary text-center" data-container="#boutons" data-toggle="tooltip" data-placement="left" title="réinitialiser la copie"><i class="fas fa-sync-alt"></i></button>
+                    </div>
                 </div>
-            </div>
+            @endif
+
+            @if (isset($page_sujet_copie))
+                <div id="reinitialiser_copie" class="text-right pt-1 text-monospace" style="display:none">
+                    <small>Le contenu de la copie sera supprimé</small> 
+                    <button  onclick="delete_localstorage()" type="button" class="btn btn-sm btn-danger">confirmer</button>
+                    <button onclick="document.getElementById('reinitialiser_copie').style.display='none';" type="button" class="btn btn-sm btn-dark text-center" style="width:35px;"><i class="fa-solid fa-xmark"></i></button>
+                </div>
             @endif
 
         </div>
@@ -95,8 +103,8 @@
 
     </div>
 
-    {{-- ============== --}}
-    {{-- ==== /PDF ==== --}}
-    {{-- ============== --}}
+    {{-- =============== --}}
+    {{-- == /PDF - MD == --}}
+    {{-- =============== --}}
 
 @endif

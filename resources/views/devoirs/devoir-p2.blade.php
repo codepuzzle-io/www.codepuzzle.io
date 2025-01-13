@@ -12,6 +12,7 @@ $page_devoir = true;
 
 	<script>
 		// FOCUS
+        // Événement lorsque l'utilisateur quitte la page
 		window.addEventListener('blur', function() {
 			window.location.replace("/devoir");
 		});

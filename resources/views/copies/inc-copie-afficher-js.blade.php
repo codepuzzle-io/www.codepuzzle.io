@@ -138,6 +138,29 @@
     {{-- == /Éditeur ACE ================================================= --}}
 
 
+    {{-- == Chargement de la copie avec la copie sauvegardée =========== --}}
+    <script>
+        @if (isset($page_sujet_copie))
+            let saved_copie = JSON.parse(localStorage.getItem('copie-{{$sujet->jeton}}'));
+        @endif
+        @if (isset($page_devoir))
+            let saved_copie = {!! $copie->copie !!};
+        @endif
+        if (saved_copie !== null) {
+            console.log('copie-{{$sujet->jeton}}');
+            console.log(saved_copie);
+            // Parcourir chaque cellule du JSON
+            saved_copie.cells.forEach((cell, index) => {
+                if (cell.cell_type === "code") {
+                    console.log('code: '+cell.source.join(''));
+                    editor_code[index+1].setValue(cell.source.join(''), -1);
+                }
+            });
+        }
+    </script>
+    {{-- == /Chargement de la copie avec la copie sauvegardée ========== --}}
+
+
     {{-- == Interdiction du copier-coller extérieur ====================== --}}
     <script>		
         // INTERDICTION DU COPIER-COLLER DE CODE EXTERIEUR
@@ -161,11 +184,11 @@
 @endif
 
 
-@if ($sujet->type == 'pdf')
+@if ($sujet->type == 'pdf' OR $sujet->type == 'md')
 
-    {{-- ============= --}}
-    {{-- ==== PDF ==== --}}
-    {{-- ============= --}}
+    {{-- =============== --}}
+    {{-- == PDF - MD === --}}
+    {{-- =============== --}}
 
 
     {{-- == Markdown + MathJax + coloration ============================== --}}
@@ -435,8 +458,9 @@
             let saved_copie = JSON.parse(localStorage.getItem('copie-{{$sujet->jeton}}'));
         @endif
         @if (isset($page_devoir))
-            let saved_copie = JSON.parse({!! $copie->copie !!});
+            let saved_copie = {!! $copie->copie !!};
         @endif
+        console.log('saved copie: '+saved_copie);
         if (saved_copie !== null) {
             console.log('copie-{{$sujet->jeton}}');
             // Parcourir chaque cellule du JSON
@@ -457,9 +481,9 @@
     {{-- == /Chargement de la copie avec la copie sauvegardée ========== --}}
 
  
-    {{-- ============== --}}
-    {{-- ==== /PDF ==== --}}
-    {{-- ============== --}}
+    {{-- =============== --}}
+    {{-- == /PDF - MD == --}}
+    {{-- =============== --}}
 
 @endif
 
@@ -543,11 +567,14 @@
 
 
 @if (isset($page_sujet_copie))
+
     {{-- == Sauvegarde automatique dans localstorage ===================== --}}
     <script>
         // Sauvegarde automatique dans localstorage (toutes les 10s)
         setInterval(function() {
             localStorage.setItem('copie-{{$sujet->jeton}}', get_copie_ipynb());
+            console.log('Copie sauvegardée dans localstorage.');
+            console.log(get_copie_ipynb());
         }, 10000);
 
         // Vide localstorage
