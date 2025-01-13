@@ -57,7 +57,8 @@
     */
 
 .editor-preview {
-    font-family: 'Latin Modern Roman', serif;
+    font-family: 'Crimson Text', serif;
+    font-weight: 500;
     font-size:17px;
 }
 

@@ -70,7 +70,8 @@ h2 {
 
 /* MARKDOWN CONTENT */
 .markdown_content {
-    font-family: 'Latin Modern Roman', serif;
+    font-family: 'Crimson Text', serif;
+    font-weight: 500;
     font-size:17px;
 }
 
@@ -780,7 +781,8 @@ svg {
     background-color:white;
     overflow: hidden;
     resize: none;
-    font-family: 'Latin Modern Roman', serif;
+    font-family: 'Crimson Text', serif;
+    font-weight: 500;
     font-size:17px;
 }
 

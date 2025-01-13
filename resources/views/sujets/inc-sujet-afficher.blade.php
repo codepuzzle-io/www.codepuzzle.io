@@ -1,5 +1,5 @@
 <div class="p-3" style="border:1px solid #ced4da;border-radius:4px;background-color:white;">
-<div class="pb-2 text-uppercase font-weight-bold" style="color:black;font-size:20px;font-family: 'Latin Modern Roman', serif;">{{ $sujet->titre }}</div>
+<div class="pb-2 text-uppercase font-weight-bold" style="color:black;font-size:20px;font-family:'Crimson Text',serif;font-weight:500;">{{ $sujet->titre }}</div>
 
 @if ($sujet->type == 'exo')
 
