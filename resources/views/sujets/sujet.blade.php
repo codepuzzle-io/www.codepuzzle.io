@@ -22,7 +22,7 @@ $page_sujet = true;
 <body>
 
 	<div class="mt-2 mb-4 text-center"><a class="navbar-brand m-1" href="{{ url('/') }}"><img src="{{ asset('img/code-puzzle.png') }}" width="200" alt="CODE PUZZLE" /></a></div>
-
+ 
 	<div class="container">
 
         <!-- LIENS -->
@@ -70,7 +70,6 @@ $page_sujet = true;
 
         </div><!-- /row -->
         <!-- /LIENS -->
-
 
 		<div class="row mt-3 mb-3">
 			<div class="col">		
