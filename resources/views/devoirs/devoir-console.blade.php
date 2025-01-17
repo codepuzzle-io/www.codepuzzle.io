@@ -1,29 +1,38 @@
 <?php
-$devoir = App\Models\Devoir::where('jeton_secret', $jeton_secret)->first();
-if (!$devoir) {
-    echo "<pre>Ce devoir n'existe pas</pre>";
-    exit();
+if (isset($jeton_secret)) {
+    $devoir = App\Models\Devoir::where('jeton_secret', $jeton_secret)->first();
+	if (!$devoir) {
+		echo "<pre>Ce devoir n'existe pas.</pre>";
+		exit();
+	} else {
+		if ($devoir->user_id !== 0 && (!Auth::check() || (Auth::check() && Auth::id() !== $devoir->user_id))) {
+			echo "<pre>Vous devez vous connecter pour accéder à ce devoir.</pre>";
+			exit();
+		}
+        $copies = App\Models\Copie::where('jeton_devoir', $devoir->jeton)->orderBy('pseudo')->get();
+        $sujet = App\Models\Sujet::find($devoir->sujet_id);
+        $sujet_json = json_decode($sujet->sujet);
+        $page_devoir_console = true;
+	}
 }
-$copies = App\Models\Copie::where('jeton_devoir', $devoir->jeton)->orderBy('pseudo')->get();
-$sujet = App\Models\Sujet::find($devoir->sujet_id);
-$sujet_json = json_decode($sujet->sujet);
-$page_devoir_console = true;
 ?>
 <!doctype html>
 <html lang="fr">
 <head>
     @include('inc-meta')
-
     <meta name="robots" content="noindex">
-
     <title>DEVOIR | {{$devoir->jeton}} | CONSOLE</title>
 </head>
 <body>
 
-    @include('inc-nav')
+    @if(Auth::check())
+		@include('inc-nav-console')
+	@else
+		@include('inc-nav')
+	@endif
 
-	<div class="container">
-		<div class="row pt-3">
+	<div class="container mt-4">
+		<div class="row">
 
             <div class="col-md-2 text-right pb-5">
 				@if(Auth::check())
@@ -34,52 +43,61 @@ $page_devoir_console = true;
 				@endif
 			</div>
 
-			<div class="col-md-10 pl-4 pr-4">
+			<div class="col-md-10">
 
                 <h1 class="text-center">DEVOIR</h1>
 
+                @if($devoir->user_id == 0 OR !Auth::check())
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="text-monospace p-2 pl-3 pr-3 mb-3" style="border:dashed 2px #e3342f;border-radius:8px;">
+                                @if(isset($_GET['i']) AND !Auth::check())
+                                    <div class="text-monospace text-danger text-center font-weight-bold m-2">SAUVEGARDEZ LES INFORMATIONS CI-DESSOUS AVANT DE QUITTER CETTE PAGE</div>
+                                @endif
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="text-center font-weight-bold small">lien secret</div>
+                                        <div class="text-center rounded bg-danger text-white p-3">
+                                            <a id="lien_secret" href="/devoir-console/{{strtoupper($devoir->jeton_secret)}}" target="_blank" class="text-white font-weight-bold">www.codepuzzle.io/devoir-console/{{strtoupper($devoir->jeton_secret)}}</a>
+                                            <div class="pl-1 text-light small" onclick="copier('lien_secret', this)" style="cursor:pointer;width:20px;display:inline-block;"><i class="fa-regular fa-clone"></i></div>
+                                        </div>
+                                        <div class="small text-muted pt-1"><span class="text-danger"><i class="fas fa-exclamation-circle"></i> Ne pas partager ce lien. Il permet de revenir sur cette page.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
                 <div class="row">
-                
-                    <div class="col-md-12 text-monospace p-2 pl-3 pr-3 mb-3" style="border:dashed 2px #e3342f;border-radius:8px;">
 
-                        @if(isset($_GET['i']) AND !Auth::check())
-                            <div class="text-monospace text-danger text-center font-weight-bold m-2">SAUVEGARDEZ LES INFORMATIONS CI-DESSOUS AVANT DE QUITTER CETTE PAGE</div>
-                        @endif
+                    <div class="col-md-12">
+                        <div class="text-monospace pt-2 pl-3 pr-3 pb-3 mb-3" style="background-color:#dae0e5;border-radius:6px;">
 
-                        <div class="row justify-content-md-center">
-                            @if($devoir->user_id == 0 OR !Auth::check())
-                            <div class="col-md-auto">
-                                 <div class="text-center font-weight-bold small">lien secret</div>
-                                 <div class="text-center rounded bg-danger text-white p-3"><a href="/devoir-console/{{strtoupper($devoir->jeton_secret)}}" target="_blank" class="text-white font-weight-bold">www.codepuzzle.io/devoir-console/{{strtoupper($devoir->jeton_secret)}}</a></div>
-                                 <div class="small text-muted pt-1"><span class="text-danger"><i class="fas fa-exclamation-circle"></i> Ne pas partager ce lien</span><br />Il permet d'accéder à la console du devoir (sujet, lien pour les élèves, correction...).</div>
+                            <div>
+                                <span class="text-center small text-muted p-0" style="vertical-align:2px;"><i class="fa-solid fa-share"></i> Lien à fournir aux élèves: </span>
+                                <span class="text-center font-weight-bold text-monospace">
+                                    <a id="lien" href="/E{{strtoupper($devoir->jeton)}}" target="_blank" class="text-dark" style="font-size:24px">www.codepuzzle.io/E{{strtoupper($devoir->jeton)}}</a>
+                                </span>
+                                <span class="pl-3">
+                                    <button onclick="fullscreen('fullscreen')" type="button" class="btn btn-light btn-sm" style="vertical-align:4px;"><i class="fas fa-expand"></i></button>
+                                    <div id="fullscreen" class="bg-white text-center" style="display:none">
+                                        <br /><br /><br /><br /><br /><br />
+                                        <img src="{{ asset('img/code-puzzle.png') }}" width="200" />
+                                        <br /><br /><br /><br /><br /><br /><br /><br />
+                                        <div class="text-monospace text-dark font-weight-bold" style="font-size:5vw;">www.codepuzzle.io/E{{ strtoupper($devoir->jeton) }}</div>
+                                    </div>
+                                    <button onclick="copier('lien', this)" type="button" class="btn btn-light btn-sm" style="vertical-align:4px;"><i class="fa-regular fa-clone"></i></button>
+                                </span>
                             </div>
-                            @endif
-                            <div class="col-md-auto">
-                                <div class="text-center font-weight-bold small">code secret</div>
-                                <div class="text-center border border-danger rounded text-danger font-weight-bold p-3">{{$devoir->mot_secret}}</div>
-                                <div class="small text-muted pt-1"><span class="text-danger"><i class="fas fa-exclamation-circle"></i> Ne pas partager ce code</span><br />Il permet de déverrouiller la copie d'un élève</div>
+
+                            <div>
+                                <span class="text-center small text-muted p-0"><i class="fa-solid fa-share"></i> Code secret<sup class="pl-1" data-toggle="tooltip" data-placement="bottom" title="Ne pas partager ce code. Il permet de déverrouiller la copie d'un élève"><i class="fas fa-exclamation-circle"></i></sup>: </span>
+                                <span id="code_secret" class="text-danger font-weight-bold">{{$devoir->mot_secret}}</span>
+                                <span onclick="copier('code_secret', this)" class="small text-muted" style="vertical-align:2px;cursor:pointer"><i class="fa-regular fa-clone"></i></span>
                             </div>
-                        </div>
-                        
-                    </div>
-                </div>
 
-                <div class="mt-2 mb-4">
-                    <div class="text-center small text-muted p-0">lien à fournir aux élèves</div>
-                    <div class="text-center font-weight-bold text-monospace">
-						<a id="lien" href="/E{{strtoupper($devoir->jeton)}}" target="_blank" class="text-dark" style="font-size:24px">www.codepuzzle.io/E{{strtoupper($devoir->jeton)}}</a>
-                    </div>
-                    <div class="text-center">
-                        <span class="pr-1" onclick="fullscreen('fullscreen')" style="cursor:pointer;"><i class="fas fa-expand"></i></span>
-                        <div id="fullscreen" class="bg-white text-center" style="display:none">
-                            <br /><br /><br /><br /><br /><br />
-                            <img src="{{ asset('img/code-puzzle.png') }}" width="200" />
-                            <br /><br /><br /><br /><br /><br /><br /><br />
-                            <div class="text-monospace text-dark font-weight-bold" style="font-size:5vw;">www.codepuzzle.io/E{{ strtoupper($devoir->jeton) }}</div>
                         </div>
-
-                        <span class="pl-1" onclick="copier('lien')" style="cursor:pointer;"><i class="fa-regular fa-copy"></i></span>
-                        <div id="lien_copie_confirmation" class="text-center small text-monospace text muted">&nbsp;</div>
                     </div>
 
                 </div>
@@ -98,7 +116,7 @@ $page_devoir_console = true;
                     <div class="markdown_content" style="padding:20px;border:solid 1px #DBE0E5;border-radius:4px;background-color:#f3f5f7;border-radius:4px;">{{$devoir->consignes_eleve}}</div>
                 @endif
 
-                <div class="mt-3 mb-1 text-monospace">{{strtoupper(__('copies'))}}</div>
+                <div class="mt-5 mb-1 text-monospace">{{strtoupper(__('copies'))}}</div>
                 @if ($copies->isNotEmpty())
                     <div class="row mb-5">
                         <div class="col-md-12">
@@ -169,12 +187,12 @@ $page_devoir_console = true;
                     </div>
                 @endif
 
-                @if ($copies->where('revised', 1)->count() != 0)
-                    <div class="mt-2 mb-1 text-monospace">{{strtoupper(__("comptes-rendus"))}}</div>
-                    <div class="row">
-                        <div class="col-md-12">
+                <!-- COMPTES-RENDUS -->
+                <div class="mt-2 mb-1 text-monospace">{{strtoupper(__("comptes-rendus"))}}</div>
+                <div class="row">
+                    <div class="col-md-12">
+                        @if ($copies->where('revised', 1)->count() != 0)
                             <ul class="list-group text-monospace">
-
                                 @foreach($copies as $copie)
                                     @if($copie->revised == 1)
                                         <li class="list-group-item">                           
@@ -185,15 +203,18 @@ $page_devoir_console = true;
                                         </li>
                                     @endif
                                 @endforeach
-
                             </ul>
                             <div class="mt-1">
                                 <a class="btn btn-dark btn-sm" href="/devoir-imprimer/{{ Crypt::encryptString($devoir->id) }}" role="button"><i class="fa-solid fa-print mr-2"></i> imprimer les comptes-rendus</a>
                                 <span class="text-muted small">pour les annoter à la main si nécessaire et les distribuer aux élèves</span>
                             </div>
-                        </div>                        
-                    </div>
-                @endif
+                        @else
+                            <div class="text-monospace small text-muted">Pas de copie corrigée pour l'instant.</div>
+                        @endif   
+                    </div>               
+                </div>
+                <!-- /COMPTES-RENDUS -->
+                
 
                 <div class="pt-5 mb-1 text-monospace">{{strtoupper(__("sujet"))}}</div>
                 <!-- SUJET -->
@@ -211,7 +232,7 @@ $page_devoir_console = true;
     
     {{-- == Copie lien ======================================================= --}}	
 	<script>
-	function copier(id) {
+	function copier(id, element) {
 		var texte = document.getElementById(id).textContent;
 		if (!navigator.clipboard) {
 			// Alternative pour les navigateurs ne prenant pas en charge navigator.clipboard
@@ -230,20 +251,24 @@ $page_devoir_console = true;
 			// Gérer les erreurs éventuelles
 			//alert("Impossible de copier le texte dans le presse-papiers. Veuillez le faire manuellement.");
 		});
-		
-		var status = document.getElementById(id+'_copie_confirmation');
-        status.innerText = "copié";
-		
-		status.style.opacity = '1';
+
+        let icon = element.innerHTML;
+		element.style.opacity = '0.2';
+        element.innerHTML = '<i class="fa-solid fa-check"></i>';
 		var fadeOutInterval = setInterval(function() {
-			var opacity = parseFloat(status.style.opacity);
-			if (opacity <= 0) {
+			var opacity = parseFloat(element.style.opacity);
+			if (opacity == 1) {
 				clearInterval(fadeOutInterval);
-				status.innerHTML = "&nbsp;"; // Effacer le texte après l'animation
 			} else {
-				status.style.opacity = (opacity - 0.1).toString();
+                if (opacity > 0.8){
+                    element.blur();
+                    element.innerHTML = icon;
+                }
+				element.style.opacity = (opacity + 0.1).toString();
 			}
-		}, 150);
+		}, 200);
+
+		console.log('copied');
 	}
 	</script>
     {{-- == /Copie lien ====================================================== --}}	

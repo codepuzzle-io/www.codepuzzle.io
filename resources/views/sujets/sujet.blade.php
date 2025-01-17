@@ -14,6 +14,9 @@ $page_sujet = true;
 <html lang="fr">
 <head>
 	@include('inc-meta')
+    <link href="{{ asset('css/highlight.css') }}" rel="stylesheet">
+	<link href="{{ asset('css/easymde.css') }}" rel="stylesheet">
+	<link href="{{ asset('css/easymde-custom.css') }}" rel="stylesheet">
     <title>SUJET</title>
 </head>
 <body>
@@ -22,50 +25,54 @@ $page_sujet = true;
 
 	<div class="container">
 
-		<div class="row">
-			<div class="col offset-md-1">
+        <!-- LIENS -->
+        <div class="row">
 
-                <div class="mt-2">
-                    <div class="text-left small text-muted p-0">lien sujet</div>
-                    <div class="text-left font-weight-bold text-monospace">
-                        <a id="lien_sujet" href="/S{{strtoupper($sujet->jeton)}}" target="_blank" class="text-dark" style="font-size:24px">www.codepuzzle.io/S{{strtoupper($sujet->jeton)}}</a>
-                                        
-                        <span class="pl-2 align-text-bottom" onclick="fullscreen('fullscreen_lien_sujet')" style="cursor:pointer;"><i class="fas fa-expand"></i></span>
-                        <div id="fullscreen_lien_sujet" class="bg-white text-center" style="display:none">
-                            <br /><br /><br /><br /><br /><br />
-                            <img src="{{ asset('img/code-puzzle.png') }}" width="200" />
-                            <br /><br /><br /><br /><br /><br /><br /><br />
-                            <div class="text-monospace text-dark font-weight-bold" style="font-size:5vw;">www.codepuzzle.io/S{{ strtoupper($sujet->jeton) }}</div>
-                        </div>
+            <div class="col-md-12">
+                <div class="text-monospace pt-2 pl-3 pr-3 pb-3 mb-3" style="background-color:#dae0e5;border-radius:6px;">
 
-                        <span class="pl-1 align-text-bottom" onclick="copier('lien_sujet')" style="cursor:pointer;"><i class="fa-regular fa-copy"></i></span>
-                        <span id="lien_sujet_copie_confirmation" class="text-center small text-monospace text muted align-text-bottom">&nbsp;</span>
-					</div>
+                    <div>
+                        <span class="text-center small text-muted p-0" style="vertical-align:2px;"><i class="fa-solid fa-share"></i> Lien sujet:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <span class="text-center font-weight-bold text-monospace" style="font-size:24px">
+                            <a id="lien_sujet" href="/S{{strtoupper($sujet->jeton)}}" target="_blank" class="text-dark">www.codepuzzle.io/S{{strtoupper($sujet->jeton)}}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </span>
+                        <span class="pl-3">
+                            <button onclick="fullscreen('lien_sujet_fullscreen')" type="button" class="btn btn-light btn-sm" style="vertical-align:4px;"><i class="fas fa-expand"></i></button>
+                            <div id="lien_sujet_fullscreen" class="bg-white text-center" style="display:none">
+                                <br /><br /><br /><br /><br /><br />
+                                <img src="{{ asset('img/code-puzzle.png') }}" width="200" />
+                                <br /><br /><br /><br /><br /><br /><br /><br />
+                                <div class="text-monospace text-dark font-weight-bold" style="font-size:5vw;">www.codepuzzle.io/S{{strtoupper($sujet->jeton)}}</div>
+                            </div>
+                            <button onclick="copier('lien_sujet', this)" type="button" class="btn btn-light btn-sm" style="vertical-align:4px;"><i class="fa-regular fa-clone"></i></button>
+                        </span>
+                    </div>
+
+                    <div>
+                        <span class="text-center small text-muted p-0" style="vertical-align:2px;"><i class="fa-solid fa-share"></i> Lien sujet + copie:</span>
+                        <span class="text-center font-weight-bold text-monospace" style="font-size:24px">
+                            <a id="lien_sujet_copie" href="/S{{strtoupper($sujet->jeton)}}/copie" target="_blank" class="text-dark">www.codepuzzle.io/S{{strtoupper($sujet->jeton)}}/copie</a>
+                        </span>
+                        <span class="pl-3">
+                            <button onclick="fullscreen('lien_sujet_copie_fullscreen')" type="button" class="btn btn-light btn-sm" style="vertical-align:4px;"><i class="fas fa-expand"></i></button>
+                            <div id="lien_sujet_copie_fullscreen" class="bg-white text-center" style="display:none">
+                                <br /><br /><br /><br /><br /><br />
+                                <img src="{{ asset('img/code-puzzle.png') }}" width="200" />
+                                <br /><br /><br /><br /><br /><br /><br /><br />
+                                <div class="text-monospace text-dark font-weight-bold" style="font-size:5vw;">www.codepuzzle.io/S{{strtoupper($sujet->jeton)}}/copie</div>
+                            </div>
+                            <button onclick="copier('lien_sujet_copie', this)" type="button" class="btn btn-light btn-sm" style="vertical-align:4px;"><i class="fa-regular fa-clone"></i></button>
+                        </span>
+                    </div>							
+
                 </div>
+            </div>
+
+        </div><!-- /row -->
+        <!-- /LIENS -->
 
 
-				<div class="mt-2 mb-4">
-					<div class="text-left small text-muted p-0">lien sujet + copie</div>
-                    <div class="text-left font-weight-bold text-monospace">
-                        <a id="lien_sujet_copie" href="/S{{strtoupper($sujet->jeton)}}/copie" target="_blank" class="text-dark" style="font-size:24px">www.codepuzzle.io/S{{strtoupper($sujet->jeton)}}/copie</a>
-                                        
-                        <span class="pl-2 align-text-bottom" onclick="fullscreen('fullscreen_lien_sujet_copie')" style="cursor:pointer;"><i class="fas fa-expand"></i></span>
-                        <div id="fullscreen_lien_sujet_copie" class="bg-white text-center" style="display:none">
-                            <br /><br /><br /><br /><br /><br />
-                            <img src="{{ asset('img/code-puzzle.png') }}" width="200" />
-                            <br /><br /><br /><br /><br /><br /><br /><br />
-                            <div class="text-monospace text-dark font-weight-bold" style="font-size:5vw;">www.codepuzzle.io/S{{ strtoupper($sujet->jeton) }}/copie</div>
-                        </div>
-
-                        <span class="pl-1 align-text-bottom" onclick="copier('lien_sujet_copie')" style="cursor:pointer;"><i class="fa-regular fa-copy"></i></span>
-                        <span id="lien_sujet_copie_copie_confirmation" class="text-center small text-monospace text muted align-text-bottom">&nbsp;</span>
-					</div>
-				</div>	
-
-            </div>	
-		</div><!-- /row -->
-
-		<div class="row">
+		<div class="row mt-3 mb-3">
 			<div class="col">		
 
 				<div class="mt-2 mb-4 text-center">
