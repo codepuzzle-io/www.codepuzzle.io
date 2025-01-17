@@ -76,9 +76,8 @@ $page_sujet = true;
 			<div class="col">		
 
 				<div class="mt-2 mb-4 text-center">
-					<a class="btn btn-outline-secondary btn-sm text-monospace ml-1 mr-1" href="/sujet-{{$sujet->type}}-creer/{{Crypt::encryptString($sujet->id)}}/dupliquer" role="button" target="_blank">dupliquer</a>
-					<a class="btn btn-outline-secondary btn-sm text-monospace ml-1 mr-1" href="/S{{strtoupper($sujet->jeton)}}/copie" role="button" target="_blank">sujet + copie</a>
-					<a class="btn btn-outline-secondary btn-sm text-monospace ml-1 mr-1" href="/devoir-creer/{{Crypt::encryptString($sujet->id)}}" role="button">créer un devoir</a>
+					<a class="btn btn-dark btn-sm text-monospace ml-1 mr-1" href="/sujet-{{$sujet->type}}-creer/{{Crypt::encryptString($sujet->id)}}/dupliquer" role="button" target="_blank"><i class="fa-solid fa-repeat mr-2"></i>dupliquer</a>
+					<a class="btn btn-dark btn-sm text-monospace ml-1 mr-1" href="/devoir-creer/{{Crypt::encryptString($sujet->id)}}" role="button"><i class="fa-regular fa-file-lines mr-2"></i>créer un devoir</a>
 				</div>
 
 				<div class="mb-1 text-monospace">{{strtoupper(__("sujet"))}}</div>
