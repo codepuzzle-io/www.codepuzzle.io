@@ -73,7 +73,7 @@
 						</div>
 						<div class="card-footer pt-2 text-center">
 							<a class="btn btn-light btn-sm text-left pl-3 pr-3" href="/banque-defis" role="button">
-								<div style="float:left;padding-right:10px;padding-top:3px;"><i class="fa-solid fa-box-archive fa-xl"></i></div> Banque de défis<br />EP NSI 2024
+								<div style="float:left;padding-right:10px;padding-top:3px;"><i class="fa-solid fa-box-archive fa-xl"></i></div> Banque de défis<br />EP NSI 2025
 							</a>
 						</div>
 					</div>
