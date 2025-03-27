@@ -344,7 +344,7 @@
                     <div class="mb-1">
                     Liste des sujets de l'épreuve pratique de 2025 à intégrer dans une <a href="/classe-creer" target="_blank">classe</a> pour proposer des entraînements aux élèves et <a href="/#classe" target="_blank">suivre leur progression</a>. Cocher ou décocher  les sujets afin de générer une liste à ajouter dans une classe. Si un sujet est déjà présent dans la classe, il n'est pas ajouté une deuxième fois.
                     </div>
-                    <div class="mb-2 text-danger">Remarque: il manque le 12.2 et le 26.2</div>
+                    <div class="mb-2 text-danger">Remarque: il manque le 26.2 et le 34.2 (car non adaptables aux défis)</div>
                     <div class="small">
                         @foreach($EP25 as $titre => $jeton)
                             <div class="form-check form-check-inline">
@@ -367,7 +367,7 @@
                     <div class="mb-1">
                     Liste des sujets de l'épreuve pratique de 2024 à intégrer dans une <a href="/classe-creer" target="_blank">classe</a> pour proposer des entraînements aux élèves et <a href="/#classe" target="_blank">suivre leur progression</a>. Cocher ou décocher  les sujets afin de générer une liste à ajouter dans une classe. Si un sujet est déjà présent dans la classe, il n'est pas ajouté une deuxième fois.
                     </div>
-                    <div class="mb-2 text-danger">Remarque: il manque le 12.2 et le 26.2</div>
+                    <div class="mb-2 text-danger">Remarque: il manque le 12.2 et le 26.2 (car non adaptables aux défis)</div>
                     <div class="small">
                         @foreach($EP24 as $titre => $jeton)
                             <div class="form-check form-check-inline">
