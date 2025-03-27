@@ -339,14 +339,14 @@ Route::get('/duplicate-ep', function () {
         '43' => '28', '44' => '24', '45' => '46', '46' => '10', '47' => '35', '48' => '01'
     ];
 
-    // Sélection des articles concernés
+    // Sélection des défis 2024
     $articles = Defi::where('user_id', 1)
-        ->where('titre_enseignant', 'like', '%[EP23]%')
+        ->where('titre_enseignant', 'like', '%[EP24] - %')
         ->get();
 
     foreach ($articles as $article) {
 
-        $newTitle = preg_replace_callback('/\[EP23\] - (\d{2})\.(1|2)/', function ($matches) use ($conversion) {
+        $newTitle = preg_replace_callback('/\[EP24\] - (\d{2})\.(1|2)/', function ($matches) use ($conversion) {
             $oldNumber = $matches[1];  // Nombre avant le point (ex: '04')
             $decimal = $matches[2];    // Partie après le point (ex: '1')
             // Remplacer le nombre avant le point selon la conversion
@@ -354,11 +354,11 @@ Route::get('/duplicate-ep', function () {
             // Retourner le nouveau titre avec la partie décimale inchangée
             
             return "[EP25] - {$newNumber}.{$decimal}";
-        }, $article->title);
+        }, $article->titre_enseignant);
 
         // Mise à jour du titre
-        if ($newTitle !== $article->title) {
-            echo $newTitle . "<br />";
+        if ($newTitle !== $article->titre_enseignant) {
+            //echo $newTitle . "<br />";
             /*
             do {
                 $codeError = '';
@@ -394,6 +394,18 @@ Route::get('/duplicate-ep', function () {
             */
         }
     }
+	
+	
+    // Sélection des défis 2025 pour faire la liste des jetons
+    $articles = Defi::where('user_id', 1)
+        ->where('titre_enseignant', 'like', '%[EP25] - %')
+		->orderBy('titre_enseignant')
+        ->get();
+	foreach ($articles as $article) {
+		// 'EP25-41.1' => 'DWXMF',
+		echo "'" . $article->titre_enseignant . "' => '" . strtoupper($article->jeton) . "',<br />";
+		
+	}
 
     return "Mise à jour terminée !";
 })->middleware('auth');

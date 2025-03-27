@@ -13,6 +13,105 @@
     @include('inc-nav')
 
     <?php
+	$EP25 = [
+		'[EP25] - 01.1' => 'QJX9',
+		'[EP25] - 01.2' => 'BUKW',
+		'[EP25] - 02.1' => '7CE5',
+		'[EP25] - 02.2' => '8VLB',
+		'[EP25] - 03.1' => 'AE9Q',
+		'[EP25] - 03.2' => 'E4KY',
+		'[EP25] - 04.1' => 'H4RX',
+		'[EP25] - 04.2' => 'JZ4N',
+		'[EP25] - 05.1' => '583C',
+		'[EP25] - 05.2' => 'V5RF',
+		'[EP25] - 06.1' => 'DY9C',
+		'[EP25] - 06.2' => 'Q2Z6',
+		'[EP25] - 07.1' => 'LDQA',
+		'[EP25] - 07.2' => 'ZS8Q',
+		'[EP25] - 08.1' => 'SYP7',
+		'[EP25] - 08.2' => 'NJZB',
+		'[EP25] - 09.1' => 'ZK7V',
+		'[EP25] - 09.2' => 'W2DX',
+		'[EP25] - 10.1' => 'QM6A',
+		'[EP25] - 10.2' => 'ZGXU',
+		'[EP25] - 11.1' => 'NHBU',
+		'[EP25] - 11.2' => 'NBLD',
+		'[EP25] - 12.1' => '92AD',
+		'[EP25] - 12.2' => '5MKF',
+		'[EP25] - 13.1' => 'XSF9',
+		'[EP25] - 13.2' => 'TUGH',
+		'[EP25] - 14.1' => 'FAV8',
+		'[EP25] - 14.2' => 'MZF5',
+		'[EP25] - 15.1' => '8JM2',
+		'[EP25] - 15.2' => 'JS5Y',
+		'[EP25] - 16.1' => '6N9U',
+		'[EP25] - 16.2' => 'FCNW',
+		'[EP25] - 17.1' => 'RWBU',
+		'[EP25] - 17.2' => 'AGH2',
+		'[EP25] - 18.1' => 'XRQ3',
+		'[EP25] - 18.2' => 'D476',
+		'[EP25] - 19.1' => 'KQDX',
+		'[EP25] - 19.2' => 'MB86',
+		'[EP25] - 20.1' => 'EH8W',
+		'[EP25] - 20.2' => 'K2U7',
+		'[EP25] - 21.1' => 'UYJV',
+		'[EP25] - 21.2' => '8MRF',
+		'[EP25] - 22.1' => 'HUCE',
+		'[EP25] - 22.2' => 'STXC',
+		'[EP25] - 23.1' => '2CFT',
+		'[EP25] - 23.2' => 'TJQF',
+		'[EP25] - 24.1' => 'KW5A',
+		'[EP25] - 24.2' => '24XR',
+		'[EP25] - 25.1' => 'WL2D',
+		'[EP25] - 25.2' => 'KVBG',
+		'[EP25] - 26.1' => 'X6YA',
+		
+		'[EP25] - 27.1' => 'KQS6',
+		'[EP25] - 27.2' => 'HSE6',
+		'[EP25] - 28.1' => 'TY6H',
+		'[EP25] - 28.2' => 'CJFD',
+		'[EP25] - 29.1' => 'PSEB',
+		'[EP25] - 29.2' => 'TUF7',
+		'[EP25] - 30.1' => 'EYGQ',
+		'[EP25] - 30.2' => 'A364',
+		'[EP25] - 31.1' => '5A93',
+		'[EP25] - 31.2' => 'DYHV',
+		'[EP25] - 32.1' => 'BY8L',
+		'[EP25] - 32.2' => 'RAZ7',
+		'[EP25] - 33.1' => 'XF8S',
+		'[EP25] - 33.2' => 'SU8M',
+		'[EP25] - 34.1' => 'DPQM',
+		
+		'[EP25] - 35.1' => 'QNGY',
+		'[EP25] - 35.2' => '5WU9',
+		'[EP25] - 36.1' => 'LNCK',
+		'[EP25] - 36.2' => '8M9U',
+		'[EP25] - 37.1' => 'XPZG',
+		'[EP25] - 37.2' => '69NE',
+		'[EP25] - 38.1' => 'CRW7',
+		'[EP25] - 38.2' => 'GJEB',
+		'[EP25] - 39.1' => 'GDNR',
+		'[EP25] - 39.2' => 'S2QL',
+		'[EP25] - 40.1' => 'XDJ6',
+		'[EP25] - 40.2' => 'LYA3',
+		'[EP25] - 41.1' => '587Z',
+		'[EP25] - 41.2' => '78VM',
+		'[EP25] - 42.1' => 'Q5LV',
+		'[EP25] - 42.2' => 'YHSM',
+		'[EP25] - 43.1' => '5UDP',
+		'[EP25] - 43.2' => 'H2RX',
+		'[EP25] - 44.1' => 'N5DT',
+		'[EP25] - 44.2' => '3PH8',
+		'[EP25] - 45.1' => '96JH',
+		'[EP25] - 45.2' => 'HMY7',
+		'[EP25] - 46.1' => 'M7Q2',
+		'[EP25] - 46.2' => 'K7P3',
+		'[EP25] - 47.1' => '4CT6',
+		'[EP25] - 47.2' => 'MGJP',
+		'[EP25] - 48.1' => 'D947',
+		'[EP25] - 48.2' => '63YK',	
+	];
+	
 	$EP24 = [
         'EP24-01.1' => 'DH83G',
         'EP24-01.2' => 'DF8PT',
@@ -204,6 +303,13 @@
 
     // JETONS
 	// EP24
+    $jetons_EP25 = "";
+    foreach ($EP25 AS $titre => $jeton) {
+        $jetons_EP25 .= $jeton . ',';
+    }
+    $jetons_EP25 = rtrim($jetons_EP25, ',');	
+	
+	// EP24
     $jetons_EP24 = "";
     foreach ($EP24 AS $titre => $jeton) {
         $jetons_EP24 .= $jeton . ',';
@@ -234,6 +340,29 @@
                 <h1>Banque de défis</h1>
 
                 <div class="text-monospace mb-4"style="border:solid 1px silver;padding:10px;border-radius:4px;">
+                    <b>ÉPREUVE PRATIQUE 2025</b>
+                    <div class="mb-1">
+                    Liste des sujets de l'épreuve pratique de 2025 à intégrer dans une <a href="/classe-creer" target="_blank">classe</a> pour proposer des entraînements aux élèves et <a href="/#classe" target="_blank">suivre leur progression</a>. Cocher ou décocher  les sujets afin de générer une liste à ajouter dans une classe. Si un sujet est déjà présent dans la classe, il n'est pas ajouté une deuxième fois.
+                    </div>
+                    <div class="mb-2 text-danger">Remarque: il manque le 12.2 et le 26.2</div>
+                    <div class="small">
+                        @foreach($EP25 as $titre => $jeton)
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="{{ $titre }}" data-ep25="{{ $jeton }}" checked>
+                                <label class="form-check-label" for="{{ $titre }}">{{ substr($titre, -4) }}</label>
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="ml-1 mt-3">Codes sélectionnés:</div>
+                    <textarea id="codes_ep25" class="form-control mb-2" rows="6">{{$jetons_EP25}}</textarea>
+
+					@foreach($EP25 as $titre => $jeton)
+						<div class="small pl-2 pr-3" style="float:left;">{{$titre}}: <a href="https://www.codepuzzle.io/{{$jeton}}" target="_blank">www.codepuzzle.io/{{$jeton}}</a></div>
+					@endforeach
+					<br  style="clear:both;"/>
+                </div>
+
+                <div class="text-monospace mb-4"style="border:solid 1px silver;padding:10px;border-radius:4px;">
                     <b>ÉPREUVE PRATIQUE 2024</b>
                     <div class="mb-1">
                     Liste des sujets de l'épreuve pratique de 2024 à intégrer dans une <a href="/classe-creer" target="_blank">classe</a> pour proposer des entraînements aux élèves et <a href="/#classe" target="_blank">suivre leur progression</a>. Cocher ou décocher  les sujets afin de générer une liste à ajouter dans une classe. Si un sujet est déjà présent dans la classe, il n'est pas ajouté une deuxième fois.
@@ -254,7 +383,6 @@
 						<div class="small pl-2 pr-3" style="float:left;">{{$titre}}: <a href="https://www.codepuzzle.io/{{$jeton}}" target="_blank">www.codepuzzle.io/{{$jeton}}</a></div>
 					@endforeach
 					<br  style="clear:both;"/>
-					
                 </div>
 
                 <div class="text-monospace mb-4"style="border:solid 1px silver;padding:10px;border-radius:4px;">
@@ -412,6 +540,24 @@ IFrame('https://www.codepuzzle.io/I{{ strtoupper($jeton) }}', width='100%', heig
     <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>    
 
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var checkboxes = document.querySelectorAll('input[type="checkbox"][data-ep25]');
+            checkboxes.forEach(function(checkbox) {
+                checkbox.addEventListener('change', function() {
+                    updateCodesEP25();
+                });
+            });
+        });
+
+        function updateCodesEP25() {
+            var selectedCodes = [];
+            var checkboxes = document.querySelectorAll('input[type="checkbox"][data-ep25]:checked');
+            checkboxes.forEach(function(checkbox) {
+                selectedCodes.push(checkbox.getAttribute('data-ep25'));
+            });
+            document.getElementById('codes_ep25').textContent = selectedCodes.join(',');
+        }	
+	
         document.addEventListener('DOMContentLoaded', function() {
             var checkboxes = document.querySelectorAll('input[type="checkbox"][data-ep24]');
             checkboxes.forEach(function(checkbox) {
