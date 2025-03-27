@@ -17,6 +17,7 @@
 
 	<div class="container mt-3">
 		
+		{{--
 		<div class="row pb-3 text-monospace">
 			<div class="col-md-8 offset-md-2">
 				<div class="border border-danger rounded p-2 text-danger small">
@@ -25,6 +26,8 @@
 				</div>
 			</div>
 		</div>
+		--}}
+
 		
 		<div class="row pt-3 text-monospace">
 			<div class="col-md-1 text-muted text-right small">

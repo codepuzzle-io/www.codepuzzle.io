@@ -8,6 +8,8 @@ use App\Http\Controllers\Auth\ConfirmPasswordController;
 use App\Http\Controllers\Auth\VerificationController;
 use Illuminate\Support\Facades\Session;
 
+use App\Models\Defi;
+
 
 // ============================================================================
 // == SETLOCALE & PREFIX BASED ON URL OR PREVIOUS URL
@@ -313,6 +315,88 @@ Route::any('/p/{puzzle_jeton}', function ($puzzle_jeton) {
 Route::any('/iframe/{puzzle_jeton}', function ($puzzle_jeton) {
     return view('puzzle')->with(['jeton' => $puzzle_jeton, 'iframe' => true]);
 });
+
+
+// ============================================================================
+// == Duplicate epreuve pratique
+// ============================================================================
+
+Route::get('/duplicate-ep', function () {
+
+    // Vérifier que l'utilisateur connecté a l'ID 1
+    if (auth()->user()->id !== 1) {
+        abort(403, 'Accès non autorisé.');
+    }
+
+    $conversion = [
+        '01' => '47', '02' => '45', '03' => '08', '04' => '48', '05' => '02', '06' => '27',
+        '07' => '37', '08' => '30', '09' => '23', '10' => '44', '11' => '36', '12' => '34',
+        '13' => '13', '14' => '20', '15' => '38', '16' => '04', '17' => '42', '18' => '15',
+        '19' => '06', '20' => '14', '21' => '31', '22' => '40', '23' => '33', '24' => '11',
+        '25' => '19', '26' => '26', '27' => '43', '28' => '03', '29' => '16', '30' => '12',
+        '31' => '09', '32' => '41', '33' => '05', '34' => '07', '35' => '25', '36' => '32',
+        '37' => '39', '38' => '21', '39' => '22', '40' => '29', '41' => '17', '42' => '18',
+        '43' => '28', '44' => '24', '45' => '46', '46' => '10', '47' => '35', '48' => '01'
+    ];
+
+    // Sélection des articles concernés
+    $articles = Defi::where('user_id', 1)
+        ->where('titre_enseignant', 'like', '%[EP23]%')
+        ->get();
+
+    foreach ($articles as $article) {
+
+        $newTitle = preg_replace_callback('/\[EP23\] - (\d{2})\.(1|2)/', function ($matches) use ($conversion) {
+            $oldNumber = $matches[1];  // Nombre avant le point (ex: '04')
+            $decimal = $matches[2];    // Partie après le point (ex: '1')
+            // Remplacer le nombre avant le point selon la conversion
+            $newNumber = $conversion[$oldNumber] ?? $oldNumber;
+            // Retourner le nouveau titre avec la partie décimale inchangée
+            
+            return "[EP25] - {$newNumber}.{$decimal}";
+        }, $article->title);
+
+        // Mise à jour du titre
+        if ($newTitle !== $article->title) {
+            echo $newTitle . "<br />";
+            /*
+            do {
+                $codeError = '';
+                $chars = '23456789abcdefghjklmnpqrstuvwxyz';
+                $jeton = substr(str_shuffle($chars), 0, 4);
+    
+                try {
+                    Defi::create([
+                        'user_id'                => $article->user_id,
+                        'jeton'                  => $jeton,
+                        'titre_enseignant'       => $newTitle,
+                        'sous_titre_enseignant'  => $article->sous_titre_enseignant,
+                        'titre_eleve'            => $newTitle,
+                        'consignes_eleve'        => $article->consignes_eleve,
+                        'tests'                  => $article->tests,
+                        'lang'                   => $article->lang,
+                        'with_chrono'            => $article->with_chrono,
+                        'with_nbverif'           => $article->with_nbverif,
+                        'with_message'           => $article->with_message,                    
+                        'with_console'           => $article->with_console,                    
+                        'uuid'                   => Str::orderedUuid()->getHex(),
+                        'code'                   => $article->code,
+                        'code_pre_tests'         => $article->code_pre_tests,
+                        'solution'               => $article->solution,
+                    ]);
+                }
+    
+                catch(Exception $e) {
+                    $codeError = $e->errorInfo[1];
+                }
+    
+            } while ($codeError === 1062);
+            */
+        }
+    }
+
+    return "Mise à jour terminée !";
+})->middleware('auth');
 
 
 // ============================================================================
