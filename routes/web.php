@@ -403,7 +403,7 @@ Route::get('/duplicate-ep', function () {
         ->get();
 	foreach ($articles as $article) {
 		// 'EP25-41.1' => 'DWXMF',
-		echo "'" . $article->titre_enseignant . "' => '" . strtoupper($article->jeton) . "',<br />";
+		echo "'" . $article->titre_enseignant . "' => 'D" . strtoupper($article->jeton) . "',<br />";
 		
 	}
 
