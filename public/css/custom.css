@@ -644,6 +644,43 @@ svg {
 
 
 /* BUTTONS */
+
+/* Bouton IA */
+.btn-ia {
+    color: #fff;
+    background-color: #6f42c1;
+    border-color:    #6f42c1;
+  }
+  .btn-ia:hover,
+  .btn-ia:focus,
+  .btn-ia.focus {
+    color: #fff;
+    background-color: #5a379e;
+    border-color:    #52348a;
+    text-decoration: none;
+  }
+  .btn-ia:active,
+  .btn-ia.active,
+  .show > .btn-ia.dropdown-toggle {
+    color: #fff;
+    background-color: #52348a;
+    border-color:    #472f7a;
+  }
+  .btn-ia.disabled,
+  .btn-ia:disabled {
+    color:    #fff;
+    background-color: #6f42c1;
+    border-color:    #6f42c1;
+    opacity: 0.65;
+  }
+  
+  /* Optionnel : ombre au focus */
+  .btn-ia:focus {
+    box-shadow: 0 0 0 0.2rem rgba(111, 66, 193, 0.5);
+  }
+
+
+/* Bouton sm */
 .btn-sm, .btn-group-sm > .btn {
   padding: 6px 8px 4px 8px;
   font-size: 80%;

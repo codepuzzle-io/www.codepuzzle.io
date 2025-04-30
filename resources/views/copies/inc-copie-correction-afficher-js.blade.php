@@ -22,15 +22,23 @@
             if (status === 'init') {
                 console.log
                 document.getElementById("output_" + editor_id).innerText = "Prêt!\n";
+                document.getElementById("run_" + editor_id).style.display = 'inline-block';
                 document.getElementById("run_" + editor_id).innerHTML = '<i class="fas fa-play"></i>';
                 document.getElementById("run_" + editor_id).disabled = false;
                 document.getElementById("restart_" + editor_id).style.display = 'none';
             }
             if (status === 'completed') {
+                document.getElementById("run_" + editor_id).style.display = 'inline-block';
                 document.getElementById("run_" + editor_id).innerHTML = '<i class="fas fa-play"></i>';
                 document.getElementById("run_" + editor_id).disabled = false;
                 document.getElementById("restart_" + editor_id).style.display = 'none';
-            }            
+            } 
+            if (status === 'running') {
+                //document.getElementById("run_" + event.data.id).innerHTML = '<i class="fas fa-cog fa-spin"></i>';
+                //document.getElementById("run_" + event.data.id).disabled = true;
+                document.getElementById("run_" + event.data.id).style.display = 'none';
+                document.getElementById("restart_" + event.data.id).style.display = 'inline-block';
+            }           
         }
     }
 
@@ -45,9 +53,7 @@
 
             if (typeof event.data.status !== 'undefined') {
                 if (event.data.status === 'running') {
-                    document.getElementById("run_" + event.data.id).innerHTML = '<i class="fas fa-cog fa-spin"></i>';
-                    document.getElementById("run_" + event.data.id).disabled = true;
-                    document.getElementById("restart_" + event.data.id).style.display = 'block';
+                    updateEditors('running');
                 }
 
                 if (event.data.status === 'completed') {
@@ -99,6 +105,7 @@
         setupWorkerListener(pyodideWorker);
 
         // Réinitialiser les boutons d'exécution et d'arrêt
+        document.getElementById("run_" + id).style.display = 'inline-block';
         document.getElementById("run_" + id).innerHTML = '<i class="fas fa-circle-notch fa-spin"></i>';
         document.getElementById("run_" + id).disabled = true;
         document.getElementById("restart_" + id).style.display = 'none';
