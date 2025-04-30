@@ -132,9 +132,9 @@ Merci de structurer votre réponse en sections numérotées et de citer les lign
 
 }
 ?>
-
+                                <!-- BOUTON IA -->
                                 <div class="mt-1 text-right">
-                                    <button type="button" onclick='copyAndNotify(this, {!! json_encode($prompt, JSON_UNESCAPED_UNICODE|JSON_HEX_APOS) !!})' class="btn btn-ia btn-xs"><i class="fa-solid fa-wand-magic-sparkles" style="padding-top:5px;padding-bottom:3px;"></i></button>
+                                    <button type="button" onclick='copyAndNotify(this, {!! json_encode($prompt, JSON_UNESCAPED_UNICODE|JSON_HEX_APOS) !!})' class="btn btn-ia btn-xs" data-toggle="tooltip" data-placement="right"  data-trigger="hover" title="{{__('Cliquer ici pour copier une requête à coller dans votre modèle d'IA préféré afin d'analyser le code de l'élève.')}}"><i class="fa-solid fa-wand-magic-sparkles" style="padding-top:5px;padding-bottom:3px;"></i></button>
                                 </div>
 
 
