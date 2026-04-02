@@ -8,7 +8,8 @@ body {
     font-family: "Nunito", sans-serif;
     font-size: 0.9rem;
     font-weight: 400;
-    line-height: 1.6;
+    /*line-height: 1.6;*/
+    line-height: 1.4;
     color: #212529;
     text-align: left;
     background-color: #f8fafc;
@@ -70,13 +71,15 @@ h2 {
 
 /* MARKDOWN CONTENT */
 .markdown_content {
-    font-family: 'Crimson Text', serif;
-    font-weight: 500;
-    font-size:17px;
+    /*font-family: 'Crimson Text', serif;*/
+    font-family: 'Inter', serif;
+    font-weight: 400;
+    /*font-size:17px;*/
+    font-size: 0.9rem !important;
 }
 
 .markdown_content h1 {
-	font-size: 18px;
+	font-size: 16px;
 	text-transform: uppercase;
 	text-align:left;
 	color:black;
@@ -86,7 +89,7 @@ h2 {
 }
 
 .markdown_content h2 {
-    font-size: 17px;
+    font-size: 14px;
 	text-transform: uppercase;
     text-align:left;
 	color: black;
@@ -110,12 +113,9 @@ h2 {
     font-size:85% !important;
 }
 
-
-
-
-
-
-
+.markdown_content img {
+    max-width: 100% !important;
+}
 
 
 .exemple {
@@ -166,8 +166,11 @@ h2 {
     background-color:white !important;
 }
 
-.card:hover {
-    background-color: #f3f5f7  !important;
+.welcome .card:hover {
+    border:1px dashed #c0c3c6 !important;
+}
+
+.welcome .bas:hover {
     border:1px dashed #c0c3c6 !important;
 }
 
@@ -818,9 +821,12 @@ svg {
     background-color:white;
     overflow: hidden;
     resize: none;
-    font-family: 'Crimson Text', serif;
-    font-weight: 500;
-    font-size:17px;
+    /*font-family: 'Crimson Text', serif;*/
+    /*font-weight: 500;*/
+    /*font-size:17px;*/
+    font-family: 'Inter', serif;
+    font-weight: 400;
+    font-size: 0.9rem !important;
 }
 
 .cellule_content pre code {

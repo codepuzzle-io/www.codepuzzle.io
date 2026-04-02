@@ -8,9 +8,10 @@
     @php
 		$lang_switch = '<a href="/console/lang/fr" class="kbd mr-1">fr</a><a href="/console/lang/en" class="kbd">en</a>';
 	@endphp
+    
     @include('inc-nav-console')
 
-	<div class="container mt-3 mb-5">
+	<div class="container mt-3 pb-5">
 
 		<div class="row">
 
@@ -24,6 +25,7 @@
                 <div class="mb-1 text-center"><a class="btn btn-light btn-sm d-block" href="{{route('console-sujets')}}" role="button">{{__('SUJETS')}}</a></div>
                 <div class="mb-1 text-center"><a class="btn btn-light btn-sm d-block" href="{{route('console-devoirs')}}" role="button">{{__('DEVOIRS')}}</a></div>
                 <div class="mb-1 text-center"><a class="btn btn-light btn-sm d-block" href="{{route('console-programmes')}}" role="button">{{__('PROGRAMMES')}}</a></div>
+                <div class="mb-1 text-center"><a class="btn btn-light btn-sm d-block" href="{{route('console-captures')}}" role="button">{{__('CAPTURES')}}</a></div>
                 <div class="mb-3 text-center"><a class="btn btn-light btn-sm d-block" href="{{route('console-classes')}}" role="button">{{__('CLASSES')}}</a></div>
 
                 <div class="mt-5 text-muted text-monospace small" style="text-align:justify">
@@ -49,13 +51,13 @@
                     Activités
                 </div>
                 <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-2 pb-1">
                         <div class="text-center"><a class="btn btn-success d-block" href="{{route('puzzle-creer-get')}}" role="button">nouveau<br />puzzle</a></div>
                    </div>
-                    <div class="col-md-2">
+                    <div class="col-md-2 pb-1">
                         <div class="text-center"><a class="btn btn-success d-block" href="{{route('defi-creer-get')}}" role="button">nouveau<br />défi</a></div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-2 pb-1">
                         <div class="text-center"><a class="btn btn-success d-block" href="{{route('sujet-creer-get')}}" role="button">nouveau<br />sujet</a></div>
                     </div>    
                 </div>  
@@ -64,12 +66,12 @@
                     Pour la classe
                 </div>  
                 <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-2 pb-1">
                         <div class="text-center"><a class="btn btn-dark d-block" href="{{route('programme-creer-get')}}" role="button">nouveau<br />programme</a></div>
                     </div>
   
 
-                    <div class="col-md-2">
+                    <div class="col-md-2 pb-1">
                         <div class="text-center"><a class="btn btn-dark d-block" href="{{route('classe-creer-get')}}" role="button">nouvelle<br />classe</a></div>      
                     </div>          
                 </div>  

@@ -60,6 +60,8 @@
 									</div>
 								</div>
 							</div>
+							
+							<input type="hidden" name="loaded_at" value="{{ now() }}">
 
 							<div class="form-group row mb-5">
 								<div class="col-md-6 offset-md-4">

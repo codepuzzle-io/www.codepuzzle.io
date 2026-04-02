@@ -43,7 +43,7 @@ $Parsedown = new ParsedownMath([
                 <div class="mt-5 text-monospace font-weight-bold">{{strtoupper($classe->nom_classe)}}</div>
                 <div class="text-monospace pt-4 pb-2">{{strtoupper(__('ACTIVITÉS DE LA CLASSE'))}}</div>
 
-                @if(sizeof($activites_classe) > 0)
+				@if(!empty(array_filter((array)$activites_classe, fn($v) => trim($v) !== '')))
                     <table class="table table-borderless table-sm text-monospace small m-0">
                         @foreach($activites_classe as $code)
                             @php
@@ -70,7 +70,7 @@ $Parsedown = new ParsedownMath([
                                 </td>    
                             </tr>
                             <tr>
-                                <td colspan="5" class="m-0 p-0"><div class="collapse" id="collapse_1_{{$loop->iteration}}"><div class="consignes mathjax rounded bg-white mt-1 pl-3 pr-3 pt-3 pb-1 mb-3">{!! trim($Parsedown->text($activite_info->consignes_eleve)) !!}</div></div></td>
+                                <td colspan="5" class="m-0 p-0"><div class="collapse" id="collapse_1_{{$loop->iteration}}"><div class="consignes mathjax rounded bg-white mt-1 pl-3 pr-3 pt-3 pb-1 mb-3">{!! @trim($Parsedown->text($activite_info->consignes_eleve)) !!}</div></div></td>
                             </tr>                            
                         @endforeach
                     </table>
@@ -79,9 +79,8 @@ $Parsedown = new ParsedownMath([
                 @endif
 
                 <div class="text-monospace pt-4 pb-2">{{strtoupper(__('AUTRES ACTIVITÉS'))}}</div>
-
-                @if(sizeof($activites_autres) > 0)
-                    
+		
+				@if(!empty(array_filter((array)$activites_autres, fn($v) => trim($v) !== '')))
                     <table class="table table-borderless table-sm text-monospace small m-0">
                         @foreach($activites_autres as $code)
                             @php

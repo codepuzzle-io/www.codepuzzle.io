@@ -1,5 +1,5 @@
 <div class="p-3" style="border:1px solid #ced4da;border-radius:4px;background-color:white;">
-<div class="pb-2 text-uppercase font-weight-bold" style="color:black;font-size:20px;font-family:'Crimson Text',serif;font-weight:500;">{{ $sujet->titre }}</div>
+<div class="pb-2 text-uppercase font-weight-bold" style="color:black;font-size:20px;font-family:'Inter',serif;font-weight:500;">{{ $sujet->titre }}</div>
 
 @if ($sujet->type == 'exo')
 
@@ -12,29 +12,72 @@
     <!-- /ÉNONCÉ --> 
 
     @if (isset($page_sujet_console) or isset($page_devoir_console) or isset($page_devoir_creer) or isset($page_sujet))
+
+        <!-- SCOPE --> 
+        <div class="mt-4 small border rounded p-2 text-monospace text-dark" style="border-style: dashed !important">
+            PORTÉE D'EXÉCUTION DU CODE : 
+            @if (isset($sujet_json->run_scope) && $sujet_json->run_scope == 'session')
+                exécution partagée (toutes les cellules partagent le même environnement)
+            @else
+                exécution par cellule (chaque cellule s'exécute indépendamment des autres)
+            @endif
+        </div>
+        <!-- /SCOPE --> 
+
+        <!-- FICHIERS --> 
+        @if (isset($sujet_json->bibliotheques) && filled(trim((string) $sujet_json->bibliotheques)))
+        <div class="mt-4 mb-1 text-monospace mt-3 small">BIBLIOTHÈQUE(S)</div>
+        <div class="mb-4 p-3 rounded text-monospace small" style="background-color:#f3f5f7;">
+            {{ $sujet_json->bibliotheques }}
+        </div>
+        @endif
+        <!-- /FICHIERS --> 
+
+        <!-- FICHIERS --> 
+        @if (isset($sujet_json->fichiers) && filled(trim((string) $sujet_json->fichiers)))
+        <div class="mt-4 mb-1 text-monospace mt-3 small">FICHIER(S)</div>
+        <div class="mb-4 p-3 rounded text-white" style="background-color:black;">
+            <div class="mt-0 mb-0 text-monospace small" style="color:silver;line-height:1.2">
+                <?php
+                $urls = array_values(array_filter(
+                    array_map('trim', preg_split("/\r\n|\n|\r/", (string) $sujet_json->fichiers)),
+                    fn($s) => $s !== ''
+                ));
+                ?>
+                @foreach ($urls as $url)
+                    <div class="ml-1">
+                        {{ $loop->last ? '┗ ' : '┣ ' }}<a href="{{ $url }}" target="_blank" rel="noopener">{{ $url }}</a>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+        @endif
+        <!-- /FICHIERS --> 
+
         @foreach($sujet_json->code AS $code)
             @if(count((array) $sujet_json->code) > 1)
-                <div class="text-monospace mt-3 small">PROGRAMME {{ $loop->iteration }}</div>
+                <div class="text-monospace mb-1 mt-3 small">PROGRAMME {{ $loop->iteration }}</div>
             @else
-                <div class="text-monospace mt-3 small">PROGRAMME</div>
+                <div class="text-monospace mb-1 mt-3 small">PROGRAMME</div>
             @endif
             <div class="p-3" style="border:solid #ced4da 1px;border-radius:4px;background-color:#F3F5F7;">
                 <!-- CODE ELEVE --> 
-                <div class="mb-1 text-monospace small">{{strtoupper(__("code ÉlÈve"))}}</div>
+                <div class="mb-1 text-monospace small">{{mb_strtoupper(__("code ÉlÈve"))}}</div>
                 <div id="code_editor_eleve_{{ $loop->iteration }}" style="border-radius:5px;">{{ $code->code_eleve }}</div>
                 <!-- /CODE ELEVE -->
 
                 <!-- CODE ENSEIGNANT --> 
-                <div class="mt-4 text-monospace small">{{strtoupper(__("code enseignant"))}}</div>
+                <div class="mt-4 text-monospace small">{{mb_strtoupper(__("code enseignant"))}}</div>
                 <div id="code_editor_enseignant_{{ $loop->iteration }}" style="border-radius:5px;">{{ $code->code_enseignant }}</div>
                 <!-- /CODE ENSEIGNANT -->
 
                 <!-- SOLUTION --> 
-                <div class="mt-4 text-monospace small">{{strtoupper(__('solution possible'))}}</div>
+                <div class="mt-4 text-monospace small">{{mb_strtoupper(__('solution possible'))}}</div>
                 <div id="code_editor_solution_{{ $loop->iteration }}" style="border-radius:5px;">{{ $code->code_solution }}</div>
                 <!-- /SOLUTION --> 	
             </div>
         @endforeach
+
     @endif
 
     @if (isset($page_devoir_corriger))
@@ -46,17 +89,17 @@
             @endif
             <div class="p-3" style="border:solid #ced4da 1px;border-radius:4px;background-color:#F3F5F7;">
                 <!-- CODE ELEVE --> 
-                <div class="mb-1 text-monospace small">{{strtoupper(__("code ÉlÈve"))}}</div>
+                <div class="mb-1 text-monospace small">{{mb_strtoupper(__("code ÉlÈve"))}}</div>
                 <div class="highlight-me"><pre><code class="language-python rounded">{{ $code->code_eleve}} def fonc():</code></pre></div>
                 <!-- /CODE ELEVE -->
 
                 <!-- CODE ENSEIGNANT --> 
-                <div class="mt-4 text-monospace small">{{strtoupper(__("code enseignant"))}}</div>
+                <div class="mt-4 text-monospace small">{{mb_strtoupper(__("code enseignant"))}}</div>
                 <div class="highlight-me"><pre><code class="language-python rounded">{{ $code->code_enseignant }}</code></pre></div>
                 <!-- /CODE ENSEIGNANT -->
 
                 <!-- SOLUTION --> 
-                <div class="mt-4 text-monospace small">{{strtoupper(__('solution possible'))}}</div>
+                <div class="mt-4 text-monospace small">{{mb_strtoupper(__('solution possible'))}}</div>
                 <div class="highlight-me"><pre><code class="language-python rounded">{{ $code->code_solution }}</code></pre></div>
                 <!-- /SOLUTION --> 	
             </div>

@@ -64,6 +64,9 @@
 								</div>
 							</div>
 						</form>
+
+						<div class="mt-5 text-center"><a href="/creer-un-compte" style="text-decoration:underline">créer un compte</a></div>
+
 					</div>
 				</div>
 			</div>

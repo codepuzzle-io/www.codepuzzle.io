@@ -34,10 +34,11 @@ if (isset($jeton)) {
         .gutter-col {
             grid-row: 1/-1;
             cursor: col-resize;
-            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAAXNSR0IB2cksfwAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAAuIwAALiMBeKU/dgAAACNJREFUKM9jNLFy+M/AwMBw5tgBRhibiYEiwDhq5qiZeM0EAAvMLYFPpp3FAAAAAElFTkSuQmCC');
             background-color: rgb(229, 231, 235);
             background-repeat: no-repeat;
             background-position: 50%;
+            width:15px;
         }
         .gutter-col-1 {
             grid-column: 2;
@@ -88,7 +89,7 @@ if (isset($jeton)) {
     <script src="{{ asset('lib/split-grid/split-grid.js') }}" type="text/javascript" charset="utf-8"></script>
     <script>
 	    Split({
-	        minSize: 200,
+	        minSize: 300,
 	        columnGutters: [{
 	            track: 1,
 	            element: document.querySelector('.gutter-col-1'),

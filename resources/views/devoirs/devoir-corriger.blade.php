@@ -29,7 +29,7 @@ $copie_next = $copies->get($indice_next);
 
 
 // == PRE-TRAITEMENT ==========================================================
-$commentaires ='';
+$commentaires = '';
 $note = '';
 // une correction existe
 if ($copie->correction_enseignant != null) {
@@ -40,6 +40,7 @@ if ($copie->correction_enseignant != null) {
         if (!isset($notebook_cell->metadata->correction_name)) $copie_cells[] = $notebook_cell;
     }
 } else {
+    $commentaires = $devoir->bareme;
     $copie_cells = json_decode($copie->copie)->cells;
 }
 // == /PRE-TRAITEMENT =========================================================
@@ -138,13 +139,13 @@ dump($copie_cells);
 
                     <div class="mt-3 mb-3">
 
-                        <div class="text-monospace text-success font-weight-bold mt-2">Commentaires</div>
+                        <div class="text-monospace text-success font-weight-bold mt-2">Compte-rendu / commentaires</div>
                         
-                        <textarea id="commentaires" class="form-control border border-success text-success mb-3" rows="6">{{ $commentaires }}</textarea>
+                        <textarea id="commentaires" class="form-control form-control-sm border border-success text-success mb-3 text-monospace" rows="6" style="overflow:hidden;resize:none;">{{ $commentaires }}</textarea>
                         
                         <div class="form-inline mb-1">
                             <span class="text-monospace text-success font-weight-bold">Note<sup style="padding-left:2px;font-size:70%;color:silver;">*</sup></span>
-                            <input id="note" type="text" class="form-control border border-success text-success ml-2 mr-3" value="{{ $note }}" style="width:80px;" />
+                            <input id="note" type="text" class="form-control form-control-sm border border-success text-success ml-2 mr-3 text-monospace" value="{{ $note }}" style="width:80px;" />
                             <button id="save" onclick="correction_sauvegarder('{{ Crypt::encryptString($copie->id) }}')" type="button" class="btn btn-danger" style="display:none;"><i class="fas fa-save"></i></button>
                         </div>
                         <div><span style="font-size:70%;color:silver;"><sup>*</sup>champ optionnel</span></div>
@@ -180,6 +181,22 @@ dump($copie_cells);
 	@include('inc-bottom-js')
     @include('sujets/inc-sujet-afficher-js')
     @include('copies/inc-copie-correction-afficher-js')
+
+
+    <script>
+        function autosize(ta){
+            ta.style.height = 'auto';
+            ta.style.height = (ta.scrollHeight + 2) + 'px';
+        }
+
+        const ta_commentaires = document.getElementById('commentaires');
+
+        // redimensionner à chaque saisie utilisateur
+        ta_commentaires.addEventListener('input', () => autosize(commentaires));
+
+        // redimensionner au chargement (sans déclencher d'input)
+        document.addEventListener('DOMContentLoaded', () => autosize(commentaires));
+    </script>
 
     <!-- GRID -->
     <script src="{{ asset('lib/split-grid/split-grid.js') }}" type="text/javascript" charset="utf-8"></script>

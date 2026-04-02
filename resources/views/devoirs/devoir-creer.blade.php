@@ -74,7 +74,7 @@ $page_devoir_creer = true;
 					@csrf
 
 					<!-- TITRE -->
-					<div class="text-monospace mb-1">{{strtoupper(__('titre'))}}<sup class="ml-1 text-danger small">*</sup></div>
+					<div class="text-monospace mb-1">{{mb_strtoupper(__('titre'))}}<sup class="ml-1 text-danger small">*</sup></div>
 					<input id="titre_enseignant" type="text" class="form-control @error('titre_enseignant') is-invalid @enderror" name="titre_enseignant" value="{{ old('titre_enseignant') ?? $devoir->titre_enseignant ?? '' }}" autofocus>
 					@error('titre_enseignant')
 						<span class="invalid-feedback text-danger text-monospace" role="alert">
@@ -84,8 +84,8 @@ $page_devoir_creer = true;
 					<!-- /TITRE -->
 
 					<!-- CONSIGNES -->
-					<div class="mt-4 mb-1 text-monospace">{{strtoupper(__('consignes'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
-					<textarea class="form-control @error('consignes_eleve') is-invalid @enderror" name="consignes_eleve" id="consignes_eleve" rows="4">{{ old('consignes_eleve') ?? $devoir->consignes_eleve ?? '' }}</textarea>
+					<div class="mt-4 mb-1 text-monospace">{{mb_strtoupper(__('consignes'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
+					<textarea class="form-control @error('consignes_eleve') is-invalid @enderror" name="consignes_eleve" id="consignes_eleve" rows="4" style="overflow:hidden;resize:none;" oninput="this.style.height='auto';this.style.height=this.scrollHeight+2+'px'">{{ old('consignes_eleve') ?? $devoir->consignes_eleve ?? '' }}</textarea>
 					@error('consignes_eleve')
 						<span class="invalid-feedback" role="alert">
 							<strong>{{ $message }}</strong>
@@ -93,8 +93,19 @@ $page_devoir_creer = true;
 					@enderror
 					<!-- /CONSIGNES -->	
 
+					<!-- BAREME -->
+					<div class="mt-4 text-monospace">{{mb_strtoupper(__('critères d\'évaluation / barème'))}} <span class="font-italic small" style="color:silver;">{{__('optionnel')}}</span></div>
+					<div class="mb-1 small text-monospace text-muted text-justify">Ces informations pré-rempliront le champs "Compte-rendu / commentaires" de la correction.</div>
+					<textarea class="form-control @error('bareme') is-invalid @enderror text-monospace" name="bareme" id="bareme" rows="4" style="overflow:hidden;resize:none;" oninput="this.style.height='auto';this.style.height=this.scrollHeight+2+'px'">{{ old('bareme') ?? $devoir->bareme ?? '' }}</textarea>
+					@error('bareme')
+						<span class="invalid-feedback" role="alert">
+							<strong>{{ $message }}</strong>
+						</span>
+					@enderror
+					<!-- /BAREME -->	
+
 					<!-- SUJET -->	
-						<div class="mt-4 mb-1 text-monospace">{{strtoupper(__('sujet'))}}</div>	
+						<div class="mt-4 mb-1 text-monospace">{{mb_strtoupper(__('sujet'))}}</div>	
 						@include('sujets/inc-sujet-afficher')				
 					<!-- /SUJET -->	
 			
@@ -118,6 +129,15 @@ $page_devoir_creer = true;
 
 	@include('inc-bottom-js')
 	@include('sujets/inc-sujet-afficher-js')
+
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			const consignes_eleve = document.getElementById('consignes_eleve');
+			consignes_eleve.dispatchEvent(new Event('input', {bubbles:true}));
+			const bareme = document.getElementById('bareme');
+			bareme.dispatchEvent(new Event('input', {bubbles:true}));
+		});
+	</script>
 
 </body>
 </html>

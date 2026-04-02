@@ -71,7 +71,7 @@ if (isset($jeton_secret)) {
                             <div>
                                 <span class="text-center small text-muted p-0" style="vertical-align:2px;"><i class="fa-solid fa-share"></i> Lien sujet:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                 <span class="text-center font-weight-bold text-monospace" style="font-size:24px">
-                                    <a id="lien_sujet" href="/S{{strtoupper($sujet->jeton)}}" target="_blank" class="text-dark">www.codepuzzle.io/S{{strtoupper($sujet->jeton)}}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a id="lien_sujet" href="/S{{strtoupper($sujet->jeton)}}" target="_blank" class="text-dark">www.codepuzzle.io/S{{strtoupper($sujet->jeton)}}</a>&nbsp;&nbsp;
                                 </span>
                                 <span class="pl-3">
                                     <button onclick="fullscreen('lien_sujet_fullscreen')" type="button" class="btn btn-light btn-sm" style="vertical-align:4px;"><i class="fas fa-expand"></i></button>
@@ -88,7 +88,7 @@ if (isset($jeton_secret)) {
                             <div>
                                 <span class="text-center small text-muted p-0" style="vertical-align:2px;"><i class="fa-solid fa-share"></i> Lien sujet + copie:</span>
                                 <span class="text-center font-weight-bold text-monospace" style="font-size:24px">
-                                    <a id="lien_sujet_copie" href="/S{{strtoupper($sujet->jeton)}}/copie" target="_blank" class="text-dark">www.codepuzzle.io/S{{strtoupper($sujet->jeton)}}/copie</a>
+                                    <a id="lien_sujet_copie" href="/K{{ \App\Functions\SujetId::encodeSujetId($sujet->id) }}" target="_blank" class="text-dark">www.codepuzzle.io/K{{ \App\Functions\SujetId::encodeSujetId($sujet->id) }}</a>&nbsp;&nbsp;
                                 </span>
                                 <span class="pl-3">
                                     <button onclick="fullscreen('lien_sujet_copie_fullscreen')" type="button" class="btn btn-light btn-sm" style="vertical-align:4px;"><i class="fas fa-expand"></i></button>
@@ -96,7 +96,7 @@ if (isset($jeton_secret)) {
                                         <br /><br /><br /><br /><br /><br />
                                         <img src="{{ asset('img/code-puzzle.png') }}" width="200" />
                                         <br /><br /><br /><br /><br /><br /><br /><br />
-                                        <div class="text-monospace text-dark font-weight-bold" style="font-size:5vw;">www.codepuzzle.io/S{{strtoupper($sujet->jeton)}}/copie</div>
+                                        <div class="text-monospace text-dark font-weight-bold" style="font-size:5vw;">www.codepuzzle.io/K{{ \App\Functions\SujetId::encodeSujetId($sujet->id) }}</div>
                                     </div>
                                     <button onclick="copier('lien_sujet_copie', this)" type="button" class="btn btn-light btn-sm" style="vertical-align:4px;"><i class="fa-regular fa-clone"></i></button>
                                 </span>

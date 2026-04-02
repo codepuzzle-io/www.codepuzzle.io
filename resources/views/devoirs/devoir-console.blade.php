@@ -113,10 +113,16 @@ if (isset($jeton_secret)) {
 
                 <div class="mt-2 mb-1 text-monospace font-weight-bold">{{strtoupper(__($devoir->titre_enseignant))}}</div>
                 @if ($devoir->consignes_eleve != '')
-                    <div class="markdown_content" style="padding:20px;border:solid 1px #DBE0E5;border-radius:4px;background-color:#f3f5f7;border-radius:4px;">{{$devoir->consignes_eleve}}</div>
+                    <div class="mt-4 mb-1 text-monospace">{{mb_strtoupper(__('consignes'))}}</div>
+                    <div class="markdown_content" style="white-space:pre-wrap;padding:20px;border:solid 1px #DBE0E5;border-radius:4px;background-color:#f3f5f7;border-radius:4px;">{{$devoir->consignes_eleve}}</div>
                 @endif
 
-                <div class="mt-5 mb-1 text-monospace">{{strtoupper(__('copies'))}}</div>
+                @if ($devoir->bareme != '')
+                    <div class="mt-4 mb-1 text-monospace">{{mb_strtoupper(__('critères d\'évaluation / barème'))}}</div>
+                    <div class="text-monospace small" style="white-space:pre-wrap;padding:20px;border:solid 1px #DBE0E5;border-radius:4px;background-color:#f3f5f7;border-radius:4px;">{{$devoir->bareme}}</div>
+                @endif
+
+                <div class="mt-4 mb-1 text-monospace">{{strtoupper(__('copies'))}}</div>
                 @if ($copies->isNotEmpty())
                     <div class="row mb-5">
                         <div class="col-md-12">
@@ -148,7 +154,7 @@ if (isset($jeton_secret)) {
                                         @if($copie->revised == 1)
                                             <a class="btn btn-sm btn-success" href="/devoir-corriger/{{ Crypt::encryptString($devoir->id) }}/{{ $loop->index }}" role="button" style="width:40px;" target="_blank"><i class="fas fa-check"></i></a>
                                         @else
-                                            <a class="btn btn-sm btn-light" href="/devoir-corriger/{{ Crypt::encryptString($devoir->id) }}/{{ $loop->index }}" role="button" style="width:40px;" target="_blank"><i class="fas fa-question"></i></a>
+                                            <a class="btn btn-sm btn-light" href="/devoir-corriger/{{ Crypt::encryptString($devoir->id) }}/{{ $loop->index }}" role="button" style="width:40px;" target="_blank"><i class="fa-solid fa-marker"></i></a>
                                         @endif                               
                                         
                                         <span class="pl-2 text-monospace">{{$copie->pseudo}}</span>
@@ -204,7 +210,7 @@ if (isset($jeton_secret)) {
                                     @endif
                                 @endforeach
                             </ul>
-                            <div class="mt-1">
+                            <div class="mt-2">
                                 <a class="btn btn-dark btn-sm" href="/devoir-imprimer/{{ Crypt::encryptString($devoir->id) }}" role="button"><i class="fa-solid fa-print mr-2"></i> imprimer les comptes-rendus</a>
                                 <span class="text-muted small">pour les annoter à la main si nécessaire et les distribuer aux élèves</span>
                             </div>

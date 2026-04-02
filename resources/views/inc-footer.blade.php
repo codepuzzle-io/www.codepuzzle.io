@@ -7,6 +7,17 @@
 	</div>
 </div>
 
-<div class="text-right small text-muted mr-5" style="opacity:0.5;">
-	bricodé par <a href="https://twitter.com/laurentabbal" target="_blank"><i class="fab fa-twitter" data-toggle="tooltip" data-placement="top" title="" data-title="Laurent Abbal" aria-label="Laurent Abbal"></i><span class="sr-only">Laurent Abbal</span></a>
+<div class="mt-3 text-center text-monospace">
+	<a tabindex="0" class="text-success" role="button" data-container="body" data-trigger="click" data-html="true" data-sanitize="false" data-toggle="popover" data-placement="right" data-content="
+		<ul class='fa-ul text-monospace ml-4 mb-0'>
+			<li><span class='fa-li pe-3 text-success'><i class='fa-solid fa-bolt-lightning'></i></span><a href='https://laurentabbal.forge.apps.education.fr/' target='_blank'>Projets</a></li>
+			<li><span class='fa-li pe-3 text-success'><i class='fa-brands fa-mastodon'></i></span><a href='https://mastodon.social/@laurentabbal' target='_blank'>@laurentabbal@mastodon.social</a></li>
+			<li><span class='fa-li pe-3 text-success'><i class='fas fa-dove'></i></span><a href='https://bsky.app/profile/laurentabbal.bsky.social' target='_blank'>laurentabbal.bsky.social</a></li>
+			<li><span class='fa-li pe-3 text-success'><i class='fa-brands fa-linkedin'></i></span><a href='https://www.linkedin.com/in/laurentabbal/' target='_blank'>in/laurentabbal</a></li>
+			<li><span class='fa-li pe-3 text-success'><i class='fa-brands fa-square-x-twitter'></i></span><a href='https://x.com/laurentabbal' target='_blank'>@laurentabbal</a></li>
+			<li><span class='fa-li pe-3 text-success'><i class='fa-brands fa-square-gitlab'></i></span><a href='https://forge.apps.education.fr/laurent.abbal' target='_blank'>laurent.abbal</a></li>		
+			<li><span class='fa-li pe-3 text-success'><i class='fa-brands fa-square-github'></i></span><a href='https://github.com/laurentabbal' target='_blank'>laurentabbal</a></li>		
+		</ul>
+		"><i class="fas fa-user-astronaut fa-lg"></i>
+	</a>
 </div>

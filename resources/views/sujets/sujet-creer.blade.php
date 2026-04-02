@@ -34,9 +34,9 @@
 				<h1>{{__('nouveau sujet')}}</h1>
 
 				<div class="text-center text-monospace">
-					<a class="btn btn-dark mr-1" href="/sujet-exo-creer" role="button">Exercice Python</a>
-					<a class="btn btn-dark ml-1" href="/sujet-pdf-creer" role="button">Sujet au format PDF</a>
-					<a class="btn btn-dark ml-1" href="/sujet-md-creer" role="button">Sujet au format Markdown</a>
+					<a class="btn btn-dark mr-1 mb-2" href="/sujet-exo-creer" role="button">Exercice(s) Python / Épreuve Pratique</a>
+					<a class="btn btn-dark ml-1 mb-2" href="/sujet-pdf-creer" role="button">Sujet au format PDF</a>
+					<a class="btn btn-dark ml-1 mb-2" href="/sujet-md-creer" role="button">Sujet au format Markdown</a>
 				</div>
 
 			</div>

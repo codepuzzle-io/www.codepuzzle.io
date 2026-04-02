@@ -41,11 +41,43 @@
 
                 <h1>Banque de sujets</h1>
 
-                <ul class="text-monospace">
-                    @foreach($sujets AS $titre => $code)
-                        <li>{{$titre}}: <a href="/{{$code}}" target="_blank">www.codepuzzle.io/{{$code}}</a></li>
-                    @endforeach
-                </ul>
+                <div class="text-monospace">
+                    <b>ÉPREUVE PRATIQUE 2026</b>
+                    <div class=" mb-4 border rounded p-3">
+                        <ul class="mb-0">
+                            <li>
+                                <b>Sujet 0-1</b>
+                                <ul style="list-style-type:square;">
+                                    <li class="small">Sujet : <a href="https://www.codepuzzle.io/SDNFBK" target="_blank">www.codepuzzle.io/SDNFBK</a></li>
+                                    <li class="small">Sujet + copie à fournir aux élèves pour un entraînement en autonomie : <a href="https://www.codepuzzle.io/K31L24 " target="_blank">www.codepuzzle.io/K31L24 </a></li>
+                                </ul>
+                            </li>
+                            <li class="mt-2">
+                                <b>Sujet 0-2</b>
+                                <ul style="list-style-type:square;">
+                                    <li class="small">Sujet : <a href="https://www.codepuzzle.io/SYQ7BP" target="_blank">www.codepuzzle.io/SYQ7BP</a></li>
+                                    <li class="small">Sujet + copie à fournir aux élèves pour un entraînement en autonomie : <a href="https://www.codepuzzle.io/K31L1U " target="_blank">www.codepuzzle.io/K31L1U </a></li>
+                                </ul>
+                            </li>
+                            <li class="mt-2">
+                                <b>Sujet 0-3</b>
+                                <ul style="list-style-type:square;">
+                                    <li class="small">Sujet : <a href="https://www.codepuzzle.io/SZ5F2Q" target="_blank">www.codepuzzle.io/SZ5F2Q</a></li>
+                                    <li class="small">Sujet + copie à fournir aux élèves pour un entraînement en autonomie : <a href="https://www.codepuzzle.io/K31L1V" target="_blank">www.codepuzzle.io/K31L1V</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="text-monospace">
+                    <b>SUJETS BAC</b>
+                    <ul>
+                        @foreach($sujets AS $titre => $code)
+                            <li>{{$titre}}: <a href="/{{$code}}" target="_blank">www.codepuzzle.io/{{$code}}</a></li>
+                        @endforeach
+                    </ul>
+                </div>
 
             </div>
         </div>

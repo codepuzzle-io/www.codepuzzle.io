@@ -9,10 +9,12 @@ if (isset($sujet_id)) {
 		echo "<pre>Ce sujet n'existe pas.</pre>";
 		exit();
 	} else {
+		/*
 		if ($sujet->user_id !== 0 && (!Auth::check() || (Auth::check() && Auth::id() !== $sujet->user_id))) {
 			echo "<pre>Vous ne pouvez pas accéder à ce sujet.</pre>";
 			exit();
 		}    
+		*/
 		$sujet_json = json_decode($sujet->sujet);
     }
 }
@@ -52,14 +54,14 @@ if (isset($sujet_id)) {
 			<div class="col-md-10 pl-4 pr-4">
 
 				<h1 class="mb-0">{{__('sujet')}}</h1>
-				<div class="mb-4 text-muted">Exercice Python</div>
+				<div class="mb-4 text-muted">Exercice(s) Python / Épreuve Pratique</div>
 
 				<form method="POST" action="{{route('sujet-exo-creer-post')}}">
 
 					@csrf
 
 					<!-- TITRE -->
-					<div class="text-monospace">{{strtoupper(__('titre'))}}<sup class="ml-1 text-danger small">*</sup></div>
+					<div class="text-monospace">{{mb_strtoupper(__('titre'))}}<sup class="ml-1 text-danger small">*</sup></div>
 					<input id="titre" type="text" class="form-control @error('titre') is-invalid @enderror" name="titre" value="{{ old('titre') ?? $sujet->titre ?? '' }}" autofocus>
 					@error('titre')
 						<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -67,14 +69,72 @@ if (isset($sujet_id)) {
 					<!-- /TITRE -->		
 
 					<!-- ÉNONCÉ -->
-					<div class="mt-4 text-monospace">{{strtoupper(__('ÉNONCÉ'))}}<sup class="ml-1 text-danger small">*</sup></div>
+					<div class="mt-4 text-monospace">{{mb_strtoupper(__('ÉNONCÉ'))}}<sup class="ml-1 text-danger small">*</sup></div>
 					<textarea id="markdown_content" class="form-control @error('enonce') is-invalid @enderror" name="enonce" rows="6">{{ old('enonce') ?? $sujet_json->enonce ?? '' }}</textarea>
 					@error('enonce')
 						<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
 					@enderror
 					<!-- /ÉNONCÉ -->
+
+					<!-- SCOPE -->
+					<div class="mt-4">
+						<div class="text-monospace">{{ mb_strtoupper(__("Portée d'exécution du code")) }}<sup class="ml-1 text-danger small">*</sup></div>
+
+						@php
+							$currentScope = old('run_scope') ?? ($sujet_json->run_scope ?? 'cell');
+						@endphp
+
+						<div class="form-check">
+							<input
+							class="form-check-input @error('run_scope') is-invalid @enderror"
+							type="radio"
+							name="run_scope"
+							id="scope_cell"
+							value="cell"
+							{{ $currentScope === 'cell' ? 'checked' : '' }}>
+							<label class="form-check-label text-monospace small" for="scope_cell">
+							Exécution par cellule <span class="text-muted">(chaque cellule s'exécute indépendamment des autres)</span>
+							</label>
+						</div>
+
+						<div class="form-check">
+							<input
+							class="form-check-input @error('run_scope') is-invalid @enderror"
+							type="radio"
+							name="run_scope"
+							id="scope_session"
+							value="session"
+							{{ $currentScope === 'session' ? 'checked' : '' }}>
+							<label class="form-check-label text-monospace small" for="scope_session">
+							Exécution partagée <span class="text-muted">(toutes les cellules partagent le même environnement)</span>
+							</label>
+						</div>
+
+						@error('run_scope')
+							<div class="invalid-feedback d-block"><strong>{{ $message }}</strong></div>
+						@enderror
+					</div>
+					<!-- /SCOPE -->
+
+					<!-- BIBLIOTHEQUES -->
+					<div class="mt-4 text-monospace">{{mb_strtoupper(__('bibliotheques'))}} <span class="font-italic small" style="color:silver;">optionnel</span></div>
+					<div class="mb-1 small text-monospace text-muted text-justify">Séparer les noms des bibliothèques par des virgules. Chaque bibliothèque sera chargée au démarrage.</div>
+					<input id="bibliotheques" class="form-control @error('bibliotheques') is-invalid @enderror" name="bibliotheques" value="{{ old('bibliotheques') ?? $sujet_json->bibliotheques ?? '' }}" />
+					@error('bibliotheques')
+						<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+					@enderror
+					<!-- /BIBLIOTHEQUES -->	
+
+					<!-- FICHIERS -->
+					<div class="mt-4 text-monospace">{{mb_strtoupper(__('fichiers'))}} <span class="font-italic small" style="color:silver;">optionnel</span></div>
+					<div class="mb-1 small text-monospace text-muted text-justify">Les fichiers doivent être hébergés sur internet. Saisir une URL par ligne.<br />Chaque fichier sera téléchargé au démarrage et copié dans le système de fichiers. Ainsi, le code Python pourra lire/importer/manipuler ces fichiers. Le nom du fichier est déduit du dernier segment de l'URL (ex. <code>…/donnees.py</code> → <code>donnees.py</code>).</div>
+					<textarea id="fichiers" class="form-control @error('fichiers') is-invalid @enderror" name="fichiers" rows="2" style="overflow:hidden;resize:none;" oninput="this.style.height='auto';this.style.height=this.scrollHeight+2+'px'">{{ old('fichiers') ?? $sujet_json->fichiers ?? '' }}</textarea>
+					@error('fichiers')
+						<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+					@enderror
+					<!-- /FICHIERS -->	
 					
-					<div class="row mt-3">
+					<div class="row mt-4">
 						<div class="col-md-3 pt-2">
 							<div class="small text-monospace text-muted text-justify">
 								Si le sujet nécessite l'écriture de plusieurs programmes indépendants, vous pouvez ajouter des options en cliquant sur le bouton ci-dessous. 
@@ -112,6 +172,14 @@ if (isset($sujet_id)) {
 	{{-- == Gestion des cellules ========================================= --}}
 
     <script src="{{ asset('js/ace/ace.js') }}" type="text/javascript" charset="utf-8"></script>
+
+	<script>
+	document.addEventListener('DOMContentLoaded', () => {
+		const ta = document.getElementById('fichiers');
+		ta.dispatchEvent(new Event('input', {bubbles:true}));
+	});
+	</script>
+
     <script>
         var editor_code_eleve = [];
         var editor_code_enseignant = [];
@@ -159,17 +227,17 @@ if (isset($sujet_id)) {
 					}
 
 					div_content += `
-					<div class="text-monospace">{{strtoupper(__("code ÉlÈve"))}} <span class="font-italic small" style="color:silver;">{{__("optionnel")}}</span></div>
+					<div class="text-monospace">{{mb_strtoupper(__("code ÉlÈve"))}} <span class="font-italic small" style="color:silver;">{{__("optionnel")}}</span></div>
 					<div class="text-monospace text-muted small text-justify mb-1">{{__("Ce code sera proposé à l'élève comme point de départ.")}}</div>
 					<textarea id="code_eleve_`+div_id+`" name="code[`+div_id+`][code_eleve]" style="display:none;"></textarea>
 					<div id="code_editor_eleve_`+div_id+`" class="mb-2 code-editor"></div>
 
-					<div class="mt-4 text-monospace">{{strtoupper(__("code enseignant"))}} <span class="font-italic small" style="color:silver;">{{__("optionnel")}}</span></div>
+					<div class="mt-4 text-monospace">{{mb_strtoupper(__("code enseignant"))}} <span class="font-italic small" style="color:silver;">{{__("optionnel")}}</span></div>
 					<div class="text-monospace text-muted small text-justify mb-1">{{__("Non visible par les élèves. Vous pouvez y placer un jeu de tests par exemple. Ce code pourra être exécuté en même temps que celui de l'élève ou seul lors de l'évaluation.")}}</div>
 					<textarea id="code_enseignant_`+div_id+`" name="code[`+div_id+`][code_enseignant]" style="display:none;"></textarea>
 					<div id="code_editor_enseignant_`+div_id+`" class="mb-2 code-editor"></div>
 					
-					<div class="mt-4 text-monospace">{{strtoupper(__('solution possible'))}} <span class="font-italic small" style="color:silver;">{{__("optionnel")}}</span></div>
+					<div class="mt-4 text-monospace">{{mb_strtoupper(__('solution possible'))}} <span class="font-italic small" style="color:silver;">{{__("optionnel")}}</span></div>
 					<div class="text-monospace text-muted small text-justify mb-1">{{__("Non visible par les élèves. Cette soluton possible sert seulement de référence.")}}</div>
 					<textarea id="code_solution_`+div_id+`" name="code[`+div_id+`][code_solution]" style="display:none;"></textarea>
 					<div id="code_editor_solution_`+div_id+`" class="mb-2 code-editor"></div>

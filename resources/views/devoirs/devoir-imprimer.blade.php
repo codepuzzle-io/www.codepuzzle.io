@@ -64,7 +64,7 @@ $copies = App\Models\Copie::where('jeton_devoir', $devoir->jeton)->orderBy('pseu
         <p class="text-center mt-5" style="font-size:120%;">RÉCAPITULATIF</p>
 
         <!-- COMMENTAIRES --> 
-        <div class="mt-3 text-monospace">{{strtoupper(__('commentaires'))}}</div>
+        <div class="mt-3 text-monospace">NOTES & {{strtoupper(__('commentaires'))}}</div>
         <table class="table table-borderless mt-2">
             @foreach($copies as $copie)
                 <?php
@@ -84,8 +84,8 @@ $copies = App\Models\Copie::where('jeton_devoir', $devoir->jeton)->orderBy('pseu
                 ?>
                 <tr>
                     <td class="p-2 font-weight-bold text-uppercase">{{$copie->pseudo}}</td>
-                    <td style="vertical-align:top;padding:5px 0px 5px 0px;"><div class="border border-success rounded text-dark mr-1 pt-2 pb-2 pl-3 pr-3">{!! nl2br($note) !!}</div></td>
-                    <td style="width:100%;vertical-align:top;padding:5px 0px 5px 0px;"><div class="border border-success rounded text-dark pt-2 pb-2 pl-3 pr-3">{!! nl2br($commentaires) !!}</div></td>
+                    <td style="vertical-align:top;padding:5px 0px 5px 0px;"><div class="border border-success rounded text-dark mr-1 pt-2 pb-2 pl-3 pr-3" style="white-space:pre-wrap">{{ $note }}</div></td>
+                    <td style="width:100%;vertical-align:top;padding:5px 0px 5px 0px;"><div class="border border-success rounded text-dark pt-2 pb-2 pl-3 pr-3" style="white-space:pre-wrap">{{ $commentaires }}</div></td>
                 </tr>
             @endforeach
         </table>
@@ -140,9 +140,9 @@ $copies = App\Models\Copie::where('jeton_devoir', $devoir->jeton)->orderBy('pseu
                 <table class="table table-borderless mt-2">
                     <tr>
                         @if ($note != '')
-                            <td style="vertical-align:top;padding:5px 0px 5px 0px;"><div class="border border-success rounded text-dark mr-1 pt-2 pb-2 pl-3 pr-3">{!! nl2br($note) !!}</div></td>
+                            <td style="vertical-align:top;padding:5px 0px 5px 0px;"><div class="border border-success rounded text-dark mr-1 pt-2 pb-2 pl-3 pr-3" style="white-space:pre-wrap">{{ $note }}</div></td>
                         @endif
-                        <td style="width:100%;vertical-align:top;padding:5px 0px 5px 0px;"><div class="border border-success rounded text-dark pt-2 pb-2 pl-3 pr-3">{!! nl2br($commentaires) !!}</div></td>
+                        <td style="width:100%;vertical-align:top;padding:5px 0px 5px 0px;"><div class="border border-success rounded text-dark pt-2 pb-2 pl-3 pr-3" style="white-space:pre-wrap">{{ $commentaires }}</div></td>
                     </tr>
                 </table>
                 <!-- /NOTE & COMMENTAIRES --> 	

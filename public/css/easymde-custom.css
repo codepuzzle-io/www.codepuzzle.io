@@ -57,13 +57,16 @@
     */
 
 .editor-preview {
-    font-family: 'Crimson Text', serif;
-    font-weight: 500;
-    font-size:17px;
+    /*font-family: 'Crimson Text', serif;*/
+    /*font-weight: 500;*/
+    /*font-size:17px;*/
+    font-family: 'Inter', serif;
+    font-weight: 400;
+    font-size: 0.9rem !important;
 }
 
 .editor-preview h1 {
-	font-size: 18px;
+	font-size: 16px;
 	text-transform: uppercase;
 	text-align:left;
 	color:black;
@@ -73,7 +76,7 @@
 }
 
 .editor-preview h2 {
-    font-size: 17px;
+    font-size: 14px;
 	text-transform: uppercase;
     text-align:left;
 	color: black;

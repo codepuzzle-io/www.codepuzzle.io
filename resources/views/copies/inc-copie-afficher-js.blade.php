@@ -1,9 +1,213 @@
-{{-- == Webworker ======================================================== --}}
+{{-- == Helpers ========================================================== --}}
 <script>
 
-    var pyodideWorker = new Worker("{{ asset('pyodideworker/copie-pyodideWorker.js') }}");
+    // == ==
+    // Mime
+    function guessMime(name) {
+        const ext = (name.split('.').pop() || '').toLowerCase();
+        const map = {
+            'txt':'text/plain;charset=utf-8','md':'text/markdown;charset=utf-8','csv':'text/csv;charset=utf-8',
+            'json':'application/json','pdf':'application/pdf',
+            'png':'image/png','jpg':'image/jpeg','jpeg':'image/jpeg','gif':'image/gif','webp':'image/webp','svg':'image/svg+xml',
+            'wav':'audio/wav','mp3':'audio/mpeg','ogg':'audio/ogg',
+            'mp4':'video/mp4','webm':'video/webm',
+            'py':'text/plain;charset=utf-8',
+            'html':'text/html;charset=utf-8',
+            'css':'text/plain;charset=utf-8',
+            'js':'text/plain;charset=utf-8',
+            'zip':'application/zip'
+        };
+        return map[ext] || 'application/octet-stream';
+    }
 
-    // Initialisation des éditeurs
+
+    function normalizeInlineMime(mime, filename) {
+        const ext = (filename.split('.').pop() || '').toLowerCase();
+        // Pour éviter tout téléchargement parasite, on force du texte brut
+        // sur les types "code" et assimilés.
+        const forcePlain = new Set(['py','js','ts','css','md','csv','tsv','log','ipynb']);
+        if (forcePlain.has(ext)) return 'text/plain;charset=utf-8';
+
+        // JSON/SVG: certains navigateurs se méfient si le mime est incohérent
+        if (ext === 'json') return 'application/json';
+        if (ext === 'svg')  return 'image/svg+xml';
+
+        return mime || 'application/octet-stream';
+    }
+
+    function canOpenInline(mime, filename='') {
+        const m = (mime || '').toLowerCase();
+        const ext = (filename.split('.').pop() || '').toLowerCase();
+
+        const inlineTypes = [
+            /^text\//, /^image\//, /^audio\//, /^video\//,
+            /^application\/pdf$/, /^application\/json$/, /^application\/xml$/,
+            /^image\/svg\+xml$/
+        ];
+        const textLikeExt = new Set(['md','csv','tsv','log','py','js','ts','css','html','htm','svg','ipynb','json','txt']);
+
+        return inlineTypes.some(rx => rx.test(m)) || textLikeExt.has(ext);
+    }
+
+    function saveOrOpenBuffer(buffer, filename, mimeFromWorker) {
+        const type     = normalizeInlineMime(mimeFromWorker || guessMime(filename), filename);
+        const blob     = new Blob([buffer], { type });
+        const url      = URL.createObjectURL(blob);
+        const canInline= canOpenInline(type, filename);
+
+        // Ouverture inline : on NE déclenche PAS le download.
+        if (canInline) {
+            // Technique <a target="_blank"> : plus fiable que window.open sur certains bloqueurs
+            const a = document.createElement('a');
+            a.href = url;
+            a.target = '_blank';   // ouverture dans un onglet
+            a.rel = 'noopener';
+            // surtout PAS d’attribut download ici
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+
+            // Laisser au nouvel onglet le temps de charger le blob avant révocation
+            setTimeout(() => URL.revokeObjectURL(url), 60_000);
+            return; // <- on sort ici : pas de fallback download
+        }
+
+        // Sinon : téléchargement explicite
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename || 'fichier';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 0);
+    }
+
+    // Envoi une demande de lecture au worker et attend la réponse
+    function requestFileFromWorker(worker, path, { timeoutMs = 30000 } = {}) {
+        return new Promise((resolve, reject) => {
+            const id = 'rf_' + Math.random().toString(36).slice(2);
+            let timer = null;
+
+            const onMsg = (e) => {
+            const d = e.data || {};
+            if (d.type !== 'fs.readFile.result' || d.id !== id) return;
+            worker.removeEventListener('message', onMsg);
+            if (timer) clearTimeout(timer);
+            if (d.error) return reject(new Error(d.error));
+            resolve({ buffer: d.buffer, path: d.path, mime: d.mime });
+            };
+
+            worker.addEventListener('message', onMsg);
+
+            // Sécurité : timeout
+            timer = setTimeout(() => {
+            worker.removeEventListener('message', onMsg);
+            reject(new Error(`Timeout lecture worker pour ${path}`));
+            }, timeoutMs);
+
+            worker.postMessage({ cmd: 'readFile', id, path });
+        });
+    }
+
+    function setupFsDownloadDelegation(containerEl, worker) {
+        if (!containerEl || !worker) return;
+        if (containerEl._fsDlBound) return; // évite les doublons si rerender
+        containerEl._fsDlBound = true;
+
+        containerEl.addEventListener('click', async (evt) => {
+            const a = evt.target.closest('a.fs-download');
+            if (!a) return;
+            evt.preventDefault();
+
+            const path = a.getAttribute('data-path');
+            const filename = path.split('/').pop() || 'fichier';
+            try {
+                //const { buffer, mime } = await requestFileFromWorker(worker, path);
+                //saveBufferAsFile(buffer, filename, mime);
+                const { buffer, mime } = await requestFileFromWorker(worker, path);
+                saveOrOpenBuffer(buffer, filename, mime);
+            } catch (err) {
+                console.error(err);
+                alert(`Impossible de télécharger ${filename} : ${err.message || err}`);
+            }
+        });
+    }
+
+    // ========================================================================
+
+    function formatBytes(n) {
+        if (n == null) return '';
+        const k = 1024, units = ['octets','Ko','Mo','Go','To'];
+        let i = 0, v = n;
+        while (v >= k && i < units.length - 1) { v /= k; i++; }
+        return (i === 0 ? v : v.toFixed(1)) + ' ' + units[i];
+    }
+
+    // == Systeme de fichiers de Pyodide ======================================
+    function renderFsListing(fsPayload) {
+        const card = document.getElementById('pyodide_fs_block');
+        const el   = document.getElementById('pyodide_fs');
+        if (!card || !el) return;
+
+        if (fsPayload.error) {
+            card.classList.remove('d-none');
+            el.textContent = `Erreur FS (${fsPayload.path}) : ${fsPayload.error}`;
+            return;
+        }
+
+        const basePath = fsPayload.path || '/';
+        const rawItems = fsPayload.items || [];
+
+        // Normalise : accepte soit [{name, path, kind, size}], soit ["nom.ext", ...]
+        const items = rawItems.map(it => {
+            if (typeof it === 'string') {
+            const full = (basePath.endsWith('/') ? basePath : basePath + '/') + it;
+            return { name: it, path: full, kind: 'file', size: null };
+            }
+            return it;
+        });
+
+        if (items.length === 0) {
+            card.classList.add('d-none');
+            el.textContent = '';
+            return;
+        }
+
+        card.classList.remove('d-none');
+
+        // Tri simple : dossiers d’abord, puis fichiers
+        items.sort((a, b) => (a.kind === b.kind) ? a.name.localeCompare(b.name) : (a.kind === 'dir' ? -1 : 1));
+
+        const html = items.map(({ name, path, kind, size }, i, arr) => {
+            const isLast = i === arr.length - 1;
+            const filePrefix = isLast ? '┗ ' : '┣ ';   // ← symbole différent pour le dernier
+            if (kind === 'dir') {
+                // Dossier : pas de téléchargement (on pourrait plus tard naviguer)
+                return `📁 <span>${name}</span>`;
+            } else {
+                // Fichier : lien + taille
+                const tail = size != null ? ` <span class="opacity-50 small" style="vertical-align:1px;">(${formatBytes(size)})</span>` : '';
+                return `<span style="vertical-align:-2px">${filePrefix}</span><a href="#" class="fs-download" data-path="${path}" >${name}</a>${tail}`;
+            }
+        }).join('\n');
+
+        el.innerHTML = html; // <pre> accepte l'HTML, et garde tes retours à la ligne
+    }
+    // Peut être un texte (1 URL par ligne) ou déjà un tableau.
+    const urlsFromSujet = @json($sujet_json->fichiers ?? '');
+    // Normalise en tableau d’URLs (trim + suppression des lignes vides)
+    function normalizeUrls(input) {
+        if (Array.isArray(input)) {
+        return input.map(s => (s ?? '').toString().trim()).filter(Boolean);
+        }
+        const raw = (input ?? '').toString();
+        return raw.split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+    }
+    const PRELOAD_URLS = normalizeUrls(urlsFromSujet);
+    // ========================================================================
+
+
+    // == Initialisation des éditeurs =========================================
     function initializeEditors() {
         let code_editors = document.querySelectorAll('.code-editor');
         for (let i = 0; i < code_editors.length; i++) {
@@ -13,8 +217,10 @@
             document.getElementById("restart_" + editor_id).style.display = 'none';
         }
     }
+    // ========================================================================
 
-    // Mise à jour des éditeurs en fonction du statut (init, running, completed)
+
+    // == MAJ des éditeurs en fonction du statut (init, running, completed) ===
     function updateEditors(status) {
         let code_editors = document.querySelectorAll('.code-editor');
         for (let i = 0; i < code_editors.length; i++) {
@@ -32,43 +238,97 @@
             }            
         }
     }
+    // ========================================================================
 
-    // Gestion des messages du Web Worker
+
+    // == Gestion des messages du Web Worker ==================================
     function setupWorkerListener(worker) {
         worker.onmessage = function(event) {
-            console.log("WEBWORKER EVENT: ", event.data);
+            const data = event.data || {};  
+            console.log("WEBWORKER EVENT: ", data);
 
-            if (typeof event.data.init !== 'undefined') {
+            if (data.init) {
+                console.log("PRET!");
                 updateEditors('init');
+
+                // ➜ Envoyer les URLs au worker (si présentes)
+                if (PRELOAD_URLS.length > 0) {
+                    worker.postMessage({ cmd: 'putUrls', urls: PRELOAD_URLS, dir: '/home/pyodide' });
+                }
+
+                // Lister d’abord: si putUrls prend  un petit temps, on relistera après
+                worker.postMessage({ cmd: 'ls', path: '/home/pyodide' });
+                return;
             }
 
-            if (typeof event.data.status !== 'undefined') {
-                if (event.data.status === 'running') {
+            // ➜ Réception des résultats de téléchargement
+            if (data.putUrls) {
+                if (data.putUrls.error) {
+                    console.error('putUrls error:', data.putUrls.error);
+                } else {
+                    console.log('putUrls results:', data.putUrls.results);
+                }
+                // Rafraîchir la liste après dépôts
+                worker.postMessage({ cmd: 'ls', path: data.putUrls.dir || '/home/pyodide' });
+                return;
+            }
+
+            // [FS GLOBAL] — afficher la réponse de listing global
+            if (data.fs) {
+                renderFsListing(data.fs);
+                return; // rien d'autre à faire pour ce message
+            }
+
+            if (data.status) {
+                if (data.status === 'running' && data.id != null) {
                     document.getElementById("run_" + event.data.id).innerHTML = '<i class="fas fa-cog fa-spin"></i>';
                     document.getElementById("run_" + event.data.id).disabled = true;
                     document.getElementById("restart_" + event.data.id).style.display = 'block';
                 }
 
-                if (event.data.status === 'completed') {
+                if (data.status === 'completed') {
                     updateEditors('completed');
+                    // Rafraîchir le listing global après chaque exécution Python
+                    // (petit délai pour laisser le FS “finir” d’écrire si besoin)
+                    setTimeout(() => {
+                        worker.postMessage({ cmd: 'ls', path: '/home/pyodide' });
+                    }, 0);
                 }
             }
 
-            if (typeof event.data.output !== 'undefined') {
-                document.getElementById("output_" + event.data.id).innerHTML += event.data.output;
+            if ('output' in data && data.id != null) {
+                const out = document.getElementById("output_" + data.id);
+                if (out) out.innerHTML += data.output;
             }
         };
     }
+    // ========================================================================
+
+</script>
+{{-- == /Helpers ========================================================= --}}
+
+
+{{-- == Webworker ======================================================== --}}
+<script>
+
+    var pyodideWorker = new Worker("{{ asset('pyodideworker/copie-pyodideWorker.js') }}");
 
     // Attacher les événements au Web Worker initial
     setupWorkerListener(pyodideWorker);
+
+    // Délégation de clic pour les liens de fichiers (une fois)
+    setupFsDownloadDelegation(document.getElementById('pyodide_fs'), pyodideWorker);
+
+    // Scope
+    const scope = @json($sujet_json->run_scope ?? 'cell');
 
     // Envoi des données au Web Worker pour exécution
     function run(id) {
         console.log('RUN');
         const code = editor_code[id].getValue();
+        const bibliotheques = @json($sujet_json->bibliotheques ?? []);
         document.getElementById("output_" + id).innerHTML = "";
-        pyodideWorker.postMessage({ code: code, id: id });
+        pyodideWorker.postMessage({ code: code, id: id, scope: scope, bibliotheques: bibliotheques });
     }
 
     // Fonction pour redémarrer le Web Worker
@@ -162,18 +422,22 @@
 
 
     {{-- == Interdiction du copier-coller extérieur ====================== --}}
+    @if (!Auth::check())
     <script>		
         // INTERDICTION DU COPIER-COLLER DE CODE EXTERIEUR
-        editor_code[1].on("paste", function(texteColle) {
-            console.log("Text collé: " + texteColle.text);
-            if (!editor_code[1].getValue().includes(texteColle.text)) {
-                texteColle.text = "";
-                console.log("Le collage de ce texte N'est PAS autorisé.");
-            } else {
-                console.log("Le collage de ce texte est autorisé.");
-            }
-        });
+        for (let i = 1; i < editor_code.length; i++) {
+            editor_code[i].on("paste", function(texteColle) {
+                console.log("Text collé: " + texteColle.text);
+                if (!editor_code[1].getValue().includes(texteColle.text)) {
+                    texteColle.text = "";
+                    console.log("Le collage de ce texte N'est PAS autorisé.");
+                } else {
+                    console.log("Le collage de ce texte est autorisé.");
+                }
+            });
+        }
     </script>
+    @endif
     {{-- == /Interdiction du copier-coller extérieur ===================== --}} 
 
 

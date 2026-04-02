@@ -5,26 +5,44 @@
     {{-- ============== --}}
 
     @if (isset($page_sujet_copie))
-        <div style="padding:60px 15px 0 15px;">
+        <div style="padding:60px 15px 0 20px;">
     @else
-        <div style="padding:18px 15px 0 15px;">
+        <div style="padding:18px 15px 0 20px;">
     @endif
 
         @if (isset($page_sujet_copie))
-        <div id="boutons" class="mb-4" style="position:absolute;top:0;right:25px;padding:10px 10px 10px 40px;width:100%;z-index:1000;background-color:#F8FAFC;">
+        <div id="boutons" class="mb-4" style="position:absolute;top:0;right:25px;left:5px;padding:10px 10px 10px 40px;z-index:1000;background-color:#F8FAFC;">
 
             <div style="float:right">
                 <div id="boutons">
                     <a onclick="download_copie_text(this)" class="btn btn-outline-secondary btn-sm text-monospace" role="button" data-container="#boutons" data-toggle="tooltip" data-placement="auto" title="télécharger la copie au format texte (.txt)"><i class="fas fa-file-download"></i> texte</a>
                     <a onclick="download_copie_ipynb(this)" class="btn btn-outline-secondary btn-sm text-monospace" role="button" data-container="#boutons" data-toggle="tooltip" data-placement="auto" title="télécharger la copie au format notebook (.ipynb)"><i class="fas fa-file-download"></i> notebook</a>
-                    <button type="button" style="float:right;" class="ml-5 btn btn-sm btn-danger" onclick="delete_localstorage()" data-container="#boutons" data-toggle="tooltip" data-placement="auto" title="réinitialiser la copie"><i class="fas fa-sync-alt"></i></button>
+                    <button type="button" style="float:right;" class="ml-4 btn btn-sm btn-danger" onclick="delete_localstorage()" data-container="#boutons" data-toggle="tooltip" data-placement="auto" title="réinitialiser la copie"><i class="fas fa-sync-alt"></i></button>
                 </div>
             </div>
 
         </div>
         @endif
 
-        <div id="mainContainer">
+        <!-- SCOPE --> 
+        <div class="small border rounded p-2 text-monospace text-dark" style="border-style: dashed !important">
+            PORTÉE D'EXÉCUTION DU CODE : 
+            @if (isset($sujet_json->run_scope) && $sujet_json->run_scope == 'session')
+                exécution partagée (toutes les cellules partagent le même environnement)
+            @else
+                exécution par cellule (chaque cellule s'exécute indépendamment des autres)
+            @endif
+        </div>
+        <!-- /SCOPE --> 
+
+        <!-- FICHIERS -->
+        <div id="pyodide_fs_block" class="mt-2 p-3 rounded text-white d-none text-monospace" style="background-color:black;">
+            <div class="font-weight-bold text-white small">FICHIERS</div>
+            <pre id="pyodide_fs" class="mt-0 mb-0 text-muted ml-1" style="white-space:pre-wrap;line-height:1.2"></pre>
+        </div>
+        <!-- /FICHIERS -->
+
+        <div id="mainContainer" class="mt-4">
             @foreach($sujet_json->code AS $code)
                 @if(count((array) $sujet_json->code) > 1)
                     <div class="font-weight-bold text-monospace">PROGRAMME {{ $loop->iteration }}</div>
