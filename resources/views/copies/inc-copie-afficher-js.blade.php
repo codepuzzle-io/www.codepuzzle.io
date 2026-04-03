@@ -180,7 +180,7 @@
 
         const html = items.map(({ name, path, kind, size }, i, arr) => {
             const isLast = i === arr.length - 1;
-            const filePrefix = isLast ? '┗ ' : '┣ ';   // ← symbole différent pour le dernier
+            const filePrefix = isLast ? '└ ' : '├ ';   // ← symbole différent pour le dernier
             if (kind === 'dir') {
                 // Dossier : pas de téléchargement (on pourrait plus tard naviguer)
                 return `📁 <span>${name}</span>`;

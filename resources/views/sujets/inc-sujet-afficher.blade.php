@@ -7,9 +7,18 @@
     {{-- ==== EXO ===== --}}
     {{-- ============== --}}
 
-    <!-- ÉNONCÉ --> 
-    <div class="markdown_content">{{ $sujet_json->enonce }}</div>
-    <!-- /ÉNONCÉ --> 
+    <!-- ÉNONCÉ -->
+    {{-- Affichage conditionnel selon le type d'énoncé choisi par l'enseignant :
+         - 'pdf'      : iframe, URL construite depuis le jeton (sujets/{jeton}/enonce.pdf),
+                        comme le fait le type 'pdf' pour sujets-pdf/sujet_{jeton}.pdf.
+         - 'markdown' : texte Markdown rendu (comportement d'origine).
+                        Cas par défaut pour les anciens sujets sans champ enonce_type. --}}
+    @if (isset($sujet_json->enonce_type) && $sujet_json->enonce_type === 'pdf')
+        <iframe id="sujet_pdf" src="{{ Storage::url('sujets/'.$sujet->jeton.'/enonce.pdf') }}" width="100%" height="800" style="border: none;" class="mt-3 rounded"></iframe>
+    @else
+        <div class="markdown_content">{{ $sujet_json->enonce }}</div>
+    @endif
+    <!-- /ÉNONCÉ -->
 
     @if (isset($page_sujet_console) or isset($page_devoir_console) or isset($page_devoir_creer) or isset($page_sujet))
 
@@ -46,7 +55,7 @@
                 ?>
                 @foreach ($urls as $url)
                     <div class="ml-1">
-                        {{ $loop->last ? '┗ ' : '┣ ' }}<a href="{{ $url }}" target="_blank" rel="noopener">{{ $url }}</a>
+                        {{ $loop->last ? '└ ' : '├ ' }}<a href="{{ $url }}" target="_blank" rel="noopener">{{ basename($url) }}</a>
                     </div>
                 @endforeach
             </div>
@@ -130,7 +139,7 @@
     <!-- ÉNONCÉ --> 
     <div class="markdown_content">{{ $sujet_json->enonce }}</div>
     <!-- /ÉNONCÉ --> 
-    <iframe id="sujet_pdf" src="{{Storage::url('SUJETS/sujet_'.$sujet->jeton.'.pdf')}}" width="100%" height="800" style="border: none;" class="mt-3 rounded"></iframe>
+    <iframe id="sujet_pdf" src="{{Storage::url('sujets-pdf/sujet_'.$sujet->jeton.'.pdf')}}" width="100%" height="800" style="border: none;" class="mt-3 rounded"></iframe>
 
     {{-- ============== --}}
     {{-- ==== /PDF ==== --}}

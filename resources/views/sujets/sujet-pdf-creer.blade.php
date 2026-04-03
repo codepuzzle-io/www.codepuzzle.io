@@ -74,7 +74,7 @@ if (isset($sujet_id)) {
                     <!-- PDF -->
                     <div class="mt-4 text-monospace">{{strtoupper(__('fichier pdf'))}}<sup class="ml-1 text-danger small">*</sup></div>
                     @if (isset($sujet_id))
-                        <iframe id="sujet_pdf" src="{{Storage::url('SUJETS/sujet_'.$sujet->jeton.'.pdf')}}" width="100%" height="400" style="border: none;" class="rounded"></iframe>
+                        <iframe id="sujet_pdf" src="{{Storage::url('sujets-pdf/sujet_'.$sujet->jeton.'.pdf')}}" width="100%" height="400" style="border: none;" class="rounded"></iframe>
                         <div class="text-monospace text-muted small text-justify mb-1">{{__('Déposer ci-dessous un fichier pdf pour remplacer le pdf actuel.')}}</div>
                     @else
                         <div class="text-monospace text-muted small text-justify mb-1">{{__('Déposer ci-dessous le sujet au format pdf')}}</div>
